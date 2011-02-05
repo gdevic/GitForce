@@ -68,7 +68,7 @@ namespace git4win
                     default_repo = (string)rd.Deserialize(file);
 
                     // Upon load, set the current based on the default repo
-                    current = repos.Find(delegate(ClassRepo r) { return r.root == default_repo; });
+                    current = repos.Find(r => r.root == default_repo);
                 }
                 catch (Exception ex)
                 {
@@ -113,7 +113,7 @@ namespace git4win
         public ClassRepo Add(string root)
         {
             // Detect a repository with the same root path
-            if (repos.Exists(delegate(ClassRepo r) { return r.root == root; }))
+            if (repos.Exists(r => r.root == root))
                 throw new ClassException("Repository with the same name already exists!");
 
             Directory.CreateDirectory(root);

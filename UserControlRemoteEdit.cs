@@ -47,7 +47,7 @@ namespace git4win
 
             // Get the list of names from remotes class and iteratively add them to the listbox
             foreach (var r in repo.remotes.GetListNames())
-                listRemotes.Items.Add(r.ToString());
+                listRemotes.Items.Add(r);
 
             listRemotes.EndUpdate();
         }
@@ -90,7 +90,7 @@ namespace git4win
         /// </summary>
         private void btEdit_Click(object sender, EventArgs e)
         {
-            ClassRemotes.Remote remote = new ClassRemotes.Remote();
+            ClassRemotes.Remote remote;
             FormRemoteAddEdit remoteAddEdit = new FormRemoteAddEdit();
             remoteAddEdit.Prepare(FormRemoteAddEdit.Function.Edit, current);
 
@@ -129,7 +129,7 @@ namespace git4win
         /// </summary>
         private void btRename_Click(object sender, EventArgs e)
         {
-            ClassRemotes.Remote remote = new ClassRemotes.Remote();
+            ClassRemotes.Remote remote;
             FormRemoteAddEdit remoteAddEdit = new FormRemoteAddEdit();
             remoteAddEdit.Prepare(FormRemoteAddEdit.Function.Rename, current);
 

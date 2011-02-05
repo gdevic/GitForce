@@ -38,7 +38,7 @@ namespace git4win.FormMain_RightPanels
                 cmd.Append("\" HEAD");
                 // Limit the number of commits to show
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
-                    cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast.ToString());
+                    cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
                 string[] response = App.Git.Run(cmd.ToString()).Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -47,7 +47,7 @@ namespace git4win.FormMain_RightPanels
                     string[] cat = s.Split('\t');
 
                     // Convert the date/time from UNIX second based to C# date structure
-                    System.DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(cat[1])).ToLocalTime();
+                    DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(cat[1])).ToLocalTime();
                     cat[1] = date.ToShortDateString() + " " + date.ToShortTimeString();
 
                     // Trim any spaces in the subject line

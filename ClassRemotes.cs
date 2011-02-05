@@ -39,7 +39,7 @@ namespace git4win
         private Dictionary<string, Remote> remotes = new Dictionary<string, Remote>();
 
         /// <summary>
-        /// Return the list<> of names of remote repos
+        /// Return the list of names of remote repos
         /// </summary>
         public List<string> GetListNames()
         {
@@ -104,7 +104,7 @@ namespace git4win
         /// </summary>
         public void SetPassword(string name, string password)
         {
-            Remote r = new Remote();
+            Remote r;
             if (!remotes.TryGetValue(name, out r))
                 r.name = name;
             r.password = password;
@@ -117,7 +117,7 @@ namespace git4win
         /// </summary>
         public string GetPassword(string name="")
         {
-            Remote r = new Remote();
+            Remote r;
             r.password = "";
             if (name == "") name = current;
             remotes.TryGetValue(name, out r);

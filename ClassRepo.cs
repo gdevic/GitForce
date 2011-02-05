@@ -86,6 +86,7 @@ namespace git4win
         /// which may not be the current repository (that global Git.Run() uses by default)
         /// </summary>
         /// <param name="cmd">Git command to run</param>
+        /// <param name="path"></param>
         /// <returns>Result text string from the git execution</returns>
         public string Run(string cmd, string path=null)
         {

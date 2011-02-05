@@ -34,7 +34,7 @@ namespace git4win
         {
             StringBuilder cmd = new StringBuilder("checkout ");
 
-            cmd.Append(branchName.ToString());
+            cmd.Append(branchName);
 
             // Execute the final branch command
             App.Git.Run(cmd.ToString());

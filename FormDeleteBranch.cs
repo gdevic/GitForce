@@ -39,15 +39,12 @@ namespace git4win
         {
             StringBuilder cmd = new StringBuilder("branch ");
 
-            if (checkForce.Checked == true)
-                cmd.Append("-D ");
-            else
-                cmd.Append("-d ");
+            cmd.Append(checkForce.Checked ? "-D " : "-d ");
 
-            if (radioButton2.Checked == true)
+            if (radioButton2.Checked)
                 cmd.Append("-r ");
 
-            cmd.Append(branchName.ToString());
+            cmd.Append(branchName);
 
             // Execute the final branch command
             App.Git.Run(cmd.ToString());
@@ -59,7 +56,7 @@ namespace git4win
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            if (rb.Checked == true)
+            if (rb.Checked)
             {
                 switch (rb.Tag.ToString())
                 {

@@ -34,20 +34,15 @@ namespace git4win
         /// to arrive at a workable name. This function also enables the list box.
         /// This function is also called from Delete branch form, so it is static.
         /// </summary>
+        /// <param name="listBranches"></param>
         /// <param name="list"></param>
         public static void listAdd(ref ListBox listBranches, ref string[] list)
         {
             listBranches.Items.Clear();
-            foreach (string s in list)
+            foreach (string name in
+                list.Select(s => s.Replace(" remotes/", "").Replace("*", " ").Trim()).
+                Select(name => name.Split((" ").ToCharArray())[0]))
             {
-                // Trim the spaces, current branch marker and 'remotes' keyword from the branch name
-                string name = s.Replace(" remotes/", "").
-                                Replace("*", " ").
-                                Trim();
-
-                // Trim a possible origin redirection ("branch -> origin/master")
-                name = name.Split((" ").ToCharArray())[0];
-
                 listBranches.Items.Add(name);
             }
             if (listBranches.Items.Count > 0)
@@ -111,14 +106,11 @@ namespace git4win
         /// </summary>
         private void btCreate_Click(object sender, EventArgs e)
         {
-            string name = textBranchName.Text.ToString().Trim();
+            string name = textBranchName.Text.Trim();
 
             StringBuilder cmd = new StringBuilder();
 
-            if (checkCheckOut.Checked == true)
-                cmd.Append("checkout -b ");
-            else
-                cmd.Append("branch ");
+            cmd.Append(checkCheckOut.Checked ? "checkout -b " : "branch ");
 
             cmd.Append(name);
 
@@ -144,7 +136,7 @@ namespace git4win
         /// </summary>
         private void textSHA1_TextChanged(object sender, EventArgs e)
         {
-            origin = textSHA1.Text.ToString();
+            origin = textSHA1.Text;
         }
 
         /// <summary>

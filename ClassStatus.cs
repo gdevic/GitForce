@@ -34,7 +34,7 @@ namespace git4win
         /// <summary>
         /// Translation of git status codes into useful human readable strings
         /// </summary>
-        private static Dictionary<char, string> desc = new Dictionary<char, string>() {
+        private static Dictionary<char, string> desc = new Dictionary<char, string> {
             { ' ', "OK" },
             { 'M', "Modified" },
             { 'A', "Added" },
@@ -48,7 +48,7 @@ namespace git4win
         /// <summary>
         /// Enumeration of icons for files in different stage
         /// </summary>
-        public enum Img : int
+        public enum Img
         {
             FOLDER_CLOSED, FOLDER_OPENED, DATABASE_CLOSED, DATABASE_OPENED,
             FILE_UNMODIFIED,        // ID=5
@@ -66,8 +66,7 @@ namespace git4win
         /// <summary>
         /// Describes a mapping from a file status to the image associated with it
         /// </summary>
-        private static Dictionary<char, Img> staticons = new Dictionary<char, Img>()
-        {
+        private static Dictionary<char, Img> staticons = new Dictionary<char, Img> {
             { ' ', Img.FILE_UNMODIFIED },
             { '?', Img.FILE_UNTRACKED },
             { 'D', Img.FILE_DELETED },
@@ -139,10 +138,7 @@ namespace git4win
         /// </summary>
         public void Filter(FilterDelegate d)
         {
-            List<string> newList = new List<string>();
-            foreach (string s in list)
-                if (d(s) == false)
-                    newList.Add(s);
+            List<string> newList = list.Where(s => d(s) == false).ToList();
             list = newList;
         }
 
@@ -376,14 +372,17 @@ namespace git4win
                 {
                     result.AddRange(Directory.GetFiles(dir, "*.*"));
 
-                    foreach (string d in Directory.GetDirectories(dir))
+                    foreach (string d in
+                        Directory.GetDirectories(dir).Where(d => !d.EndsWith("\\.git") 
+                        || Properties.Settings.Default.ShowDotGitFolders))
                     {
-                        // Setting: Reveal .git folders in Local File View mode
-                        if (!d.EndsWith("\\.git") || Properties.Settings.Default.ShowDotGitFolders == true)
-                            stack.Push(d);
+                        stack.Push(d);
                     }
                 }
-                catch { };
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             return result;
         }

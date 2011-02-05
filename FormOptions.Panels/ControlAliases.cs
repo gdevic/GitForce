@@ -37,7 +37,10 @@ namespace git4win.FormOptions_Panels
                             break;
                     }
                 }
-                catch { }
+                catch(Exception ex)
+                {
+                    App.Execute.Add(ex.Message);
+                }
             }
 
             // Add the dirty (modified) value changed helper
@@ -54,11 +57,10 @@ namespace git4win.FormOptions_Panels
                 // Remove all aliases and then rebuild them
                 ClassConfig.Run("--remove-section alias");
 
-                foreach (string s in textBoxAliases.Lines)
+                foreach (string[] def in
+                    textBoxAliases.Lines.Select(s => s.Trim().Split('=')).Where(def => def.Length == 2))
                 {
-                    string[] def = s.Trim().Split('=');
-                    if (def.Length == 2)
-                        ClassConfig.Set("alias." + def[0].Trim(), def[1].Trim());
+                    ClassConfig.Set("alias." + def[0].Trim(), def[1].Trim());
                 }
 
                 textBoxAliases.Tag = null;

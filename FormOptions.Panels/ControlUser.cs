@@ -37,13 +37,13 @@ namespace git4win.FormOptions_Panels
         {
             if (textBoxUserName.Tag != null)
             {
-                ClassConfig.Set("user.name", textBoxUserName.Text.ToString());
+                ClassConfig.Set("user.name", textBoxUserName.Text);
                 textBoxUserName.Tag = null;
             }
 
             if (textBoxUserEmail.Tag != null)
             {
-                ClassConfig.Set("user.email", textBoxUserEmail.Text.ToString());
+                ClassConfig.Set("user.email", textBoxUserEmail.Text);
                 textBoxUserEmail.Tag = null;
             }
         }

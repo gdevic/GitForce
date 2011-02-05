@@ -44,7 +44,7 @@ namespace git4win
         private void rbSource_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            if (rb.Checked == true)
+            if (rb.Checked)
             {
                 textBoxLocal.ReadOnly = true;
                 btNext.Enabled = btBrowse.Enabled = remoteDisplay.Enabled = false;

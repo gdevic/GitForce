@@ -46,8 +46,7 @@ namespace git4win
         /// <param name="files"></param>
         public void Rebuild(List<string> files)
         {
-            foreach (var c in bundle)
-                files = c.Renew(files);
+            files = bundle.Aggregate(files, (current, c) => c.Renew(current));
 
             // Assign the remaining files to the first commit ("Default")
             bundle[0].AddFiles(files);

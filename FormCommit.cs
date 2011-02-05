@@ -48,11 +48,9 @@ namespace git4win
         /// </summary>
         public List<string> GetFiles()
         {
-            List<string> files = new List<string>();
-            for (int i = 0; i < listFiles.Items.Count; i++)
-                if (listFiles.GetItemCheckState(i) == CheckState.Checked)
-                    files.Add(listFiles.Items[i].ToString());
-            return files;
+            return listFiles.Items.Cast<object>().
+                Where((t, i) => listFiles.GetItemCheckState(i) == CheckState.Checked).
+                Select(t => t.ToString()).ToList();
         }
 
         /// <summary>

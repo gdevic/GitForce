@@ -101,29 +101,23 @@ namespace git4win
         /// </summary>
         public GitFileInfo[] GetFiles(SortBy sortBy)
         {
-            List<GitFileInfo> files = new List<GitFileInfo>();
+            List<GitFileInfo> files = (from s in List
+                                       where s.IndexOf('\\') < 0
+                                       select Path.Combine(FullName, s)
+                                       into path select new GitFileInfo(path)).ToList();
 
             // Add all items in the list that dont have directory separator
             // Those are the files residing at this level
-            foreach (string s in List)
-            {
-                if (s.IndexOf('\\') < 0)
-                {
-                    string path = Path.Combine(FullName, s);
-                    GitFileInfo file = new GitFileInfo(path);
-                    files.Add(file);
-                }
-            }
 
             // Sort the list by the name or extension of the files in it
             switch (sortBy)
             {
                 case SortBy.Name:
-                    files.Sort(delegate(GitFileInfo f1, GitFileInfo f2) { return f1.Name.CompareTo(f2.Name); });
+                    files.Sort((f1, f2) => f1.Name.CompareTo(f2.Name));
                     break;
 
                 case SortBy.Extension:
-                    files.Sort(delegate(GitFileInfo f1, GitFileInfo f2) { return Path.GetExtension(f1.Name).CompareTo(Path.GetExtension(f2.Name)); });
+                    files.Sort((f1, f2) => Path.GetExtension(f1.Name).CompareTo(Path.GetExtension(f2.Name)));
                     break;
             }
 

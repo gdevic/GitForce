@@ -26,9 +26,9 @@ namespace git4win
         /// </summary>
         public ClassPutty()
         {
-            pathPageant = WriteResourceToFile(global::git4win.Properties.Resources.pageant, "pageant.exe");
-            pathPlink = WriteResourceToFile(global::git4win.Properties.Resources.plink, "plink.exe");
-            pathPuttyGen = WriteResourceToFile(global::git4win.Properties.Resources.puttygen, "puttygen.exe");
+            pathPageant = WriteResourceToFile(Properties.Resources.pageant, "pageant.exe");
+            pathPlink = WriteResourceToFile(Properties.Resources.plink, "plink.exe");
+            pathPuttyGen = WriteResourceToFile(Properties.Resources.puttygen, "puttygen.exe");
 
             // Run the daemon process, update keys
             RunPageantUpdateKeys();
@@ -57,7 +57,10 @@ namespace git4win
                 File.Delete(pathPlink);
                 File.Delete(pathPuttyGen);
             }
-            catch { };
+            catch(Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -65,10 +68,7 @@ namespace git4win
         /// </summary>
         private static bool IsProcessRunning(string name)
         {
-            foreach (Process proc in Process.GetProcesses())
-                if (proc.ProcessName==name)
-                    return true;
-            return false;
+            return Process.GetProcesses().Any(proc => proc.ProcessName == name);
         }
 
         /// <summary>
@@ -84,7 +84,10 @@ namespace git4win
                     sw.Write(buffer);
                 }
             }
-            catch { };
+            catch(Exception ex)
+            {
+                App.Execute.Add(ex.Message);
+            }
             return path;
         }
 
@@ -145,7 +148,7 @@ namespace git4win
         /// </summary>
         public List<string> GetPassPhrases()
         {
-            List<string> pfs = new List<string>();
+            List<string> pfs;
 
             // Base-64 encoded strings, zero-delimited, are read from application settings
             pfs = Properties.Settings.Default.PuTTYPf.
@@ -155,7 +158,7 @@ namespace git4win
 
             // Select each string and tramsform it from Base-64 to plaintext
             pfs = pfs.Select(
-                    s => System.Text.ASCIIEncoding.ASCII.GetString(
+                    s => Encoding.ASCII.GetString(
                     Convert.FromBase64String(s))).
                     ToList();
             return pfs;
@@ -169,7 +172,7 @@ namespace git4win
             // Convert each passphrase into Base-64 encoded string
             pfs = pfs.Select(
                 s => Convert.ToBase64String(
-                    System.Text.ASCIIEncoding.ASCII.GetBytes(s))).
+                    Encoding.ASCII.GetBytes(s))).
                     ToList();
 
             Properties.Settings.Default.PuTTYPf = String.Join("\0", pfs);
@@ -195,8 +198,7 @@ namespace git4win
 //          startInfo.CreateNoWindow = true;
             startInfo.Arguments = args;
 
-            Process procPlink = new Process();
-            procPlink = Process.Start(startInfo);
+            Process procPlink = Process.Start(startInfo);
 
             procPlink.WaitForExit();
         }

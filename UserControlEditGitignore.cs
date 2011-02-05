@@ -56,7 +56,7 @@ namespace git4win
             bool result = true;
             try
             {
-                File.WriteAllText(file, textBox.Text.ToString());
+                File.WriteAllText(file, textBox.Text);
                 fileName = file;
             }
             catch (Exception ex)
@@ -73,9 +73,7 @@ namespace git4win
         /// </summary>
         private void btAdd_Click(object sender, EventArgs e)
         {
-            List<string> items = new List<string>();
-            foreach (string s in listFilters.SelectedItems)
-                items.Add(s.Split(' ').First());
+            List<string> items = (from string s in listFilters.SelectedItems select s.Split(' ').First()).ToList();
             items.InsertRange(0, textBox.Lines);
             textBox.Lines = items.Distinct().ToArray();
         }

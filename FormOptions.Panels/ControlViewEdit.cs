@@ -60,9 +60,7 @@ namespace git4win.FormOptions_Panels
         public void ApplyChanges()
         {
             // Store a list of programs to application settings
-            List<string> progs = new List<string>();
-            foreach (string s in listPrograms.Items)
-                progs.Add(s);
+            List<string> progs = listPrograms.Items.Cast<string>().ToList();
             Properties.Settings.Default.EditViewPrograms = String.Join("\0", progs);
         }
 

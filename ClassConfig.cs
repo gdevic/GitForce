@@ -28,8 +28,8 @@ namespace git4win
         /// <param name="repo">Optional repository to set the local key instead of a global</param>
         public static void Set(string key, string value, ClassRepo repo = null)
         {
-            string setkey = (value==null || value.Length==0)? "--unset " : "";
-            string val = (value == null || value.Length == 0) ? "" : " \"" + value + "\"";
+            string setkey = string.IsNullOrEmpty(value)? "--unset " : "";
+            string val = string.IsNullOrEmpty(value) ? "" : " \"" + value + "\"";
             string cmd = setkey + key + val;
 
             if (repo == null)

@@ -55,8 +55,6 @@ namespace git4win
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
-            { }
         }
 
         /// <summary>

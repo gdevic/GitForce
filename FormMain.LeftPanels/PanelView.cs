@@ -85,7 +85,7 @@ namespace git4win.FormMain_LeftPanels
         public void SetView(int mode)
         {
             // Set the menu bullet to the current view
-            List<ToolStripMenuItem> viewMenus = new List<ToolStripMenuItem>() {
+            List<ToolStripMenuItem> viewMenus = new List<ToolStripMenuItem> {
                 menuView0, menuView1, menuView2, menuView3, menuView4 };
             foreach (var m in viewMenus)
                 m.Checked = false;
@@ -127,7 +127,7 @@ namespace git4win.FormMain_LeftPanels
                         break;
                     case 1:     // Git view of files: status - untracked
                         Status.SetListByCommand("status --porcelain -uno -z *");
-                        Status.Filter(delegate(string s) { return s.StartsWith("??"); });
+                        Status.Filter(s => s.StartsWith("??"));
                         Status.Seal();
                         break;
                     case 2:     // Git view of repo: ls-tree
@@ -142,13 +142,13 @@ namespace git4win.FormMain_LeftPanels
                         break;
                     case 4:     // Local files not in repo: untracked only
                         Status.SetListByCommand("status --porcelain -uall -z *");
-                        Status.Filter(delegate(string s) { return !s.StartsWith("??"); });
+                        Status.Filter(s => !s.StartsWith("??"));
                         Status.Seal();
                         break;
                 }
 
                 // Set the file sorting order
-                if (Properties.Settings.Default.sortByExtension == true)
+                if (Properties.Settings.Default.sortByExtension)
                     Status.sortBy = GitDirectoryInfo.SortBy.Extension;
                 else
                     Status.sortBy = GitDirectoryInfo.SortBy.Name;
@@ -163,7 +163,7 @@ namespace git4win.FormMain_LeftPanels
                 node.ImageIndex = icons[mode];
 
                 // Assign the icons to the nodes of tree view
-                Status.viewAssignIcon(node, isIndex:false);
+                Status.viewAssignIcon(node, false);
 
                 // Always keep the root node expanded by default
                 node.Expand();
@@ -256,7 +256,7 @@ namespace git4win.FormMain_LeftPanels
         /// </summary>
         private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            string[] files = (string[])treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
+            string[] files = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
             DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Move);
         }
 
@@ -312,9 +312,7 @@ namespace git4win.FormMain_LeftPanels
             if (e.Button == MouseButtons.Right)
             {
                 // Build the context menu to be shown
-                TreeNode sel = treeView.GetNodeAt(e.X, e.Y);
-                if (sel == null)
-                    sel = treeView.Nodes[0];
+                TreeNode sel = treeView.GetNodeAt(e.X, e.Y) ?? treeView.Nodes[0];
 
                 contextMenu.Items.Clear();
                 contextMenu.Items.AddRange(GetContextMenu(contextMenu, sel.Tag as string));
@@ -342,7 +340,7 @@ namespace git4win.FormMain_LeftPanels
                 return new ToolStripItemCollection(owner, new ToolStripItem[] {} );
 
             TSelection sel = new TSelection();
-            sel.selFiles = (string[])treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
+            sel.selFiles = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
 
             // Empty path is only sent from the main menu (not the context right-click handler)
             // in which case consider selected file first file in the selected list
@@ -360,7 +358,7 @@ namespace git4win.FormMain_LeftPanels
 
 
             // Build the "Diff vs" submenu
-            ToolStripMenuItem mDiffIndex = CreateMenu("Index", menuViewDiff_Click, sel, "");
+            ToolStripMenuItem mDiffIndex = CreateMenu("Index", menuViewDiff_Click, sel);
             ToolStripMenuItem mDiffHead = CreateMenu("Repository HEAD", menuViewDiff_Click, sel, "HEAD");
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs");
             mDiff.DropDownItems.Add(mDiffIndex);
@@ -369,7 +367,7 @@ namespace git4win.FormMain_LeftPanels
             // Build the "Edit Using" submenus
             // The default option is to open the file using the OS-associated editor,
             // after which all the user-specified programs are listed
-            ToolStripMenuItem mEditAssoc = CreateMenu("Associated Editor", menuViewEdit_Click, sel, "");
+            ToolStripMenuItem mEditAssoc = CreateMenu("Associated Editor", menuViewEdit_Click, sel);
             ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Using");
             mEdit.DropDownItems.Add(mEditAssoc);
             string[] progs = Properties.Settings.Default.EditViewPrograms.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -448,7 +446,7 @@ namespace git4win.FormMain_LeftPanels
         /// </summary>
         private void menuViewExplore_Click(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)(sender as ToolStripDropDownItem).Tag;
+            TSelection sel = (TSelection)((ToolStripDropDownItem) sender).Tag;
             Process.Start("explorer.exe", "/e, /select," + sel.selPath);
         }
 

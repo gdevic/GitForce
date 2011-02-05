@@ -17,16 +17,6 @@ namespace git4win
 {
     public partial class FormExecute : Form
     {
-        /// <summary>
-        /// Using Windows native call to position the scroll bar. The C# method of
-        /// using ScrollToCaret() produced very jerky scroll when adding text.
-        /// </summary>
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
-
-        private const int WM_VSCROLL = 0x115;
-        private const int SB_BOTTOM = 7;
-        
         public FormExecute()
         {
             InitializeComponent();
@@ -47,10 +37,10 @@ namespace git4win
         public void Add(string text)
         {
             int len = Math.Min(text.Length, 120);
-            textBox.Text += text.Substring(0, len);
+            textBox.Text += text.Substring(0, len) + Environment.NewLine;
 
             // Scroll to the bottom, but don't move the caret position.
-            SendMessage(textBox.Handle, WM_VSCROLL, (IntPtr)SB_BOTTOM, IntPtr.Zero);
+            Win32.SendMessage(textBox.Handle, Win32.WM_VSCROLL, (IntPtr)Win32.SB_BOTTOM, IntPtr.Zero);
         }
 
         public string[] RunThread(string cmd, string args, Dictionary<string, string> env)
@@ -86,10 +76,10 @@ namespace git4win
         /// </summary>
         public void Show(bool toShow)
         {
-            if (toShow == true)
-                this.Show();
+            if (toShow)
+                Show();
             else
-                this.Hide();
+                Hide();
         }
 
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -166,7 +156,7 @@ namespace git4win
         public void StartProcess()
         {
             //we need to create a new thread for our process
-            thread = new System.Threading.Thread(RunCmd);
+            thread = new Thread(RunCmd);
             //set the thread to run in the background
             thread.IsBackground = true;
             //name our thread (optional)
@@ -184,8 +174,8 @@ namespace git4win
             p.StartInfo.RedirectStandardInput = true;
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.UseShellExecute = false;
-            p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
-            p.ErrorDataReceived += new DataReceivedEventHandler(p_ErrorDataReceived);
+            p.OutputDataReceived += p_OutputDataReceived;
+            p.ErrorDataReceived += p_ErrorDataReceived;
             p.Start();
 
             eventThreadStarted.Set();
@@ -207,7 +197,6 @@ namespace git4win
                     }
                 }
             }
-            int exitCode = p.ExitCode;
             p.Close();
             eventThreadExited.Set();
         }

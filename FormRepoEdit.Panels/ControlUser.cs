@@ -19,6 +19,7 @@ namespace git4win.FormRepoEdit_Panels
         /// <summary>
         /// Initialize pertinent settings
         /// </summary>
+        /// <param name="repo"></param>
         /// <param name="options">All git global settings</param>
         public void Init(ClassRepo repo, string[] options)
         {
@@ -37,13 +38,13 @@ namespace git4win.FormRepoEdit_Panels
         {
             if (textBoxUserName.Tag != null)
             {
-                ClassConfig.Set("user.name", textBoxUserName.Text.ToString(), repo);
+                ClassConfig.Set("user.name", textBoxUserName.Text, repo);
                 textBoxUserName.Tag = null;
             }
 
             if (textBoxUserEmail.Tag != null)
             {
-                ClassConfig.Set("user.email", textBoxUserEmail.Text.ToString(), repo);
+                ClassConfig.Set("user.email", textBoxUserEmail.Text, repo);
                 textBoxUserEmail.Tag = null;
             }
         }

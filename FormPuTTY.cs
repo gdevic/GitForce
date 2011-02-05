@@ -61,7 +61,7 @@ namespace git4win
             OpenFileDialog dlg = new OpenFileDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                string file = dlg.FileName.ToString();
+                string file = dlg.FileName;
                 if (!listBoxKeys.Items.Contains(file))
                     listBoxKeys.Items.Add(file);
                 SaveKeys();

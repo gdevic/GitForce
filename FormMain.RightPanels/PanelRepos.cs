@@ -144,11 +144,11 @@ namespace git4win.FormMain_RightPanels
                     string root = newRepoStep2.destination;
                     string extra = newRepoStep2.extra;
                     bool isBare = newRepoStep2.isBare;
-                    string init = "";
                     ClassRepo repo = null;
 
                     try
                     {
+                        string init;
                         switch (type)
                         {
                             case "empty":

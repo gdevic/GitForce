@@ -46,11 +46,9 @@ namespace git4win
             InitializeComponent();
             repo = _repo;
 
-            /// <summary>
-            /// Get all local configuration strings and assign various panel controls.
-            /// This is placed first, before initializing the user panels, so that the
-            /// strings are accessible to individual panels if they want to use it.
-            /// </summary>
+            // Get all local configuration strings and assign various panel controls.
+            // This is placed first, before initializing the user panels, so that the
+            // strings are accessible to individual panels if they want to use it.
             string[] config = ClassConfig.Run("--local --list -z", repo).Split('\0');
 
             // Add all user panels to the base repo edit panel; call their init

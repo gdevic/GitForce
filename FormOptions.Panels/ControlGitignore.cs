@@ -31,10 +31,9 @@ namespace git4win.FormOptions_Panels
         {
             // Get a path to user excludes file, or create that file if it is not defined
             excludesFile = options.FirstOrDefault(s => s.Contains("core.excludesfile"));
-            if (excludesFile == null)
-                excludesFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".gitexcludesfile");
-            else
-                excludesFile = excludesFile.Split('\n').Last();
+            excludesFile = excludesFile == null ? 
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".gitexcludesfile")
+                : excludesFile.Split('\n').Last();
 
             // If the user file does not exists, create it
             if (!File.Exists(excludesFile))

@@ -15,15 +15,15 @@ namespace git4win
         /// Multicast delegate for application-wide data refresh
         /// </summary>
         public delegate void RefreshDelegate();
-        public static RefreshDelegate Refresh = App.voidRefresh;
-        private static void voidRefresh() { }
+        public static RefreshDelegate Refresh = VoidRefresh;
+        private static void VoidRefresh() { }
 
         /// <summary>
         /// Delegate to call in order to print into the app-wide log class
         /// </summary>
         public delegate void LogDelegate(string message);
-        public static LogDelegate Log = voidLog;
-        private static void voidLog(string message) { }
+        public static LogDelegate Log = VoidLog;
+        private static void VoidLog(string message) { }
 
         /// <summary>
         /// Delegate for hooking up status pane info notifications back to the main form
@@ -35,8 +35,8 @@ namespace git4win
         /// Delegate to main form to set the busy status
         /// </summary>
         public delegate void SetBusyStatusHandler(bool isBusy);
-        public static SetBusyStatusHandler StatusBusy = voidBusy;
-        private static void voidBusy(bool f) { }
+        public static SetBusyStatusHandler StatusBusy = VoidBusy;
+        private static void VoidBusy(bool f) { }
 
         #endregion
 
@@ -45,34 +45,34 @@ namespace git4win
         /// <summary>
         /// Form execute with command execution threads
         /// </summary>
-        public static FormExecute Execute = null;
+        public static FormExecute Execute;
 
         /// <summary>
         /// Static git class helper containing git-execution services
         /// </summary>
-        public static ClassGit Git = null;
+        public static ClassGit Git;
 
         /// <summary>
         /// Static class containing diff tool execution helpers
         /// </summary>
-        public static ClassDiff Diff = new ClassDiff();
+        public static ClassDiff Diff;
 
         /// <summary>
         /// Static class of repos containing operations on a set of repositories
         /// </summary>
-        public static ClassRepos Repos = new ClassRepos();
+        public static ClassRepos Repos;
 
         /// <summary>
         /// Static class PuTTY to manage SSL connections
         /// </summary>
-        public static ClassPutty Putty = new ClassPutty();
+        public static ClassPutty Putty;
 
         #endregion
 
         /// <summary>
         /// Application-wide mutex preventing multiple instances
         /// </summary>
-        static Mutex appMutex = new Mutex(true, "{3486D9C7-4D52-43D7-A30F-6A9B74789C5F}");
+        static readonly Mutex AppMutex = new Mutex(true, "{3486D9C7-4D52-43D7-A30F-6A9B74789C5F}");
 
         /// <summary>
         /// The main entry point for the application.
@@ -80,35 +80,40 @@ namespace git4win
         [STAThread]
         static void Main()
         {
-            if (appMutex.WaitOne(TimeSpan.Zero, true))
+            if (AppMutex.WaitOne(TimeSpan.Zero, true))
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                // Before opening the main form, make sure we have a functional git executable
+                // Initialize global application static classes in this order:
                 Execute = new FormExecute();
+                Diff = new ClassDiff();
+                Repos = new ClassRepos();
+                Putty = new ClassPutty();
                 Git = new ClassGit();
-                if (Git.Initialize() == true)
+
+                // Before we can start, we need to have a functional git executable
+                if (Git.Initialize())
                 {
                     // Initialize external diff program
-                    if (Diff.Initialize() == true)
+                    if (Diff.Initialize())
                     {
                         // Add known text editors if needed
-                        git4win.FormOptions_Panels.ControlViewEdit.AddKnownEditors();
+                        FormOptions_Panels.ControlViewEdit.AddKnownEditors();
 
-                        Form MainForm = new FormMain();
-                        Application.Run(MainForm);
+                        Form mainForm = new FormMain();
+                        Application.Run(mainForm);
 
                         Properties.Settings.Default.Save();
                     }
                 }
-                appMutex.ReleaseMutex();
+                AppMutex.ReleaseMutex();
             }
             else
             {
                 // Send our Win32 message to make the currently running instance
                 // jump on top of all the other windows
-                ClassWin32.PostMessage((IntPtr)ClassWin32.HWND_BROADCAST, ClassWin32.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
+                Win32.PostMessage((IntPtr)Win32.HWND_BROADCAST, Win32.WmShowme, IntPtr.Zero, IntPtr.Zero);
             }
         }
     }

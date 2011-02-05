@@ -17,8 +17,7 @@ namespace git4win
         /// </summary>
         public enum UrlType { Unknown, Ssh, Git, Http, Https, Ftp, Ftps, Rsync };
 
-        private static Dictionary<string, UrlType> protocol = new Dictionary<string, UrlType>()
-        {
+        private static Dictionary<string, UrlType> protocol = new Dictionary<string, UrlType> {
             { "ssh://", UrlType.Ssh },
             { "git://", UrlType.Git },
             { "http://", UrlType.Http },
@@ -68,14 +67,12 @@ namespace git4win
                     url.type = UrlType.Ssh;
 
                 // Find the easy case first
-                foreach (var v in protocol)
+                string u1 = u;
+                foreach (var v in protocol.Where(v => u1.StartsWith(v.Key, StringComparison.OrdinalIgnoreCase)))
                 {
-                    if (u.StartsWith(v.Key, StringComparison.OrdinalIgnoreCase))
-                    {
-                        url.type = v.Value;
-                        u = u.Substring(v.Key.Length);
-                        break;
-                    }
+                    url.type = v.Value;
+                    u = u.Substring(v.Key.Length);
+                    break;
                 }
 
                 // The next one to appear could be the user@
@@ -123,7 +120,7 @@ namespace git4win
                 url.path = u;
 
                 // Find the project name
-                string[] tokens = u.Split(new char[] { '\\', '/', '.' });
+                string[] tokens = u.Split(new[] { '\\', '/', '.' });
                 if (tokens.Length >= 2 && tokens[tokens.Length - 1].ToLower() == "git")
                     url.name = tokens[tokens.Length - 2];
                 else
@@ -133,8 +130,10 @@ namespace git4win
                 if (!string.IsNullOrEmpty(url.host) && !string.IsNullOrEmpty(url.path))
                     url.ok = true;
             }
-            catch { }
-            finally { };
+            catch(Exception ex)
+            {
+                App.Execute.Add(ex.Message);
+            }
 
             return url;
         }
@@ -149,7 +148,7 @@ namespace git4win
         {
             Url url = Parse(URL);
             StringBuilder canon = new StringBuilder();
-            if (url.ok == true)
+            if (url.ok)
             {
                 // Reverse lookup the protocol type dictionary
                 string proto = (from kvp in protocol where kvp.Value == url.type select kvp.Key).ToArray().First();
@@ -163,8 +162,7 @@ namespace git4win
                 canon.Append("@" + url.host);
 
                 // Default port mappings from: http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
-                Dictionary<UrlType, string> port = new Dictionary<UrlType, string>()
-                {
+                Dictionary<UrlType, string> port = new Dictionary<UrlType, string> {
                     { UrlType.Ssh,  ":22" },
                     { UrlType.Git,  ":9418" },
                     { UrlType.Http, ":80" },
@@ -185,9 +183,6 @@ namespace git4win
         }
 
 #if false
-        /// <summary>
-        /// Parsing test function
-        /// </summary>
         public static void Test()
         {
             string canon;

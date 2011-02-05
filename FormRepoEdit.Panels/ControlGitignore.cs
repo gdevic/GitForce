@@ -25,6 +25,7 @@ namespace git4win.FormRepoEdit_Panels
         /// <summary>
         /// Initialize pertinent settings
         /// </summary>
+        /// <param name="repo"></param>
         /// <param name="options">All git global settings</param>
         public void Init(ClassRepo repo, string[] options)
         {

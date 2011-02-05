@@ -192,11 +192,5 @@ namespace git4win.FormMain_RightPanels
             if (mergeBranch.ShowDialog() == DialogResult.OK)
                 App.Refresh();
         }
-
-        private void menuMergeWith(object sender, EventArgs e)
-        {
-            FormMergeBranch mergeBranch = new FormMergeBranch(branches);
-            mergeBranch.DoMerge(getSelectedNode());
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace git4win
         private static PanelRevlist panelRevlist = new PanelRevlist();
         private static PanelBranches panelBranches = new PanelBranches();
 
-        private static Dictionary<string, UserControl> panels_r = new Dictionary<string, UserControl>() {
+        private static Dictionary<string, UserControl> panels_r = new Dictionary<string, UserControl> {
             { "Repos", panelRepos },
             { "Commits", panelCommits },
             { "Revisions", panelRevlist },
@@ -40,10 +40,10 @@ namespace git4win
             InitializeComponent();
 
             // Restore the application's initial position and size
-            if (this.WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
-                this.Location = Properties.Settings.Default.FormMainLocation;
-                this.Size = Properties.Settings.Default.FormMainClientSize;
+                Location = Properties.Settings.Default.FormMainLocation;
+                Size = Properties.Settings.Default.FormMainClientSize;
             }
 
             // Initialize panels
@@ -52,9 +52,8 @@ namespace git4win
             panelView.Dock = DockStyle.Fill;
 
             // Right set of panes:
-            foreach (KeyValuePair<string, UserControl> uc in panels_r)
+            foreach (UserControl control in panels_r.Select(uc => uc.Value))
             {
-                UserControl control = uc.Value;
                 splitContainer2.Panel2.Controls.Add(control);
                 control.Dock = DockStyle.Fill;
             }
@@ -89,7 +88,7 @@ namespace git4win
         /// </summary>
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == ClassWin32.WM_SHOWME)
+            if (m.Msg == Win32.WmShowme)
                 ShowMe();
             base.WndProc(ref m);
         }
@@ -111,10 +110,10 @@ namespace git4win
         /// </summary>
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
-                Properties.Settings.Default.FormMainLocation = this.Location;
-                Properties.Settings.Default.FormMainClientSize = this.Size;
+                Properties.Settings.Default.FormMainLocation = Location;
+                Properties.Settings.Default.FormMainClientSize = Size;
             }
             App.Repos.Save();
         }
@@ -124,7 +123,7 @@ namespace git4win
         /// </summary>
         private void menuExit(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -148,7 +147,7 @@ namespace git4win
             int mode = Properties.Settings.Default.viewMode;
 
             // Set the correct bullet
-            List<ToolStripMenuItem> viewMenus = new List<ToolStripMenuItem>() {
+            List<ToolStripMenuItem> viewMenus = new List<ToolStripMenuItem> {
                 menuView0, menuView1, menuView2, menuView3, menuView4 };
             foreach (var m in viewMenus)
                 m.Checked = false;
@@ -190,9 +189,9 @@ namespace git4win
                 message = message.Substring(0, 160);
 
             // Prepend the current time, if that option is requested, in either 12 or 24-hr format
-            if (Properties.Settings.Default.logTime == true)
+            if (Properties.Settings.Default.logTime)
                 message = DateTime.Now.ToString
-                    ((Properties.Settings.Default.logTime24 == true) ? "HH:mm:ss" : "hh:mm:ss") + " "
+                    (Properties.Settings.Default.logTime24 ? "HH:mm:ss" : "hh:mm:ss") + " "
                     + message;
 
             listStatus.Items.Add(message);
@@ -204,8 +203,7 @@ namespace git4win
         /// </summary>
         private void SetInfo(string infoMessage)
         {
-            if (infoMessage != statusInfoLabel.Text)
-                statusInfoLabel.Text = infoMessage;
+            statusInfoLabel.Text = infoMessage;
         }
 
         /// <summary>
@@ -261,7 +259,7 @@ namespace git4win
         /// Event handler delegate and the actual event handler for switching
         /// the remote repo. Called when user selects one of the pre-built menu items
         /// </summary>
-        private event System.EventHandler remoteChangedEvent;
+        private event EventHandler remoteChangedEvent;
         private void remoteChanged(object sender, EventArgs e)
         {
             App.Repos.current.remotes.current = sender.ToString();
@@ -275,14 +273,6 @@ namespace git4win
         {
             FormOptions frmOptions = new FormOptions();
             frmOptions.ShowDialog();
-        }
-
-        /// <summary>
-        /// Change the view mode of the main left panel
-        /// </summary>
-        private void SetView_Click(object sender, EventArgs e)
-        {
-            panelView.viewSetByMenuItem(sender, e);
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace git4win.FormOptions_Panels
             comboApps.Text = Properties.Settings.Default.DoubleClickProgram;
 
             // Check the radio button with the currently stored action
-            Dictionary<string, RadioButton> rb = new Dictionary<string, RadioButton>() {
+            Dictionary<string, RadioButton> rb = new Dictionary<string, RadioButton> {
                 { "0", radioButton0 }, { "1", radioButton1 }, { "2", radioButton2 } };
 
             rb[option].Checked = true;
@@ -55,7 +55,7 @@ namespace git4win.FormOptions_Panels
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            if (rb.Checked == true)
+            if (rb.Checked)
             {
                 option = rb.Tag.ToString();
                 comboApps.Enabled = rb.Tag.ToString() == "2";

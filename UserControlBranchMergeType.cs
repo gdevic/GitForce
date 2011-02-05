@@ -14,8 +14,7 @@ namespace git4win
         /// <summary>
         /// Defines help text to print when a merge option is selected
         /// </summary>
-        private static Dictionary<string, string> help = new Dictionary<string, string>()
-        {
+        private static Dictionary<string, string> help = new Dictionary<string, string> {
             { "fastforward", "Help for fastforward" },
             { "commit", "Help for commit" },
             { "resolve", "Help for resolve" },
@@ -80,9 +79,7 @@ namespace git4win
         /// </summary>
         public string GetStyle()
         {
-            if (rb2.Checked == true)
-                return comboStrategy.Text;
-            return current;
+            return rb2.Checked ? comboStrategy.Text : current;
         }
 
         /// <summary>
@@ -90,7 +87,7 @@ namespace git4win
         /// </summary>
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if ((sender as RadioButton).Checked == true)
+            if ((sender as RadioButton).Checked)
             {
                 current = (sender as RadioButton).Tag.ToString();
                 if (current == "strategy")

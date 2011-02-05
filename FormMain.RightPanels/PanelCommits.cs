@@ -51,7 +51,7 @@ namespace git4win.FormMain_RightPanels
                 // List files that are updated in the index (code X is not ' ' or '?')
 
                 Status.SetListByCommand("status --porcelain -uno -z *");
-                Status.Filter(delegate(string s) { return s[0] == ' ' || s[0] == '?'; });
+                Status.Filter(s => s[0] == ' ' || s[0] == '?');
                 Status.Seal();
 
                 // Build a list view of these files
@@ -64,7 +64,7 @@ namespace git4win.FormMain_RightPanels
                 node.ImageIndex = (int)ClassStatus.Img.CHANGE_ALL;
 
                 // Assign the icons to the nodes of tree view
-                Status.viewAssignIcon(node, isIndex:true);
+                Status.viewAssignIcon(node, true);
 
                 // Always keep the root node expanded by default
                 node.Expand();
@@ -106,12 +106,13 @@ namespace git4win.FormMain_RightPanels
             // Move files into different buckets based on what function needs to be done on them
             // Likely buckets are 'M' for modified files or 'A' for added files
             Dictionary<char, List<string>> opclass = new Dictionary<char, List<string>>();
-            foreach (string s in files)
-                if (Status.isMarked(s))
-                    if (opclass.ContainsKey(Status.GetY(s)))
-                        opclass[Status.GetY(s)].Add("\"" + s + "\"");
-                    else
-                        opclass[Status.GetY(s)] = new List<string>() { "\"" + s + "\"" };
+            foreach (string s in files.Where(s => Status.isMarked(s)))
+            {
+                if (opclass.ContainsKey(Status.GetY(s)))
+                    opclass[Status.GetY(s)].Add("\"" + s + "\"");
+                else
+                    opclass[Status.GetY(s)] = new List<string> { "\"" + s + "\"" };
+            }
 
             // Perform the required operation on the files
             if (opclass.ContainsKey('M'))
@@ -143,9 +144,7 @@ namespace git4win.FormMain_RightPanels
         {
             if (e.Button == MouseButtons.Right)
             {
-                TreeNode sel = treeCommits.GetNodeAt(e.X, e.Y);
-                if (sel == null)
-                    sel = treeCommits.Nodes[0];
+                TreeNode sel = treeCommits.GetNodeAt(e.X, e.Y) ?? treeCommits.Nodes[0];
 
                 // Build the context menu to be shown
                 contextMenu.Items.Clear();
@@ -248,7 +247,7 @@ namespace git4win.FormMain_RightPanels
         {
             // If the right-click selected a changelist bundle, submit it
             // All the files that were selected should be checked in the list
-            ClassCommit c = null;
+            ClassCommit c;
             if ((sender as ToolStripMenuItem).Tag is ClassCommit)
                 c = (sender as ToolStripMenuItem).Tag as ClassCommit;
             else
@@ -256,10 +255,9 @@ namespace git4win.FormMain_RightPanels
                 // If the right-click selected files, gather all files selected
                 // into a pseudo-bundle to submit
                 c = new ClassCommit("ad-hoc");
-                List<string> files = new List<string>();
-                foreach (var n in treeCommits.SelectedNodes)
-                    if (Status.isMarked(n.Tag.ToString()))
-                        files.Add(n.Tag.ToString());
+                List<string> files = (from n in treeCommits.SelectedNodes 
+                                      where Status.isMarked(n.Tag.ToString()) 
+                                      select n.Tag.ToString()).ToList();
                 c.AddFiles(files);
             }
 
@@ -278,7 +276,7 @@ namespace git4win.FormMain_RightPanels
                     // Form the final command with the description file, optional amend and
                     // the final list of files which are then quoted
                     string cmd = "commit -F " + tempFile +
-                        (commitForm.GetCheckAmend()==true? " --amend -- " : " -- ") +
+                        (commitForm.GetCheckAmend()? " --amend -- " : " -- ") +
                         String.Join(" ", final.Select(s => "\"" + s + "\"").ToList());
 
                     App.Git.Run(cmd);
@@ -316,7 +314,7 @@ namespace git4win.FormMain_RightPanels
         {
             if ((sender as ToolStripMenuItem).Tag is string)
             {
-                string cmd = "difftool --cached -- \"" + (sender as ToolStripMenuItem).Tag.ToString() + "\"";
+                string cmd = "difftool --cached -- \"" + (sender as ToolStripMenuItem).Tag + "\"";
                 App.Git.Run(cmd);
                 App.Refresh();
             }
@@ -329,7 +327,7 @@ namespace git4win.FormMain_RightPanels
         {
             // If the right-click selected a changelist bundle, revert it
             // Use the class commit as a helper class to hold a set of files
-            ClassCommit c = null;
+            ClassCommit c;
             if ((sender as ToolStripMenuItem).Tag is ClassCommit)
             {
                 c = (sender as ToolStripMenuItem).Tag as ClassCommit;
@@ -339,10 +337,9 @@ namespace git4win.FormMain_RightPanels
                 // If the right-click selected files, gather all files selected
                 // into a pseudo-bundle to submit
                 c = new ClassCommit("ad-hoc");
-                List<string> files = new List<string>();
-                foreach (var n in treeCommits.SelectedNodes)
-                    if (Status.isMarked(n.Tag.ToString()))
-                        files.Add(n.Tag.ToString());
+                List<string> files = (from n in treeCommits.SelectedNodes 
+                                      where Status.isMarked(n.Tag.ToString()) 
+                                      select n.Tag.ToString()).ToList();
                 c.AddFiles(files);
             }
 
@@ -353,6 +350,8 @@ namespace git4win.FormMain_RightPanels
                 {
                     string cmd = "reset HEAD -- " +
                     String.Join(" ", c.files.Select(s => "\"" + s + "\"").ToList());
+                    App.Git.Run(cmd);
+                    App.Refresh();
                 }
             }
         }

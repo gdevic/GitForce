@@ -76,9 +76,8 @@ namespace git4win
                 activeName = diffs[0].name;
 
             TDiff active = diffs[0];
-            foreach (var d in diffs)
-                if (d.name == activeName)
-                    active = d;
+            foreach (var d in diffs.Where(d => d.name == activeName))
+                active = d;
 
             Properties.Settings.Default.DiffActiveName = active.name;
 
@@ -125,12 +124,11 @@ namespace git4win
         public static List<TDiff> FindKnownDiffProgs()
         {
             List<TDiff> diffs = new List<TDiff>();
-            List<TDiff> candidates = new List<TDiff>()
-            {
-                { new TDiff( "p4merge", "Perforce Merge", @"Perforce\P4Merge.exe", "%1 %2" )},
-                { new TDiff( "WinMerge", "WinMerge", @"WinMerge\WinMergeU.exe", "%1 %2" )},
-                { new TDiff( "BC3", "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" )},
-                { new TDiff( "KDiff3", "KDiff3", @"KDiff3\kdiff3.exe", "%1 %2" )}
+            List<TDiff> candidates = new List<TDiff> {
+                new TDiff( "p4merge", "Perforce Merge", @"Perforce\P4Merge.exe", "%1 %2" ), 
+                new TDiff( "WinMerge", "WinMerge", @"WinMerge\WinMergeU.exe", "%1 %2" ), 
+                new TDiff( "BC3", "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" ), 
+                new TDiff( "KDiff3", "KDiff3", @"KDiff3\kdiff3.exe", "%1 %2" )
             };
 
             // From the list of known tools ("candidates"), pick those which could be
@@ -156,10 +154,10 @@ namespace git4win
         {
             TDiff diff = new TDiff();
 
-            WriteResourceToFile(global::git4win.Properties.Resources.QtCore4, "QtCore4.dll");
-            WriteResourceToFile(global::git4win.Properties.Resources.QtGui4, "QtGui4.dll");
-            WriteResourceToFile(global::git4win.Properties.Resources.QtXml4, "QtXml4.dll");
-            diff.path = WriteResourceToFile(global::git4win.Properties.Resources.p4merge, "p4merge.exe");
+            WriteResourceToFile(Properties.Resources.QtCore4, "QtCore4.dll");
+            WriteResourceToFile(Properties.Resources.QtGui4, "QtGui4.dll");
+            WriteResourceToFile(Properties.Resources.QtXml4, "QtXml4.dll");
+            diff.path = WriteResourceToFile(Properties.Resources.p4merge, "p4merge.exe");
             diff.difftool = "InternalP4Merge";
             diff.args = "%1 %2";
             diff.name = "Internal P4Merge";
@@ -181,7 +179,10 @@ namespace git4win
                     sw.Write(buffer);
                 }
             }
-            catch { };
+            catch(Exception ex)
+            {
+                App.Execute.Add(ex.Message);
+            }
             return path;
         }
     }

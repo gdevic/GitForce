@@ -50,10 +50,10 @@ namespace git4win
                 {
                     // Ask user to show us where the git is installed
                     FormPathToGit formPath = new FormPathToGit();
-                    while (retValue = formPath.ShowDialog() == DialogResult.OK)
+                    while (retValue = (formPath.ShowDialog() == DialogResult.OK))
                     {
                         gitPath = formPath.path;
-                        if (Run("--version").Contains("git version") == true)
+                        if (Run("--version").Contains("git version"))
                         {
                             Properties.Settings.Default.gitPath = gitPath;
                             break;
@@ -114,6 +114,7 @@ namespace git4win
         /// <param name="cmd">Arguments to the git executable</param>
         /// <param name="repo">Optional repo class in which context to run the command</param>
         /// <param name="path">Optional path to execute git command</param>
+        /// <param name="password"></param>
         /// <returns>stdout result of running a command</returns>
         public string Run(string cmd, ClassRepo repo = null, string path = null, string password = "")
         {
@@ -122,11 +123,10 @@ namespace git4win
                 repo = App.Repos.current;
 
             string output = "";
-            string error = "";
             string root = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
             // Show the git command that the GUI is performing if that option is checked
-            if (Properties.Settings.Default.logCommands == true)
+            if (Properties.Settings.Default.logCommands)
                 App.Log("Executing git " + cmd);
             App.Execute.Add("git " + cmd);
 
@@ -144,10 +144,7 @@ namespace git4win
             try
             {
                 // If the path is given, it overrides any other derived path
-                if (path != null)
-                    Directory.SetCurrentDirectory(path);
-                else
-                    Directory.SetCurrentDirectory(root);
+                Directory.SetCurrentDirectory(path ?? root);
 
                 Process p = new Process();
                 p.StartInfo.FileName = gitPath;
@@ -163,7 +160,7 @@ namespace git4win
                 p.Start();
 
                 output = p.StandardOutput.ReadToEnd();
-                error = p.StandardError.ReadToEnd();
+                string error = p.StandardError.ReadToEnd();
 
                 p.WaitForExit();
 

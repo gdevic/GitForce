@@ -30,7 +30,7 @@ namespace git4win
 
         public bool DoMerge(string branch)
         {
-            bool ret = false;
+            const bool ret = false;
             if (!string.IsNullOrEmpty(branch))
             {
 

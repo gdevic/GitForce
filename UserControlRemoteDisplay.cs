@@ -58,7 +58,7 @@ namespace git4win
         /// <summary>
         /// Set all input fields to parameter values
         /// </summary>
-        /// <param name="repo">Values to set</param
+        /// <param name="repo">Values to set</param>
         public void Set(ClassRemotes.Remote repo)
         {
             textName.Text = repo.name;
@@ -119,13 +119,13 @@ namespace git4win
             btSsh.Enabled = false;
 
             // We may need to run this twice only if the host for push differs from the host for fetch
-            if (fetchUrl.ok == true)
+            if (fetchUrl.ok)
             {
                 App.Putty.ImportRemoteSshKey(fetchUrl);
                 MessageBox.Show("Public key from " + fetchUrl.host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            if (pushUrl.ok == true && pushUrl.host != fetchUrl.host)
+            if (pushUrl.ok && pushUrl.host != fetchUrl.host)
             {
                 App.Putty.ImportRemoteSshKey(pushUrl);
                 MessageBox.Show("Public key from " + pushUrl.host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
