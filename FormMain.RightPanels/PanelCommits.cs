@@ -88,9 +88,13 @@ namespace git4win.FormMain_RightPanels
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
 
-            // Each dropped file name needs to be compared against a set of git-permissible files for the current repo
+            // Since files that are dropeed might have originated from anywhere, 
+            // each file name needs to be compared against a set of git-permissible files for the current repo
+            Status = new ClassStatus(App.Repos.Current);
+            Status.SetListByCommand("status --porcelain -uall -z *");
+            Status.Seal();
 
             // Qualify files as those that are in the scope of the current repo
             // Move files into different buckets based on what function needs to be done on them
