@@ -16,21 +16,21 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Class containing sets of branches for the current repo
         /// </summary>
-        private ClassBranches branches = new ClassBranches();
+        private readonly ClassBranches _branches = new ClassBranches();
 
         public PanelBranches()
         {
             InitializeComponent();
 
-            App.Refresh += branchesRefresh;
+            App.Refresh += BranchesRefresh;
         }
 
         /// <summary>
         /// Refresh the tree view of branches
         /// </summary>
-        private void branchesRefresh()
+        private void BranchesRefresh()
         {
-            branches.Refresh();
+            _branches.Refresh();
 
             treeBranches.BeginUpdate();
             treeBranches.Nodes.Clear();
@@ -40,17 +40,17 @@ namespace git4win.FormMain_RightPanels
             TreeNode tnRemote = new TreeNode("Remote Branches");
 
             // Add all local branches to the tree
-            foreach (string s in branches.local)
+            foreach (string s in _branches.Local)
             {
                 TreeNode tn = new TreeNode(s, (int)BranchIcons.BranchIdle, (int)BranchIcons.BranchIdle);
                 tn.Tag = s;
-                if (s == branches.current)
+                if (s == _branches.Current)
                     tn.SelectedImageIndex = tn.ImageIndex = (int)BranchIcons.BranchSelected;
                 tnLocal.Nodes.Add(tn);
             }
 
             // Add all remote branches to the tree
-            foreach (string s in branches.remote)
+            foreach (string s in _branches.Remote)
             {
                 TreeNode tn = new TreeNode(s, (int)BranchIcons.BranchIdle, (int)BranchIcons.BranchIdle);
                 tn.Tag = s;
@@ -69,7 +69,7 @@ namespace git4win.FormMain_RightPanels
         /// </summary>
         public string GetCurrent() 
         {
-            return branches.current;
+            return _branches.Current;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace git4win.FormMain_RightPanels
         /// </summary>
         public void SetCurrent(string name)
         {
-            if (branches.SwitchTo(name))
+            if (_branches.SwitchTo(name))
                 App.Refresh();
         }
 
@@ -85,7 +85,7 @@ namespace git4win.FormMain_RightPanels
         /// Helper function that returns selected branch name in the tree view or null
         /// if no valid branch node was selected
         /// </summary>
-        private string getSelectedNode()
+        private string GetSelectedNode()
         {
             if (treeBranches.SelectedNode != null && treeBranches.SelectedNode.Tag != null)
                 return treeBranches.SelectedNode.Tag.ToString();
@@ -96,14 +96,14 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Right-mouse button opens a popup with the context menu
         /// </summary>
-        private void treeBranches_MouseUp(object sender, MouseEventArgs e)
+        private void TreeBranchesMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 // Build the context menu to be shown
                 treeBranches.SelectedNode = treeBranches.GetNodeAt(e.X, e.Y);
                 contextMenu.Items.Clear();
-                contextMenu.Items.AddRange(GetContextMenu(contextMenu, getSelectedNode()));
+                contextMenu.Items.AddRange(GetContextMenu(contextMenu, GetSelectedNode()));
             }
         }
 
@@ -112,7 +112,7 @@ namespace git4win.FormMain_RightPanels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, string selected)
         {
-            string sel = getSelectedNode();
+            string sel = GetSelectedNode();
 
             // Menus are set in this order:
             //  [0]  New...        -> always open a dialog
@@ -120,20 +120,20 @@ namespace git4win.FormMain_RightPanels
             //  [2]  Switch to     -> dialog or switch: local branches only, different from current
             //  [3]  Merge with    -> dialog or merge: branch different from current
 
-            ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, menuNewBranch_Click);
-            ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, menuDeleteBranch_Click);
+            ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, MenuNewBranchClick);
+            ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteBranchClick);
 
             ToolStripMenuItem mSwitchTo;
-            if (sel != branches.current && branches.local.IndexOf(sel) >= 0)
-                mSwitchTo = new ToolStripMenuItem("Switch to " + sel, null, treeBranches_DoubleClick);
+            if (sel != _branches.Current && _branches.Local.IndexOf(sel) >= 0)
+                mSwitchTo = new ToolStripMenuItem("Switch to " + sel, null, TreeBranchesDoubleClick);
             else
-                mSwitchTo = new ToolStripMenuItem("Switch to...", null, menuSwitch_Click);
+                mSwitchTo = new ToolStripMenuItem("Switch to...", null, MenuSwitchClick);
 
             ToolStripMenuItem mMergeWith;
-            if (sel != branches.current && (branches.local.IndexOf(sel) >= 0 || branches.remote.IndexOf(sel) >= 0))
-                mMergeWith = new ToolStripMenuItem("Merge with " + sel, null, menuMerge_Click);
+            if (sel != _branches.Current && (_branches.Local.IndexOf(sel) >= 0 || _branches.Remote.IndexOf(sel) >= 0))
+                mMergeWith = new ToolStripMenuItem("Merge with " + sel, null, MenuMergeClick);
             else
-                mMergeWith = new ToolStripMenuItem("Merge with...", null, menuMerge_Click);
+                mMergeWith = new ToolStripMenuItem("Merge with...", null, MenuMergeClick);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
                 mNew, mDelete, mSwitchTo, mMergeWith
@@ -142,7 +142,7 @@ namespace git4win.FormMain_RightPanels
             if (sel == null)
                 mDelete.Enabled = mSwitchTo.Enabled = mMergeWith.Enabled = false;
 
-            mNew.Enabled = App.Repos.current != null;
+            mNew.Enabled = App.Repos.Current != null;
 
             return menu;
         }
@@ -150,7 +150,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Create a new branch using a dialog to select the branch
         /// </summary>
-        private void menuNewBranch_Click(object sender, EventArgs e)
+        private static void MenuNewBranchClick(object sender, EventArgs e)
         {
             FormNewBranch newBranch = new FormNewBranch();
             if (newBranch.ShowDialog() == DialogResult.OK)
@@ -160,7 +160,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Delete a branch using a dialog to select the branch
         /// </summary>
-        private void menuDeleteBranch_Click(object sender, EventArgs e)
+        private static void MenuDeleteBranchClick(object sender, EventArgs e)
         {
             FormDeleteBranch delBranch = new FormDeleteBranch();
             if (delBranch.ShowDialog() == DialogResult.OK)
@@ -170,7 +170,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Switch to a branch using a dialog to select the branch
         /// </summary>
-        private void menuSwitch_Click(object sender, EventArgs e)
+        private static void MenuSwitchClick(object sender, EventArgs e)
         {
             FormSwitchToBranch switchBranch = new FormSwitchToBranch();
             if (switchBranch.ShowDialog() == DialogResult.OK)
@@ -181,14 +181,14 @@ namespace git4win.FormMain_RightPanels
         /// Double-clicking on a local branch name will switch to it
         /// This is also a handler to switch to a selected branch using context menu
         /// </summary>
-        private void treeBranches_DoubleClick(object sender, EventArgs e)
+        private void TreeBranchesDoubleClick(object sender, EventArgs e)
         {
-            SetCurrent(getSelectedNode());
+            SetCurrent(GetSelectedNode());
         }
 
-        private void menuMerge_Click(object sender, EventArgs e)
+        private void MenuMergeClick(object sender, EventArgs e)
         {
-            FormMergeBranch mergeBranch = new FormMergeBranch(branches);
+            FormMergeBranch mergeBranch = new FormMergeBranch(_branches);
             if (mergeBranch.ShowDialog() == DialogResult.OK)
                 App.Refresh();
         }

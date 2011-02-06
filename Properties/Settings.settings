@@ -47,9 +47,6 @@
     <Setting Name="commitsRetrieveAll" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="sortByExtension" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="leavePageant" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -69,7 +66,8 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DiffActiveName" Type="System.String" Scope="User">
-      <Value Profile="(Default)"> </Value>
+      <Value Profile="(Default)">
+                </Value>
     </Setting>
   </Settings>
 </SettingsFile>

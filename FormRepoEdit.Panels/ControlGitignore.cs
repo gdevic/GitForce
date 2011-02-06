@@ -15,7 +15,7 @@ namespace git4win.FormRepoEdit_Panels
         /// <summary>
         /// File containing the excludes patterns
         /// </summary>
-        private string excludesFile = null;
+        private string _excludesFile;
 
         public ControlGitignore()
         {
@@ -29,8 +29,8 @@ namespace git4win.FormRepoEdit_Panels
         /// <param name="options">All git global settings</param>
         public void Init(ClassRepo repo, string[] options)
         {
-            excludesFile = Path.Combine(repo.root, ".git", "info", "exclude");
-            userControlEditGitignore.LoadGitIgnore(excludesFile);
+            _excludesFile = Path.Combine(repo.Root, ".git", "info", "exclude");
+            userControlEditGitignore.LoadGitIgnore(_excludesFile);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace git4win.FormRepoEdit_Panels
         /// </summary>
         public void ApplyChanges(ClassRepo repo)
         {
-            userControlEditGitignore.SaveGitIgnore(excludesFile);
+            userControlEditGitignore.SaveGitIgnore(_excludesFile);
         }
     }
 }

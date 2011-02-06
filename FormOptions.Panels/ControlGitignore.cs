@@ -16,7 +16,7 @@ namespace git4win.FormOptions_Panels
         /// <summary>
         /// File containing user gitignore settings
         /// </summary>
-        private string excludesFile = null;
+        private string _excludesFile;
 
         public ControlGitignore()
         {
@@ -30,16 +30,16 @@ namespace git4win.FormOptions_Panels
         public void Init(string[] options)
         {
             // Get a path to user excludes file, or create that file if it is not defined
-            excludesFile = options.FirstOrDefault(s => s.Contains("core.excludesfile"));
-            excludesFile = excludesFile == null ? 
+            _excludesFile = options.FirstOrDefault(s => s.Contains("core.excludesfile"));
+            _excludesFile = _excludesFile == null ? 
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".gitexcludesfile")
-                : excludesFile.Split('\n').Last();
+                : _excludesFile.Split('\n').Last();
 
             // If the user file does not exists, create it
-            if (!File.Exists(excludesFile))
-                File.CreateText(excludesFile).Close();
+            if (!File.Exists(_excludesFile))
+                File.CreateText(_excludesFile).Close();
 
-            userControlEditGitignore.LoadGitIgnore(excludesFile);
+            userControlEditGitignore.LoadGitIgnore(_excludesFile);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace git4win.FormOptions_Panels
         /// </summary>
         public void ApplyChanges()
         {
-            userControlEditGitignore.SaveGitIgnore(excludesFile);
-            ClassConfig.Set("core.excludesfile", excludesFile);
+            userControlEditGitignore.SaveGitIgnore(_excludesFile);
+            ClassConfig.Set("core.excludesfile", _excludesFile);
         }
     }
 }

@@ -14,14 +14,9 @@ namespace git4win.FormMain_RightPanels
     public partial class PanelCommits : UserControl
     {
         /// <summary>
-        /// Status class containing the git status of the files
+        /// Status class containing the git status of current repo files
         /// </summary>
-        private ClassStatus Status = null;
-
-        /// <summary>
-        /// Current repo, another instance
-        /// </summary>
-        ClassRepo repo = null;
+        private ClassStatus Status;
 
         /// <summary>
         /// Class constructor
@@ -30,23 +25,22 @@ namespace git4win.FormMain_RightPanels
         {
             InitializeComponent();
 
-            treeCommits.ImageList = ClassStatus.GetImageList();
+            treeCommits.ImageList = ClassView.GetImageList();
 
-            App.Refresh += commitsRefresh;
+            App.Refresh += CommitsRefresh;
         }
 
         /// <summary>
         /// Panel commit refresh function
         /// </summary>
-        private void commitsRefresh()
+        private void CommitsRefresh()
         {
             treeCommits.BeginUpdate();
             treeCommits.Nodes.Clear();
 
-            if (App.Repos.current != null)
+            if (App.Repos.Current != null)
             {
-                repo = App.Repos.current;
-                Status = new ClassStatus(repo);
+                Status = new ClassStatus(App.Repos.Current);
 
                 // List files that are updated in the index (code X is not ' ' or '?')
 
@@ -55,16 +49,16 @@ namespace git4win.FormMain_RightPanels
                 Status.Seal();
 
                 // Build a list view of these files
-                TreeNode node = Status.BuildCommitsView();
+                TreeNode node = ClassView.BuildCommitsView(Status.Repo, Status.GetFileList());
 
                 // Add the resulting list to the tree view control
                 treeCommits.Nodes.Add(node);
 
                 // Set the first node (root) image according to the view mode
-                node.ImageIndex = (int)ClassStatus.Img.CHANGE_ALL;
+                node.ImageIndex = (int)ClassView.Img.ChangeAll;
 
                 // Assign the icons to the nodes of tree view
-                Status.viewAssignIcon(node, true);
+                ClassView.ViewAssignIcon(Status, node, true);
 
                 // Always keep the root node expanded by default
                 node.Expand();
@@ -75,15 +69,15 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Shortcut function to the panel refresh
         /// </summary>
-        private void menuRefresh_Click(object sender, EventArgs e) { commitsRefresh(); }
+        private void MenuRefreshClick(object sender, EventArgs e) { CommitsRefresh(); }
 
         /// <summary>
         /// User dragged something into the view
         /// </summary>
-        private void treeCommits_DragEnter(object sender, DragEventArgs e)
+        private static void TreeCommitsDragEnter(object sender, DragEventArgs e)
         {
             // Allow drop only when there is a valid repo available
-            if (App.Repos.current != null)
+            if (App.Repos.Current != null)
                 e.Effect = DragDropEffects.All;
         }
 
@@ -91,38 +85,34 @@ namespace git4win.FormMain_RightPanels
         /// Handler for the drop portion of drag and drop. User dropped one or more files to the commit pane.
         /// The files may originate from the left pane, or from an external application like explorer.
         /// </summary>
-        private void treeCommits_DragDrop(object sender, DragEventArgs e)
+        private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            // Since files that are dropeed might have originated from anywhere, 
-            // each file name needs to be compared against a set of git-permissible files for the current repo
-            Status = new ClassStatus(App.Repos.current);
-            Status.SetListByCommand("status --porcelain -uall -z *");
-            Status.Seal();
+            // Each dropped file name needs to be compared against a set of git-permissible files for the current repo
 
             // Qualify files as those that are in the scope of the current repo
             // Move files into different buckets based on what function needs to be done on them
             // Likely buckets are 'M' for modified files or 'A' for added files
             Dictionary<char, List<string>> opclass = new Dictionary<char, List<string>>();
-            foreach (string s in files.Where(s => Status.isMarked(s)))
+            foreach (string s in files.Where(s => Status.IsMarked(s)))
             {
-                if (opclass.ContainsKey(Status.GetY(s)))
-                    opclass[Status.GetY(s)].Add("\"" + s + "\"");
+                if (opclass.ContainsKey(Status.GetYcode(s)))
+                    opclass[Status.GetYcode(s)].Add("\"" + s + "\"");
                 else
-                    opclass[Status.GetY(s)] = new List<string> { "\"" + s + "\"" };
+                    opclass[Status.GetYcode(s)] = new List<string> { "\"" + s + "\"" };
             }
 
             // Perform the required operation on the files
             if (opclass.ContainsKey('M'))
-                App.Git.Run("add -- " + string.Join(" ", opclass['M']));
+                Status.Repo.Run("add -- " + string.Join(" ", opclass['M']));
 
             if (opclass.ContainsKey('?'))
-                App.Git.Run("add -- " + string.Join(" ", opclass['?']));
+                Status.Repo.Run("add -- " + string.Join(" ", opclass['?']));
 
             if (opclass.ContainsKey('D'))
-                App.Git.Run("rm -- " + string.Join(" ", opclass['D']));
+                Status.Repo.Run("rm -- " + string.Join(" ", opclass['D']));
 
             App.Refresh();
         }
@@ -131,7 +121,7 @@ namespace git4win.FormMain_RightPanels
         /// As the mouse moves over nodes, show the human readable description of
         /// files that the mouse points to
         /// </summary>
-        private void treeCommits_MouseMove(object sender, MouseEventArgs e)
+        private void TreeCommitsMouseMove(object sender, MouseEventArgs e)
         {
             if (Status != null)
                 Status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
@@ -140,7 +130,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Right-mouse button opens a popup with the context menu
         /// </summary>
-        private void treeCommits_MouseUp(object sender, MouseEventArgs e)
+        private void TreeCommitsMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -151,7 +141,7 @@ namespace git4win.FormMain_RightPanels
                 contextMenu.Items.AddRange(GetContextMenu(contextMenu, sel.Tag));
 
                 // Add the Refresh (F5) menu item
-                ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, menuRefresh_Click, Keys.F5);
+                ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
                 contextMenu.Items.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
             }
         }
@@ -162,22 +152,22 @@ namespace git4win.FormMain_RightPanels
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, object tag)
         {
             // Menus are set in this order:
-            //  [0]  Diff File Against Repo...
+            //  [0]  Diff vs Repo HEAD
             //  [0]  Submit...           -> when there are files in the selected bundle
             //  [1]  New Commit...       -> always open a dialog
             //  [2]  Edit Commit...      -> enabled if the tag is ClassCommit                 and not Default
             //  [3]  Remove Empty Commit -> enabled if the tag is ClassCommit and it is empty and not Default
 
-            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff File Against Repo...", null, menuDiff_Click);
+            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick);
             mDiff.Tag = tag;
-            ToolStripMenuItem mSub = new ToolStripMenuItem("Submit...", null, menuSubmit_Click, Keys.Control | Keys.S);
+            ToolStripMenuItem mSub = new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S);
             mSub.Tag = tag;
-            ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, menuNewCommit_Click);
-            ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Spec...", null, menuEditCommit_Click);
+            ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, MenuNewCommitClick);
+            ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick);
             mEdit.Tag = tag;        // Store the ClassCommit in the menu tag
-            ToolStripMenuItem mDel  = new ToolStripMenuItem("Delete Empty Changelist", null, menuDeleteEmpty_Click);
+            ToolStripMenuItem mDel  = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick);
             mDel.Tag = tag;         // Store the ClassCommit in the menu tag
-            ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, menuRevert_Click);
+            ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, MenuRevertClick);
             mRevert.Tag = tag;
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
@@ -191,13 +181,13 @@ namespace git4win.FormMain_RightPanels
             if (treeCommits.Nodes.Count==0 || tag == treeCommits.Nodes[0].Tag)
                 mSub.Enabled = false;
 
-            if (App.Repos.current == null)
+            if (App.Repos.Current == null)
                 mNew.Enabled = false;
 
-            if (!(tag is ClassCommit && !(tag as ClassCommit).isDefault))
+            if (!(tag is ClassCommit && !(tag as ClassCommit).IsDefault))
                 mEdit.Enabled = false;
 
-            if (!(tag is ClassCommit && (tag as ClassCommit).files.Count == 0 && !(tag as ClassCommit).isDefault))
+            if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
                 mDel.Enabled = false;
 
             return menu;
@@ -206,44 +196,44 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// New commit bundle needed
         /// </summary>
-        private void menuNewCommit_Click(object sender, EventArgs e)
+        private void MenuNewCommitClick(object sender, EventArgs e)
         {
             FormCommit commitForm = new FormCommit(false);
-            commitForm.SetFiles(repo.commits.bundle[0]);
+            commitForm.SetFiles(Status.Repo.Commits.Bundle[0]);
             if (commitForm.ShowDialog() == DialogResult.OK)
             {
                 // Create a new commit bundle and move selected files to it
-                repo.commits.NewBundle(commitForm.GetDescription(), commitForm.GetFiles());
-                commitsRefresh();
+                Status.Repo.Commits.NewBundle(commitForm.GetDescription(), commitForm.GetFiles());
+                CommitsRefresh();
             }
         }
 
         /// <summary>
         /// Edit selected commit bundle
         /// </summary>
-        private void menuEditCommit_Click(object sender, EventArgs e)
+        private void MenuEditCommitClick(object sender, EventArgs e)
         {
             // Recover the commit class bundle that was selected
             ClassCommit c = (sender as ToolStripMenuItem).Tag as ClassCommit;
 
-            FormCommit commitForm = new FormCommit(false, c.description);
+            FormCommit commitForm = new FormCommit(false, c.Description);
             commitForm.SetFiles(c);
             if (commitForm.ShowDialog() == DialogResult.OK)
             {
                 // Update the description text and the list of files
-                c.description = commitForm.GetDescription();
+                c.Description = commitForm.GetDescription();
 
                 // Renew only files that were left checked, the rest add back to the Default commit
                 List<string> removedFiles = c.Renew(commitForm.GetFiles());
-                repo.commits.bundle[0].AddFiles(removedFiles);
-                commitsRefresh();
+                Status.Repo.Commits.Bundle[0].AddFiles(removedFiles);
+                CommitsRefresh();
             }
         }
 
         /// <summary>
         /// Submit selected files within a changelist
         /// </summary>
-        private void menuSubmit_Click(object sender, EventArgs e)
+        private void MenuSubmitClick(object sender, EventArgs e)
         {
             // If the right-click selected a changelist bundle, submit it
             // All the files that were selected should be checked in the list
@@ -256,12 +246,12 @@ namespace git4win.FormMain_RightPanels
                 // into a pseudo-bundle to submit
                 c = new ClassCommit("ad-hoc");
                 List<string> files = (from n in treeCommits.SelectedNodes 
-                                      where Status.isMarked(n.Tag.ToString()) 
+                                      where Status.IsMarked(n.Tag.ToString()) 
                                       select n.Tag.ToString()).ToList();
                 c.AddFiles(files);
             }
 
-            FormCommit commitForm = new FormCommit(true, c.description);
+            FormCommit commitForm = new FormCommit(true, c.Description);
             commitForm.SetFiles(c);
             if (commitForm.ShowDialog() == DialogResult.OK)
             {
@@ -279,16 +269,16 @@ namespace git4win.FormMain_RightPanels
                         (commitForm.GetCheckAmend()? " --amend -- " : " -- ") +
                         String.Join(" ", final.Select(s => "\"" + s + "\"").ToList());
 
-                    App.Git.Run(cmd);
+                    Status.Repo.Run(cmd);
 
                     File.Delete(tempFile);
 
                     // If the current commit bundle is not default, remove it. Refresh which follows
                     // will reset all files which were _not_ submitted as part of this change to be
                     // moved to the default changelist.
-                    if (!c.isDefault)
+                    if (!c.IsDefault)
                     {
-                        App.Repos.current.commits.bundle.Remove(c);
+                        App.Repos.Current.Commits.Bundle.Remove(c);
                     }
                 }
                 App.Refresh();
@@ -299,23 +289,25 @@ namespace git4win.FormMain_RightPanels
         /// Delete empty commit bundle.
         /// It is already verified that the commit bundle (sent in the tag) is empty.
         /// </summary>
-        private void menuDeleteEmpty_Click(object sender, EventArgs e)
+        private void MenuDeleteEmptyClick(object sender, EventArgs e)
         {
             // Recover the commit class bundle that was selected
             ClassCommit c = (sender as ToolStripMenuItem).Tag as ClassCommit;
-            repo.commits.bundle.Remove(c);
-            commitsRefresh();
+            Status.Repo.Commits.Bundle.Remove(c);
+            CommitsRefresh();
         }
 
         /// <summary>
         /// Diff the selected file against the repo
         /// </summary>
-        private void menuDiff_Click(object sender, EventArgs e)
+        private void MenuDiffClick(object sender, EventArgs e)
         {
             if ((sender as ToolStripMenuItem).Tag is string)
             {
-                string cmd = "difftool --cached -- \"" + (sender as ToolStripMenuItem).Tag + "\"";
-                App.Git.Run(cmd);
+                string file = (sender as ToolStripMenuItem).Tag as string;
+                file = file.Substring(Status.Repo.Root.Length + 1);
+                string cmd = "difftool --cached -- \"" + file + "\"";
+                Status.Repo.Run(cmd);
                 App.Refresh();
             }
         }
@@ -323,7 +315,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Revert selected files or a submit bundle
         /// </summary>
-        private void menuRevert_Click(object sender, EventArgs e)
+        private void MenuRevertClick(object sender, EventArgs e)
         {
             // If the right-click selected a changelist bundle, revert it
             // Use the class commit as a helper class to hold a set of files
@@ -338,19 +330,19 @@ namespace git4win.FormMain_RightPanels
                 // into a pseudo-bundle to submit
                 c = new ClassCommit("ad-hoc");
                 List<string> files = (from n in treeCommits.SelectedNodes 
-                                      where Status.isMarked(n.Tag.ToString()) 
+                                      where Status.IsMarked(n.Tag.ToString()) 
                                       select n.Tag.ToString()).ToList();
                 c.AddFiles(files);
             }
 
             // Get the files checked for commit
-            if (c.files.Count > 0)
+            if (c.Files.Count > 0)
             {
                 if (MessageBox.Show("Revert will unstage all the selected files and will lose the changes.\rProceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
                 {
                     string cmd = "reset HEAD -- " +
-                    String.Join(" ", c.files.Select(s => "\"" + s + "\"").ToList());
-                    App.Git.Run(cmd);
+                    String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToList());
+                    Status.Repo.Run(cmd);
                     App.Refresh();
                 }
             }

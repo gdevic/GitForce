@@ -52,7 +52,7 @@
             this.rbRetrieveLast.TabStop = true;
             this.rbRetrieveLast.Text = "Retrieve last:";
             this.rbRetrieveLast.UseVisualStyleBackColor = true;
-            this.rbRetrieveLast.CheckedChanged += new System.EventHandler(this.rbRetrieveAll_CheckedChanged);
+            this.rbRetrieveLast.CheckedChanged += new System.EventHandler(this.RbRetrieveAllCheckedChanged);
             // 
             // rbRetrieveAll
             // 
@@ -64,7 +64,7 @@
             this.rbRetrieveAll.TabStop = true;
             this.rbRetrieveAll.Text = "Retrieve all";
             this.rbRetrieveAll.UseVisualStyleBackColor = true;
-            this.rbRetrieveAll.CheckedChanged += new System.EventHandler(this.rbRetrieveAll_CheckedChanged);
+            this.rbRetrieveAll.CheckedChanged += new System.EventHandler(this.RbRetrieveAllCheckedChanged);
             // 
             // label1
             // 

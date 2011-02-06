@@ -15,22 +15,17 @@ namespace git4win.FormMain_LeftPanels
     public partial class PanelView : UserControl
     {
         /// <summary>
-        /// Current format can be tree view or list view
+        /// Status class containing the git status of current repo files
         /// </summary>
-        private bool isTreeView = true;
-
-        /// <summary>
-        /// Status class containing the git status of files
-        /// </summary>
-        private ClassStatus Status = null;
+        private ClassStatus Status;
 
         /// <summary>
         /// Structure holding the tree selection items information
         /// </summary>
-        private struct TSelection
+        private struct Selection
         {
-            public string selPath;
-            public string[] selFiles;
+            public string SelPath;
+            public string[] SelFiles;
             public string tag;
 
             /// <summary>
@@ -39,10 +34,10 @@ namespace git4win.FormMain_LeftPanels
             /// Quotes are added around each file path name,
             /// All files are joined into one resulting string
             /// </summary>
-            public string selFilesGitFormat()
+            public string SelFilesGitFormat()
             {
-                return String.Join(" ", selFiles.
-                    Select(s => "\"" + s.Substring(App.Repos.current.root.Length + 1) + "\"").ToList());
+                return String.Join(" ", SelFiles.
+                    Select(s => "\"" + s.Substring(App.Repos.Current.Root.Length + 1) + "\"").ToList());
             }
 
             /// <summary>
@@ -51,9 +46,9 @@ namespace git4win.FormMain_LeftPanels
             /// Quotes are added around the file path name
             /// </summary>
             /// <returns></returns>
-            public string selPathGitFormat()
+            public string SelPathGitFormat()
             {
-                return "\"" + selPath.Substring(App.Repos.current.root.Length + 1) + "\"";
+                return "\"" + SelPath.Substring(App.Repos.Current.Root.Length + 1) + "\"";
             }
         };
 
@@ -61,9 +56,9 @@ namespace git4win.FormMain_LeftPanels
         {
             InitializeComponent();
 
-            treeView.ImageList = ClassStatus.GetImageList();
+            treeView.ImageList = ClassView.GetImageList();
 
-            App.Refresh += viewRefresh;
+            App.Refresh += ViewRefresh;
 
             // Initialize the current view
             // Current view mode is persistent and stored in in Properties.Settings.Default.viewMode (int)
@@ -74,7 +69,7 @@ namespace git4win.FormMain_LeftPanels
         /// Set the view mode by sending a menu item whose Tag contains the mode number.
         /// This function is called from a menu handlers that select view mode.
         /// </summary>
-        public void viewSetByMenuItem(object sender, EventArgs e)
+        public void ViewSetByMenuItem(object sender, EventArgs e)
         {
             SetView(int.Parse((sender as ToolStripMenuItem).Tag.ToString()));
         }
@@ -92,32 +87,37 @@ namespace git4win.FormMain_LeftPanels
             viewMenus[mode].Checked = true;
 
             Properties.Settings.Default.viewMode = mode;
-            viewRefresh();
+            ViewRefresh();
         }
 
         /// <summary>
         /// Panel view class refresh function
         /// </summary>
-        public void viewRefresh()
+        public void ViewRefresh()
         {
             int mode = Properties.Settings.Default.viewMode;
 
             // Define root initial icons for 5 viewing modes
-            int[] icons = { (int)ClassStatus.Img.FOLDER_OPENED, 
-                            (int)ClassStatus.Img.FOLDER_OPENED, 
-                            (int)ClassStatus.Img.DATABASE_OPENED,
-                            (int)ClassStatus.Img.FOLDER_OPENED,
-                            (int)ClassStatus.Img.FOLDER_OPENED };
+            int[] icons = { (int)ClassView.Img.FolderOpened, 
+                            (int)ClassView.Img.FolderOpened, 
+                            (int)ClassView.Img.DatabaseOpened,
+                            (int)ClassView.Img.FolderOpened,
+                            (int)ClassView.Img.FolderOpened };
 
             // Set the view mode text (picked up from the indexed menu combo box)
             viewLabel.Text = dropViewMode.DropDownItems[mode].Text;
 
+            menuSortFilesByExtension.Enabled = btListView.Enabled = App.Repos.Current != null;
+
             treeView.BeginUpdate();
             treeView.Nodes.Clear();
 
-            if (App.Repos.current != null)
+            if (App.Repos.Current != null)
             {
-                Status = new ClassStatus(App.Repos.current);
+                Status = new ClassStatus(App.Repos.Current);
+
+                btListView.Checked = !Status.Repo.IsTreeView;
+                menuSortFilesByExtension.Checked = Status.Repo.SortBy == GitDirectoryInfo.SortBy.Extension;
 
                 switch (mode)
                 {
@@ -137,7 +137,7 @@ namespace git4win.FormMain_LeftPanels
                     case 3:     // Local file view: use local directory list
                         Status.SetListByCommand("status --porcelain -uall -z *");
                         Status.Seal();
-                        Status.LoadLocalFiles();
+                        Status.SetListByList(GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root));
                         Status.Seal();
                         break;
                     case 4:     // Local files not in repo: untracked only
@@ -147,14 +147,17 @@ namespace git4win.FormMain_LeftPanels
                         break;
                 }
 
-                // Set the file sorting order
-                if (Properties.Settings.Default.sortByExtension)
-                    Status.sortBy = GitDirectoryInfo.SortBy.Extension;
-                else
-                    Status.sortBy = GitDirectoryInfo.SortBy.Name;
+                // Sort the files in the Status list by the repo's sorting rule
+                Status.Sort();
 
                 // Build the tree view (or a list view)
-                TreeNode node = Status.BuildView(isTreeView);
+                TreeNode node = new TreeNode(App.Repos.Current.Root);
+                node.Tag = App.Repos.Current.Root + @"\";
+
+                if (Status.Repo.IsTreeView)
+                    ClassView.BuildTreeRecurse(node, Status.GetFileList(), Status.Repo.SortBy);
+                else
+                    ClassView.BuildFileList(node, App.Repos.Current.Root, Status.GetFileList());
 
                 // Add the resulting tree to the tree view control
                 treeView.Nodes.Add(node);
@@ -163,13 +166,13 @@ namespace git4win.FormMain_LeftPanels
                 node.ImageIndex = icons[mode];
 
                 // Assign the icons to the nodes of tree view
-                Status.viewAssignIcon(node, false);
+                ClassView.ViewAssignIcon(Status, node, false);
 
                 // Always keep the root node expanded by default
                 node.Expand();
 
                 // Finally, expand the rest of the tree to its previous expand state
-                viewExpand(node);
+                ViewExpand(node);
 
             }
             treeView.EndUpdate();
@@ -178,52 +181,52 @@ namespace git4win.FormMain_LeftPanels
         /// <summary>
         /// Refresh the tree view pane
         /// </summary>
-        private void menuRefresh(object sender, EventArgs e)
+        private void MenuRefresh(object sender, EventArgs e)
         {
-            viewRefresh();
+            ViewRefresh();
         }
 
         /// <summary>
         /// Traverse tree and expand those nodes which are marked as expanded
         /// </summary>
-        private void viewExpand(TreeNode rootNode)
+        private static void ViewExpand(TreeNode rootNode)
         {
             TreeNodeCollection nodes = rootNode.Nodes;
             foreach (TreeNode tn in nodes)
             {
-                if( App.Repos.current.isExpanded(tn.Tag.ToString()))
+                if( App.Repos.Current.IsExpanded(tn.Tag.ToString()))
                 {
                     tn.Expand();
                     tn.ImageIndex |= 1;
                 }
-                viewExpand(tn);
+                ViewExpand(tn);
             }
         }
 
         /// <summary>
         /// Callback called when user clicks on a node to expand it
         /// </summary>
-        private void treeView_AfterExpand(object sender, TreeViewEventArgs e)
+        private static void TreeViewAfterExpand(object sender, TreeViewEventArgs e)
         {
             TreeNode tn = e.Node;
-            App.Repos.current.ExpansionSet(tn.Tag.ToString());
+            App.Repos.Current.ExpansionSet(tn.Tag.ToString());
             tn.ImageIndex |= 1;
         }
 
         /// <summary>
         /// Callback called when user clicks on a node to collapse it
         /// </summary>
-        private void treeView_AfterCollapse(object sender, TreeViewEventArgs e)
+        private void TreeViewAfterCollapse(object sender, TreeViewEventArgs e)
         {
             TreeNode tn = e.Node;
             // If the user closed the root node, collapse everything
             if (tn == treeView.Nodes[0])
             {
-                App.Repos.current.ExpansionReset(null);
+                App.Repos.Current.ExpansionReset(null);
                 treeView.CollapseAll();
             }
             else
-                App.Repos.current.ExpansionReset(tn.Tag.ToString());
+                App.Repos.Current.ExpansionReset(tn.Tag.ToString());
             tn.ImageIndex &= ~1;
         }
 
@@ -233,7 +236,7 @@ namespace git4win.FormMain_LeftPanels
         /// using a default Explorer file association ("1"), or open a file using a
         /// specified application ("2")
         /// </summary>
-        private void treeView_DoubleClick(object sender, EventArgs e)
+        private void TreeViewDoubleClick(object sender, EventArgs e)
         {
             TreeNode sel = treeView.SelectedNode;
             if (sel != null && !sel.Tag.ToString().EndsWith(@"\"))
@@ -246,7 +249,7 @@ namespace git4win.FormMain_LeftPanels
                     Process.Start(sel.Tag.ToString());
                 if (option == "2")
                     Process.Start(program, sel.Tag.ToString());
-                viewRefresh();
+                ViewRefresh();
             }
         }
 
@@ -254,13 +257,13 @@ namespace git4win.FormMain_LeftPanels
         /// Drag and drop handler. User selected one or more files and started to drag them (away).
         /// Send a set of files through their full path name.
         /// </summary>
-        private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
+        private void TreeViewItemDrag(object sender, ItemDragEventArgs e)
         {
             string[] files = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
             DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Move);
         }
 
-        private void treeView_DragEnter(object sender, DragEventArgs e)
+        private static void TreeViewDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
@@ -269,29 +272,33 @@ namespace git4win.FormMain_LeftPanels
         /// As the mouse moves over nodes, show the human readable description of
         /// files that the mouse points to
         /// </summary>
-        private void treeView_MouseMove(object sender, MouseEventArgs e)
+        private void TreeViewMouseMove(object sender, MouseEventArgs e)
         {
             if (Status != null)
                 Status.ShowTreeInfo(treeView.GetNodeAt(e.X, e.Y));
         }
 
         /// <summary>
-        /// Toggle between list view and tree view
+        /// Toggle between list view and tree view.
+        /// This button is disabled if there is no repo to view (Status is null)
         /// </summary>
-        private void btListView_Click(object sender, EventArgs e)
+        private void BtListViewClick(object sender, EventArgs e)
         {
-            btListView.Checked = isTreeView;
-            isTreeView = !isTreeView;
-            viewRefresh();
+            btListView.Checked = Status.Repo.IsTreeView;
+            Status.Repo.IsTreeView = !Status.Repo.IsTreeView;
+            ViewRefresh();
         }
 
         /// <summary>
         /// Track the checked setting and refresh the local view when changed
+        /// This button is disabled if there is no repo to view (Status is null)
         /// </summary>
-        private void menuSortFilesByExtension_Click(object sender, EventArgs e)
+        private void MenuSortFilesByExtensionClick(object sender, EventArgs e)
         {
-            Properties.Settings.Default.sortByExtension = menuSortFilesByExtension.Checked;
-            viewRefresh();
+            Status.Repo.SortBy = menuSortFilesByExtension.Checked
+                                     ? GitDirectoryInfo.SortBy.Extension
+                                     : GitDirectoryInfo.SortBy.Name;
+            ViewRefresh();
         }
 
         /// <summary>
@@ -307,7 +314,7 @@ namespace git4win.FormMain_LeftPanels
         /// <summary>
         /// Right-mouse button opens a popup with the context menu
         /// </summary>
-        private void treeView_MouseUp(object sender, MouseEventArgs e)
+        private void TreeViewMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -322,7 +329,7 @@ namespace git4win.FormMain_LeftPanels
         /// <summary>
         /// Helper function to create a menu item
         /// </summary>
-        private ToolStripMenuItem CreateMenu(string name, EventHandler onClick, TSelection sel, string tag="")
+        private static ToolStripMenuItem CreateMenu(string name, EventHandler onClick, Selection sel, string tag="")
         {
             ToolStripMenuItem menu = new ToolStripMenuItem(name, null, onClick);
             sel.tag = tag;
@@ -336,30 +343,30 @@ namespace git4win.FormMain_LeftPanels
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, string path)
         {
             // If there is no current repo, nothing to build
-            if (App.Repos.current == null)
+            if (App.Repos.Current == null)
                 return new ToolStripItemCollection(owner, new ToolStripItem[] {} );
 
-            TSelection sel = new TSelection();
-            sel.selFiles = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
+            Selection sel = new Selection();
+            sel.SelFiles = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
 
             // Empty path is only sent from the main menu (not the context right-click handler)
             // in which case consider selected file first file in the selected list
             if (string.IsNullOrEmpty(path))
-                sel.selPath = sel.selFiles.Count() > 0? 
-                    sel.selPath = sel.selFiles[0] :
-                    App.Repos.current.root;
+                sel.SelPath = sel.SelFiles.Count() > 0? 
+                    sel.SelPath = sel.SelFiles[0] :
+                    App.Repos.Current.Root;
             else
-                sel.selPath = path;
+                sel.SelPath = path;
 
-            App.Execute.Add(sel.selPath + Environment.NewLine);
+            App.Execute.Add(sel.SelPath + Environment.NewLine);
 
-            ToolStripMenuItem mUpdate = CreateMenu("Update Changelist", menuViewUpdateChangelist_Click, sel);
-            ToolStripMenuItem mRevert = CreateMenu("Revert", menuViewRevert_Click, sel);
+            ToolStripMenuItem mUpdate = CreateMenu("Update Changelist", MenuViewUpdateChangelistClick, sel);
+            ToolStripMenuItem mRevert = CreateMenu("Revert", MenuViewRevertClick, sel);
 
 
             // Build the "Diff vs" submenu
-            ToolStripMenuItem mDiffIndex = CreateMenu("Index", menuViewDiff_Click, sel);
-            ToolStripMenuItem mDiffHead = CreateMenu("Repository HEAD", menuViewDiff_Click, sel, "HEAD");
+            ToolStripMenuItem mDiffIndex = CreateMenu("Index", MenuViewDiffClick, sel);
+            ToolStripMenuItem mDiffHead = CreateMenu("Repository HEAD", MenuViewDiffClick, sel, "HEAD");
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs");
             mDiff.DropDownItems.Add(mDiffIndex);
             mDiff.DropDownItems.Add(mDiffHead);
@@ -367,15 +374,15 @@ namespace git4win.FormMain_LeftPanels
             // Build the "Edit Using" submenus
             // The default option is to open the file using the OS-associated editor,
             // after which all the user-specified programs are listed
-            ToolStripMenuItem mEditAssoc = CreateMenu("Associated Editor", menuViewEdit_Click, sel);
+            ToolStripMenuItem mEditAssoc = CreateMenu("Associated Editor", MenuViewEditClick, sel);
             ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Using");
             mEdit.DropDownItems.Add(mEditAssoc);
             string[] progs = Properties.Settings.Default.EditViewPrograms.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (string s in progs)
-                mEdit.DropDownItems.Add(CreateMenu(Path.GetFileName(s), menuViewEdit_Click, sel, s));
+                mEdit.DropDownItems.Add(CreateMenu(Path.GetFileName(s), MenuViewEditClick, sel, s));
 
-            ToolStripMenuItem mExplore = CreateMenu("Explore...", menuViewExplore_Click, sel);
-            ToolStripMenuItem mCommand = CreateMenu("Command Prompt...", menuViewCommand_Click, sel);
+            ToolStripMenuItem mExplore = CreateMenu("Explore...", MenuViewExploreClick, sel);
+            ToolStripMenuItem mCommand = CreateMenu("Command Prompt...", MenuViewCommandClick, sel);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
                 mUpdate,
@@ -386,7 +393,7 @@ namespace git4win.FormMain_LeftPanels
                 mExplore, mCommand
             });
 
-            if (sel.selPath.EndsWith(@"\"))
+            if (sel.SelPath.EndsWith(@"\"))
                 mRevert.Enabled = 
                 mDiff.Enabled =
                 mEdit.Enabled = false;
@@ -397,66 +404,66 @@ namespace git4win.FormMain_LeftPanels
         /// <summary>
         /// Update changelist (index) with selected files
         /// </summary>
-        private void menuViewUpdateChangelist_Click(object sender, EventArgs e)
+        private void MenuViewUpdateChangelistClick(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)(sender as ToolStripDropDownItem).Tag;
-            App.Repos.current.Run("add -- " + sel.selFilesGitFormat());
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            Status.Repo.Run("add -- " + sel.SelFilesGitFormat());
             App.Refresh();      // App-wide refresh since 'add' modifies other panes
         }
 
         /// <summary>
         /// Discard changes to selected files in the working set
         /// </summary>
-        private void menuViewRevert_Click(object sender, EventArgs e)
+        private void MenuViewRevertClick(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)(sender as ToolStripDropDownItem).Tag;
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
             if (MessageBox.Show("This will revert all changes to selected files in your working directory. It will not affect staged files in Changelists.\r\rProceed with Revert?",
                 "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                App.Repos.current.Run("checkout -- " + sel.selFilesGitFormat());
-                viewRefresh();
+                Status.Repo.Run("checkout -- " + sel.SelFilesGitFormat());
+                ViewRefresh();
             }
         }
 
         /// <summary>
         /// Diff selected file versus one of several options, specified in tag field
         /// </summary>
-        private void menuViewDiff_Click(object sender, EventArgs e)
+        private static void MenuViewDiffClick(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)(sender as ToolStripDropDownItem).Tag;
-            App.Repos.current.Run("difftool " + sel.tag + " -- " + sel.selPathGitFormat());
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            App.Repos.Current.Run("difftool " + sel.tag + " -- " + sel.SelPathGitFormat());
         }
 
         /// <summary>
         /// Edit selected file using either the default editor (native OS file association,
         /// if the tag is "", or the editor program specified in the tag field
         /// </summary>
-        private void menuViewEdit_Click(object sender, EventArgs e)
+        private static void MenuViewEditClick(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)(sender as ToolStripDropDownItem).Tag;
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(sel.selPath));
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(sel.SelPath));
             if (string.IsNullOrEmpty(sel.tag))
-                Process.Start(sel.selPath);
+                Process.Start(sel.SelPath);
             else
-                Process.Start(sel.tag, sel.selPath);
+                Process.Start(sel.tag, sel.SelPath);
         }
 
         /// <summary>
         /// Run the Windows Explorer in the directory containing a selected file
         /// </summary>
-        private void menuViewExplore_Click(object sender, EventArgs e)
+        private static void MenuViewExploreClick(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)((ToolStripDropDownItem) sender).Tag;
-            Process.Start("explorer.exe", "/e, /select," + sel.selPath);
+            Selection sel = (Selection)((ToolStripDropDownItem) sender).Tag;
+            Process.Start("explorer.exe", "/e, /select," + sel.SelPath);
         }
 
         /// <summary>
         /// Open a command prompt in the directory containing a selected file
         /// </summary>
-        private void menuViewCommand_Click(object sender, EventArgs e)
+        private static void MenuViewCommandClick(object sender, EventArgs e)
         {
-            TSelection sel = (TSelection)(sender as ToolStripDropDownItem).Tag;
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(sel.selPath));
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(sel.SelPath));
             Process.Start("cmd.exe");
         }
     }

@@ -68,7 +68,7 @@
             this.btAdd.TabIndex = 2;
             this.btAdd.Text = "Add...";
             this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            this.btAdd.Click += new System.EventHandler(this.BtAddClick);
             // 
             // btRemove
             // 
@@ -79,7 +79,7 @@
             this.btRemove.TabIndex = 3;
             this.btRemove.Text = "Remove";
             this.btRemove.UseVisualStyleBackColor = true;
-            this.btRemove.Click += new System.EventHandler(this.btRemove_Click);
+            this.btRemove.Click += new System.EventHandler(this.BtRemoveClick);
             // 
             // openFileDialog
             // 

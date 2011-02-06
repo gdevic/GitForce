@@ -90,7 +90,7 @@
             this.menuView0.Size = new System.Drawing.Size(194, 22);
             this.menuView0.Tag = "0";
             this.menuView0.Text = "Git View of Local Files";
-            this.menuView0.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView0.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView1
             // 
@@ -98,7 +98,7 @@
             this.menuView1.Size = new System.Drawing.Size(194, 22);
             this.menuView1.Tag = "1";
             this.menuView1.Text = "Git View of Files";
-            this.menuView1.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView1.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView2
             // 
@@ -106,7 +106,7 @@
             this.menuView2.Size = new System.Drawing.Size(194, 22);
             this.menuView2.Tag = "2";
             this.menuView2.Text = "Git View of Repo";
-            this.menuView2.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView2.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView3
             // 
@@ -114,7 +114,7 @@
             this.menuView3.Size = new System.Drawing.Size(194, 22);
             this.menuView3.Tag = "3";
             this.menuView3.Text = "Local File View";
-            this.menuView3.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView3.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView4
             // 
@@ -122,7 +122,7 @@
             this.menuView4.Size = new System.Drawing.Size(194, 22);
             this.menuView4.Tag = "4";
             this.menuView4.Text = "Local Files Not in Repo";
-            this.menuView4.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView4.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // toolStripSeparator1
             // 
@@ -131,12 +131,11 @@
             // 
             // menuSortFilesByExtension
             // 
-            this.menuSortFilesByExtension.Checked = global::git4win.Properties.Settings.Default.sortByExtension;
             this.menuSortFilesByExtension.CheckOnClick = true;
             this.menuSortFilesByExtension.Name = "menuSortFilesByExtension";
             this.menuSortFilesByExtension.Size = new System.Drawing.Size(194, 22);
             this.menuSortFilesByExtension.Text = "Sort Files by Extension";
-            this.menuSortFilesByExtension.Click += new System.EventHandler(this.menuSortFilesByExtension_Click);
+            this.menuSortFilesByExtension.Click += new System.EventHandler(this.MenuSortFilesByExtensionClick);
             // 
             // toolStripButton1
             // 
@@ -148,7 +147,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "Refresh";
-            this.toolStripButton1.Click += new System.EventHandler(this.menuRefresh);
+            this.toolStripButton1.Click += new System.EventHandler(this.MenuRefresh);
             // 
             // btListView
             // 
@@ -159,7 +158,7 @@
             this.btListView.Name = "btListView";
             this.btListView.Size = new System.Drawing.Size(23, 22);
             this.btListView.Text = "Toggle between list or tree views";
-            this.btListView.Click += new System.EventHandler(this.btListView_Click);
+            this.btListView.Click += new System.EventHandler(this.BtListViewClick);
             // 
             // treeView
             // 
@@ -174,13 +173,13 @@
             this.treeView.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("treeView.SelectedNodes")));
             this.treeView.Size = new System.Drawing.Size(400, 375);
             this.treeView.TabIndex = 1;
-            this.treeView.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCollapse);
-            this.treeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterExpand);
-            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
-            this.treeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
-            this.treeView.DoubleClick += new System.EventHandler(this.treeView_DoubleClick);
-            this.treeView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseMove);
-            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
+            this.treeView.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewAfterCollapse);
+            this.treeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(TreeViewAfterExpand);
+            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeViewItemDrag);
+            this.treeView.DragEnter += new System.Windows.Forms.DragEventHandler(TreeViewDragEnter);
+            this.treeView.DoubleClick += new System.EventHandler(this.TreeViewDoubleClick);
+            this.treeView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TreeViewMouseMove);
+            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeViewMouseUp);
             // 
             // contextMenu
             // 

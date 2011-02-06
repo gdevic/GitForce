@@ -44,7 +44,7 @@ namespace git4win.FormOptions_Panels
             }
 
             // Add the dirty (modified) value changed helper
-            textBoxAliases.TextChanged += ControlDirtyHelper.control_Dirty;
+            textBoxAliases.TextChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>

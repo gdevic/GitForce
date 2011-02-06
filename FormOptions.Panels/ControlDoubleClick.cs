@@ -13,7 +13,7 @@ namespace git4win.FormOptions_Panels
     public partial class ControlDoubleClick : UserControl, IUserSettings
     {
         // Selected radio button option number
-        private string option = Properties.Settings.Default.DoubleClick;
+        private string _option = Properties.Settings.Default.DoubleClick;
 
         public ControlDoubleClick()
         {
@@ -36,8 +36,8 @@ namespace git4win.FormOptions_Panels
             Dictionary<string, RadioButton> rb = new Dictionary<string, RadioButton> {
                 { "0", radioButton0 }, { "1", radioButton1 }, { "2", radioButton2 } };
 
-            rb[option].Checked = true;
-            comboApps.Enabled = option == "2";
+            rb[_option].Checked = true;
+            comboApps.Enabled = _option == "2";
         }
 
         /// <summary>
@@ -46,18 +46,18 @@ namespace git4win.FormOptions_Panels
         public void ApplyChanges()
         {
             Properties.Settings.Default.DoubleClickProgram = comboApps.Text;
-            Properties.Settings.Default.DoubleClick = option;
+            Properties.Settings.Default.DoubleClick = _option;
         }
 
         /// <summary>
         /// Radio button clicked
         /// </summary>
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        private void RadioButtonCheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                option = rb.Tag.ToString();
+                _option = rb.Tag.ToString();
                 comboApps.Enabled = rb.Tag.ToString() == "2";
             }
         }

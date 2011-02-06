@@ -16,18 +16,18 @@ namespace git4win.FormMain_RightPanels
         {
             InitializeComponent();
 
-            App.Refresh += revlistRefresh;
+            App.Refresh += RevlistRefresh;
         }
 
         /// <summary>
         /// Fills in the list of revisions and changes to the repository
         /// </summary>
-        private void revlistRefresh()
+        private void RevlistRefresh()
         {
             listRev.BeginUpdate();
             listRev.Items.Clear();
 
-            if (App.Repos.current != null)
+            if (App.Repos.Current != null)
             {
                 // Get the list of revisions by running a git command
                 StringBuilder cmd = new StringBuilder("log --pretty=format:\"");

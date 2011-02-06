@@ -26,8 +26,8 @@ namespace git4win.FormOptions_Panels
             textBoxUserEmail.Text = ClassConfig.Get("user.email");
 
             // Add the dirty (modified) value changed helper
-            textBoxUserName.TextChanged += ControlDirtyHelper.control_Dirty;
-            textBoxUserEmail.TextChanged += ControlDirtyHelper.control_Dirty;
+            textBoxUserName.TextChanged += ControlDirtyHelper.ControlDirty;
+            textBoxUserEmail.TextChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>

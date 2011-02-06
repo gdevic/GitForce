@@ -67,8 +67,8 @@
             this.treeBranches.Size = new System.Drawing.Size(400, 375);
             this.treeBranches.TabIndex = 1;
             this.treeBranches.Tag = "";
-            this.treeBranches.DoubleClick += new System.EventHandler(this.treeBranches_DoubleClick);
-            this.treeBranches.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeBranches_MouseUp);
+            this.treeBranches.DoubleClick += new System.EventHandler(this.TreeBranchesDoubleClick);
+            this.treeBranches.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeBranchesMouseUp);
             // 
             // contextMenu
             // 

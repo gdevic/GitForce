@@ -75,10 +75,10 @@
             this.treeCommits.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("treeCommits.SelectedNodes")));
             this.treeCommits.Size = new System.Drawing.Size(400, 375);
             this.treeCommits.TabIndex = 1;
-            this.treeCommits.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeCommits_DragDrop);
-            this.treeCommits.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeCommits_DragEnter);
-            this.treeCommits.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeCommits_MouseMove);
-            this.treeCommits.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeCommits_MouseUp);
+            this.treeCommits.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeCommitsDragDrop);
+            this.treeCommits.DragEnter += new System.Windows.Forms.DragEventHandler(TreeCommitsDragEnter);
+            this.treeCommits.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseMove);
+            this.treeCommits.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseUp);
             // 
             // PanelCommits
             // 

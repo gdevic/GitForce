@@ -43,7 +43,7 @@
             this.btPutty.TabIndex = 0;
             this.btPutty.Text = "PuTTYgen";
             this.btPutty.UseVisualStyleBackColor = true;
-            this.btPutty.Click += new System.EventHandler(this.btPutty_Click);
+            this.btPutty.Click += new System.EventHandler(BtPuttyClick);
             // 
             // label1
             // 

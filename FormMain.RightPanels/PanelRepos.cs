@@ -18,19 +18,19 @@ namespace git4win.FormMain_RightPanels
         {
             InitializeComponent();
 
-            App.Refresh += reposRefresh;
+            App.Refresh += ReposRefresh;
         }
 
         /// <summary>
         /// Fill in the list of repositories in the GUI listbox from the repos list
         /// </summary>
-        private void reposRefresh()
+        private void ReposRefresh()
         {
             listRepos.BeginUpdate();
             listRepos.Items.Clear();
-            foreach (ClassRepo r in App.Repos.repos)
+            foreach (ClassRepo r in App.Repos.Repos)
             {
-                ListViewItem li = new ListViewItem(r.root);
+                ListViewItem li = new ListViewItem(r.Root);
                 li.SubItems.Add(new ListViewItem.ListViewSubItem(li, ClassConfig.Get("user.name", r)));
                 li.SubItems.Add(new ListViewItem.ListViewSubItem(li, ClassConfig.Get("user.email", r)));
                 
@@ -39,13 +39,13 @@ namespace git4win.FormMain_RightPanels
                 li.ImageIndex = (int)RepoIcons.RepoIdle;
 
                 // Select the 'current' repository in the list
-                if (r == App.Repos.current)
+                if (r == App.Repos.Current)
                 {
                     li.Selected = true;
                     li.ImageIndex |= 2; // Bit [1] is current
                 }
 
-                if (r.root == App.Repos.GetDefault())
+                if (r.Root == App.Repos.GetDefault())
                     li.ImageIndex |= 1; // Bit [0] is default
 
                 listRepos.Items.Add(li);
@@ -59,7 +59,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Return the selected repo object or null if no repo is selected (no repos in the list)
         /// </summary>
-        public ClassRepo getSelectedRepo()
+        public ClassRepo GetSelectedRepo()
         {
             if (listRepos.SelectedIndices.Count == 1)
                 return (ClassRepo)listRepos.Items[listRepos.SelectedIndices[0]].Tag;
@@ -69,15 +69,15 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Double-clicking on a repository will switch to it.
         /// </summary>
-        private void listRepos_DoubleClick(object sender, EventArgs e)
+        private void ListReposDoubleClick(object sender, EventArgs e)
         {
-            App.Repos.current = getSelectedRepo();
+            App.Repos.SetCurrent(GetSelectedRepo());
         }
 
         /// <summary>
         /// Right-mouse button opens a popup with the context menu
         /// </summary>
-        private void listRepos_MouseUp(object sender, MouseEventArgs e)
+        private void ListReposMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -100,11 +100,11 @@ namespace git4win.FormMain_RightPanels
             //  [4]  Switch to     -> switch to selected repo
             //  [5]  Set Default   -> set default repo to selected repo
 
-            ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, menuNewRepo_Click);
-            ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit...", null, menuRepoEdit_Click);
-            ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, menuDeleteRepo_Click);
-            ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, listRepos_DoubleClick);
-            ToolStripMenuItem mSetDefault = new ToolStripMenuItem("Set Default to...", null, menuSetDefaultRepoTo_Click);
+            ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, MenuNewRepoClick);
+            ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit...", null, MenuRepoEditClick);
+            ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteRepoClick);
+            ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, ListReposDoubleClick);
+            ToolStripMenuItem mSetDefault = new ToolStripMenuItem("Set Default to...", null, MenuSetDefaultRepoToClick);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
                 mNew, mEdit, mDelete,
@@ -112,7 +112,7 @@ namespace git4win.FormMain_RightPanels
                 mSwitchTo, mSetDefault
             });
 
-            if (getSelectedRepo() == null)
+            if (GetSelectedRepo() == null)
                 mEdit.Enabled = mDelete.Enabled = mSwitchTo.Enabled = mSetDefault.Enabled = false;
 
             return menu;
@@ -121,7 +121,7 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Create or clone a new git repository
         /// </summary>
-        private void menuNewRepo_Click(object sender, EventArgs e)
+        private static void MenuNewRepoClick(object sender, EventArgs e)
         {
             FormNewRepoStep1 newRepoStep1 = new FormNewRepoStep1();
             FormNewRepoStep2 newRepoStep2 = new FormNewRepoStep2();
@@ -130,7 +130,7 @@ namespace git4win.FormMain_RightPanels
             if (newRepoStep1.ShowDialog() == DialogResult.OK)
             {
                 // Enforce target directory being empty for clone operations
-                newRepoStep2.enforceDirEmpty = newRepoStep1.type != "empty";
+                newRepoStep2.EnforceDirEmpty = newRepoStep1.Type != "empty";
 
                 DialogResult result = newRepoStep2.ShowDialog();
 
@@ -140,10 +140,10 @@ namespace git4win.FormMain_RightPanels
 
                 if (result == DialogResult.OK)
                 {
-                    string type = newRepoStep1.type;
-                    string root = newRepoStep2.destination;
-                    string extra = newRepoStep2.extra;
-                    bool isBare = newRepoStep2.isBare;
+                    string type = newRepoStep1.Type;
+                    string root = newRepoStep2.Destination;
+                    string extra = newRepoStep2.Extra;
+                    bool isBare = newRepoStep2.IsBare;
                     ClassRepo repo = null;
 
                     try
@@ -158,26 +158,26 @@ namespace git4win.FormMain_RightPanels
                                 break;
 
                             case "local":
-                                init = "clone " + newRepoStep1.local + " " + root + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone " + newRepoStep1.Local + " " + root + (isBare ? " --bare --shared " : " ") + extra;
                                 App.Git.Run(init, null, root);
                                 repo = App.Repos.Add(root);
                                 break;
 
                             case "remote":
-                                ClassRemotes.Remote r = newRepoStep1.remote;
+                                ClassRemotes.Remote r = newRepoStep1.Remote;
 
-                                init = "clone --origin " + r.name + " " + ClassURL.ToCanonical(r.urlFetch) + " " + root + (isBare ? " --bare --shared " : " ") + extra;
-                                App.Git.Run(init, null, root, r.password);
+                                init = "clone --origin " + r.Name + " " + ClassUrl.ToCanonical(r.UrlFetch) + " " + root + (isBare ? " --bare --shared " : " ") + extra;
+                                App.Git.Run(init, null, root, r.Password);
                                 repo = App.Repos.Add(root);
                                 break;
                         }
 
                         // Finally, switch to the new repo which will cause a global refresh
-                        App.Repos.current = repo;
+                        App.Repos.SetCurrent(repo);
                     }
                     catch (ClassException ex)
                     {
-                        MessageBox.Show(ex.msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -186,9 +186,9 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Edit a selected repository specification
         /// </summary>
-        private void menuRepoEdit_Click(object sender, EventArgs e)
+        private void MenuRepoEditClick(object sender, EventArgs e)
         {
-            ClassRepo repo = getSelectedRepo();
+            ClassRepo repo = GetSelectedRepo();
             FormRepoEdit repoEdit = new FormRepoEdit(repo);
             if (repoEdit.ShowDialog() == DialogResult.OK)
                 App.Refresh();
@@ -197,10 +197,10 @@ namespace git4win.FormMain_RightPanels
         /// <summary>
         /// Delete selected repository and optionally more files
         /// </summary>
-        private void menuDeleteRepo_Click(object sender, EventArgs e)
+        private void MenuDeleteRepoClick(object sender, EventArgs e)
         {
-            ClassRepo repo = getSelectedRepo();
-            FormDeleteRepo deleteRepo = new FormDeleteRepo(repo.root);
+            ClassRepo repo = GetSelectedRepo();
+            FormDeleteRepo deleteRepo = new FormDeleteRepo(repo.Root);
             if (deleteRepo.ShowDialog() == DialogResult.OK)
                 App.Repos.Delete(repo);
         }
@@ -209,10 +209,10 @@ namespace git4win.FormMain_RightPanels
         /// Set the default repo to the one selected. The default repo is automatically
         /// selected after program loads.
         /// </summary>
-        private void menuSetDefaultRepoTo_Click(object sender, EventArgs e)
+        private void MenuSetDefaultRepoToClick(object sender, EventArgs e)
         {
-            App.Repos.SetDefault(getSelectedRepo());
-            reposRefresh();
+            App.Repos.SetDefault(GetSelectedRepo());
+            ReposRefresh();
         }
     }
 }

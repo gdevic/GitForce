@@ -58,7 +58,7 @@
             this.radioButton0.Tag = "0";
             this.radioButton0.Text = "Do nothing";
             this.radioButton0.UseVisualStyleBackColor = true;
-            this.radioButton0.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radioButton0.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
             // radioButton2
             // 
@@ -70,7 +70,7 @@
             this.radioButton2.Tag = "2";
             this.radioButton2.Text = "Open a file using this application:";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
             // comboApps
             // 
@@ -93,7 +93,7 @@
             this.radioButton1.Tag = "1";
             this.radioButton1.Text = "Open a file using Explorer associated application";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
             // ControlDoubleClick
             // 

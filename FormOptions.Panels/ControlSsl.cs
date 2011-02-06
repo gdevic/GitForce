@@ -25,7 +25,7 @@ namespace git4win.FormOptions_Panels
             checkBoxLeavePageant.Checked = Properties.Settings.Default.leavePageant;
 
             // Add the dirty (modified) value changed helper
-            checkBoxLeavePageant.CheckStateChanged += ControlDirtyHelper.control_Dirty;
+            checkBoxLeavePageant.CheckStateChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace git4win.FormOptions_Panels
         /// <summary>
         /// Run PuTTYgen to manage SSL connections.
         /// </summary>
-        private void btPutty_Click(object sender, EventArgs e)
+        private static void BtPuttyClick(object sender, EventArgs e)
         {
             App.Putty.RunPuTTYgen();
         }

@@ -42,7 +42,7 @@ namespace git4win.FormOptions_Panels
         /// <summary>
         /// Retrieve number of changes radio button changed
         /// </summary>
-        private void rbRetrieveAll_CheckedChanged(object sender, EventArgs e)
+        private void RbRetrieveAllCheckedChanged(object sender, EventArgs e)
         {
             textBoxLast.ReadOnly = rbRetrieveAll.Checked;
         }

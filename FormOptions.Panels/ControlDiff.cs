@@ -16,8 +16,8 @@ namespace git4win.FormOptions_Panels
             InitializeComponent();
         }
 
-        private List<ClassDiff.TDiff> diffs = null;
-        private int checkedIndex = -1;
+        private List<ClassDiff.Diff> _diffs;
+        private int _checkedIndex = -1;
 
         /// <summary>
         /// Initialize pertinent settings
@@ -26,10 +26,10 @@ namespace git4win.FormOptions_Panels
         public void Init(string[] options)
         {
             // Add names of diff tools that were found on the system
-            diffs = App.Diff.diffs;
+            _diffs = App.Diff.Diffs;
             string activeName = Properties.Settings.Default.DiffActiveName;
-            foreach(var s in diffs)
-                listBoxDiffs.Items.Add(s.name, s.name==activeName);
+            foreach(var s in _diffs)
+                listBoxDiffs.Items.Add(s.Name, s.Name==activeName);
         }
 
         /// <summary>
@@ -37,20 +37,20 @@ namespace git4win.FormOptions_Panels
         /// </summary>
         public void ApplyChanges()
         {
-            Properties.Settings.Default.DiffActiveName = diffs[checkedIndex].name;
-            ClassDiff.Configure(diffs, diffs[checkedIndex]);
+            Properties.Settings.Default.DiffActiveName = _diffs[_checkedIndex].Name;
+            ClassDiff.Configure(_diffs, _diffs[_checkedIndex]);
         }
 
         /// <summary>
         /// User clicked on an diff tool to select it as the active one
         /// </summary>
-        private void listBoxDiffs_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void ListBoxDiffsItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked)
             {
                 foreach (int i in listBoxDiffs.CheckedIndices)
                     listBoxDiffs.SetItemCheckState(i, CheckState.Unchecked);
-                checkedIndex = e.Index;
+                _checkedIndex = e.Index;
             }
         }
     }

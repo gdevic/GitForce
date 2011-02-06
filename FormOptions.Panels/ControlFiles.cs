@@ -27,8 +27,8 @@ namespace git4win.FormOptions_Panels
             checkBoxShowDotGit.Checked = Properties.Settings.Default.ShowDotGitFolders;
 
             // Add the dirty (modified) value changed helper
-            checkBoxIgnoreCase.CheckStateChanged += ControlDirtyHelper.control_Dirty;
-            checkBoxShowDotGit.CheckStateChanged += ControlDirtyHelper.control_Dirty;
+            checkBoxIgnoreCase.CheckStateChanged += ControlDirtyHelper.ControlDirty;
+            checkBoxShowDotGit.CheckStateChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>

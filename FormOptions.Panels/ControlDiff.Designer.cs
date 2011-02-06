@@ -55,7 +55,7 @@
             this.listBoxDiffs.Name = "listBoxDiffs";
             this.listBoxDiffs.Size = new System.Drawing.Size(300, 265);
             this.listBoxDiffs.TabIndex = 5;
-            this.listBoxDiffs.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listBoxDiffs_ItemCheck);
+            this.listBoxDiffs.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ListBoxDiffsItemCheck);
             // 
             // ControlDiff
             // 

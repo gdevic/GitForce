@@ -67,7 +67,7 @@ namespace git4win.FormOptions_Panels
         /// <summary>
         /// User clicked on Add button to add a program
         /// </summary>
-        private void btAdd_Click(object sender, EventArgs e)
+        private void BtAddClick(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 if (!listPrograms.Items.Contains(openFileDialog.FileName))
@@ -77,7 +77,7 @@ namespace git4win.FormOptions_Panels
         /// <summary>
         /// User clicked on Remove button to remove selected programs
         /// </summary>
-        private void btRemove_Click(object sender, EventArgs e)
+        private void BtRemoveClick(object sender, EventArgs e)
         {
             while (listPrograms.SelectedItems.Count > 0)
                 listPrograms.Items.Remove(listPrograms.SelectedItem);

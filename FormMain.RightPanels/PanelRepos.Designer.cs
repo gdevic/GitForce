@@ -77,8 +77,8 @@
             this.listRepos.TabIndex = 1;
             this.listRepos.UseCompatibleStateImageBehavior = false;
             this.listRepos.View = System.Windows.Forms.View.Details;
-            this.listRepos.DoubleClick += new System.EventHandler(this.listRepos_DoubleClick);
-            this.listRepos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listRepos_MouseUp);
+            this.listRepos.DoubleClick += new System.EventHandler(this.ListReposDoubleClick);
+            this.listRepos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ListReposMouseUp);
             // 
             // colRoot
             // 
