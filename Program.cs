@@ -87,10 +87,10 @@ namespace git4win
 
                 // Initialize global application static classes in this order:
                 Execute = new FormExecute();
+                Git = new ClassGit();
                 Diff = new ClassDiff();
                 Repos = new ClassRepos();
                 Putty = new ClassPutty();
-                Git = new ClassGit();
 
                 // Before we can start, we need to have a functional git executable
                 if (Git.Initialize())
@@ -111,9 +111,9 @@ namespace git4win
             }
             else
             {
-                // Send our Win32 message to make the currently running instance
+                // Send our NativeMethods message to make the currently running instance
                 // jump on top of all the other windows
-                Win32.PostMessage((IntPtr)Win32.HWND_BROADCAST, Win32.WmShowme, IntPtr.Zero, IntPtr.Zero);
+                NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WmShowme, IntPtr.Zero, IntPtr.Zero);
             }
         }
     }

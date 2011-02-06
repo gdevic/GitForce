@@ -116,7 +116,7 @@
             this.menuMainFile.Name = "menuMainFile";
             this.menuMainFile.Size = new System.Drawing.Size(37, 20);
             this.menuMainFile.Text = "File";
-            this.menuMainFile.DropDownOpening += new System.EventHandler(this.menuMainFile_DropDownOpening);
+            this.menuMainFile.DropDownOpening += new System.EventHandler(this.MenuMainFileDropDownOpening);
             // 
             // menuMainEdit
             // 
@@ -132,7 +132,7 @@
             this.menuMainSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.menuMainSelectAll.Size = new System.Drawing.Size(164, 22);
             this.menuMainSelectAll.Text = "Select All";
-            this.menuMainSelectAll.Click += new System.EventHandler(this.menuMainSelectAll_Click);
+            this.menuMainSelectAll.Click += new System.EventHandler(MenuMainSelectAllClick);
             // 
             // menuMainView
             // 
@@ -153,7 +153,7 @@
             this.menuMainView.Name = "menuMainView";
             this.menuMainView.Size = new System.Drawing.Size(44, 20);
             this.menuMainView.Text = "View";
-            this.menuMainView.DropDownOpened += new System.EventHandler(this.menuMainView_DropDownOpened);
+            this.menuMainView.DropDownOpened += new System.EventHandler(this.MenuMainViewDropDownOpened);
             // 
             // menuMainPendingChanges
             // 
@@ -162,7 +162,7 @@
             this.menuMainPendingChanges.Size = new System.Drawing.Size(230, 22);
             this.menuMainPendingChanges.Tag = "Commits";
             this.menuMainPendingChanges.Text = "Pending Changelists";
-            this.menuMainPendingChanges.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.menuMainPendingChanges.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // menuMainSubmittedChanges
             // 
@@ -171,7 +171,7 @@
             this.menuMainSubmittedChanges.Size = new System.Drawing.Size(230, 22);
             this.menuMainSubmittedChanges.Tag = "Revisions";
             this.menuMainSubmittedChanges.Text = "Submitted Changelists";
-            this.menuMainSubmittedChanges.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.menuMainSubmittedChanges.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // menuMainBranches
             // 
@@ -180,7 +180,7 @@
             this.menuMainBranches.Size = new System.Drawing.Size(230, 22);
             this.menuMainBranches.Tag = "Branches";
             this.menuMainBranches.Text = "Branches";
-            this.menuMainBranches.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.menuMainBranches.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // menuMainRepos
             // 
@@ -189,7 +189,7 @@
             this.menuMainRepos.Size = new System.Drawing.Size(230, 22);
             this.menuMainRepos.Tag = "Repos";
             this.menuMainRepos.Text = "Repository";
-            this.menuMainRepos.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.menuMainRepos.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // toolStripSeparator5
             // 
@@ -203,7 +203,7 @@
             this.menuView0.Size = new System.Drawing.Size(230, 22);
             this.menuView0.Tag = "0";
             this.menuView0.Text = "Git View of Local Files";
-            this.menuView0.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView0.Click += new System.EventHandler(ViewSetByMenuItem);
             // 
             // menuView1
             // 
@@ -212,7 +212,7 @@
             this.menuView1.Size = new System.Drawing.Size(230, 22);
             this.menuView1.Tag = "1";
             this.menuView1.Text = "Git View of Files";
-            this.menuView1.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView1.Click += new System.EventHandler(ViewSetByMenuItem);
             // 
             // menuView2
             // 
@@ -221,7 +221,7 @@
             this.menuView2.Size = new System.Drawing.Size(230, 22);
             this.menuView2.Tag = "2";
             this.menuView2.Text = "Git View of Repo";
-            this.menuView2.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView2.Click += new System.EventHandler(ViewSetByMenuItem);
             // 
             // menuView3
             // 
@@ -230,7 +230,7 @@
             this.menuView3.Size = new System.Drawing.Size(230, 22);
             this.menuView3.Tag = "3";
             this.menuView3.Text = "Local File View";
-            this.menuView3.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView3.Click += new System.EventHandler(ViewSetByMenuItem);
             // 
             // menuView4
             // 
@@ -239,7 +239,7 @@
             this.menuView4.Size = new System.Drawing.Size(230, 22);
             this.menuView4.Tag = "4";
             this.menuView4.Text = "Local Files Not in Repo";
-            this.menuView4.Click += new System.EventHandler(this.viewSetByMenuItem);
+            this.menuView4.Click += new System.EventHandler(ViewSetByMenuItem);
             // 
             // toolStripSeparator6
             // 
@@ -252,14 +252,14 @@
             this.menuMainRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.menuMainRefresh.Size = new System.Drawing.Size(230, 22);
             this.menuMainRefresh.Text = "Refresh Active Pane";
-            this.menuMainRefresh.Click += new System.EventHandler(this.menuRefreshAll);
+            this.menuMainRefresh.Click += new System.EventHandler(MenuRefreshAll);
             // 
             // menuViewExecuteWindow
             // 
             this.menuViewExecuteWindow.Name = "menuViewExecuteWindow";
             this.menuViewExecuteWindow.Size = new System.Drawing.Size(230, 22);
             this.menuViewExecuteWindow.Text = "Execute Window";
-            this.menuViewExecuteWindow.Click += new System.EventHandler(this.menuShowExecuteWindow);
+            this.menuViewExecuteWindow.Click += new System.EventHandler(this.MenuShowExecuteWindow);
             // 
             // menuMainSettings
             // 
@@ -280,14 +280,14 @@
             this.menuMainOptions.Name = "menuMainOptions";
             this.menuMainOptions.Size = new System.Drawing.Size(192, 22);
             this.menuMainOptions.Text = "Options...";
-            this.menuMainOptions.Click += new System.EventHandler(this.menuOptions);
+            this.menuMainOptions.Click += new System.EventHandler(MenuOptions);
             // 
             // menuMainManageKeys
             // 
             this.menuMainManageKeys.Name = "menuMainManageKeys";
             this.menuMainManageKeys.Size = new System.Drawing.Size(192, 22);
             this.menuMainManageKeys.Text = "Manage PuTTY Keys...";
-            this.menuMainManageKeys.Click += new System.EventHandler(this.menuMainManageKeys_Click);
+            this.menuMainManageKeys.Click += new System.EventHandler(MenuMainManageKeysClick);
             // 
             // toolStripSeparator1
             // 
@@ -313,42 +313,42 @@
             this.menuMainEditRemoteRepo.Name = "menuMainEditRemoteRepo";
             this.menuMainEditRemoteRepo.Size = new System.Drawing.Size(192, 22);
             this.menuMainEditRemoteRepo.Text = "Edit Remote Repos...";
-            this.menuMainEditRemoteRepo.Click += new System.EventHandler(this.menuEditRemoteRepos);
+            this.menuMainEditRemoteRepo.Click += new System.EventHandler(MenuEditRemoteRepos);
             // 
             // menuMainPullFromRemote
             // 
             this.menuMainPullFromRemote.Name = "menuMainPullFromRemote";
             this.menuMainPullFromRemote.Size = new System.Drawing.Size(192, 22);
             this.menuMainPullFromRemote.Text = "Pull from Remote";
-            this.menuMainPullFromRemote.Click += new System.EventHandler(this.menuRepoPull);
+            this.menuMainPullFromRemote.Click += new System.EventHandler(MenuRepoPull);
             // 
             // menuMainPushToRemote
             // 
             this.menuMainPushToRemote.Name = "menuMainPushToRemote";
             this.menuMainPushToRemote.Size = new System.Drawing.Size(192, 22);
             this.menuMainPushToRemote.Text = "Push to Remote";
-            this.menuMainPushToRemote.Click += new System.EventHandler(this.menuRepoPush);
+            this.menuMainPushToRemote.Click += new System.EventHandler(MenuRepoPush);
             // 
             // menuMainChangelist
             // 
             this.menuMainChangelist.Name = "menuMainChangelist";
             this.menuMainChangelist.Size = new System.Drawing.Size(75, 20);
             this.menuMainChangelist.Text = "Changelist";
-            this.menuMainChangelist.DropDownOpening += new System.EventHandler(this.menuMainChangelist_DropDownOpening);
+            this.menuMainChangelist.DropDownOpening += new System.EventHandler(this.MenuMainChangelistDropDownOpening);
             // 
             // menuMainBranch
             // 
             this.menuMainBranch.Name = "menuMainBranch";
             this.menuMainBranch.Size = new System.Drawing.Size(67, 20);
             this.menuMainBranch.Text = "Branches";
-            this.menuMainBranch.DropDownOpening += new System.EventHandler(this.menuMainBranch_DropDownOpening);
+            this.menuMainBranch.DropDownOpening += new System.EventHandler(this.MenuMainBranchDropDownOpening);
             // 
             // menuMainRepository
             // 
             this.menuMainRepository.Name = "menuMainRepository";
             this.menuMainRepository.Size = new System.Drawing.Size(75, 20);
             this.menuMainRepository.Text = "Repository";
-            this.menuMainRepository.DropDownOpening += new System.EventHandler(this.menuMainRepository_DropDownOpening);
+            this.menuMainRepository.DropDownOpening += new System.EventHandler(this.MenuMainRepositoryDropDownOpening);
             // 
             // helpToolStripMenuItem
             // 
@@ -363,7 +363,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(AboutToolStripMenuItemClick);
             // 
             // statusStrip
             // 
@@ -415,7 +415,7 @@
             this.btChangelists.Size = new System.Drawing.Size(23, 22);
             this.btChangelists.Tag = "Commits";
             this.btChangelists.Text = "View Pending Changelists";
-            this.btChangelists.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.btChangelists.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // btSubmitted
             // 
@@ -427,7 +427,7 @@
             this.btSubmitted.Size = new System.Drawing.Size(23, 22);
             this.btSubmitted.Tag = "Revisions";
             this.btSubmitted.Text = "View Submitted Changelists";
-            this.btSubmitted.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.btSubmitted.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // btBranches
             // 
@@ -439,7 +439,7 @@
             this.btBranches.Size = new System.Drawing.Size(23, 22);
             this.btBranches.Tag = "Branches";
             this.btBranches.Text = "View Branches";
-            this.btBranches.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.btBranches.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // btRepos
             // 
@@ -451,7 +451,7 @@
             this.btRepos.Size = new System.Drawing.Size(23, 22);
             this.btRepos.Tag = "Repos";
             this.btRepos.Text = "View Repositories";
-            this.btRepos.Click += new System.EventHandler(this.rightPanelSelection_Click);
+            this.btRepos.Click += new System.EventHandler(RightPanelSelectionClick);
             // 
             // toolStripSeparator8
             // 
@@ -477,7 +477,7 @@
             this.btOptions.Name = "btOptions";
             this.btOptions.Size = new System.Drawing.Size(23, 22);
             this.btOptions.Text = "Set git4win Options";
-            this.btOptions.Click += new System.EventHandler(this.menuOptions);
+            this.btOptions.Click += new System.EventHandler(MenuOptions);
             // 
             // btPutty
             // 
@@ -487,7 +487,7 @@
             this.btPutty.Name = "btPutty";
             this.btPutty.Size = new System.Drawing.Size(23, 22);
             this.btPutty.Text = "Manage PuTTY Keys";
-            this.btPutty.Click += new System.EventHandler(this.menuMainManageKeys_Click);
+            this.btPutty.Click += new System.EventHandler(MenuMainManageKeysClick);
             // 
             // splitContainer1
             // 
@@ -547,14 +547,14 @@
             this.menuStatusCopy.Name = "menuStatusCopy";
             this.menuStatusCopy.Size = new System.Drawing.Size(152, 22);
             this.menuStatusCopy.Text = "Copy";
-            this.menuStatusCopy.Click += new System.EventHandler(this.menuStatusCopy_Click);
+            this.menuStatusCopy.Click += new System.EventHandler(this.MenuStatusCopyClick);
             // 
             // menuStatusSelectAll
             // 
             this.menuStatusSelectAll.Name = "menuStatusSelectAll";
             this.menuStatusSelectAll.Size = new System.Drawing.Size(152, 22);
             this.menuStatusSelectAll.Text = "Select All";
-            this.menuStatusSelectAll.Click += new System.EventHandler(this.menuStatusSelectAll_Click);
+            this.menuStatusSelectAll.Click += new System.EventHandler(this.MenuStatusSelectAllClick);
             // 
             // toolStripSeparator2
             // 
@@ -566,7 +566,7 @@
             this.menuSelectClear.Name = "menuSelectClear";
             this.menuSelectClear.Size = new System.Drawing.Size(152, 22);
             this.menuSelectClear.Text = "Clear";
-            this.menuSelectClear.Click += new System.EventHandler(this.menuSelectClear_Click);
+            this.menuSelectClear.Click += new System.EventHandler(this.MenuSelectClearClick);
             // 
             // FormMain
             // 
@@ -583,7 +583,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "git4win";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMainFormClosing);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.statusStrip.ResumeLayout(false);

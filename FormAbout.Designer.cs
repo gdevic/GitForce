@@ -85,7 +85,7 @@
             this.linkGithub.TabIndex = 4;
             this.linkGithub.TabStop = true;
             this.linkGithub.Text = "https://github.com/gdevic/git4win";
-            this.linkGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGithub_LinkClicked);
+            this.linkGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(LinkGithubLinkClicked);
             // 
             // FormAbout
             // 

@@ -123,5 +123,36 @@ namespace git4win
 
             return files.ToArray();
         }
+
+        /// <summary>
+        /// Recursively create a list of directories and files from the given path.
+        /// </summary>
+        public static List<string> GetFilesRecursive(string path)
+        {
+            List<string> result = new List<string>();
+            Stack<string> stack = new Stack<string>();
+            stack.Push(path);
+
+            while (stack.Count > 0)
+            {
+                string dir = stack.Pop();
+                try
+                {
+                    result.AddRange(Directory.GetFiles(dir, "*.*"));
+
+                    foreach (string d in
+                        Directory.GetDirectories(dir).Where(d => !d.EndsWith("\\.git")
+                        || Properties.Settings.Default.ShowDotGitFolders))
+                    {
+                        stack.Push(d);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    App.Log(ex.Message);
+                }
+            }
+            return result;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace git4win
         {
             InitializeComponent();
 
-            userControlRemoteEdit.setRepo(repo);
+            userControlRemoteEdit.SetRepo(repo);
         }
     }
 }

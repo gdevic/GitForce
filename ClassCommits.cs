@@ -14,15 +14,15 @@ namespace git4win
         /// <summary>
         /// List of commits
         /// </summary>
-        public List<ClassCommit> bundle = new List<ClassCommit>();
+        public List<ClassCommit> Bundle = new List<ClassCommit>();
 
         /// <summary>
         /// Constructor for list of commits - always create at least one (empty) commit named "Default"
         /// </summary>
         public ClassCommits()
         {
-            bundle.Add(new ClassCommit("Default"));
-            bundle[0].isDefault = true;
+            Bundle.Add(new ClassCommit("Default"));
+            Bundle[0].IsDefault = true;
         }
 
         /// <summary>
@@ -31,13 +31,13 @@ namespace git4win
         public void NewBundle(string description, List<string> files)
         {
             // Remove all files listed from every bundle
-            foreach (var c in bundle)
+            foreach (var c in Bundle)
                 c.Prune(files);
 
             // Add a new bundle with these files
             ClassCommit commit = new ClassCommit(description);
             commit.AddFiles(files);
-            bundle.Add(commit);
+            Bundle.Add(commit);
         }
 
         /// <summary>
@@ -46,10 +46,10 @@ namespace git4win
         /// <param name="files"></param>
         public void Rebuild(List<string> files)
         {
-            files = bundle.Aggregate(files, (current, c) => c.Renew(current));
+            files = Bundle.Aggregate(files, (current, c) => c.Renew(current));
 
             // Assign the remaining files to the first commit ("Default")
-            bundle[0].AddFiles(files);
+            Bundle[0].AddFiles(files);
         }
     }
 }

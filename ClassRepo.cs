@@ -13,24 +13,34 @@ namespace git4win
         /// <summary>
         /// Root local directory of the repository
         /// </summary>
-        public string root;
+        public string Root;
 
         /// <summary>
         /// Set of remotes associated with this repository
         /// </summary>
-        public ClassRemotes remotes = new ClassRemotes();
+        public ClassRemotes Remotes = new ClassRemotes();
 
         /// <summary>
         /// Set of active commits currently existing for this repo
         /// </summary>
-        public ClassCommits commits = new ClassCommits();
+        public ClassCommits Commits = new ClassCommits();
+
+        /// <summary>
+        /// Current format can be tree view or list view
+        /// </summary>
+        public bool IsTreeView = true;
+
+        /// <summary>
+        /// Current sorting rule for the view
+        /// </summary>
+        public GitDirectoryInfo.SortBy SortBy = GitDirectoryInfo.SortBy.Name;
 
         /// <summary>
         /// Stores the set of paths that are expanded in the left pane view.
         /// Although used only by the view, keeping it here saves it across
         /// the sessions.
         /// </summary>
-        private HashSet<string> viewExpansionSet = new HashSet<string>();
+        private readonly HashSet<string> _viewExpansionSet = new HashSet<string>();
 
         /// <summary>
         /// Constructor that sets the local root
@@ -38,7 +48,7 @@ namespace git4win
         /// <param name="newRoot">Root of the repository</param>
         public ClassRepo(string newRoot)
         {
-            root = newRoot;
+            Root = newRoot;
         }
 
         /// <summary>
@@ -46,7 +56,7 @@ namespace git4win
         /// </summary>
         public void ExpansionSet(string path)
         {
-            viewExpansionSet.Add(path);
+            _viewExpansionSet.Add(path);
         }
 
         /// <summary>
@@ -56,18 +66,18 @@ namespace git4win
         public void ExpansionReset(string path)
         {
             if (path == null)
-                viewExpansionSet.Clear();
+                _viewExpansionSet.Clear();
             else
-                viewExpansionSet.Remove(path);
+                _viewExpansionSet.Remove(path);
         }
 
         /// <summary>
         /// Return true if the path is marked as expanded
         /// </summary>
         /// <returns></returns>
-        public bool isExpanded(string path)
+        public bool IsExpanded(string path)
         {
-            return viewExpansionSet.Contains(path);
+            return _viewExpansionSet.Contains(path);
         }
 
         /// <summary>
@@ -76,7 +86,7 @@ namespace git4win
         /// </summary>
         public string Win2GitPath(string path)
         {
-            string s = path.Substring(root.Length + 1)
+            string s = path.Substring(Root.Length + 1)
                            .Replace('\\', '/');
             return s;
         }

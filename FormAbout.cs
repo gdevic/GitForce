@@ -23,7 +23,7 @@ namespace git4win
         /// <summary>
         /// Open a link to github
         /// </summary>
-        private void linkGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private static void LinkGithubLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(@"https://github.com/gdevic/git4win");
         }

@@ -59,7 +59,7 @@
             this.btDelete.TabIndex = 1;
             this.btDelete.Text = "Delete";
             this.btDelete.UseVisualStyleBackColor = true;
-            this.btDelete.Click += new System.EventHandler(this.Delete_Click);
+            this.btDelete.Click += new System.EventHandler(this.DeleteClick);
             // 
             // label1
             // 
@@ -82,7 +82,7 @@
             this.radioButton1.Tag = "Local";
             this.radioButton1.Text = "Local branch:";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButton1CheckedChanged);
             // 
             // radioButton2
             // 
@@ -94,7 +94,7 @@
             this.radioButton2.Tag = "Remote";
             this.radioButton2.Text = "Remote branch:";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButton1CheckedChanged);
             // 
             // listBranches
             // 
@@ -107,7 +107,7 @@
             this.listBranches.Name = "listBranches";
             this.listBranches.Size = new System.Drawing.Size(189, 117);
             this.listBranches.TabIndex = 5;
-            this.listBranches.SelectedIndexChanged += new System.EventHandler(this.listBranches_SelectedIndexChanged);
+            this.listBranches.SelectedIndexChanged += new System.EventHandler(this.ListBranchesSelectedIndexChanged);
             // 
             // checkForce
             // 

@@ -48,7 +48,7 @@
             this.btEdit.TabIndex = 2;
             this.btEdit.Text = "Edit";
             this.btEdit.UseVisualStyleBackColor = true;
-            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
+            this.btEdit.Click += new System.EventHandler(this.BtEditClick);
             // 
             // btAdd
             // 
@@ -59,7 +59,7 @@
             this.btAdd.TabIndex = 1;
             this.btAdd.Text = "Add";
             this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            this.btAdd.Click += new System.EventHandler(this.BtAddClick);
             // 
             // btDelete
             // 
@@ -71,7 +71,7 @@
             this.btDelete.TabIndex = 4;
             this.btDelete.Text = "Delete";
             this.btDelete.UseVisualStyleBackColor = true;
-            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            this.btDelete.Click += new System.EventHandler(this.BtDeleteClick);
             // 
             // listRemotes
             // 
@@ -83,7 +83,7 @@
             this.listRemotes.Name = "listRemotes";
             this.listRemotes.Size = new System.Drawing.Size(128, 119);
             this.listRemotes.TabIndex = 0;
-            this.listRemotes.SelectedIndexChanged += new System.EventHandler(this.listRemotes_SelectedIndexChanged);
+            this.listRemotes.SelectedIndexChanged += new System.EventHandler(this.ListRemotesSelectedIndexChanged);
             // 
             // groupBox2
             // 
@@ -111,7 +111,7 @@
             this.btRename.TabIndex = 3;
             this.btRename.Text = "Rename";
             this.btRename.UseVisualStyleBackColor = true;
-            this.btRename.Click += new System.EventHandler(this.btRename_Click);
+            this.btRename.Click += new System.EventHandler(this.BtRenameClick);
             // 
             // userControlRemoteDisplay
             // 

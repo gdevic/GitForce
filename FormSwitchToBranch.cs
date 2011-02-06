@@ -11,41 +11,41 @@ namespace git4win
 {
     public partial class FormSwitchToBranch : Form
     {
-        private string[] localBranches = null;
+        private readonly string[] _localBranches;
 
         /// <summary>
         /// Singular branch name that is selected to be switched to
         /// </summary>
-        private string branchName = null;
+        private string _branchName;
 
         public FormSwitchToBranch()
         {
             InitializeComponent();
 
             // Initialize the list of local branches to switch to
-            localBranches = App.Git.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            FormNewBranch.listAdd(ref listBranches, ref localBranches);
+            _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            FormNewBranch.ListAdd(ref listBranches, ref _localBranches);
         }
 
         /// <summary>
         /// Button is clicked to switch to a (local) branch
         /// </summary>
-        private void SwitchBranch_Click(object sender, EventArgs e)
+        private void SwitchBranchClick(object sender, EventArgs e)
         {
             StringBuilder cmd = new StringBuilder("checkout ");
 
-            cmd.Append(branchName);
+            cmd.Append(_branchName);
 
             // Execute the final branch command
-            App.Git.Run(cmd.ToString());
+            App.Repos.Current.Run(cmd.ToString());
         }
 
         /// <summary>
         /// Store the selected branch
         /// </summary>
-        private void listBranches_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBranchesSelectedIndexChanged(object sender, EventArgs e)
         {
-            branchName = listBranches.SelectedItem.ToString();
+            _branchName = listBranches.SelectedItem.ToString();
             btSwitch.Enabled = true;
         }
     }

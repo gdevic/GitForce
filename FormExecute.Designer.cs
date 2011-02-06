@@ -50,7 +50,7 @@
             this.textBox.Size = new System.Drawing.Size(562, 355);
             this.textBox.TabIndex = 0;
             this.textBox.Text = "";
-            this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
+            this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(TextBoxKeyPress);
             // 
             // contextMenu
             // 
@@ -67,14 +67,14 @@
             this.menuExecCopy.Name = "menuExecCopy";
             this.menuExecCopy.Size = new System.Drawing.Size(122, 22);
             this.menuExecCopy.Text = "Copy";
-            this.menuExecCopy.Click += new System.EventHandler(this.menuExecCopy_Click);
+            this.menuExecCopy.Click += new System.EventHandler(this.MenuExecCopyClick);
             // 
             // menuExecSelectAll
             // 
             this.menuExecSelectAll.Name = "menuExecSelectAll";
             this.menuExecSelectAll.Size = new System.Drawing.Size(122, 22);
             this.menuExecSelectAll.Text = "Select All";
-            this.menuExecSelectAll.Click += new System.EventHandler(this.menuExecSelectAll_Click);
+            this.menuExecSelectAll.Click += new System.EventHandler(this.MenuExecSelectAllClick);
             // 
             // toolStripSeparator1
             // 
@@ -86,7 +86,7 @@
             this.menuExecClear.Name = "menuExecClear";
             this.menuExecClear.Size = new System.Drawing.Size(122, 22);
             this.menuExecClear.Text = "Clear";
-            this.menuExecClear.Click += new System.EventHandler(this.menuExecClear_Click);
+            this.menuExecClear.Click += new System.EventHandler(this.MenuExecClearClick);
             // 
             // FormExecute
             // 

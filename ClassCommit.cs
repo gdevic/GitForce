@@ -12,13 +12,13 @@ namespace git4win
     [Serializable]
     public class ClassCommit
     {
-        public List<string> files = new List<string>();
-        public string description = null;
-        public bool isDefault = false;
+        public List<string> Files = new List<string>();
+        public string Description;
+        public bool IsDefault;
 
         public ClassCommit(string desc)
         {
-            description = desc;
+            Description = desc;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace git4win
         /// </summary>
         public void AddFiles(List<string> newFiles)
         {
-            files = files.Union(newFiles).ToList();
+            Files = Files.Union(newFiles).ToList();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace git4win
         /// </summary>
         public void Prune(List<string> outlaws)
         {
-            files = files.Except(outlaws).ToList();
+            Files = Files.Except(outlaws).ToList();
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace git4win
         /// </summary>
         public List<string> Renew(List<string> allFiles)
         {
-            files = files.Intersect(allFiles).ToList();
-            return allFiles.Except(files).ToList();
+            Files = Files.Intersect(allFiles).ToList();
+            return allFiles.Except(Files).ToList();
         }
     }
 }

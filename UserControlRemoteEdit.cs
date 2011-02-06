@@ -14,31 +14,31 @@ namespace git4win
         /// <summary>
         /// Local cache of the repo that we are editing
         /// </summary>
-        ClassRepo repo;
+        private ClassRepo _repo;
 
         /// <summary>
         /// Currently selected remote repo in our editing listbox
         /// </summary>
-        private ClassRemotes.Remote current;
+        private ClassRemotes.Remote _current;
 
         public RemoteEdit()
         {
             InitializeComponent();
         }
 
-        public void setRepo(ClassRepo _repo)
+        public void SetRepo(ClassRepo repo)
         {
-            repo = _repo;
-            listRefresh();
+            _repo = repo;
+            ListRefresh();
 
             // Select the first item, if there is any
             if (listRemotes.Items.Count > 0)
                 listRemotes.SelectedIndex = 0;
         }
 
-        private void listRefresh()
+        private void ListRefresh()
         {
-            repo.remotes.Refresh(repo);
+            _repo.Remotes.Refresh(_repo);
 
             // Populate the list box
             userControlRemoteDisplay.Clear();
@@ -46,19 +46,19 @@ namespace git4win
             listRemotes.Items.Clear();
 
             // Get the list of names from remotes class and iteratively add them to the listbox
-            foreach (var r in repo.remotes.GetListNames())
+            foreach (var r in _repo.Remotes.GetListNames())
                 listRemotes.Items.Add(r);
 
             listRemotes.EndUpdate();
         }
 
-        private void listRemotes_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListRemotesSelectedIndexChanged(object sender, EventArgs e)
         {
             if (listRemotes.SelectedIndex >= 0)
             {
                 string name = listRemotes.SelectedItem.ToString();
-                current = repo.remotes.Get(name);
-                userControlRemoteDisplay.Set(current);
+                _current = _repo.Remotes.Get(name);
+                userControlRemoteDisplay.Set(_current);
 
                 btEdit.Enabled = btRename.Enabled = btDelete.Enabled = true;
             }
@@ -69,7 +69,7 @@ namespace git4win
         /// <summary>
         /// Add new remote repository
         /// </summary>
-        private void btAdd_Click(object sender, EventArgs e)
+        private void BtAddClick(object sender, EventArgs e)
         {
             ClassRemotes.Remote remote = new ClassRemotes.Remote();
             FormRemoteAddEdit remoteAddEdit = new FormRemoteAddEdit();
@@ -78,69 +78,69 @@ namespace git4win
             if (remoteAddEdit.ShowDialog() == DialogResult.OK)
             {
                 remote = remoteAddEdit.Get();
-                repo.Run("remote add " + remote.name + " " + remote.urlFetch);
-                repo.remotes.SetPassword(remote.name, remote.password);
+                _repo.Run("remote add " + remote.Name + " " + remote.UrlFetch);
+                _repo.Remotes.SetPassword(remote.Name, remote.Password);
 
-                setRepo(repo);
+                SetRepo(_repo);
             }
         }
 
         /// <summary>
         /// Edit selected remote repository
         /// </summary>
-        private void btEdit_Click(object sender, EventArgs e)
+        private void BtEditClick(object sender, EventArgs e)
         {
             ClassRemotes.Remote remote;
             FormRemoteAddEdit remoteAddEdit = new FormRemoteAddEdit();
-            remoteAddEdit.Prepare(FormRemoteAddEdit.Function.Edit, current);
+            remoteAddEdit.Prepare(FormRemoteAddEdit.Function.Edit, _current);
 
             if (remoteAddEdit.ShowDialog() == DialogResult.OK)
             {
                 // Get new values and start comparing what changed
                 remote = remoteAddEdit.Get();
 
-                if (remote.urlFetch != current.urlFetch)
+                if (remote.UrlFetch != _current.UrlFetch)
                 {
                     // Change the fetch URL
-                    repo.Run("remote set-url " + remote.name + " " + remote.urlFetch);
+                    _repo.Run("remote set-url " + remote.Name + " " + remote.UrlFetch);
 
                     // However, this will also change the push URL, so reset it
-                    if (current.urlPush != "")
-                        repo.Run("remote set-url --push " + remote.name + " " + current.urlPush);
+                    if (_current.UrlPush != "")
+                        _repo.Run("remote set-url --push " + remote.Name + " " + _current.UrlPush);
                 }
 
-                if (remote.urlPush != current.urlPush)
+                if (remote.UrlPush != _current.UrlPush)
                 {
                     // Change the push URL
-                    repo.Run("remote set-url --push " + remote.name + " " + remote.urlPush);
+                    _repo.Run("remote set-url --push " + remote.Name + " " + remote.UrlPush);
                 }
 
-                if (remote.password != current.password)
+                if (remote.Password != _current.Password)
                 {
                     // Change the password
-                    repo.remotes.SetPassword(remote.name, remote.password);
+                    _repo.Remotes.SetPassword(remote.Name, remote.Password);
                 }
-                setRepo(repo);
+                SetRepo(_repo);
             }
         }
 
         /// <summary>
         /// Rename selected remote repository
         /// </summary>
-        private void btRename_Click(object sender, EventArgs e)
+        private void BtRenameClick(object sender, EventArgs e)
         {
             ClassRemotes.Remote remote;
             FormRemoteAddEdit remoteAddEdit = new FormRemoteAddEdit();
-            remoteAddEdit.Prepare(FormRemoteAddEdit.Function.Rename, current);
+            remoteAddEdit.Prepare(FormRemoteAddEdit.Function.Rename, _current);
 
             if (remoteAddEdit.ShowDialog() == DialogResult.OK)
             {
                 // Get new name and change it
                 remote = remoteAddEdit.Get();
-                if (remote.name != current.name)
+                if (remote.Name != _current.Name)
                 {
-                    repo.Run("remote rename " + current.name + " " + remote.name);
-                    setRepo(repo);
+                    _repo.Run("remote rename " + _current.Name + " " + remote.Name);
+                    SetRepo(_repo);
                 }
             }
         }
@@ -148,16 +148,16 @@ namespace git4win
         /// <summary>
         /// Delete selected remote repository
         /// </summary>
-        private void btDelete_Click(object sender, EventArgs e)
+        private void BtDeleteClick(object sender, EventArgs e)
         {
-            if (MessageBox.Show("This will delete reference to a remote repository '" + current.name + "'\nProceed?", "Delete", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show("This will delete reference to a remote repository '" + _current.Name + "'\nProceed?", "Delete", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                repo.Run("remote rm " + current.name);
+                _repo.Run("remote rm " + _current.Name);
 
                 btEdit.Enabled = btRename.Enabled = btDelete.Enabled = false;
 
                 // Refresh and select the next item, if any
-                setRepo(repo);
+                SetRepo(_repo);
             }
         }
     }

@@ -58,7 +58,7 @@
             this.btDelete.TabIndex = 1;
             this.btDelete.Text = "Delete";
             this.btDelete.UseVisualStyleBackColor = true;
-            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            this.btDelete.Click += new System.EventHandler(this.BtDeleteClick);
             // 
             // radioDelete1
             // 
@@ -72,7 +72,7 @@
             this.radioDelete1.Tag = "0";
             this.radioDelete1.Text = "Only remove it from this git4win list. All files will be intact.";
             this.radioDelete1.UseVisualStyleBackColor = true;
-            this.radioDelete1.Click += new System.EventHandler(this.radioButtonClicked);
+            this.radioDelete1.Click += new System.EventHandler(this.RadioButtonClicked);
             // 
             // radioDelete2
             // 
@@ -84,7 +84,7 @@
             this.radioDelete2.Tag = "1";
             this.radioDelete2.Text = "Also delete .git directory, but leave your files intact.";
             this.radioDelete2.UseVisualStyleBackColor = true;
-            this.radioDelete2.Click += new System.EventHandler(this.radioButtonClicked);
+            this.radioDelete2.Click += new System.EventHandler(this.RadioButtonClicked);
             // 
             // radioDelete3
             // 
@@ -96,7 +96,7 @@
             this.radioDelete3.Tag = "2";
             this.radioDelete3.Text = "Delete .git directory and all files.";
             this.radioDelete3.UseVisualStyleBackColor = true;
-            this.radioDelete3.Click += new System.EventHandler(this.radioButtonClicked);
+            this.radioDelete3.Click += new System.EventHandler(this.RadioButtonClicked);
             // 
             // label1
             // 

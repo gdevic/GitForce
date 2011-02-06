@@ -38,12 +38,12 @@ namespace git4win
                     btOK.Enabled = false;
                     break;
                 case Function.Edit:
-                    Text = "Edit remote repository '" + remote.name + "'";
+                    Text = "Edit remote repository '" + remote.Name + "'";
                     remoteDisplay.Enable(false, true);
                     remoteDisplay.Set(remote);
                     break;
                 case Function.Rename:
-                    Text = "Rename remote repository '" + remote.name + "'";
+                    Text = "Rename remote repository '" + remote.Name + "'";
                     remoteDisplay.Enable(true, false);
                     remoteDisplay.Set(remote);
                     break;

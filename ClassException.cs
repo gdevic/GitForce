@@ -7,11 +7,11 @@ namespace git4win
 {
     public class ClassException : Exception
     {
-        public string msg;
+        public string Msg;
 
         public ClassException(string message)
         {
-            msg = message;
+            Msg = message;
         }
     }
 }

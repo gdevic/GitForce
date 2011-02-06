@@ -71,7 +71,7 @@
             this.btSsh.TabIndex = 8;
             this.btSsh.Text = "Import Remote SSH Key";
             this.btSsh.UseVisualStyleBackColor = true;
-            this.btSsh.Click += new System.EventHandler(this.btSsh_Click);
+            this.btSsh.Click += new System.EventHandler(this.BtSshClick);
             // 
             // textPassword
             // 

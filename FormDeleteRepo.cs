@@ -15,24 +15,24 @@ namespace git4win
         /// <summary>
         /// Radio button selection mode
         /// </summary>
-        private int radioSelection = 0;
+        private int _radioSelection;
 
         /// <summary>
         /// Root directory to delete from
         /// </summary>
-        private string dir;
+        private readonly string _dir;
 
         public FormDeleteRepo(string root)
         {
             InitializeComponent();
 
-            dir = textPath.Text = root;
+            _dir = textPath.Text = root;
         }
 
         /// <summary>
         /// Remove directories and files if selected
         /// </summary>
-        private void btDelete_Click(object sender, EventArgs e)
+        private void BtDeleteClick(object sender, EventArgs e)
         {
             try
             {
@@ -41,14 +41,14 @@ namespace git4win
                 // 1: delete only .git tree
                 // 2: delete complete repo folder
 
-                if (radioSelection == 1)
+                if (_radioSelection == 1)
                 {
-                    Directory.Delete(dir + "\\.git", true);
+                    Directory.Delete(_dir + "\\.git", true);
                 }
 
-                if (radioSelection == 2)
+                if (_radioSelection == 2)
                 {
-                    Directory.Delete(dir, true);
+                    Directory.Delete(_dir, true);
                 }
             }
             catch (Exception ex)
@@ -60,9 +60,9 @@ namespace git4win
         /// <summary>
         /// Any one of the 3 radio buttons are clicked. Store the selection.
         /// </summary>
-        private void radioButtonClicked(object sender, EventArgs e)
+        private void RadioButtonClicked(object sender, EventArgs e)
         {
-            radioSelection = int.Parse((sender as RadioButton).Tag.ToString());
+            _radioSelection = int.Parse((sender as RadioButton).Tag.ToString());
         }
     }
 }

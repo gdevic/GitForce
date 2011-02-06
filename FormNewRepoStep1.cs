@@ -16,23 +16,23 @@ namespace git4win
         /// <summary>
         /// Describes the source for the new repo: "empty", "local" or "remote"
         /// </summary>
-        public string type = "empty";
-        public string local = "";
-        public ClassRemotes.Remote remote = new ClassRemotes.Remote();
+        public string Type = "empty";
+        public string Local = "";
+        public ClassRemotes.Remote Remote;
 
         public FormNewRepoStep1()
         {
             InitializeComponent();
             // Set the default remote name
-            remote.name = "origin";
-            remoteDisplay.Set(remote);
+            Remote.Name = "origin";
+            remoteDisplay.Set(Remote);
             remoteDisplay.AnyTextChanged += SomeTextChanged;
         }
 
         /// <summary>
         /// Browse for the local path to directory to clone
         /// </summary>
-        private void btBrowse_Click(object sender, EventArgs e)
+        private void BtBrowseClick(object sender, EventArgs e)
         {
             if (folderDlg.ShowDialog() == DialogResult.OK)
                 textBoxLocal.Text = folderDlg.SelectedPath;
@@ -41,7 +41,7 @@ namespace git4win
         /// <summary>
         /// User changed the radio button source for the repo
         /// </summary>
-        private void rbSource_CheckedChanged(object sender, EventArgs e)
+        private void RbSourceCheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
@@ -50,7 +50,7 @@ namespace git4win
                 btNext.Enabled = btBrowse.Enabled = remoteDisplay.Enabled = false;
                 remoteDisplay.Enable(false, false);
 
-                switch (type = rb.Tag.ToString())
+                switch (Type = rb.Tag.ToString())
                 {
                     case "empty":
                         btNext.Enabled = true;
@@ -59,12 +59,12 @@ namespace git4win
                         textBoxLocal.ReadOnly = false;
                         btBrowse.Enabled = true;
                         btNext.Enabled = Path.IsPathRooted(textBoxLocal.Text) && Directory.Exists(Path.Combine(textBoxLocal.Text, ".git"));
-                        local = textBoxLocal.Text;
+                        Local = textBoxLocal.Text;
                         break;
                     case "remote":
                         remoteDisplay.Enabled = true;
                         remoteDisplay.Enable(true, true);
-                        btNext.Enabled = remoteDisplay.isValid();
+                        btNext.Enabled = remoteDisplay.IsValid();
                         break;
                 }
             }
@@ -73,10 +73,10 @@ namespace git4win
         /// <summary>
         /// Text in the local directory path changed. Validate the entry.
         /// </summary>
-        private void textBoxLocal_TextChanged(object sender, EventArgs e)
+        private void TextBoxLocalTextChanged(object sender, EventArgs e)
         {
             btNext.Enabled = Path.IsPathRooted(textBoxLocal.Text) && Directory.Exists(Path.Combine(textBoxLocal.Text, ".git"));
-            local = textBoxLocal.Text;
+            Local = textBoxLocal.Text;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace git4win
         private void SomeTextChanged(bool valid)
         {
             btNext.Enabled = valid;
-            remote = remoteDisplay.Get();
+            Remote = remoteDisplay.Get();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MultiSelectTreeview
     /// </summary>
 	public class MultiSelectTreeview : TreeView
 	{
-        private bool overrideShift = false;
+        private bool _overrideShift;
 
         /// <summary>
         /// This is a kind of hack to select all nodes (at the current expand level)
@@ -19,16 +19,16 @@ namespace MultiSelectTreeview
         /// </summary>
         public void SelectAll()
         {
-            overrideShift = true;
+            _overrideShift = true;
 
             // Nothing is selected in the tree, this isn't a good state
             // select the top node
-            if (m_SelectedNode == null || m_SelectedNode == Nodes[0])
+            if (_mSelectedNode == null || _mSelectedNode == Nodes[0])
             {
                 SelectAllNodes(TopNode);
             }
 
-            if (m_SelectedNode.Parent == null)
+            if (_mSelectedNode.Parent == null)
             {
                 // Select all of the root nodes up to this point 
                 if (Nodes.Count > 0)
@@ -39,10 +39,10 @@ namespace MultiSelectTreeview
             else
             {
                 // Select all of the nodes up to this point under this nodes parent
-                SelectNode(m_SelectedNode.Parent.FirstNode);
+                SelectNode(_mSelectedNode.Parent.FirstNode);
             }
 
-            if (m_SelectedNode.Parent == null)
+            if (_mSelectedNode.Parent == null)
             {
                 // Select the last ROOT node in the tree
                 if (Nodes.Count > 0)
@@ -53,20 +53,20 @@ namespace MultiSelectTreeview
             else
             {
                 // Select the last node in this branch
-                SelectNode(m_SelectedNode.Parent.LastNode);
+                SelectNode(_mSelectedNode.Parent.LastNode);
             }
 
-            overrideShift = false;
+            _overrideShift = false;
         }
 
 		#region Selected Node(s) Properties
 
-		private List<TreeNode> m_SelectedNodes = null;		
+		private readonly List<TreeNode> _mSelectedNodes;		
 		public List<TreeNode> SelectedNodes
 		{
 			get
 			{
-				return m_SelectedNodes;
+				return _mSelectedNodes;
 			}
 			set
 			{
@@ -82,10 +82,10 @@ namespace MultiSelectTreeview
 		}
 
 		// Note we use the new keyword to Hide the native treeview's SelectedNode property.
-		private TreeNode m_SelectedNode;
+		private TreeNode _mSelectedNode;
 		public new TreeNode SelectedNode
 		{
-			get { return m_SelectedNode; }
+			get { return _mSelectedNode; }
 			set
 			{
 				ClearSelectedNodes();
@@ -100,7 +100,7 @@ namespace MultiSelectTreeview
 
 		public MultiSelectTreeview()
 		{
-			m_SelectedNodes = new List<TreeNode>();
+			_mSelectedNodes = new List<TreeNode>();
 			base.SelectedNode = null;
 		}
 
@@ -113,7 +113,7 @@ namespace MultiSelectTreeview
 			// keyboard to select nodes
 			try
 			{
-				if( m_SelectedNode == null && TopNode != null )
+				if( _mSelectedNode == null && TopNode != null )
 				{
 					ToggleNode( TopNode, true );
 				}
@@ -142,7 +142,7 @@ namespace MultiSelectTreeview
 					int rightBound = node.Bounds.Right + 10; // Give a little extra room
 					if( e.Location.X > leftBound && e.Location.X < rightBound )
 					{
-						if( ModifierKeys == Keys.None && ( m_SelectedNodes.Contains( node ) ) )
+						if( ModifierKeys == Keys.None && ( _mSelectedNodes.Contains( node ) ) )
 						{
 							// Potential Drag Operation
 							// Let Mouse Up do select
@@ -174,7 +174,7 @@ namespace MultiSelectTreeview
 				TreeNode node = GetNodeAt( e.Location );
 				if( node != null )
 				{
-					if( ModifierKeys == Keys.None && m_SelectedNodes.Contains( node ) )
+					if( ModifierKeys == Keys.None && _mSelectedNodes.Contains( node ) )
 					{
 						int leftBound = node.Bounds.X; // -20; // Allow user to click on image
 						int rightBound = node.Bounds.Right + 10; // Give a little extra room
@@ -206,7 +206,7 @@ namespace MultiSelectTreeview
 
 				if( node != null )
 				{
-					if( !m_SelectedNodes.Contains( node ) )
+					if( !_mSelectedNodes.Contains( node ) )
 					{
 						SelectSingleNode( node );
 						ToggleNode( node, true );
@@ -267,56 +267,56 @@ namespace MultiSelectTreeview
 			{
 				// Nothing is selected in the tree, this isn't a good state
 				// select the top node
-				if( m_SelectedNode == null && TopNode != null )
+				if( _mSelectedNode == null && TopNode != null )
 				{
 					ToggleNode( TopNode, true );
 				}
 
 				// Nothing is still selected in the tree, this isn't a good state, leave.
-				if( m_SelectedNode == null ) return;
+				if( _mSelectedNode == null ) return;
 
 				switch (e.KeyCode)
 				{
 				    case Keys.Left:
-				        if( m_SelectedNode.IsExpanded && m_SelectedNode.Nodes.Count > 0 )
+				        if( _mSelectedNode.IsExpanded && _mSelectedNode.Nodes.Count > 0 )
 				        {
 				            // Collapse an expanded node that has children
-				            m_SelectedNode.Collapse();
+				            _mSelectedNode.Collapse();
 				        }
-				        else if( m_SelectedNode.Parent != null )
+				        else if( _mSelectedNode.Parent != null )
 				        {
 				            // Node is already collapsed, try to select its parent.
-				            SelectSingleNode( m_SelectedNode.Parent );
+				            SelectSingleNode( _mSelectedNode.Parent );
 				        }
 				        break;
 				    case Keys.Right:
-				        if( !m_SelectedNode.IsExpanded )
+				        if( !_mSelectedNode.IsExpanded )
 				        {
 				            // Expand a collpased node's children
-				            m_SelectedNode.Expand();
+				            _mSelectedNode.Expand();
 				        }
 				        else
 				        {
 				            // Node was already expanded, select the first child
-				            SelectSingleNode( m_SelectedNode.FirstNode );
+				            SelectSingleNode( _mSelectedNode.FirstNode );
 				        }
 				        break;
 				    case Keys.Up:
-				        if( m_SelectedNode.PrevVisibleNode != null )
+				        if( _mSelectedNode.PrevVisibleNode != null )
 				        {
-				            SelectNode( m_SelectedNode.PrevVisibleNode );
+				            SelectNode( _mSelectedNode.PrevVisibleNode );
 				        }
 				        break;
 				    case Keys.Down:
-				        if( m_SelectedNode.NextVisibleNode != null )
+				        if( _mSelectedNode.NextVisibleNode != null )
 				        {
-				            SelectNode( m_SelectedNode.NextVisibleNode );
+				            SelectNode( _mSelectedNode.NextVisibleNode );
 				        }
 				        break;
 				    case Keys.Home:
 				        if( bShift )
 				        {
-				            if( m_SelectedNode.Parent == null )
+				            if( _mSelectedNode.Parent == null )
 				            {
 				                // Select all of the root nodes up to this point 
 				                if( Nodes.Count > 0 )
@@ -327,7 +327,7 @@ namespace MultiSelectTreeview
 				            else
 				            {
 				                // Select all of the nodes up to this point under this nodes parent
-				                SelectNode( m_SelectedNode.Parent.FirstNode );
+				                SelectNode( _mSelectedNode.Parent.FirstNode );
 				            }
 				        }
 				        else
@@ -342,7 +342,7 @@ namespace MultiSelectTreeview
 				    case Keys.End:
 				        if( bShift )
 				        {
-				            if( m_SelectedNode.Parent == null )
+				            if( _mSelectedNode.Parent == null )
 				            {
 				                // Select the last ROOT node in the tree
 				                if( Nodes.Count > 0 )
@@ -353,7 +353,7 @@ namespace MultiSelectTreeview
 				            else
 				            {
 				                // Select the last node in this branch
-				                SelectNode( m_SelectedNode.Parent.LastNode );
+				                SelectNode( _mSelectedNode.Parent.LastNode );
 				            }
 				        }
 				        else
@@ -375,7 +375,7 @@ namespace MultiSelectTreeview
 				        {
 				            // Select the highest node in the display
 				            int nCount = VisibleCount;
-				            TreeNode ndCurrent = m_SelectedNode;
+				            TreeNode ndCurrent = _mSelectedNode;
 				            while( ( nCount ) > 0 && ( ndCurrent.PrevVisibleNode != null ) )
 				            {
 				                ndCurrent = ndCurrent.PrevVisibleNode;
@@ -388,7 +388,7 @@ namespace MultiSelectTreeview
 				        {
 				            // Select the lowest node in the display
 				            int nCount = VisibleCount;
-				            TreeNode ndCurrent = m_SelectedNode;
+				            TreeNode ndCurrent = _mSelectedNode;
 				            while( ( nCount ) > 0 && ( ndCurrent.NextVisibleNode != null ) )
 				            {
 				                ndCurrent = ndCurrent.NextVisibleNode;
@@ -404,7 +404,7 @@ namespace MultiSelectTreeview
 				            // starts with this character
 				            string sSearch = ( (char) e.KeyValue ).ToString();
 
-				            TreeNode ndCurrent = m_SelectedNode;
+				            TreeNode ndCurrent = _mSelectedNode;
 				            while( ( ndCurrent.NextVisibleNode != null ) )
 				            {
 				                ndCurrent = ndCurrent.NextVisibleNode;
@@ -438,16 +438,16 @@ namespace MultiSelectTreeview
 			{
 				BeginUpdate();
 
-				if( m_SelectedNode == null || (ModifierKeys == Keys.Control && !overrideShift))
+				if( _mSelectedNode == null || (ModifierKeys == Keys.Control && !_overrideShift))
 				{
 					// Ctrl+Click selects an unselected node, or unselects a selected node.
-					bool bIsSelected = m_SelectedNodes.Contains( node );
+					bool bIsSelected = _mSelectedNodes.Contains( node );
 					ToggleNode( node, !bIsSelected );
 				}
-				else if( ModifierKeys == Keys.Shift || overrideShift )
+				else if( ModifierKeys == Keys.Shift || _overrideShift )
 				{
 					// Shift+Click selects nodes between the selected node and here.
-					TreeNode ndStart = m_SelectedNode;
+					TreeNode ndStart = _mSelectedNode;
 					TreeNode ndEnd = node;
 
 					if( ndStart.Parent == ndEnd.Parent )
@@ -561,7 +561,7 @@ namespace MultiSelectTreeview
 					SelectSingleNode( node );
 				}
 
-				OnAfterSelect( new TreeViewEventArgs( m_SelectedNode ) );
+				OnAfterSelect( new TreeViewEventArgs( _mSelectedNode ) );
 			}
 			finally
 			{
@@ -573,7 +573,7 @@ namespace MultiSelectTreeview
 		{
 			try
 			{
-				foreach( TreeNode node in m_SelectedNodes )
+				foreach( TreeNode node in _mSelectedNodes )
 				{
 					node.BackColor = BackColor;
 					node.ForeColor = ForeColor;
@@ -581,8 +581,8 @@ namespace MultiSelectTreeview
 			}
 			finally
 			{
-				m_SelectedNodes.Clear();
-				m_SelectedNode = null;
+				_mSelectedNodes.Clear();
+				_mSelectedNode = null;
 			}
 		}
 
@@ -609,17 +609,17 @@ namespace MultiSelectTreeview
 		{
 			if( bSelectNode )
 			{
-				m_SelectedNode = node;
-				if( !m_SelectedNodes.Contains( node ) )
+				_mSelectedNode = node;
+				if( !_mSelectedNodes.Contains( node ) )
 				{
-					m_SelectedNodes.Add( node );
+					_mSelectedNodes.Add( node );
 				}
 				node.BackColor = SystemColors.Highlight;
 				node.ForeColor = SystemColors.HighlightText;
 			}
 			else
 			{
-				m_SelectedNodes.Remove( node );
+				_mSelectedNodes.Remove( node );
 				node.BackColor = BackColor;
 				node.ForeColor = ForeColor;
 			}

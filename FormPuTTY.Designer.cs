@@ -76,7 +76,7 @@
             this.listBoxKeys.Name = "listBoxKeys";
             this.listBoxKeys.Size = new System.Drawing.Size(341, 108);
             this.listBoxKeys.TabIndex = 2;
-            this.listBoxKeys.SelectedIndexChanged += new System.EventHandler(this.listBoxKeys_SelectedIndexChanged);
+            this.listBoxKeys.SelectedIndexChanged += new System.EventHandler(this.ListBoxKeysSelectedIndexChanged);
             // 
             // byAdd
             // 
@@ -87,7 +87,7 @@
             this.byAdd.TabIndex = 0;
             this.byAdd.Text = "Add...";
             this.byAdd.UseVisualStyleBackColor = true;
-            this.byAdd.Click += new System.EventHandler(this.byAdd_Click);
+            this.byAdd.Click += new System.EventHandler(this.ByAddClick);
             // 
             // btRemove
             // 
@@ -99,7 +99,7 @@
             this.btRemove.TabIndex = 1;
             this.btRemove.Text = "Remove";
             this.btRemove.UseVisualStyleBackColor = true;
-            this.btRemove.Click += new System.EventHandler(this.btRemove_Click);
+            this.btRemove.Click += new System.EventHandler(this.BtRemoveClick);
             // 
             // listBoxPf
             // 
@@ -112,7 +112,7 @@
             this.listBoxPf.Name = "listBoxPf";
             this.listBoxPf.Size = new System.Drawing.Size(341, 79);
             this.listBoxPf.TabIndex = 2;
-            this.listBoxPf.SelectedIndexChanged += new System.EventHandler(this.listBoxPf_SelectedIndexChanged);
+            this.listBoxPf.SelectedIndexChanged += new System.EventHandler(this.ListBoxPfSelectedIndexChanged);
             // 
             // btAddPf
             // 
@@ -124,7 +124,7 @@
             this.btAddPf.TabIndex = 1;
             this.btAddPf.Text = "Add";
             this.btAddPf.UseVisualStyleBackColor = true;
-            this.btAddPf.Click += new System.EventHandler(this.btAddP_Click);
+            this.btAddPf.Click += new System.EventHandler(this.BtAddPClick);
             // 
             // btRemovePf
             // 
@@ -136,7 +136,7 @@
             this.btRemovePf.TabIndex = 3;
             this.btRemovePf.Text = "Remove";
             this.btRemovePf.UseVisualStyleBackColor = true;
-            this.btRemovePf.Click += new System.EventHandler(this.btRemoveP_Click);
+            this.btRemovePf.Click += new System.EventHandler(this.BtRemovePClick);
             // 
             // btShowPf
             // 
@@ -147,7 +147,7 @@
             this.btShowPf.TabIndex = 4;
             this.btShowPf.Text = "Show";
             this.btShowPf.UseVisualStyleBackColor = true;
-            this.btShowPf.Click += new System.EventHandler(this.btShow_Click);
+            this.btShowPf.Click += new System.EventHandler(this.BtShowClick);
             // 
             // label1
             // 
@@ -174,7 +174,7 @@
             this.btImport.TabIndex = 0;
             this.btImport.Text = "Import Now";
             this.btImport.UseVisualStyleBackColor = true;
-            this.btImport.Click += new System.EventHandler(this.btImport_Click);
+            this.btImport.Click += new System.EventHandler(this.BtImportClick);
             // 
             // btPuttygen
             // 
@@ -185,7 +185,7 @@
             this.btPuttygen.TabIndex = 1;
             this.btPuttygen.Text = "PuTTYgen";
             this.btPuttygen.UseVisualStyleBackColor = true;
-            this.btPuttygen.Click += new System.EventHandler(this.btPuttygen_Click);
+            this.btPuttygen.Click += new System.EventHandler(BtPuttygenClick);
             // 
             // groupBox1
             // 
@@ -212,7 +212,7 @@
             this.textBoxInputPf.Size = new System.Drawing.Size(341, 20);
             this.textBoxInputPf.TabIndex = 0;
             this.textBoxInputPf.UseSystemPasswordChar = true;
-            this.textBoxInputPf.TextChanged += new System.EventHandler(this.textBoxInputPf_TextChanged);
+            this.textBoxInputPf.TextChanged += new System.EventHandler(this.TextBoxInputPfTextChanged);
             // 
             // groupBox2
             // 

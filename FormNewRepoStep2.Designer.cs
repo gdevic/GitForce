@@ -99,7 +99,7 @@
             this.textBoxRepoPath.Name = "textBoxRepoPath";
             this.textBoxRepoPath.Size = new System.Drawing.Size(375, 20);
             this.textBoxRepoPath.TabIndex = 4;
-            this.textBoxRepoPath.TextChanged += new System.EventHandler(this.textBoxRepoPath_TextChanged);
+            this.textBoxRepoPath.TextChanged += new System.EventHandler(this.TextBoxRepoPathTextChanged);
             // 
             // btBrowse
             // 
@@ -110,7 +110,7 @@
             this.btBrowse.TabIndex = 5;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
-            this.btBrowse.Click += new System.EventHandler(this.btBrowse_Click);
+            this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
             // 
             // label2
             // 
@@ -129,7 +129,7 @@
             this.textBoxExtraArgs.Name = "textBoxExtraArgs";
             this.textBoxExtraArgs.Size = new System.Drawing.Size(375, 20);
             this.textBoxExtraArgs.TabIndex = 7;
-            this.textBoxExtraArgs.TextChanged += new System.EventHandler(this.textBoxExtraArgs_TextChanged);
+            this.textBoxExtraArgs.TextChanged += new System.EventHandler(this.TextBoxExtraArgsTextChanged);
             // 
             // checkBoxBare
             // 
@@ -140,7 +140,7 @@
             this.checkBoxBare.TabIndex = 8;
             this.checkBoxBare.Text = "Create a shared or \"bare\" repository with no working files in it";
             this.checkBoxBare.UseVisualStyleBackColor = true;
-            this.checkBoxBare.CheckedChanged += new System.EventHandler(this.checkBoxBare_CheckedChanged);
+            this.checkBoxBare.CheckedChanged += new System.EventHandler(this.CheckBoxBareCheckedChanged);
             // 
             // groupBoxSsh
             // 
@@ -168,7 +168,7 @@
             this.btMyKeys.Text = "Manage PuTTY Keys...";
             this.btMyKeys.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btMyKeys.UseVisualStyleBackColor = true;
-            this.btMyKeys.Click += new System.EventHandler(this.btPageant_Click);
+            this.btMyKeys.Click += new System.EventHandler(BtPageantClick);
             // 
             // label3
             // 

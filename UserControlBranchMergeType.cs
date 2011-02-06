@@ -14,7 +14,7 @@ namespace git4win
         /// <summary>
         /// Defines help text to print when a merge option is selected
         /// </summary>
-        private static Dictionary<string, string> help = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> Help = new Dictionary<string, string> {
             { "fastforward", "Help for fastforward" },
             { "commit", "Help for commit" },
             { "resolve", "Help for resolve" },
@@ -27,7 +27,7 @@ namespace git4win
         /// <summary>
         /// Currently selected merge style
         /// </summary>
-        private string current = null;
+        private string _current;
 
         public UserControlBranchMergeStyle()
         {
@@ -79,29 +79,29 @@ namespace git4win
         /// </summary>
         public string GetStyle()
         {
-            return rb2.Checked ? comboStrategy.Text : current;
+            return rb2.Checked ? comboStrategy.Text : _current;
         }
 
         /// <summary>
         /// Called on radio button style changed
         /// </summary>
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        private void RadioButtonCheckedChanged(object sender, EventArgs e)
         {
             if ((sender as RadioButton).Checked)
             {
-                current = (sender as RadioButton).Tag.ToString();
-                if (current == "strategy")
-                    current = comboStrategy.Text;
-                labelHelp.Text = help[current];
+                _current = (sender as RadioButton).Tag.ToString();
+                if (_current == "strategy")
+                    _current = comboStrategy.Text;
+                labelHelp.Text = Help[_current];
             }
         }
 
         /// <summary>
         /// Called on combo style selection changed
         /// </summary>
-        private void comboStrategy_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboStrategySelectedIndexChanged(object sender, EventArgs e)
         {
-            labelHelp.Text = help[(sender as ComboBox).Text];
+            labelHelp.Text = Help[(sender as ComboBox).Text];
         }
     }
 }

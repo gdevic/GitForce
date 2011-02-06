@@ -27,13 +27,13 @@ namespace git4win
         /// This is placed first, before initializing the user panels, so that the
         /// strings are accessible to individual panels if they want to use it.
         /// </summary>
-        protected string[] config = ClassConfig.Run("--list -z").Split('\0');
+        protected string[] Config = ClassConfig.Run("--list -z").Split('\0');
 
         /// <summary>
         /// Create a lookup from panel names (which are set in each corresponding node
         /// of an option set tree view) to the actual option panel instance:
         /// </summary>
-        private Dictionary<string, UserControl> panels = new Dictionary<string, UserControl> {
+        private readonly Dictionary<string, UserControl> _panels = new Dictionary<string, UserControl> {
             { "User", new ControlUser() },
             { "Status", new ControlStatus() },
             { "Commits", new ControlCommits() },
@@ -50,17 +50,17 @@ namespace git4win
         /// <summary>
         /// Settings panel that is currently on the top
         /// </summary>
-        private UserControl current;
+        private UserControl _current;
 
         public FormOptions()
         {
             InitializeComponent();
 
             // Add all user panels to the base options panel; call their init
-            foreach (KeyValuePair<string, UserControl> key in panels)
+            foreach (KeyValuePair<string, UserControl> key in _panels)
             {
                 panel.Controls.Add(key.Value);
-                (key.Value as IUserSettings).Init(config);
+                (key.Value as IUserSettings).Init(Config);
                 key.Value.Dock = DockStyle.Fill;
             }
 
@@ -72,13 +72,13 @@ namespace git4win
         /// <summary>
         /// Selecting the tree node brings up the corresponding user control
         /// </summary>
-        private void treeSections_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeSectionsAfterSelect(object sender, TreeViewEventArgs e)
         {
             string panelName = e.Node.Tag as string;
-            if (panelName != null && panels.ContainsKey(panelName))
+            if (panelName != null && _panels.ContainsKey(panelName))
             {
-                current = panels[panelName];
-                current.BringToFront();
+                _current = _panels[panelName];
+                _current.BringToFront();
             }
         }
 
@@ -88,18 +88,18 @@ namespace git4win
         /// Hitting Cancel will void all changes in any panel done since the last
         /// time Apply button was pressed.
         /// </summary>
-        private void btApply_Click(object sender, EventArgs e)
+        private void BtApplyClick(object sender, EventArgs e)
         {
-            (current as IUserSettings).ApplyChanges();
+            (_current as IUserSettings).ApplyChanges();
         }
 
         /// <summary>
         /// User clicked on the OK button - apply all modified settings before
         /// returning from the dialog
         /// </summary>
-        private void btOK_Click(object sender, EventArgs e)
+        private void BtOkClick(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, UserControl> key in panels)
+            foreach (KeyValuePair<string, UserControl> key in _panels)
                 (key.Value as IUserSettings).ApplyChanges();
         }
     }
@@ -112,7 +112,7 @@ namespace git4win
     /// </summary>
     public static class ControlDirtyHelper
     {
-        public static void control_Dirty(object sender, EventArgs e)
+        public static void ControlDirty(object sender, EventArgs e)
         {
             (sender as Control).Tag = "1";
         }

@@ -56,7 +56,7 @@
             this.btSwitch.TabIndex = 1;
             this.btSwitch.Text = "Switch";
             this.btSwitch.UseVisualStyleBackColor = true;
-            this.btSwitch.Click += new System.EventHandler(this.SwitchBranch_Click);
+            this.btSwitch.Click += new System.EventHandler(this.SwitchBranchClick);
             // 
             // label1
             // 
@@ -78,7 +78,7 @@
             this.listBranches.Name = "listBranches";
             this.listBranches.Size = new System.Drawing.Size(231, 101);
             this.listBranches.TabIndex = 3;
-            this.listBranches.SelectedIndexChanged += new System.EventHandler(this.listBranches_SelectedIndexChanged);
+            this.listBranches.SelectedIndexChanged += new System.EventHandler(this.ListBranchesSelectedIndexChanged);
             // 
             // FormSwitchToBranch
             // 

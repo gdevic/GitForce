@@ -14,16 +14,16 @@ namespace git4win
         /// <summary>
         /// Current parsing information of the URL strings
         /// </summary>
-        private ClassURL.Url fetchUrl;
-        private ClassURL.Url pushUrl;
+        private ClassUrl.Url _fetchUrl;
+        private ClassUrl.Url _pushUrl;
 
         /// <summary>
         /// Callback delegate to signal when a text in a name or URL
         /// fields have changed.
         /// </summary>
         public delegate void AnyTextChangedDelegate(bool valid);
-        public AnyTextChangedDelegate AnyTextChanged = voidAnyTextChanged;
-        private static void voidAnyTextChanged(bool valid) { }
+        public AnyTextChangedDelegate AnyTextChanged = VoidAnyTextChanged;
+        private static void VoidAnyTextChanged(bool valid) { }
 
         public RemoteDisplay()
         {
@@ -61,10 +61,10 @@ namespace git4win
         /// <param name="repo">Values to set</param>
         public void Set(ClassRemotes.Remote repo)
         {
-            textName.Text = repo.name;
-            textUrlFetch.Text = repo.urlFetch;
-            textUrlPush.Text = repo.urlPush;
-            textPassword.Text = repo.password;
+            textName.Text = repo.Name;
+            textUrlFetch.Text = repo.UrlFetch;
+            textUrlPush.Text = repo.UrlPush;
+            textPassword.Text = repo.Password;
         }
 
         /// <summary>
@@ -74,10 +74,10 @@ namespace git4win
         public ClassRemotes.Remote Get()
         {
             ClassRemotes.Remote repo = new ClassRemotes.Remote();
-            repo.name = textName.Text;
-            repo.urlFetch = textUrlFetch.Text;
-            repo.urlPush = textUrlPush.Text;
-            repo.password = textPassword.Text;
+            repo.Name = textName.Text;
+            repo.UrlFetch = textUrlFetch.Text;
+            repo.UrlPush = textUrlPush.Text;
+            repo.Password = textPassword.Text;
 
             return repo;
         }
@@ -85,13 +85,13 @@ namespace git4win
         /// <summary>
         /// Validate entries and return true if they are reasonably valid
         /// </summary>
-        public bool isValid()
+        public bool IsValid()
         {
-            fetchUrl = ClassURL.Parse(textUrlFetch.Text);
-            pushUrl = ClassURL.Parse(textUrlPush.Text);
+            _fetchUrl = ClassUrl.Parse(textUrlFetch.Text);
+            _pushUrl = ClassUrl.Parse(textUrlPush.Text);
 
             // Consider valid entry if the name is ok and some combination of urls
-            return textName.Text.Length > 0 && fetchUrl.type != ClassURL.UrlType.Unknown;
+            return textName.Text.Length > 0 && _fetchUrl.Type != ClassUrl.UrlType.Unknown;
         }
 
         /// <summary>
@@ -101,12 +101,12 @@ namespace git4win
         private void SomeTextChanged(object sender, EventArgs e)
         {
             // Call the delegate and also reparse our fetch and push URLs
-            AnyTextChanged(isValid());
+            AnyTextChanged(IsValid());
 
-            btSsh.Enabled = (fetchUrl.ok && fetchUrl.type == ClassURL.UrlType.Ssh) ||
-                            (pushUrl.ok && pushUrl.type == ClassURL.UrlType.Ssh);
+            btSsh.Enabled = (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) ||
+                            (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh);
 
-            textPassword.ReadOnly = !(fetchUrl.type == ClassURL.UrlType.Https || pushUrl.type == ClassURL.UrlType.Https);
+            textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
         }
 
         /// <summary>
@@ -114,21 +114,21 @@ namespace git4win
         /// PLINK code has been modified to silently accept the remote public key and store
         /// it into our registry.
         /// </summary>
-        private void btSsh_Click(object sender, EventArgs e)
+        private void BtSshClick(object sender, EventArgs e)
         {
             btSsh.Enabled = false;
 
             // We may need to run this twice only if the host for push differs from the host for fetch
-            if (fetchUrl.ok)
+            if (_fetchUrl.Ok)
             {
-                App.Putty.ImportRemoteSshKey(fetchUrl);
-                MessageBox.Show("Public key from " + fetchUrl.host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                App.Putty.ImportRemoteSshKey(_fetchUrl);
+                MessageBox.Show("Public key from " + _fetchUrl.Host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            if (pushUrl.ok && pushUrl.host != fetchUrl.host)
+            if (_pushUrl.Ok && _pushUrl.Host != _fetchUrl.Host)
             {
-                App.Putty.ImportRemoteSshKey(pushUrl);
-                MessageBox.Show("Public key from " + pushUrl.host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                App.Putty.ImportRemoteSshKey(_pushUrl);
+                MessageBox.Show("Public key from " + _pushUrl.Host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

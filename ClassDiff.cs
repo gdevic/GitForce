@@ -22,41 +22,41 @@ namespace git4win
         /// <summary>
         /// Structure describing a diff utility
         /// </summary>
-        public struct TDiff
+        public struct Diff
         {
             /// <summary>
             /// Git configuration name for diff tool
             /// </summary>
-            public string difftool;
+            public string Difftool;
 
             /// <summary>
             /// User-friendly name of the diff utility
             /// </summary>
-            public string name;
+            public string Name;
 
             /// <summary>
             /// Full path/name to the diff utility
             /// </summary>
-            public string path;
+            public string Path;
 
             /// <summary>
             /// Arguments needed to execute a 2-file diff
             /// </summary>
-            public string args;
+            public string Args;
 
-            public TDiff(string DiffTool, string Name, string Path, string Args)
+            public Diff(string diffTool, string name, string path, string args)
             {
-                difftool = DiffTool;
-                name = Name;
-                path = Path;
-                args = Args;
+                Difftool = diffTool;
+                Name = name;
+                Path = path;
+                Args = args;
             }
         }
 
         /// <summary>
         /// List of diff programs recognized by the application
         /// </summary>
-        public List<TDiff> diffs = null;
+        public List<Diff> Diffs;
         
         /// <summary>
         /// Init code to be called on the application startup.
@@ -64,25 +64,25 @@ namespace git4win
         public bool Initialize()
         {
             // Find selected diff programs installed and add them to the list
-            diffs = FindKnownDiffProgs();
+            Diffs = FindKnownDiffProgs();
 
             // If none of preset diff apps are present, extract our internal one
-            if (diffs.Count == 0)
-                diffs.Add(GetInternalDiff());
+            if (Diffs.Count == 0)
+                Diffs.Add(GetInternalDiff());
 
             // Assign the active diff utility or the first one on the list
             string activeName = Properties.Settings.Default.DiffActiveName;
             if (string.IsNullOrWhiteSpace(activeName))
-                activeName = diffs[0].name;
+                activeName = Diffs[0].Name;
 
-            TDiff active = diffs[0];
-            foreach (var d in diffs.Where(d => d.name == activeName))
+            Diff active = Diffs[0];
+            foreach (var d in Diffs.Where(d => d.Name == activeName))
                 active = d;
 
-            Properties.Settings.Default.DiffActiveName = active.name;
+            Properties.Settings.Default.DiffActiveName = active.Name;
 
             // Lastly, configure the git by setting all optional diffs and the active one
-            return Configure(diffs, active);
+            return Configure(Diffs, active);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace git4win
         /// when doing the visual diff.
         /// Returns false if the list is empty, making no changes to the git config.
         /// </summary>
-        public static bool Configure(List<TDiff> diffs, TDiff active)
+        public static bool Configure(List<Diff> diffs, Diff active)
         {
             // Set up global git config with each given diff program
             if (diffs.Count > 0)
@@ -99,17 +99,17 @@ namespace git4win
                 foreach (var d in diffs)
                 {
                     // All all diff tools to git global config as sections we can select from
-                    string path = d.path.Replace('\\', '/');
-                    string usr = d.args.Replace("%1", "$LOCAL").Replace("%2", "$REMOTE");
+                    string path = d.Path.Replace('\\', '/');
+                    string usr = d.Args.Replace("%1", "$LOCAL").Replace("%2", "$REMOTE");
                     string arg = "'" + path + "' " + usr;
-                    ClassConfig.Set("difftool." + d.difftool + ".cmd", arg);
+                    ClassConfig.Set("difftool." + d.Difftool + ".cmd", arg);
                 }
 
                 // Make sure the prompt will be off for visual diff
                 ClassConfig.Set("difftool.prompt", "false");
 
                 // Set the active diff tool
-                ClassConfig.Set("diff.tool", active.difftool);
+                ClassConfig.Set("diff.tool", active.Difftool);
 
                 return true;
             }
@@ -121,14 +121,14 @@ namespace git4win
         /// installed on the system. The list might be empty, if none of known
         /// diff tools are found.
         /// </summary>
-        public static List<TDiff> FindKnownDiffProgs()
+        public static List<Diff> FindKnownDiffProgs()
         {
-            List<TDiff> diffs = new List<TDiff>();
-            List<TDiff> candidates = new List<TDiff> {
-                new TDiff( "p4merge", "Perforce Merge", @"Perforce\P4Merge.exe", "%1 %2" ), 
-                new TDiff( "WinMerge", "WinMerge", @"WinMerge\WinMergeU.exe", "%1 %2" ), 
-                new TDiff( "BC3", "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" ), 
-                new TDiff( "KDiff3", "KDiff3", @"KDiff3\kdiff3.exe", "%1 %2" )
+            List<Diff> diffs = new List<Diff>();
+            List<Diff> candidates = new List<Diff> {
+                new Diff( "p4merge", "Perforce Merge", @"Perforce\P4Merge.exe", "%1 %2" ), 
+                new Diff( "WinMerge", "WinMerge", @"WinMerge\WinMergeU.exe", "%1 %2" ), 
+                new Diff( "BC3", "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" ), 
+                new Diff( "KDiff3", "KDiff3", @"KDiff3\kdiff3.exe", "%1 %2" )
             };
 
             // From the list of known tools ("candidates"), pick those which could be
@@ -136,11 +136,11 @@ namespace git4win
             foreach (var d in candidates)
             {
                 string path = Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.ProgramFilesX86), d.path);
+                    Environment.SpecialFolder.ProgramFilesX86), d.Path);
                 if (File.Exists(path))
                 {
-                    TDiff diff = d;
-                    diff.path = path;
+                    Diff diff = d;
+                    diff.Path = path;
                     diffs.Add(diff);
                 }
             }
@@ -150,17 +150,17 @@ namespace git4win
         /// <summary>
         /// Extract internal diff program into Application data
         /// </summary>
-        public static TDiff GetInternalDiff()
+        public static Diff GetInternalDiff()
         {
-            TDiff diff = new TDiff();
+            Diff diff = new Diff();
 
             WriteResourceToFile(Properties.Resources.QtCore4, "QtCore4.dll");
             WriteResourceToFile(Properties.Resources.QtGui4, "QtGui4.dll");
             WriteResourceToFile(Properties.Resources.QtXml4, "QtXml4.dll");
-            diff.path = WriteResourceToFile(Properties.Resources.p4merge, "p4merge.exe");
-            diff.difftool = "InternalP4Merge";
-            diff.args = "%1 %2";
-            diff.name = "Internal P4Merge";
+            diff.Path = WriteResourceToFile(Properties.Resources.p4merge, "p4merge.exe");
+            diff.Difftool = "InternalP4Merge";
+            diff.Args = "%1 %2";
+            diff.Name = "Internal P4Merge";
 
             return diff;
         }

@@ -46,7 +46,7 @@
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(281, 20);
             this.textBoxPath.TabIndex = 0;
-            this.textBoxPath.TextChanged += new System.EventHandler(this.textBoxPath_TextChanged);
+            this.textBoxPath.TextChanged += new System.EventHandler(this.TextBoxPathTextChanged);
             // 
             // btBrowse
             // 
@@ -57,7 +57,7 @@
             this.btBrowse.TabIndex = 1;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
-            this.btBrowse.Click += new System.EventHandler(this.btBrowse_Click);
+            this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
             // 
             // label1
             // 
@@ -120,7 +120,7 @@
             this.linkLabel.TabIndex = 6;
             this.linkLabel.TabStop = true;
             this.linkLabel.Text = "http://code.google.com/p/msysgit";
-            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.gitLinkClicked);
+            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GitLinkClicked);
             // 
             // FormPathToGit
             // 

@@ -61,7 +61,7 @@
             this.btOK.TabIndex = 2;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
-            this.btOK.Click += new System.EventHandler(this.btOK_Click);
+            this.btOK.Click += new System.EventHandler(this.BtOkClick);
             // 
             // btApply
             // 
@@ -72,7 +72,7 @@
             this.btApply.TabIndex = 1;
             this.btApply.Text = "Apply";
             this.btApply.UseVisualStyleBackColor = true;
-            this.btApply.Click += new System.EventHandler(this.btApply_Click);
+            this.btApply.Click += new System.EventHandler(this.BtApplyClick);
             // 
             // treeSections
             // 
@@ -92,7 +92,7 @@
             treeNode3});
             this.treeSections.Size = new System.Drawing.Size(158, 230);
             this.treeSections.TabIndex = 0;
-            this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSections_AfterSelect);
+            this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);
             // 
             // panel
             // 

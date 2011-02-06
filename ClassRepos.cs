@@ -18,38 +18,20 @@ namespace git4win
         /// Location of the repos data file containing a list of repositories.
         /// They are kept in a separate file located in the user app data directory.
         /// </summary>
-        private string reposDatFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) 
+        private readonly string _reposDataFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) 
                                     + @"\git4win-repos.dat";
 
         /// <summary>
         /// Contains a list of repos that the program knows about
         /// </summary>
-        public List<ClassRepo> repos = new List<ClassRepo>();
+        public List<ClassRepo> Repos = new List<ClassRepo>();
 
         /// <summary>
         /// Name of the default repo to switch to upon start
         /// </summary>
-        private string default_repo = "";
+        private string _defaultRepo = "";
 
-        /// <summary>
-        /// Pointer to the current repo
-        /// </summary>
-        private ClassRepo _current = null;
-        public ClassRepo current
-        {
-            set
-            {
-                // Skip refreshing if a repo did not change
-                if (value != _current)
-                {
-                    _current = value;                       // Set the new current repo
-                    if (current != null)
-                        current.remotes.Refresh(current);   // Refresh the list of remote repos
-                    App.Refresh();                          // Multicast refresh delegate
-                }
-            }
-            get { return _current; }
-        }
+        public ClassRepo Current { get; private set; }
 
         /// <summary>
         /// Load a set of repositories from a file. This is called only once at
@@ -57,18 +39,18 @@ namespace git4win
         /// </summary>
         public void Load()
         {
-            if (File.Exists(reposDatFile))
+            if (File.Exists(_reposDataFile))
             {
-                FileStream file = new FileStream(reposDatFile, FileMode.Open);
+                FileStream file = new FileStream(_reposDataFile, FileMode.Open);
                 try
                 {
                     BinaryFormatter rd = new BinaryFormatter();
-                    repos = new List<ClassRepo>();
-                    repos = (List<ClassRepo>)rd.Deserialize(file);
-                    default_repo = (string)rd.Deserialize(file);
+                    Repos = new List<ClassRepo>();
+                    Repos = (List<ClassRepo>)rd.Deserialize(file);
+                    _defaultRepo = (string)rd.Deserialize(file);
 
                     // Upon load, set the current based on the default repo
-                    current = repos.Find(r => r.root == default_repo);
+                    SetCurrent(Repos.Find(r => r.Root == _defaultRepo));
                 }
                 catch (Exception ex)
                 {
@@ -90,10 +72,10 @@ namespace git4win
         {
             try
             {
-                FileStream file = new FileStream(reposDatFile, FileMode.Create);
+                FileStream file = new FileStream(_reposDataFile, FileMode.Create);
                 BinaryFormatter wr = new BinaryFormatter();
-                wr.Serialize(file, repos);
-                wr.Serialize(file, default_repo);
+                wr.Serialize(file, Repos);
+                wr.Serialize(file, _defaultRepo);
                 file.Close();
             }
             catch (Exception ex)
@@ -113,16 +95,16 @@ namespace git4win
         public ClassRepo Add(string root)
         {
             // Detect a repository with the same root path
-            if (repos.Exists(r => r.root == root))
+            if (Repos.Exists(r => r.Root == root))
                 throw new ClassException("Repository with the same name already exists!");
 
             Directory.CreateDirectory(root);
             ClassRepo repo = new ClassRepo(root);
-            repos.Add(repo);
+            Repos.Add(repo);
 
             // If this is the firs repo, set it as default
-            if (repos.Count == 1)
-                default_repo = repo.root;
+            if (Repos.Count == 1)
+                _defaultRepo = repo.Root;
             return repo;
         }
 
@@ -132,14 +114,22 @@ namespace git4win
         /// <param name="repo">Repository class to remove from repos</param>
         public void Delete(ClassRepo repo)
         {
-            repos.Remove(repo);
+            Repos.Remove(repo);
 
             // If the current has been deleted, find a new current
-            if (repo == current)
-                current = repos.Count > 0 ? repos[0] : null;
+            if (repo == Current)
+                SetCurrent(Repos.Count > 0 ? Repos[0] : null);
 
             // Refresh since the current might not have changed
             App.Refresh();
+        }
+
+        public void SetCurrent(ClassRepo repo)
+        {
+            Current = repo;                        // Set the new current repo
+            if (Current != null)
+                Current.Remotes.Refresh(Current);   // Refresh the list of remote repos
+            App.Refresh();                          // Multicast refresh delegate
         }
 
         /// <summary>
@@ -147,7 +137,7 @@ namespace git4win
         /// </summary>
         public void SetDefault(ClassRepo repo)
         {
-            default_repo = repo.root;
+            _defaultRepo = repo.Root;
         }
 
         /// <summary>
@@ -155,7 +145,7 @@ namespace git4win
         /// </summary>
         public string GetDefault()
         {
-            return default_repo;
+            return _defaultRepo;
         }
     }
 }

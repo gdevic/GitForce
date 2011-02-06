@@ -10,14 +10,14 @@ namespace git4win
     /// Static helper class that parses URLs into various protocol variations
     /// that git understands
     /// </summary>
-    public static class ClassURL
+    public static class ClassUrl
     {
         /// <summary>
         /// Type of the URL address
         /// </summary>
         public enum UrlType { Unknown, Ssh, Git, Http, Https, Ftp, Ftps, Rsync };
 
-        private static Dictionary<string, UrlType> protocol = new Dictionary<string, UrlType> {
+        private static readonly Dictionary<string, UrlType> Protocol = new Dictionary<string, UrlType> {
             { "ssh://", UrlType.Ssh },
             { "git://", UrlType.Git },
             { "http://", UrlType.Http },
@@ -32,13 +32,13 @@ namespace git4win
         /// </summary>
         public struct Url
         {
-            public bool ok;         // Is the path correctly parsed?
-            public UrlType type;    // Type of the URL address
-            public string user;     // User name in 'user@host.xz'
-            public string host;     // Host name in 'user@host.xz'
-            public string path;     // Path to git repo as in '/path/to/repo.git'
-            public string name;     // Project name portion only as in 'repo'
-            public uint port;       // Port that is specified or 0 (valid SSH port is never 0)
+            public bool Ok;         // Is the path correctly parsed?
+            public UrlType Type;    // Type of the URL address
+            public string User;     // User name in 'user@host.xz'
+            public string Host;     // Host name in 'user@host.xz'
+            public string Path;     // Path to git repo as in '/path/to/repo.git'
+            public string Name;     // Project name portion only as in 'repo'
+            public uint Port;       // Port that is specified or 0 (valid SSH port is never 0)
         }
 
         /// <summary>
@@ -49,13 +49,13 @@ namespace git4win
             string u = URL.Trim();
             Url url = new Url();
 
-            url.type = UrlType.Unknown;
-            url.user = string.Empty;
-            url.host = string.Empty;
-            url.path = string.Empty;
-            url.name = string.Empty;
-            url.port = 0;
-            url.ok = false;
+            url.Type = UrlType.Unknown;
+            url.User = string.Empty;
+            url.Host = string.Empty;
+            url.Path = string.Empty;
+            url.Name = string.Empty;
+            url.Port = 0;
+            url.Ok = false;
 
             try
             {
@@ -64,13 +64,13 @@ namespace git4win
 
                 // Some formats imply SSH, so do a quick sanity check before assigning it
                 if (u.Contains(':'))
-                    url.type = UrlType.Ssh;
+                    url.Type = UrlType.Ssh;
 
                 // Find the easy case first
                 string u1 = u;
-                foreach (var v in protocol.Where(v => u1.StartsWith(v.Key, StringComparison.OrdinalIgnoreCase)))
+                foreach (var v in Protocol.Where(v => u1.StartsWith(v.Key, StringComparison.OrdinalIgnoreCase)))
                 {
-                    url.type = v.Value;
+                    url.Type = v.Value;
                     u = u.Substring(v.Key.Length);
                     break;
                 }
@@ -78,25 +78,25 @@ namespace git4win
                 // The next one to appear could be the user@
                 if (u.Contains('@'))
                 {
-                    url.user = u.Substring(0, u.IndexOf('@'));
+                    url.User = u.Substring(0, u.IndexOf('@'));
                     u = u.Substring(u.IndexOf('@') + 1);
                 }
 
                 // The host name follows, terminated by [:port] or /path
                 if (u.Contains(':'))
                 {
-                    url.host = u.Substring(0, u.IndexOf(':'));
+                    url.Host = u.Substring(0, u.IndexOf(':'));
                     u = u.Substring(u.IndexOf(':') + 1);
                 }
                 else
                     if (u.Contains('/'))
                     {
-                        url.host = u.Substring(0, u.IndexOf('/'));
+                        url.Host = u.Substring(0, u.IndexOf('/'));
                         u = u.Substring(u.IndexOf('/') + 1);
                     }
 
                 // What comes next might be a port number or might not
-                if (uint.TryParse(u.Split('/').First(), out url.port))
+                if (uint.TryParse(u.Split('/').First(), out url.Port))
                 {
                     if (u.IndexOf('/') > 0)
                         u = u.Substring(u.IndexOf('/') + 1);
@@ -110,25 +110,25 @@ namespace git4win
                 {
                     if (u.IndexOf('/') > 0)
                     {
-                        url.user = u.Substring(1, u.IndexOf('/') - 1);
+                        url.User = u.Substring(1, u.IndexOf('/') - 1);
                         u = u.Substring(u.IndexOf('/') + 1);
                     }
                 }
 
                 // The rest is the path to git repo
                 u = u.TrimStart('/');
-                url.path = u;
+                url.Path = u;
 
                 // Find the project name
                 string[] tokens = u.Split(new[] { '\\', '/', '.' });
                 if (tokens.Length >= 2 && tokens[tokens.Length - 1].ToLower() == "git")
-                    url.name = tokens[tokens.Length - 2];
+                    url.Name = tokens[tokens.Length - 2];
                 else
-                    url.name = tokens[tokens.Length - 1];
+                    url.Name = tokens[tokens.Length - 1];
 
                 // Final check that we have at least necessary portions of the address
-                if (!string.IsNullOrEmpty(url.host) && !string.IsNullOrEmpty(url.path))
-                    url.ok = true;
+                if (!string.IsNullOrEmpty(url.Host) && !string.IsNullOrEmpty(url.Path))
+                    url.Ok = true;
             }
             catch(Exception ex)
             {
@@ -148,18 +148,18 @@ namespace git4win
         {
             Url url = Parse(URL);
             StringBuilder canon = new StringBuilder();
-            if (url.ok)
+            if (url.Ok)
             {
                 // Reverse lookup the protocol type dictionary
-                string proto = (from kvp in protocol where kvp.Value == url.type select kvp.Key).ToArray().First();
+                string proto = (from kvp in Protocol where kvp.Value == url.Type select kvp.Key).ToArray().First();
                 canon.Append(proto);
 
-                if (url.user == string.Empty)
-                    url.user = Environment.GetEnvironmentVariable("USERNAME");
-                if (url.user == string.Empty)
-                    url.user = "anonymous";
-                canon.Append(url.user);
-                canon.Append("@" + url.host);
+                if (url.User == string.Empty)
+                    url.User = Environment.GetEnvironmentVariable("USERNAME");
+                if (url.User == string.Empty)
+                    url.User = "anonymous";
+                canon.Append(url.User);
+                canon.Append("@" + url.Host);
 
                 // Default port mappings from: http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
                 Dictionary<UrlType, string> port = new Dictionary<UrlType, string> {
@@ -171,12 +171,12 @@ namespace git4win
                     { UrlType.Ftps, ":989" },
                     { UrlType.Rsync,":873"  }
                 };
-                if (url.port == 0)
-                    canon.Append(port[url.type]);
+                if (url.Port == 0)
+                    canon.Append(port[url.Type]);
                 else
-                    canon.Append(":" + url.port);
+                    canon.Append(":" + url.Port);
 
-                canon.Append("/" + url.path);
+                canon.Append("/" + url.Path);
             }
 
             return canon.ToString();

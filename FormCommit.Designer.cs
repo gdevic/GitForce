@@ -99,7 +99,7 @@
             this.textDescription.Name = "textDescription";
             this.textDescription.Size = new System.Drawing.Size(412, 182);
             this.textDescription.TabIndex = 1;
-            this.textDescription.TextChanged += new System.EventHandler(this.textDescription_TextChanged);
+            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
             // 
             // label1
             // 
@@ -153,7 +153,7 @@
             this.btSelectAll.TabIndex = 3;
             this.btSelectAll.Text = "Select All";
             this.btSelectAll.UseVisualStyleBackColor = true;
-            this.btSelectAll.Click += new System.EventHandler(this.btSelectAll_Click);
+            this.btSelectAll.Click += new System.EventHandler(this.BtSelectAllClick);
             // 
             // btUnselectAll
             // 
@@ -164,7 +164,7 @@
             this.btUnselectAll.TabIndex = 4;
             this.btUnselectAll.Text = "Unselect All";
             this.btUnselectAll.UseVisualStyleBackColor = true;
-            this.btUnselectAll.Click += new System.EventHandler(this.btUnselectAll_Click);
+            this.btUnselectAll.Click += new System.EventHandler(this.BtUnselectAllClick);
             // 
             // FormCommit
             // 

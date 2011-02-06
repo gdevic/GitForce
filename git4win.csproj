@@ -60,6 +60,7 @@
     <Compile Include="ClassRepos.cs" />
     <Compile Include="ClassStatus.cs" />
     <Compile Include="ClassURL.cs" />
+    <Compile Include="ClassView.cs" />
     <Compile Include="ClassWin32.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
@@ -429,6 +430,7 @@
       <DependentUpon>UserControlRemoteEdit.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

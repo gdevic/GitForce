@@ -21,29 +21,29 @@ namespace git4win
         [Serializable]
         public struct Remote
         {
-            public string name;
-            public string urlFetch;
-            public string urlPush;
-            public string password;
+            public string Name;
+            public string UrlFetch;
+            public string UrlPush;
+            public string Password;
         }
 
         /// <summary>
         /// Current (default) remote name
         /// </summary>
-        public string current = "";
+        public string Current = "";
 
         /// <summary>
         /// Lookup dictionary of passwords for a given remote name
         /// Implicitly, it also stores the list of remotes
         /// </summary>
-        private Dictionary<string, Remote> remotes = new Dictionary<string, Remote>();
+        private Dictionary<string, Remote> _remotes = new Dictionary<string, Remote>();
 
         /// <summary>
         /// Return the list of names of remote repos
         /// </summary>
         public List<string> GetListNames()
         {
-            List<string> list = remotes.Select(kvp => kvp.Key).ToList();
+            List<string> list = _remotes.Select(kvp => kvp.Key).ToList();
             return list;
         }
 
@@ -52,7 +52,7 @@ namespace git4win
         /// </summary>
         public Remote Get(string name)
         {
-            return remotes[name];
+            return _remotes[name];
         }
 
         /// <summary>
@@ -77,25 +77,25 @@ namespace git4win
                 if (newlist.ContainsKey(name))
                     r = newlist[name];
 
-                if (remotes.ContainsKey(name))
-                    r.password = remotes[name].password;
+                if (_remotes.ContainsKey(name))
+                    r.Password = _remotes[name].Password;
 
                 // Set all other fields that we refresh every time                
-                r.name = name;
+                r.Name = name;
 
-                if (url[2] == "(fetch)") r.urlFetch = url[1];
-                if (url[2] == "(push)") r.urlPush = url[1];
+                if (url[2] == "(fetch)") r.UrlFetch = url[1];
+                if (url[2] == "(push)") r.UrlPush = url[1];
 
                 // Add it to the new list
                 newlist[name] = r;
             }
 
             // Set the newly built list to be the master list
-            remotes = newlist;
+            _remotes = newlist;
 
             // Fixup the new current string name
-            if (!remotes.ContainsKey(current))
-                current = remotes.Count > 0 ? remotes.ElementAt(0).Key : "";
+            if (!_remotes.ContainsKey(Current))
+                Current = _remotes.Count > 0 ? _remotes.ElementAt(0).Key : "";
         }
 
         /// <summary>
@@ -105,10 +105,10 @@ namespace git4win
         public void SetPassword(string name, string password)
         {
             Remote r;
-            if (!remotes.TryGetValue(name, out r))
-                r.name = name;
-            r.password = password;
-            remotes[name] = r;
+            if (!_remotes.TryGetValue(name, out r))
+                r.Name = name;
+            r.Password = password;
+            _remotes[name] = r;
         }
 
         /// <summary>
@@ -118,10 +118,10 @@ namespace git4win
         public string GetPassword(string name="")
         {
             Remote r;
-            r.password = "";
-            if (name == "") name = current;
-            remotes.TryGetValue(name, out r);
-            return r.password;
+            r.Password = "";
+            if (name == "") name = Current;
+            _remotes.TryGetValue(name, out r);
+            return r.Password;
         }
     }
 }

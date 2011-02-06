@@ -59,7 +59,7 @@
             this.btAdd.TabIndex = 3;
             this.btAdd.Text = "<< Add Selected";
             this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            this.btAdd.Click += new System.EventHandler(this.BtAddClick);
             // 
             // splitContainer1
             // 

@@ -15,21 +15,21 @@ namespace git4win
         /// <summary>
         /// Default path is the user's program files
         /// </summary>
-        public string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+        public string Path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
 
         public FormPathToGit()
         {
             InitializeComponent();
 
-            textBoxPath.Text = path;
+            textBoxPath.Text = Path;
             labelInfo.Text = "git4win is a GUI front-end to the command line git. " +
             "That means you have to have git already installed. You can download git for Windows from the link below.";
         }
 
-        private void btBrowse_Click(object sender, EventArgs e)
+        private void BtBrowseClick(object sender, EventArgs e)
         {
             OpenFileDialog fileDlg = new OpenFileDialog();
-            fileDlg.InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+            fileDlg.InitialDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
             if (fileDlg.ShowDialog() == DialogResult.OK)
             {
                 textBoxPath.Text = fileDlg.FileName;
@@ -39,7 +39,7 @@ namespace git4win
         /// <summary>
         /// Open the web browser with a link to msysgit
         /// </summary>
-        private void gitLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void GitLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabel.Text);
         }
@@ -48,10 +48,10 @@ namespace git4win
         /// As the text in the git path is changing, check for the git executable name
         /// and enable or disable the OK button based on this check
         /// </summary>
-        private void textBoxPath_TextChanged(object sender, EventArgs e)
+        private void TextBoxPathTextChanged(object sender, EventArgs e)
         {
-            path = textBoxPath.Text;
-            btOK.Enabled = File.Exists(path) && path.EndsWith("git.exe");
+            Path = textBoxPath.Text;
+            btOK.Enabled = File.Exists(Path) && Path.EndsWith("git.exe");
         }
     }
 }

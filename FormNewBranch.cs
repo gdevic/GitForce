@@ -15,14 +15,14 @@ namespace git4win
         /// Cache the origin lists of branches and tags, so we fetch them only once,
         /// and also are able to populate them dynamically as the user selects a radio button
         /// </summary>
-        private string[] localBranches = null;
-        private string[] remoteBranches = null;
-        private string[] tags = null;
+        private string[] _localBranches;
+        private string[] _remoteBranches;
+        private string[] _tags;
 
         /// <summary>
         /// Singular branch origin selected among various options with a radio button
         /// </summary>
-        private string origin = null;
+        private string _origin;
 
         public FormNewBranch()
         {
@@ -36,7 +36,7 @@ namespace git4win
         /// </summary>
         /// <param name="listBranches"></param>
         /// <param name="list"></param>
-        public static void listAdd(ref ListBox listBranches, ref string[] list)
+        public static void ListAdd(ref ListBox listBranches, ref string[] list)
         {
             listBranches.Items.Clear();
             foreach (string name in
@@ -54,7 +54,7 @@ namespace git4win
         /// <summary>
         /// Called on a change of radio button selection for the branch origin
         /// </summary>
-        private void radioBranchSource_CheckedChanged(object sender, EventArgs e)
+        private void RadioBranchSourceCheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
             if (rb.Checked == false)
@@ -69,7 +69,7 @@ namespace git4win
                         listBranches.BackColor = SystemColors.Control;
                         break;
                 }
-                origin = null;
+                _origin = null;
             }
             else
             {
@@ -81,19 +81,19 @@ namespace git4win
                         textSHA1.Enabled = true;
                         break;
                     case "Local":
-                        if (localBranches == null)
-                            localBranches = App.Git.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        listAdd(ref listBranches, ref localBranches);
+                        if (_localBranches == null)
+                            _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        ListAdd(ref listBranches, ref _localBranches);
                         break;
                     case "Remote":
-                        if (remoteBranches == null)
-                            remoteBranches = App.Git.Run("branch -r").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        listAdd(ref listBranches, ref remoteBranches);
+                        if (_remoteBranches == null)
+                            _remoteBranches = App.Repos.Current.Run("branch -r").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        ListAdd(ref listBranches, ref _remoteBranches);
                         break;
                     case "Tag":
-                        if (tags == null)
-                            tags = App.Git.Run("tag").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        listAdd(ref listBranches, ref tags);
+                        if (_tags == null)
+                            _tags = App.Repos.Current.Run("tag").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        ListAdd(ref listBranches, ref _tags);
                         break;
                     default:
                         break;
@@ -104,7 +104,7 @@ namespace git4win
         /// <summary>
         /// Button clicked to create a new branch and exit the dialog
         /// </summary>
-        private void btCreate_Click(object sender, EventArgs e)
+        private void BtCreateClick(object sender, EventArgs e)
         {
             string name = textBranchName.Text.Trim();
 
@@ -114,42 +114,42 @@ namespace git4win
 
             cmd.Append(name);
 
-            if (origin != null)
-                cmd.Append(" " + origin);
+            if (_origin != null)
+                cmd.Append(" " + _origin);
 
             // Execute the final branch command
-            App.Git.Run(cmd.ToString());
+            App.Repos.Current.Run(cmd.ToString());
         }
 
         /// <summary>
         /// Store the selected item name of a local, remote branch or tag into the origin
         /// tracking variable.
         /// </summary>
-        private void listBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            origin = listBranches.SelectedItem.ToString(); 
+            _origin = listBranches.SelectedItem.ToString(); 
         }
 
         /// <summary>
         /// Store the SHA1 textual value as it is being typed, into the origin
         /// tracking variable
         /// </summary>
-        private void textSHA1_TextChanged(object sender, EventArgs e)
+        private void TextSha1TextChanged(object sender, EventArgs e)
         {
-            origin = textSHA1.Text;
+            _origin = textSHA1.Text;
         }
 
         /// <summary>
         /// Limit the character set that can be used to specify the branch name
         /// or SHA1 key (somewhat loosely in order to reuse the function)
         /// </summary>
-        private void textBranchName_KeyPress(object sender, KeyPressEventArgs e)
+        private static void TextBranchNameKeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar!='_' && !char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 
-        private void textBranchName_KeyUp(object sender, KeyEventArgs e)
+        private void TextBranchNameKeyUp(object sender, KeyEventArgs e)
         {
             // Enable the Create button if we have the branch name
             btCreate.Enabled = textBranchName.Text.Length > 0;

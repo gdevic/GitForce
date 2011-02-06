@@ -40,33 +40,33 @@ namespace git4win
             textBox.Text += text.Substring(0, len) + Environment.NewLine;
 
             // Scroll to the bottom, but don't move the caret position.
-            Win32.SendMessage(textBox.Handle, Win32.WM_VSCROLL, (IntPtr)Win32.SB_BOTTOM, IntPtr.Zero);
+            NativeMethods.SendMessage(textBox.Handle, NativeMethods.WM_VSCROLL, (IntPtr)NativeMethods.SB_BOTTOM, IntPtr.Zero);
         }
 
         public string[] RunThread(string cmd, string args, Dictionary<string, string> env)
         {
             ClassRunCmd worker = new ClassRunCmd(
                 this,
-                delegate(string _stdout)
+                delegate(string stdout)
                 {
                     lock (textBox)
                     {
-                        if (!string.IsNullOrEmpty(_stdout))
+                        if (!string.IsNullOrEmpty(stdout))
                         {
-                            textBox.Text += _stdout + '\r';
+                            textBox.Text += stdout + '\r';
                             textBox.SelectionStart = textBox.Text.Length;
                             textBox.ScrollToCaret();
                         }
                     }
                 });
-            worker.cmd = cmd;
-            worker.args = args;
+            worker.Cmd = cmd;
+            worker.Args = args;
             worker.StartProcess();
             worker.WaitForExit();
 
             string[] response = new string[2];
-            response[0] = string.Join("\0", worker.stdout);
-            response[1] = string.Join("\0", worker.stderr);
+            response[0] = string.Join("\0", worker.Stdout);
+            response[1] = string.Join("\0", worker.Stderr);
 
             return response;
         }
@@ -82,18 +82,18 @@ namespace git4win
                 Hide();
         }
 
-        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        private static void TextBoxKeyPress(object sender, KeyPressEventArgs e)
         {
-            ClassRunCmd.keys.Enqueue(e.KeyChar);
+            ClassRunCmd.Keys.Enqueue(e.KeyChar);
             if (e.KeyChar == '\r')
-                ClassRunCmd.keys.Enqueue('\n');
-            ClassRunCmd.eventHanle.Set();
+                ClassRunCmd.Keys.Enqueue('\n');
+            ClassRunCmd.EventHanle.Set();
         }
 
         /// <summary>
         /// Copy selected text to the clipboard
         /// </summary>
-        private void menuExecCopy_Click(object sender, EventArgs e)
+        private void MenuExecCopyClick(object sender, EventArgs e)
         {
             textBox.Copy();
         }
@@ -101,7 +101,7 @@ namespace git4win
         /// <summary>
         /// Select all text
         /// </summary>
-        private void menuExecSelectAll_Click(object sender, EventArgs e)
+        private void MenuExecSelectAllClick(object sender, EventArgs e)
         {
             textBox.SelectAll();
         }
@@ -109,7 +109,7 @@ namespace git4win
         /// <summary>
         /// Clear the text box
         /// </summary>
-        private void menuExecClear_Click(object sender, EventArgs e)
+        private void MenuExecClearClick(object sender, EventArgs e)
         {
             textBox.Clear();
         }
@@ -117,19 +117,19 @@ namespace git4win
 
     public class ClassRunCmd
     {
-        public static EventWaitHandle eventHanle = new EventWaitHandle(false, EventResetMode.AutoReset);
-        public static volatile Queue keys = new Queue();
+        public static EventWaitHandle EventHanle = new EventWaitHandle(false, EventResetMode.AutoReset);
+        public static volatile Queue Keys = new Queue();
 
-        private Thread thread;
-        private Process p = null;
-        private EventWaitHandle eventThreadStarted = new EventWaitHandle(false, EventResetMode.AutoReset);
-        private EventWaitHandle eventThreadExited = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private Thread _thread;
+        private Process _p;
+        private readonly EventWaitHandle _eventThreadStarted = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private readonly EventWaitHandle _eventThreadExited = new EventWaitHandle(false, EventResetMode.AutoReset);
 
-        public string cmd = null;
-        public string args = null;
+        public string Cmd;
+        public string Args;
 
-        public List<string> stdout = new List<string>();
-        public List<string> stderr = new List<string>();
+        public List<string> Stdout = new List<string>();
+        public List<string> Stderr = new List<string>();
 
         //our ISynchronizeInvoke object
         private static ISynchronizeInvoke _synch;
@@ -156,62 +156,62 @@ namespace git4win
         public void StartProcess()
         {
             //we need to create a new thread for our process
-            thread = new Thread(RunCmd);
+            _thread = new Thread(RunCmd);
             //set the thread to run in the background
-            thread.IsBackground = true;
+            _thread.IsBackground = true;
             //name our thread (optional)
-            thread.Name = "RunCmdThread_" + cmd;
+            _thread.Name = "RunCmdThread_" + Cmd;
             //start our thread
-            thread.Start();
+            _thread.Start();
         }
 
         private void RunCmd()
         {
-            p = new Process();
-            p.StartInfo = new ProcessStartInfo(cmd, args);
-            p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.CreateNoWindow = true;
-            p.StartInfo.UseShellExecute = false;
-            p.OutputDataReceived += p_OutputDataReceived;
-            p.ErrorDataReceived += p_ErrorDataReceived;
-            p.Start();
+            _p = new Process();
+            _p.StartInfo = new ProcessStartInfo(Cmd, Args);
+            _p.StartInfo.RedirectStandardError = true;
+            _p.StartInfo.RedirectStandardOutput = true;
+            _p.StartInfo.RedirectStandardInput = true;
+            _p.StartInfo.CreateNoWindow = true;
+            _p.StartInfo.UseShellExecute = false;
+            _p.OutputDataReceived += POutputDataReceived;
+            _p.ErrorDataReceived += PErrorDataReceived;
+            _p.Start();
 
-            eventThreadStarted.Set();
+            _eventThreadStarted.Set();
 
-            StreamWriter streamWr = p.StandardInput;
+            StreamWriter streamWr = _p.StandardInput;
             streamWr.AutoFlush = true;
 
-            p.BeginOutputReadLine();
+            _p.BeginOutputReadLine();
 
-            while (!p.HasExited)
+            while (!_p.HasExited)
             {
                 // If a key is available, get it, but wait for it max 1 ms
-                if (eventHanle.WaitOne(1))
+                if (EventHanle.WaitOne(1))
                 {
-                    while (keys.Count > 0)
+                    while (Keys.Count > 0)
                     {
-                        char key = (char)keys.Dequeue();
+                        char key = (char)Keys.Dequeue();
                         streamWr.Write(key);
                     }
                 }
             }
-            p.Close();
-            eventThreadExited.Set();
+            _p.Close();
+            _eventThreadExited.Set();
         }
 
         public void WaitForExit()
         {
-            eventThreadStarted.WaitOne();
-            eventThreadExited.WaitOne(-1);
+            _eventThreadStarted.WaitOne();
+            _eventThreadExited.WaitOne(-1);
         }
 
-        private void p_OutputDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
+        private void POutputDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
         {
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                stdout.Add(outLine.Data);
+                Stdout.Add(outLine.Data);
 
                 object[] items = new object[1];
                 items[0] = outLine.Data;
@@ -219,11 +219,11 @@ namespace git4win
             }
         }
 
-        private void p_ErrorDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
+        private void PErrorDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
         {
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                stderr.Add(outLine.Data);
+                Stderr.Add(outLine.Data);
             }
         }
     }

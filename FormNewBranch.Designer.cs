@@ -66,7 +66,7 @@
             this.btCreate.TabIndex = 1;
             this.btCreate.Text = "Create";
             this.btCreate.UseVisualStyleBackColor = true;
-            this.btCreate.Click += new System.EventHandler(this.btCreate_Click);
+            this.btCreate.Click += new System.EventHandler(this.BtCreateClick);
             // 
             // label1
             // 
@@ -85,8 +85,8 @@
             this.textBranchName.Name = "textBranchName";
             this.textBranchName.Size = new System.Drawing.Size(378, 20);
             this.textBranchName.TabIndex = 3;
-            this.textBranchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBranchName_KeyPress);
-            this.textBranchName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBranchName_KeyUp);
+            this.textBranchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(TextBranchNameKeyPress);
+            this.textBranchName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBranchNameKeyUp);
             // 
             // checkCheckOut
             // 
@@ -131,7 +131,7 @@
             this.listBranches.Name = "listBranches";
             this.listBranches.Size = new System.Drawing.Size(223, 88);
             this.listBranches.TabIndex = 6;
-            this.listBranches.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
+            this.listBranches.SelectedIndexChanged += new System.EventHandler(this.ListBoxSelectedIndexChanged);
             // 
             // textSHA1
             // 
@@ -143,8 +143,8 @@
             this.textSHA1.Name = "textSHA1";
             this.textSHA1.Size = new System.Drawing.Size(223, 20);
             this.textSHA1.TabIndex = 5;
-            this.textSHA1.TextChanged += new System.EventHandler(this.textSHA1_TextChanged);
-            this.textSHA1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBranchName_KeyPress);
+            this.textSHA1.TextChanged += new System.EventHandler(this.TextSha1TextChanged);
+            this.textSHA1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(TextBranchNameKeyPress);
             // 
             // radioButton5
             // 
@@ -156,7 +156,7 @@
             this.radioButton5.Tag = "Tag";
             this.radioButton5.Text = "Tag:";
             this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioBranchSource_CheckedChanged);
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
             // radioButton4
             // 
@@ -168,7 +168,7 @@
             this.radioButton4.Tag = "Remote";
             this.radioButton4.Text = "Remote Branch:";
             this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioBranchSource_CheckedChanged);
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
             // radioButton3
             // 
@@ -180,7 +180,7 @@
             this.radioButton3.Tag = "Local";
             this.radioButton3.Text = "Local Branch:";
             this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioBranchSource_CheckedChanged);
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
             // radioButton2
             // 
@@ -192,7 +192,7 @@
             this.radioButton2.Tag = "SHA1";
             this.radioButton2.Text = "Specify Commit SHA1:";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioBranchSource_CheckedChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
             // radioButton1
             // 
@@ -206,7 +206,7 @@
             this.radioButton1.Tag = "Head";
             this.radioButton1.Text = "Current HEAD";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioBranchSource_CheckedChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
             // FormNewBranch
             // 

@@ -15,20 +15,19 @@ namespace git4win
     /// </summary>
     public class ClassPutty
     {
-        private string pathPageant = null;
-        private string pathPlink = null;
-        private string pathPuttyGen = null;
-
-        private Process procPageant = new Process();
+        private readonly string _pathPageant;
+        private readonly string _pathPlink;
+        private readonly string _pathPuttyGen;
+        private Process _procPageant = new Process();
 
         /// <summary>
         /// Constructor class function, create executables in temp space
         /// </summary>
         public ClassPutty()
         {
-            pathPageant = WriteResourceToFile(Properties.Resources.pageant, "pageant.exe");
-            pathPlink = WriteResourceToFile(Properties.Resources.plink, "plink.exe");
-            pathPuttyGen = WriteResourceToFile(Properties.Resources.puttygen, "puttygen.exe");
+            _pathPageant = WriteResourceToFile(Properties.Resources.pageant, "pageant.exe");
+            _pathPlink = WriteResourceToFile(Properties.Resources.plink, "plink.exe");
+            _pathPuttyGen = WriteResourceToFile(Properties.Resources.puttygen, "puttygen.exe");
 
             // Run the daemon process, update keys
             RunPageantUpdateKeys();
@@ -46,16 +45,16 @@ namespace git4win
                 // Dont attempt to stop/remove Pageant if the user wanted to leave it running
                 if (Properties.Settings.Default.leavePageant == false)
                 {
-                    if (!procPageant.HasExited)
+                    if (!_procPageant.HasExited)
                     {
-                        procPageant.Kill();
-                        procPageant.WaitForExit();
+                        _procPageant.Kill();
+                        _procPageant.WaitForExit();
                     }
-                    File.Delete(pathPageant);
+                    File.Delete(_pathPageant);
                 }
 
-                File.Delete(pathPlink);
-                File.Delete(pathPuttyGen);
+                File.Delete(_pathPlink);
+                File.Delete(_pathPuttyGen);
             }
             catch(Exception ex)
             {
@@ -96,7 +95,7 @@ namespace git4win
         /// </summary>
         public void RunPuTTYgen()
         {
-            Process procPuTTY = Process.Start(pathPuttyGen);
+            Process procPuTTY = Process.Start(_pathPuttyGen);
 
             // Block until PuTTY process closes. This is safer than dealing with
             // various combinations of users starting multiple instances etc.
@@ -128,10 +127,10 @@ namespace git4win
             if (args.Length>0 || !IsProcessRunning("pageant"))
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = pathPageant;
+                startInfo.FileName = _pathPageant;
                 startInfo.Arguments = args.ToString();
 
-                procPageant = Process.Start(startInfo);
+                _procPageant = Process.Start(startInfo);
             }
         }
 
@@ -140,7 +139,7 @@ namespace git4win
         /// </summary>
         public string GetPlinkPath()
         {
-            return pathPlink;
+            return _pathPlink;
         }
 
         /// <summary>
@@ -148,12 +147,10 @@ namespace git4win
         /// </summary>
         public List<string> GetPassPhrases()
         {
-            List<string> pfs;
-
             // Base-64 encoded strings, zero-delimited, are read from application settings
-            pfs = Properties.Settings.Default.PuTTYPf.
+            List<string> pfs = Properties.Settings.Default.PuTTYPf.
                 Split(("\0").ToCharArray(), 
-                StringSplitOptions.RemoveEmptyEntries).
+                      StringSplitOptions.RemoveEmptyEntries).
                 ToList();
 
             // Select each string and tramsform it from Base-64 to plaintext
@@ -182,17 +179,17 @@ namespace git4win
         /// Initializes SSH connection by running the PLINK using the specified
         /// connection parameters. This function blocks until the PLINK returns.
         /// </summary>
-        public void ImportRemoteSshKey(ClassURL.Url url)
+        public void ImportRemoteSshKey(ClassUrl.Url url)
         {
             // Build the arguments to the PLINK process: port number, user and the host
             // Use the default SSH values if the url did not provide them
-            string args = " -P " + (url.port > 0 ? url.port.ToString() : "22") +
-                          " -l " + (string.IsNullOrEmpty(url.user) ? "anonymous" : url.user) +
-                          " " + url.host;
+            string args = " -P " + (url.Port > 0 ? url.Port.ToString() : "22") +
+                          " -l " + (string.IsNullOrEmpty(url.User) ? "anonymous" : url.User) +
+                          " " + url.Host;
 
             // Start the process silently and wait until it ends
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = pathPlink;
+            startInfo.FileName = _pathPlink;
             startInfo.EnvironmentVariables.Add("PLINK_PROTOCOL", "ssh");
             startInfo.UseShellExecute = false;
 //          startInfo.CreateNoWindow = true;

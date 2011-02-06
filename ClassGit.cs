@@ -13,19 +13,19 @@ namespace git4win
         /// <summary>
         /// A temporary file that provides password for HTTPS operations
         /// </summary>
-        private string pathPasswordBatchHelper = Path.GetTempFileName() + ".bat";
+        private readonly string _pathPasswordBatchHelper = Path.GetTempFileName() + ".bat";
 
         /// <summary>
         /// Path to git executable, saved in Properties.Settings.Default.gitPath
         /// </summary>
-        private string gitPath = Properties.Settings.Default.gitPath;
+        private string _gitPath = Properties.Settings.Default.gitPath;
 
         /// <summary>
         /// Need a class destructor to remove a temporary file
         /// </summary>
         ~ClassGit()
         {
-            File.Delete(pathPasswordBatchHelper);
+            File.Delete(_pathPasswordBatchHelper);
         }
 
         /// <summary>
@@ -38,24 +38,24 @@ namespace git4win
             bool retValue = true;
 
             // Create a temporary batch file that will provide password for HTTPS git clone operations
-            File.WriteAllText(pathPasswordBatchHelper, "@echo %PASSWORD%\n");
+            File.WriteAllText(_pathPasswordBatchHelper, "@echo %PASSWORD%\n");
 
             // Check that we have a functional version of git at an already set path
-            gitPath = Properties.Settings.Default.gitPath;
+            _gitPath = Properties.Settings.Default.gitPath;
             if (Run("--version").Contains("git version") == false)
             {
                 // Check if a version of git is installed at a known location
-                gitPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Git\bin\git.exe";
+                _gitPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Git\bin\git.exe";
                 if (Run("--version").Contains("git version") == false)
                 {
                     // Ask user to show us where the git is installed
                     FormPathToGit formPath = new FormPathToGit();
                     while (retValue = (formPath.ShowDialog() == DialogResult.OK))
                     {
-                        gitPath = formPath.path;
+                        _gitPath = formPath.Path;
                         if (Run("--version").Contains("git version"))
                         {
-                            Properties.Settings.Default.gitPath = gitPath;
+                            Properties.Settings.Default.gitPath = _gitPath;
                             break;
                         }
                     }
@@ -120,7 +120,7 @@ namespace git4win
         {
             // If the repo object is not specified, use the 'current'
             if (repo == null)
-                repo = App.Repos.current;
+                repo = App.Repos.Current;
 
             string output = "";
             string root = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
@@ -134,8 +134,8 @@ namespace git4win
             // that is, if we are running in the context of an existing repo
             if (repo != null)
             {
-                root = repo.root;
-                password = repo.remotes.GetPassword();
+                root = repo.Root;
+                password = repo.Remotes.GetPassword();
             }
 
             App.Execute.SetTitle("Command: git " + cmd);
@@ -147,8 +147,8 @@ namespace git4win
                 Directory.SetCurrentDirectory(path ?? root);
 
                 Process p = new Process();
-                p.StartInfo.FileName = gitPath;
-                p.StartInfo.EnvironmentVariables.Add("GIT_ASKPASS", pathPasswordBatchHelper);
+                p.StartInfo.FileName = _gitPath;
+                p.StartInfo.EnvironmentVariables.Add("GIT_ASKPASS", _pathPasswordBatchHelper);
                 p.StartInfo.EnvironmentVariables.Add("PASSWORD", password);
                 p.StartInfo.EnvironmentVariables.Add("GIT_SSH", App.Putty.GetPlinkPath());
                 p.StartInfo.EnvironmentVariables.Add("PLINK_PROTOCOL", "ssh");

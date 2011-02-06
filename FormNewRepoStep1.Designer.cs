@@ -86,7 +86,7 @@
             this.rbEmpty.Tag = "empty";
             this.rbEmpty.Text = "New empty working repository (with or without your files already in)";
             this.rbEmpty.UseVisualStyleBackColor = true;
-            this.rbEmpty.CheckedChanged += new System.EventHandler(this.rbSource_CheckedChanged);
+            this.rbEmpty.CheckedChanged += new System.EventHandler(this.RbSourceCheckedChanged);
             // 
             // rbLocal
             // 
@@ -98,7 +98,7 @@
             this.rbLocal.Tag = "local";
             this.rbLocal.Text = "Clone of an existing local repository accessible by a file share";
             this.rbLocal.UseVisualStyleBackColor = true;
-            this.rbLocal.CheckedChanged += new System.EventHandler(this.rbSource_CheckedChanged);
+            this.rbLocal.CheckedChanged += new System.EventHandler(this.RbSourceCheckedChanged);
             // 
             // rbRemote
             // 
@@ -110,7 +110,7 @@
             this.rbRemote.Tag = "remote";
             this.rbRemote.Text = "Clone of an existing remote repository";
             this.rbRemote.UseVisualStyleBackColor = true;
-            this.rbRemote.CheckedChanged += new System.EventHandler(this.rbSource_CheckedChanged);
+            this.rbRemote.CheckedChanged += new System.EventHandler(this.RbSourceCheckedChanged);
             // 
             // textBoxLocal
             // 
@@ -121,7 +121,7 @@
             this.textBoxLocal.ReadOnly = true;
             this.textBoxLocal.Size = new System.Drawing.Size(355, 20);
             this.textBoxLocal.TabIndex = 3;
-            this.textBoxLocal.TextChanged += new System.EventHandler(this.textBoxLocal_TextChanged);
+            this.textBoxLocal.TextChanged += new System.EventHandler(this.TextBoxLocalTextChanged);
             // 
             // label2
             // 
@@ -142,7 +142,7 @@
             this.btBrowse.TabIndex = 4;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
-            this.btBrowse.Click += new System.EventHandler(this.btBrowse_Click);
+            this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
             // 
             // remoteDisplay
             // 

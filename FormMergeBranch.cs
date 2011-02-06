@@ -17,10 +17,10 @@ namespace git4win
 
             MergeStyle.SetStyle(Properties.Settings.Default.mergeStyle);
 
-            labelCurrentBranchName.Text = "Current branch is \"" + branches.current + "\"";
-            listBranches.Items.AddRange(branches.local.ToArray());
-            listBranches.Items.AddRange(branches.remote.ToArray());
-            listBranches.Items.RemoveAt(listBranches.Items.IndexOf(branches.current));
+            labelCurrentBranchName.Text = "Current branch is \"" + branches.Current + "\"";
+            listBranches.Items.AddRange(branches.Local.ToArray());
+            listBranches.Items.AddRange(branches.Remote.ToArray());
+            listBranches.Items.RemoveAt(listBranches.Items.IndexOf(branches.Current));
             if (listBranches.Items.Count > 0)
             {
                 listBranches.SelectedIndex = 0;
@@ -39,7 +39,7 @@ namespace git4win
             return ret;
         }
 
-        private void btMerge_Click(object sender, EventArgs e)
+        private void BtMergeClick(object sender, EventArgs e)
         {
             DoMerge(listBranches.SelectedItem.ToString());
         }

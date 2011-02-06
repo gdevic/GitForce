@@ -39,8 +39,8 @@ namespace git4win
         /// </summary>
         public void SetFiles(ClassCommit bundle)
         {
-            listFiles.Items.AddRange(bundle.files.ToArray());
-            btSelectAll_Click(null, null);
+            listFiles.Items.AddRange(bundle.Files.ToArray());
+            BtSelectAllClick(null, null);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace git4win
         /// <summary>
         /// Select all files from the list
         /// </summary>
-        private void btSelectAll_Click(object sender, EventArgs e)
+        private void BtSelectAllClick(object sender, EventArgs e)
         {
             for (int i = 0; i < listFiles.Items.Count; i++)
                 listFiles.SetItemChecked(i, true);
@@ -81,7 +81,7 @@ namespace git4win
         /// <summary>
         /// Unselect all files from the list
         /// </summary>
-        private void btUnselectAll_Click(object sender, EventArgs e)
+        private void BtUnselectAllClick(object sender, EventArgs e)
         {
             for (int i = 0; i < listFiles.Items.Count; i++)
                 listFiles.SetItemChecked(i, false);
@@ -91,7 +91,7 @@ namespace git4win
         /// Capture commit description text change event in order to enable "Submit" button
         /// when the text is non-empty.
         /// </summary>
-        private void textDescription_TextChanged(object sender, EventArgs e)
+        private void TextDescriptionTextChanged(object sender, EventArgs e)
         {
             btCommit.Enabled = textDescription.Text.Trim().Length > 0;
         }

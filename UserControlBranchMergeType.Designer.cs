@@ -47,7 +47,7 @@
             this.rb0.Tag = "fastforward";
             this.rb0.Text = "Keep a single branch line if possible (fast forward)";
             this.rb0.UseVisualStyleBackColor = true;
-            this.rb0.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb0.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
             // rb1
             // 
@@ -59,7 +59,7 @@
             this.rb1.Tag = "commit";
             this.rb1.Text = "Always create a new merge commit";
             this.rb1.UseVisualStyleBackColor = true;
-            this.rb1.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb1.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
             // rb2
             // 
@@ -71,7 +71,7 @@
             this.rb2.Tag = "strategy";
             this.rb2.Text = "Use different merge strategy:";
             this.rb2.UseVisualStyleBackColor = true;
-            this.rb2.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb2.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
             // comboStrategy
             // 
@@ -90,7 +90,7 @@
             this.comboStrategy.Name = "comboStrategy";
             this.comboStrategy.Size = new System.Drawing.Size(190, 21);
             this.comboStrategy.TabIndex = 3;
-            this.comboStrategy.SelectedIndexChanged += new System.EventHandler(this.comboStrategy_SelectedIndexChanged);
+            this.comboStrategy.SelectedIndexChanged += new System.EventHandler(this.ComboStrategySelectedIndexChanged);
             // 
             // labelHelp
             // 

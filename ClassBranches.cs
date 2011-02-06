@@ -13,41 +13,41 @@ namespace git4win
         /// <summary>
         /// Name of the current branch
         /// </summary>
-        public string current = null;
+        public string Current;
 
         /// <summary>
         /// List of local branches by their name
         /// </summary>
-        public List<string> local = new List<string>();
+        public List<string> Local = new List<string>();
 
         /// <summary>
         /// List of remote branches by their name
         /// </summary>
-        public List<string> remote = new List<string>();
+        public List<string> Remote = new List<string>();
 
         /// <summary>
         /// Refresh the list of branches and assign local and remote
         /// </summary>
         public void Refresh()
         {
-            local.Clear();
-            remote.Clear();
-            current = null;
+            Local.Clear();
+            Remote.Clear();
+            Current = null;
 
-            if (App.Repos.current != null)
+            if (App.Repos.Current != null)
             {
-                string[] response = App.Git.Run("branch -a").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                string[] response = App.Repos.Current.Run("branch -a").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 foreach (string s in response)
                 {
                     // Recognize current branch - it is marked by an asterisk
                     if (s[0] == '*')
-                        current = s.Replace("*", " ").Trim();
+                        Current = s.Replace("*", " ").Trim();
 
                     // Detect if a branch is local or remote and add it to the appropriate list
                     if (s.Contains(" remotes/"))
-                        remote.Add(s.Replace(" remotes/", "").Trim());
+                        Remote.Add(s.Replace(" remotes/", "").Trim());
                     else
-                        local.Add(s.Replace("*", " ").Trim());
+                        Local.Add(s.Replace("*", " ").Trim());
                 }
             }
         }
@@ -58,9 +58,9 @@ namespace git4win
         public bool SwitchTo(string name)
         {
             // Make sure the given branch name is a valid local branch
-            if (!string.IsNullOrEmpty(name) && local.IndexOf(name) >= 0)
+            if (!string.IsNullOrEmpty(name) && Local.IndexOf(name) >= 0)
             {
-                App.Git.Run("checkout " + name);
+                App.Repos.Current.Run("checkout " + name);
                 return true;
             }
             return false;

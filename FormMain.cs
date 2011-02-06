@@ -17,19 +17,19 @@ namespace git4win
     public partial class FormMain : Form
     {
         // Left panels
-        private static PanelView panelView = new PanelView();
+        private static readonly PanelView PanelView = new PanelView();
 
         // Right panels
-        private static PanelRepos panelRepos = new PanelRepos();
-        private static PanelCommits panelCommits = new PanelCommits();
-        private static PanelRevlist panelRevlist = new PanelRevlist();
-        private static PanelBranches panelBranches = new PanelBranches();
+        private static readonly PanelRepos PanelRepos = new PanelRepos();
+        private static readonly PanelCommits PanelCommits = new PanelCommits();
+        private static readonly PanelRevlist PanelRevlist = new PanelRevlist();
+        private static readonly PanelBranches PanelBranches = new PanelBranches();
 
-        private static Dictionary<string, UserControl> panels_r = new Dictionary<string, UserControl> {
-            { "Repos", panelRepos },
-            { "Commits", panelCommits },
-            { "Revisions", panelRevlist },
-            { "Branches", panelBranches },
+        private static readonly Dictionary<string, UserControl> PanelsR = new Dictionary<string, UserControl> {
+            { "Repos", PanelRepos },
+            { "Commits", PanelCommits },
+            { "Revisions", PanelRevlist },
+            { "Branches", PanelBranches },
         };
 
         /// <summary>
@@ -48,28 +48,28 @@ namespace git4win
 
             // Initialize panels
             // Left pane:
-            splitContainer2.Panel1.Controls.Add(panelView);
-            panelView.Dock = DockStyle.Fill;
+            splitContainer2.Panel1.Controls.Add(PanelView);
+            PanelView.Dock = DockStyle.Fill;
 
             // Right set of panes:
-            foreach (UserControl control in panels_r.Select(uc => uc.Value))
+            foreach (UserControl control in PanelsR.Select(uc => uc.Value))
             {
                 splitContainer2.Panel2.Controls.Add(control);
                 control.Dock = DockStyle.Fill;
             }
             // Current right panel view is kept in Properties.Settings.Default.viewRightPanel (string)
-            changeRightPanel(Properties.Settings.Default.viewRightPanel);
+            ChangeRightPanel(Properties.Settings.Default.viewRightPanel);
 
             // Form Execute is already created but it is hidden. Show it depending on the last state
             // which is kept in Properties.Settings.Default.ShowExecuteWindow (bool)
             menuViewExecuteWindow.Checked = Properties.Settings.Default.ShowExecuteWindow;
             App.Execute.Show(menuViewExecuteWindow.Checked);
             // We prevent Execute form closing by getting a FormClosing event within which we set "e.Cancel" to True
-            App.Execute.FormClosing += menuShowExecuteWindow;
+            App.Execute.FormClosing += MenuShowExecuteWindow;
 
             // Add all callback handlers
-            App.Log = logFunction;              // Log, to add strings to the app log window
-            App.Refresh += formMainRefresh;     // Refresh, when any component wants to update the global state
+            App.Log = LogFunction;              // Log, to add strings to the app log window
+            App.Refresh += FormMainRefresh;     // Refresh, when any component wants to update the global state
             App.StatusInfo += SetInfo;          // Info message, to update status bar on the bottom of the app window
             App.StatusBusy += SetBusy;          // Busy flag set or reset
 
@@ -77,8 +77,8 @@ namespace git4win
             App.Repos.Load();
 
             // If there is no current repo, switch the right panel view to Repos
-            if (App.Repos.current == null)
-                changeRightPanel("Repos");
+            if (App.Repos.Current == null)
+                ChangeRightPanel("Repos");
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace git4win
         /// </summary>
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == Win32.WmShowme)
+            if (m.Msg == NativeMethods.WmShowme)
                 ShowMe();
             base.WndProc(ref m);
         }
@@ -108,7 +108,7 @@ namespace git4win
         /// <summary>
         /// Form is closing
         /// </summary>
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormMainFormClosing(object sender, FormClosingEventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
             {
@@ -121,7 +121,7 @@ namespace git4win
         /// <summary>
         /// Exit command - route to form closing handler
         /// </summary>
-        private void menuExit(object sender, EventArgs e)
+        private void MenuExit(object sender, EventArgs e)
         {
             Close();
         }
@@ -129,12 +129,12 @@ namespace git4win
         /// <summary>
         /// Main File menu drop down
         /// </summary>
-        private void menuMainFile_DropDownOpening(object sender, EventArgs e)
+        private void MenuMainFileDropDownOpening(object sender, EventArgs e)
         {
             menuMainFile.DropDownItems.Clear();
-            menuMainFile.DropDownItems.AddRange(panelView.GetContextMenu(menuMainFile.DropDown, string.Empty));
+            menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown, string.Empty));
 
-            ToolStripMenuItem mExit = new ToolStripMenuItem("Exit", null, menuExit, Keys.Alt | Keys.F4);
+            ToolStripMenuItem mExit = new ToolStripMenuItem("Exit", null, MenuExit, Keys.Alt | Keys.F4);
 
             menuMainFile.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mExit });
         }
@@ -142,7 +142,7 @@ namespace git4win
         /// <summary>
         /// Menu "View" has been opened. Set the bullet next to the current view mode.
         /// </summary>
-        private void menuMainView_DropDownOpened(object sender, EventArgs e)
+        private void MenuMainViewDropDownOpened(object sender, EventArgs e)
         {
             int mode = Properties.Settings.Default.viewMode;
 
@@ -158,31 +158,31 @@ namespace git4win
         /// Set the view mode by sending a menu item whose Tag contains the mode number.
         /// This function is called from a menu handlers that select view mode.
         /// </summary>
-        private void viewSetByMenuItem(object sender, EventArgs e)
+        private static void ViewSetByMenuItem(object sender, EventArgs e)
         {
-            panelView.viewSetByMenuItem(sender, e);
+            PanelView.ViewSetByMenuItem(sender, e);
         }
 
         /// <summary>
         /// This function is called when user changes a right panel
         /// </summary>
-        private void changeRightPanel(string panelName)
+        private static void ChangeRightPanel(string panelName)
         {
-            UserControl panel = panels_r[panelName];
+            UserControl panel = PanelsR[panelName];
             panel.BringToFront();
             Properties.Settings.Default.viewRightPanel = panelName;
         }
 
-        private void rightPanelSelection_Click(object sender, EventArgs e)
+        private static void RightPanelSelectionClick(object sender, EventArgs e)
         {
-            changeRightPanel((sender as ToolStripItem).Tag.ToString());
+            ChangeRightPanel((sender as ToolStripItem).Tag.ToString());
         }
 
         /// <summary>
         /// Log function called with a message to print into the log window
         /// For performance resons, if a message is too long (?), we trim it.
         /// </summary>
-        private void logFunction(string message)
+        private void LogFunction(string message)
         {
             // Trim down the message if it is too long
             if (message.Length > 160)
@@ -211,6 +211,7 @@ namespace git4win
         /// </summary>
         private void SetBusy(bool isBusy)
         {
+            Cursor = isBusy ? Cursors.WaitCursor : Cursors.Default;
             btCancelOperation.Enabled = isBusy;
             Application.DoEvents();     // Give app the chance to redraw the icon
         }
@@ -218,17 +219,17 @@ namespace git4win
         /// <summary>
         /// Refresh main form items based on the new repository
         /// </summary>
-        private void formMainRefresh()
+        private void FormMainRefresh()
         {
             // Change the window title and display the default remote name
 
             StringBuilder title = new StringBuilder("git4win ");
 
-            if (panelBranches.GetCurrent() != "")
-                title.Append("- " + panelBranches.GetCurrent());
+            if (PanelBranches.GetCurrent() != "")
+                title.Append("- " + PanelBranches.GetCurrent());
 
-            if (App.Repos.current != null && App.Repos.current.remotes.current != "")
-                title.Append(" : " + App.Repos.current.remotes.current);
+            if (App.Repos.Current != null && App.Repos.Current.Remotes.Current != "")
+                title.Append(" : " + App.Repos.Current.Remotes.Current);
 
             Text = title.ToString();
 
@@ -236,22 +237,22 @@ namespace git4win
             menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainEditRemoteRepo.Enabled = menuMainSwitchRemoteRepo.Enabled = false;
 
             menuMainSwitchRemoteRepo.DropDownItems.Clear();
-            if (App.Repos.current != null && App.Repos.current.remotes.current != "")
+            if (App.Repos.Current != null && App.Repos.Current.Remotes.Current != "")
             {
-                List<string> remotes = App.Repos.current.remotes.GetListNames();
+                List<string> remotes = App.Repos.Current.Remotes.GetListNames();
                 foreach (string s in remotes)
                 {
                     ToolStripMenuItem m = new ToolStripMenuItem(s);
-                    m.Checked = App.Repos.current.remotes.current == s;
-                    m.Click += remoteChangedEvent;
+                    m.Checked = App.Repos.Current.Remotes.Current == s;
+                    m.Click += RemoteChangedEvent;
                     menuMainSwitchRemoteRepo.DropDownItems.Add(m);
                 }
-                remoteChangedEvent = remoteChanged;
+                RemoteChangedEvent = RemoteChanged;
 
                 menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainSwitchRemoteRepo.Enabled = true;
             }
 
-            if (App.Repos.current != null)
+            if (App.Repos.Current != null)
                 menuMainEditRemoteRepo.Enabled = true;
         }
 
@@ -259,17 +260,17 @@ namespace git4win
         /// Event handler delegate and the actual event handler for switching
         /// the remote repo. Called when user selects one of the pre-built menu items
         /// </summary>
-        private event EventHandler remoteChangedEvent;
-        private void remoteChanged(object sender, EventArgs e)
+        private event EventHandler RemoteChangedEvent;
+        private void RemoteChanged(object sender, EventArgs e)
         {
-            App.Repos.current.remotes.current = sender.ToString();
-            formMainRefresh();
+            App.Repos.Current.Remotes.Current = sender.ToString();
+            FormMainRefresh();
         }
 
         /// <summary>
         /// Settings menu selected
         /// </summary>
-        private void menuOptions(object sender, EventArgs e)
+        private static void MenuOptions(object sender, EventArgs e)
         {
             FormOptions frmOptions = new FormOptions();
             frmOptions.ShowDialog();
@@ -278,7 +279,7 @@ namespace git4win
         /// <summary>
         /// Refresh Active Pane, but refresh everything
         /// </summary>
-        private void menuRefreshAll(object sender, EventArgs e)
+        private static void MenuRefreshAll(object sender, EventArgs e)
         {
             App.Refresh();
         }
@@ -286,9 +287,9 @@ namespace git4win
         /// <summary>
         /// Edit the list of remote repositories
         /// </summary>
-        private void menuEditRemoteRepos(object sender, EventArgs e)
+        private static void MenuEditRemoteRepos(object sender, EventArgs e)
         {
-            FormRemoteEdit remoteEdit = new FormRemoteEdit(App.Repos.current);
+            FormRemoteEdit remoteEdit = new FormRemoteEdit(App.Repos.Current);
             if (remoteEdit.ShowDialog() == DialogResult.OK)
                 App.Refresh();
         }
@@ -296,28 +297,28 @@ namespace git4win
         /// <summary>
         /// Pull from a remote repository
         /// </summary>
-        private void menuRepoPull(object sender, EventArgs e)
+        private static void MenuRepoPull(object sender, EventArgs e)
         {
-            App.Repos.current.Run("pull " + App.Repos.current.remotes.current + " " + panelBranches.GetCurrent());
+            App.Repos.Current.Run("pull " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
         }
 
         /// <summary>
         /// Push to remote repository
         /// </summary>
-        private void menuRepoPush(object sender, EventArgs e)
+        private static void MenuRepoPush(object sender, EventArgs e)
         {
-            App.Repos.current.Run("push " + App.Repos.current.remotes.current + " " + panelBranches.GetCurrent());
+            App.Repos.Current.Run("push " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
         }
 
         /// <summary>
         /// Toggle the execute window between Show and Hide states. This form should not
         /// be closed for the application depends on it for cmd execution.
         /// </summary>
-        private void menuShowExecuteWindow(object sender, EventArgs e)
+        private void MenuShowExecuteWindow(object sender, EventArgs e)
         {
-            bool Checked = menuViewExecuteWindow.Checked;
-            Properties.Settings.Default.ShowExecuteWindow = menuViewExecuteWindow.Checked = !Checked;
-            App.Execute.Show(!Checked);
+            bool @checked = menuViewExecuteWindow.Checked;
+            Properties.Settings.Default.ShowExecuteWindow = menuViewExecuteWindow.Checked = !@checked;
+            App.Execute.Show(!@checked);
 
             // We prevent Execute form closing by servicing a FormExecute.FormClosing event with this event,
             // so disable closure by setting Cancel to true only if the caller used that type of arguments
@@ -328,12 +329,12 @@ namespace git4win
         /// <summary>
         /// Create Repository menu drop down
         /// </summary>
-        private void menuMainRepository_DropDownOpening(object sender, EventArgs e)
+        private void MenuMainRepositoryDropDownOpening(object sender, EventArgs e)
         {
             menuMainRepository.DropDownItems.Clear();
-            menuMainRepository.DropDownItems.AddRange(panelRepos.GetContextMenu(menuMainRepository.DropDown));
+            menuMainRepository.DropDownItems.AddRange(PanelRepos.GetContextMenu(menuMainRepository.DropDown));
 
-            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, rightPanelSelection_Click, Keys.F10);
+            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionClick, Keys.F10);
             mRepos.Tag = "Repos";
             menuMainRepository.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRepos });            
         }
@@ -341,12 +342,12 @@ namespace git4win
         /// <summary>
         /// Create Branches menu drop down
         /// </summary>
-        private void menuMainBranch_DropDownOpening(object sender, EventArgs e)
+        private void MenuMainBranchDropDownOpening(object sender, EventArgs e)
         {
             menuMainBranch.DropDownItems.Clear();
-            menuMainBranch.DropDownItems.AddRange(panelBranches.GetContextMenu(menuMainBranch.DropDown, null));
+            menuMainBranch.DropDownItems.AddRange(PanelBranches.GetContextMenu(menuMainBranch.DropDown, null));
 
-            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, rightPanelSelection_Click, Keys.F8);
+            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8);
             mRefresh.Tag = "Branches";
             menuMainBranch.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
         }
@@ -354,7 +355,7 @@ namespace git4win
         /// <summary>
         /// Show the standard About box
         /// </summary>
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private static void AboutToolStripMenuItemClick(object sender, EventArgs e)
         {
             FormAbout about = new FormAbout();
             about.ShowDialog();
@@ -363,13 +364,13 @@ namespace git4win
         /// <summary>
         /// Changelist menu drop down
         /// </summary>
-        private void menuMainChangelist_DropDownOpening(object sender, EventArgs e)
+        private void MenuMainChangelistDropDownOpening(object sender, EventArgs e)
         {
             menuMainChangelist.DropDownItems.Clear();
-            menuMainChangelist.DropDownItems.AddRange(panelCommits.GetContextMenu(menuMainChangelist.DropDown, null));
+            menuMainChangelist.DropDownItems.AddRange(PanelCommits.GetContextMenu(menuMainChangelist.DropDown, null));
 
-            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, rightPanelSelection_Click, Keys.F6);
-            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, rightPanelSelection_Click, Keys.F7);
+            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionClick, Keys.F6);
+            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionClick, Keys.F7);
             mPending.Tag = "Commits";
             mSubmitted.Tag = "Revisions";
             menuMainChangelist.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mPending, mSubmitted });
@@ -378,9 +379,9 @@ namespace git4win
         /// <summary>
         /// Select all files on the left pane
         /// </summary>
-        private void menuMainSelectAll_Click(object sender, EventArgs e)
+        private static void MenuMainSelectAllClick(object sender, EventArgs e)
         {
-            panelView.SelectAll();
+            PanelView.SelectAll();
         }
 
         #region Status menu handlers
@@ -388,7 +389,7 @@ namespace git4win
         /// <summary>
         /// Right-click on the status menu selected Copy command
         /// </summary>
-        private void menuStatusCopy_Click(object sender, EventArgs e)
+        private void MenuStatusCopyClick(object sender, EventArgs e)
         {
             StringBuilder buffer = new StringBuilder();
             foreach (int i in listStatus.SelectedIndices)
@@ -400,7 +401,7 @@ namespace git4win
         /// <summary>
         /// Right-click on the status menu selected Select-All command
         /// </summary>
-        private void menuStatusSelectAll_Click(object sender, EventArgs e)
+        private void MenuStatusSelectAllClick(object sender, EventArgs e)
         {
             for (int i = 0; i < listStatus.Items.Count; i++)
                 listStatus.SetSelected(i, true);
@@ -409,7 +410,7 @@ namespace git4win
         /// <summary>
         /// Right-click on the status menu selected Clear command
         /// </summary>
-        private void menuSelectClear_Click(object sender, EventArgs e)
+        private void MenuSelectClearClick(object sender, EventArgs e)
         {
             listStatus.Items.Clear();
         }
@@ -419,7 +420,7 @@ namespace git4win
         /// <summary>
         /// Manage PuTTY Keys
         /// </summary>
-        private void menuMainManageKeys_Click(object sender, EventArgs e)
+        private static void MenuMainManageKeysClick(object sender, EventArgs e)
         {
             FormPuTTY formPuTTY = new FormPuTTY();
             formPuTTY.ShowDialog();
