@@ -166,7 +166,7 @@ namespace git4win.FormMain_RightPanels
                             case "remote":
                                 ClassRemotes.Remote r = newRepoStep1.Remote;
 
-                                init = "clone --origin " + r.Name + " " + ClassUrl.ToCanonical(r.UrlFetch) + " " + root + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone --origin " + r.Name + " " + r.UrlFetch + " " + root + (isBare ? " --bare --shared " : " ") + extra;
                                 App.Git.Run(init, null, root, r.Password);
                                 repo = App.Repos.Add(root);
                                 break;

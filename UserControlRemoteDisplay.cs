@@ -75,6 +75,13 @@ namespace git4win
         /// <returns>Structure with values</returns>
         public ClassRemotes.Remote Get()
         {
+            // For SSH, make sure the URL string follows the strict format
+            if (_fetchUrl.Type == ClassUrl.UrlType.Ssh)
+                textUrlFetch.Text = ClassUrl.ToCanonical(textUrlFetch.Text);
+
+            if (_pushUrl.Type == ClassUrl.UrlType.Ssh)
+                textUrlPush.Text = ClassUrl.ToCanonical(textUrlPush.Text);
+
             ClassRemotes.Remote repo = new ClassRemotes.Remote();
             repo.Name = textName.Text;
             repo.UrlFetch = textUrlFetch.Text;
