@@ -7,14 +7,14 @@ namespace git4win
 {
     /// <summary>
     /// Class containing a set of remotes for a given repository
-    /// This class mainly manages names and passwords - things that
+    /// This class mainly manages names, command alias and passwords - things that
     /// are not kept natively with a git repo
     /// </summary>
     [Serializable]
     public class ClassRemotes
     {
         /// <summary>
-        /// Structure describing a remote repo. Only the name and password are
+        /// Structure describing a remote repo. Only the name, push cmd and password are
         /// to be used across the sessions, while the URL fields gets rewritten
         /// every time the list of remotes is updated from git
         /// </summary>
@@ -24,6 +24,7 @@ namespace git4win
             public string Name;
             public string UrlFetch;
             public string UrlPush;
+            public string PushCmd;
             public string Password;
         }
 
@@ -57,7 +58,7 @@ namespace git4win
 
         /// <summary>
         /// Refresh the list of remotes for the given repo while keeping the
-        /// existing passwords
+        /// existing passwords and push commands
         /// </summary>
         public void Refresh(ClassRepo repo)
         {
@@ -78,7 +79,10 @@ namespace git4win
                     r = newlist[name];
 
                 if (_remotes.ContainsKey(name))
+                {
                     r.Password = _remotes[name].Password;
+                    r.PushCmd = _remotes[name].PushCmd;
+                }
 
                 // Set all other fields that we refresh every time                
                 r.Name = name;
@@ -123,5 +127,31 @@ namespace git4win
             _remotes.TryGetValue(name, out r);
             return r.Password;
         }
+
+        /// <summary>
+        /// Sets the push command field for the given remote name or
+        /// creates a new remote if the named one does not exist
+        /// </summary>
+        public void SetPushCmd(string name, string cmd)
+        {
+            Remote r;
+            if (!_remotes.TryGetValue(name, out r))
+                r.Name = name;
+            r.PushCmd = cmd;
+            _remotes[name] = r;
+        }
+
+        /// <summary>
+        /// Return the push cmd for a given remote by name or
+        /// the current remote (if name is empty string)
+        /// </summary>
+        public string GetPushCmd(string name = "")
+        {
+            Remote r;
+            r.PushCmd = "";
+            if (name == "") name = Current;
+            _remotes.TryGetValue(name, out r);
+            return r.PushCmd;
+        }    
     }
 }

@@ -164,6 +164,16 @@ namespace git4win
         }
 
         /// <summary>
+        /// Switch the view mode to Local File View and Local Pending Changelists.
+        /// Needed to be reset that way after creating a new repo.
+        /// </summary>
+        public void ResetViews()
+        {
+            PanelView.SetView(3);
+            ChangeRightPanel("Commits");
+        }
+
+        /// <summary>
         /// This function is called when user changes a right panel
         /// </summary>
         private static void ChangeRightPanel(string panelName)
@@ -303,11 +313,16 @@ namespace git4win
         }
 
         /// <summary>
-        /// Push to remote repository
+        /// Push to remote repository.
+        /// Use either the standard form (example: "origin master"), or the user override
         /// </summary>
         private static void MenuRepoPush(object sender, EventArgs e)
         {
-            App.Repos.Current.Run("push " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
+            string pushCmd = App.Repos.Current.Remotes.GetPushCmd();
+            if (String.IsNullOrEmpty(pushCmd))
+                App.Repos.Current.Run("push " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
+            else
+                App.Repos.Current.Run("push " + pushCmd);
         }
 
         /// <summary>

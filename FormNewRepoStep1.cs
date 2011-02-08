@@ -25,6 +25,7 @@ namespace git4win
             InitializeComponent();
             // Set the default remote name
             Remote.Name = "origin";
+            Remote.PushCmd = "";
             remoteDisplay.Set(Remote);
             remoteDisplay.AnyTextChanged += SomeTextChanged;
         }

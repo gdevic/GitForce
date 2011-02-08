@@ -29,8 +29,9 @@ namespace git4win
             FileModified,           // ID=9
             FileCopied,             // ID=10
             FileRenamed,            // ID=11
-            ChangeAll,              // ID=12
-            ChangeOne,              // ID=13
+            FileUnmerged,           // ID=12
+            ChangeAll,              // ID=13
+            ChangeOne,              // ID=14
         }
 
         /// <summary>
@@ -43,7 +44,8 @@ namespace git4win
             { 'A', Img.FileAdded },
             { 'M', Img.FileModified },
             { 'C', Img.FileCopied },
-            { 'R', Img.FileRenamed }
+            { 'R', Img.FileRenamed },
+            { 'U', Img.FileUnmerged }
         };
 
         /// <summary>
@@ -66,6 +68,7 @@ namespace git4win
             il.Images.Add(Properties.Resources.TreeIcon9);
             il.Images.Add(Properties.Resources.TreeIcon10);
             il.Images.Add(Properties.Resources.TreeIcon11);
+            il.Images.Add(Properties.Resources.TreeIcon11); // TODO: Add for unmerged
 
             il.Images.Add(Properties.Resources.Change0);
             il.Images.Add(Properties.Resources.Change1);

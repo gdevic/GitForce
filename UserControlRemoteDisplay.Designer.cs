@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textPushCmd = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btSsh = new System.Windows.Forms.Button();
             this.textPassword = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -46,6 +48,8 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.textPushCmd);
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btSsh);
             this.groupBox1.Controls.Add(this.textPassword);
             this.groupBox1.Controls.Add(this.label5);
@@ -57,37 +61,56 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(372, 116);
+            this.groupBox1.Size = new System.Drawing.Size(422, 143);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // textPushCmd
+            // 
+            this.textPushCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textPushCmd.Location = new System.Drawing.Point(82, 91);
+            this.textPushCmd.Name = "textPushCmd";
+            this.textPushCmd.ReadOnly = true;
+            this.textPushCmd.Size = new System.Drawing.Size(334, 20);
+            this.textPushCmd.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 94);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Cmd> push";
             // 
             // btSsh
             // 
             this.btSsh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSsh.Enabled = false;
-            this.btSsh.Location = new System.Drawing.Point(225, 89);
+            this.btSsh.Location = new System.Drawing.Point(275, 116);
             this.btSsh.Name = "btSsh";
             this.btSsh.Size = new System.Drawing.Size(141, 23);
-            this.btSsh.TabIndex = 8;
+            this.btSsh.TabIndex = 5;
             this.btSsh.Text = "Import Remote SSH Key";
             this.btSsh.UseVisualStyleBackColor = true;
             this.btSsh.Click += new System.EventHandler(this.BtSshClick);
             // 
             // textPassword
             // 
-            this.textPassword.Location = new System.Drawing.Point(81, 91);
+            this.textPassword.Location = new System.Drawing.Point(82, 117);
             this.textPassword.MaxLength = 32;
             this.textPassword.Name = "textPassword";
             this.textPassword.PasswordChar = '*';
             this.textPassword.ReadOnly = true;
-            this.textPassword.Size = new System.Drawing.Size(112, 20);
-            this.textPassword.TabIndex = 3;
+            this.textPassword.Size = new System.Drawing.Size(111, 20);
+            this.textPassword.TabIndex = 4;
             this.textPassword.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 92);
+            this.label5.Location = new System.Drawing.Point(6, 120);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 13);
             this.label5.TabIndex = 7;
@@ -97,11 +120,11 @@
             // 
             this.textUrlPush.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textUrlPush.Location = new System.Drawing.Point(81, 65);
+            this.textUrlPush.Location = new System.Drawing.Point(82, 65);
             this.textUrlPush.MaxLength = 128;
             this.textUrlPush.Name = "textUrlPush";
             this.textUrlPush.ReadOnly = true;
-            this.textUrlPush.Size = new System.Drawing.Size(285, 20);
+            this.textUrlPush.Size = new System.Drawing.Size(334, 20);
             this.textUrlPush.TabIndex = 2;
             this.textUrlPush.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -109,11 +132,11 @@
             // 
             this.textUrlFetch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textUrlFetch.Location = new System.Drawing.Point(81, 39);
+            this.textUrlFetch.Location = new System.Drawing.Point(82, 39);
             this.textUrlFetch.MaxLength = 128;
             this.textUrlFetch.Name = "textUrlFetch";
             this.textUrlFetch.ReadOnly = true;
-            this.textUrlFetch.Size = new System.Drawing.Size(285, 20);
+            this.textUrlFetch.Size = new System.Drawing.Size(334, 20);
             this.textUrlFetch.TabIndex = 1;
             this.textUrlFetch.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -137,11 +160,11 @@
             // 
             // textName
             // 
-            this.textName.Location = new System.Drawing.Point(81, 13);
+            this.textName.Location = new System.Drawing.Point(82, 13);
             this.textName.MaxLength = 32;
             this.textName.Name = "textName";
             this.textName.ReadOnly = true;
-            this.textName.Size = new System.Drawing.Size(112, 20);
+            this.textName.Size = new System.Drawing.Size(111, 20);
             this.textName.TabIndex = 0;
             this.textName.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -159,9 +182,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
-            this.MinimumSize = new System.Drawing.Size(309, 119);
+            this.MinimumSize = new System.Drawing.Size(346, 146);
             this.Name = "RemoteDisplay";
-            this.Size = new System.Drawing.Size(375, 119);
+            this.Size = new System.Drawing.Size(425, 146);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -180,5 +203,7 @@
         private System.Windows.Forms.TextBox textName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btSsh;
+        private System.Windows.Forms.TextBox textPushCmd;
+        private System.Windows.Forms.Label label1;
     }
 }

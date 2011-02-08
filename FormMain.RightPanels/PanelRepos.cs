@@ -172,6 +172,9 @@ namespace git4win.FormMain_RightPanels
                                 break;
                         }
 
+                        // Switch the view mode to Local File View and Local Pending Changelists
+                        App.MainForm.ResetViews();
+
                         // Finally, switch to the new repo which will cause a global refresh
                         App.Repos.SetCurrent(repo);
                     }

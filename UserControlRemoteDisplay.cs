@@ -38,7 +38,7 @@ namespace git4win
         public void Enable(bool name, bool all)
         {
             textName.ReadOnly = !name;
-            textUrlPush.ReadOnly = textUrlFetch.ReadOnly = btSsh.Enabled = !all;
+            textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = btSsh.Enabled = !all;
             SomeTextChanged(null, null);
         }
 
@@ -50,6 +50,7 @@ namespace git4win
             textName.Text = "";
             textUrlFetch.Text = "";
             textUrlPush.Text = "";
+            textPushCmd.Text = "";
             textPassword.Text = "";
             btSsh.Enabled = false;
             textPassword.ReadOnly = true;
@@ -64,6 +65,7 @@ namespace git4win
             textName.Text = repo.Name;
             textUrlFetch.Text = repo.UrlFetch;
             textUrlPush.Text = repo.UrlPush;
+            textPushCmd.Text = repo.PushCmd;
             textPassword.Text = repo.Password;
         }
 
@@ -77,6 +79,7 @@ namespace git4win
             repo.Name = textName.Text;
             repo.UrlFetch = textUrlFetch.Text;
             repo.UrlPush = textUrlPush.Text;
+            repo.PushCmd = textPushCmd.Text;
             repo.Password = textPassword.Text;
 
             return repo;

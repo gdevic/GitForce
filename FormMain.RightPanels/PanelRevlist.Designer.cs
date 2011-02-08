@@ -63,6 +63,7 @@
             this.colSubject});
             this.listRev.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listRev.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listRev.FullRowSelect = true;
             this.listRev.Location = new System.Drawing.Point(0, 25);
             this.listRev.Name = "listRev";
             this.listRev.Size = new System.Drawing.Size(400, 375);

@@ -67,6 +67,11 @@ namespace git4win
         /// </summary>
         public static ClassPutty Putty;
 
+        /// <summary>
+        /// Static main form class
+        /// </summary>
+        public static FormMain MainForm;
+
         #endregion
 
         /// <summary>
@@ -101,8 +106,8 @@ namespace git4win
                         // Add known text editors if needed
                         FormOptions_Panels.ControlViewEdit.AddKnownEditors();
 
-                        Form mainForm = new FormMain();
-                        Application.Run(mainForm);
+                        MainForm = new FormMain();
+                        Application.Run(MainForm);
 
                         Properties.Settings.Default.Save();
                     }

@@ -122,11 +122,11 @@ namespace git4win.FormMain_LeftPanels
                 switch (mode)
                 {
                     case 0:     // Git view of local files: status + untracked
-                        Status.SetListByCommand("status --porcelain -uall -z *");
+                        Status.SetListByCommand("status --porcelain -uall -z");
                         Status.Seal();
                         break;
                     case 1:     // Git view of files: status - untracked
-                        Status.SetListByCommand("status --porcelain -uno -z *");
+                        Status.SetListByCommand("status --porcelain -uno -z");
                         Status.Filter(s => s.StartsWith("??"));
                         Status.Seal();
                         break;
@@ -135,13 +135,13 @@ namespace git4win.FormMain_LeftPanels
                         Status.ConvertSeal();
                         break;
                     case 3:     // Local file view: use local directory list
-                        Status.SetListByCommand("status --porcelain -uall -z *");
+                        Status.SetListByCommand("status --porcelain -uall -z");
                         Status.Seal();
                         Status.SetListByList(GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root));
                         Status.Seal();
                         break;
                     case 4:     // Local files not in repo: untracked only
-                        Status.SetListByCommand("status --porcelain -uall -z *");
+                        Status.SetListByCommand("status --porcelain -uall -z");
                         Status.Filter(s => !s.StartsWith("??"));
                         Status.Seal();
                         break;
@@ -381,6 +381,9 @@ namespace git4win.FormMain_LeftPanels
             foreach (string s in progs)
                 mEdit.DropDownItems.Add(CreateMenu(Path.GetFileName(s), MenuViewEditClick, sel, s));
 
+            ToolStripMenuItem mDelete = CreateMenu("Open for Delete", MenuViewOpenForDeleteClick, sel);
+            ToolStripMenuItem mRemove = CreateMenu("Remove from File System", MenuViewRemoveFromFsClick, sel);
+
             ToolStripMenuItem mExplore = CreateMenu("Explore...", MenuViewExploreClick, sel);
             ToolStripMenuItem mCommand = CreateMenu("Command Prompt...", MenuViewCommandClick, sel);
 
@@ -389,6 +392,9 @@ namespace git4win.FormMain_LeftPanels
                 mRevert,
                 mDiff,
                 mEdit,
+                new ToolStripSeparator(),
+                mDelete,
+                mRemove,
                 new ToolStripSeparator(),
                 mExplore, mCommand
             });
@@ -446,6 +452,27 @@ namespace git4win.FormMain_LeftPanels
                 Process.Start(sel.SelPath);
             else
                 Process.Start(sel.tag, sel.SelPath);
+        }
+
+        /// <summary>
+        /// Open files for delete, using a git rm command
+        /// </summary>
+        private void MenuViewOpenForDeleteClick(object sender, EventArgs e)
+        {
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            App.Repos.Current.Run("rm -- " + sel.SelPathGitFormat());
+            ViewRefresh();
+        }
+
+        /// <summary>
+        /// Remove files from the local file system using Windows remove command
+        /// </summary>
+        private void MenuViewRemoveFromFsClick(object sender, EventArgs e)
+        {
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            foreach (string s in sel.SelFiles)
+                File.Delete(s);
+            ViewRefresh();
         }
 
         /// <summary>

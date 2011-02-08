@@ -44,7 +44,7 @@ namespace git4win.FormMain_RightPanels
 
                 // List files that are updated in the index (code X is not ' ' or '?')
 
-                Status.SetListByCommand("status --porcelain -uno -z *");
+                Status.SetListByCommand("status --porcelain -uno -z");
                 Status.Filter(s => s[0] == ' ' || s[0] == '?');
                 Status.Seal();
 
@@ -342,7 +342,8 @@ namespace git4win.FormMain_RightPanels
             // Get the files checked for commit
             if (c.Files.Count > 0)
             {
-                if (MessageBox.Show("Revert will unstage all the selected files and will lose the changes.\rProceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
+                if (MessageBox.Show(@"Revert will unstage all the selected files and will lose the changes.
+Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     string cmd = "reset HEAD -- " +
                     String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToList());

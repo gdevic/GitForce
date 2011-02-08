@@ -80,6 +80,7 @@ namespace git4win
                 remote = remoteAddEdit.Get();
                 _repo.Run("remote add " + remote.Name + " " + remote.UrlFetch);
                 _repo.Remotes.SetPassword(remote.Name, remote.Password);
+                _repo.Remotes.SetPushCmd(remote.Name, remote.PushCmd);
 
                 SetRepo(_repo);
             }
@@ -120,6 +121,13 @@ namespace git4win
                     // Change the password
                     _repo.Remotes.SetPassword(remote.Name, remote.Password);
                 }
+
+                if(remote.PushCmd != _current.PushCmd)
+                {
+                    // Change the push command
+                    _repo.Remotes.SetPushCmd(remote.Name, remote.PushCmd);
+                }
+
                 SetRepo(_repo);
             }
         }

@@ -42,7 +42,7 @@
             // 
             this.btEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btEdit.Enabled = false;
-            this.btEdit.Location = new System.Drawing.Point(87, 143);
+            this.btEdit.Location = new System.Drawing.Point(87, 168);
             this.btEdit.Name = "btEdit";
             this.btEdit.Size = new System.Drawing.Size(75, 23);
             this.btEdit.TabIndex = 2;
@@ -53,7 +53,7 @@
             // btAdd
             // 
             this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btAdd.Location = new System.Drawing.Point(6, 143);
+            this.btAdd.Location = new System.Drawing.Point(6, 168);
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(75, 23);
             this.btAdd.TabIndex = 1;
@@ -65,7 +65,7 @@
             // 
             this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btDelete.Enabled = false;
-            this.btDelete.Location = new System.Drawing.Point(249, 143);
+            this.btDelete.Location = new System.Drawing.Point(249, 168);
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(75, 23);
             this.btDelete.TabIndex = 4;
@@ -81,7 +81,7 @@
             this.listRemotes.IntegralHeight = false;
             this.listRemotes.Location = new System.Drawing.Point(6, 19);
             this.listRemotes.Name = "listRemotes";
-            this.listRemotes.Size = new System.Drawing.Size(128, 119);
+            this.listRemotes.Size = new System.Drawing.Size(128, 144);
             this.listRemotes.TabIndex = 0;
             this.listRemotes.SelectedIndexChanged += new System.EventHandler(this.ListRemotesSelectedIndexChanged);
             // 
@@ -96,7 +96,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(500, 172);
+            this.groupBox2.Size = new System.Drawing.Size(544, 197);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Remote repositories registered with a current repo";
@@ -105,7 +105,7 @@
             // 
             this.btRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btRename.Enabled = false;
-            this.btRename.Location = new System.Drawing.Point(168, 143);
+            this.btRename.Location = new System.Drawing.Point(168, 168);
             this.btRename.Name = "btRename";
             this.btRename.Size = new System.Drawing.Size(75, 23);
             this.btRename.TabIndex = 3;
@@ -118,8 +118,9 @@
             this.userControlRemoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.userControlRemoteDisplay.Location = new System.Drawing.Point(140, 19);
+            this.userControlRemoteDisplay.MinimumSize = new System.Drawing.Size(309, 119);
             this.userControlRemoteDisplay.Name = "userControlRemoteDisplay";
-            this.userControlRemoteDisplay.Size = new System.Drawing.Size(354, 119);
+            this.userControlRemoteDisplay.Size = new System.Drawing.Size(398, 145);
             this.userControlRemoteDisplay.TabIndex = 2;
             // 
             // RemoteEdit
@@ -127,8 +128,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox2);
+            this.MinimumSize = new System.Drawing.Size(493, 197);
             this.Name = "RemoteEdit";
-            this.Size = new System.Drawing.Size(500, 172);
+            this.Size = new System.Drawing.Size(544, 197);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 

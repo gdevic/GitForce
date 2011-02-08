@@ -130,10 +130,8 @@ namespace git4win
                 if (!string.IsNullOrEmpty(url.Host) && !string.IsNullOrEmpty(url.Path))
                     url.Ok = true;
             }
-            catch(Exception ex)
-            {
-                App.Execute.Add(ex.Message);
-            }
+            catch
+            {}
 
             return url;
         }

@@ -36,7 +36,7 @@
             // 
             this.btDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btDone.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btDone.Location = new System.Drawing.Point(456, 187);
+            this.btDone.Location = new System.Drawing.Point(479, 212);
             this.btDone.Name = "btDone";
             this.btDone.Size = new System.Drawing.Size(75, 23);
             this.btDone.TabIndex = 1;
@@ -51,19 +51,19 @@
             this.userControlRemoteEdit.Location = new System.Drawing.Point(12, 12);
             this.userControlRemoteEdit.MinimumSize = new System.Drawing.Size(320, 165);
             this.userControlRemoteEdit.Name = "userControlRemoteEdit";
-            this.userControlRemoteEdit.Size = new System.Drawing.Size(519, 171);
+            this.userControlRemoteEdit.Size = new System.Drawing.Size(542, 196);
             this.userControlRemoteEdit.TabIndex = 0;
             // 
             // FormRemoteEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(543, 222);
+            this.ClientSize = new System.Drawing.Size(566, 247);
             this.Controls.Add(this.btDone);
             this.Controls.Add(this.userControlRemoteEdit);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(388, 260);
+            this.MinimumSize = new System.Drawing.Size(533, 285);
             this.Name = "FormRemoteEdit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

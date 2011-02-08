@@ -34,6 +34,9 @@ namespace git4win
             {
                 case Function.Add:
                     remoteDisplay.Enable(true, true);
+                    remote.Name = "origin";
+                    remote.PushCmd = "";
+                    remoteDisplay.Set(remote);
                     Text = "Add a new remote repository";
                     btOK.Enabled = false;
                     break;

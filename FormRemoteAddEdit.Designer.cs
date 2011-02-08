@@ -37,7 +37,7 @@
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(323, 133);
+            this.btCancel.Location = new System.Drawing.Point(359, 165);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 2;
@@ -48,7 +48,7 @@
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(242, 133);
+            this.btOK.Location = new System.Drawing.Point(278, 165);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 1;
@@ -60,21 +60,22 @@
             this.remoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.remoteDisplay.Location = new System.Drawing.Point(12, 1);
+            this.remoteDisplay.MinimumSize = new System.Drawing.Size(346, 146);
             this.remoteDisplay.Name = "remoteDisplay";
-            this.remoteDisplay.Size = new System.Drawing.Size(386, 125);
+            this.remoteDisplay.Size = new System.Drawing.Size(422, 146);
             this.remoteDisplay.TabIndex = 0;
             // 
             // FormRemoteAddEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(410, 168);
+            this.ClientSize = new System.Drawing.Size(446, 200);
             this.Controls.Add(this.remoteDisplay);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(305, 206);
+            this.MinimumSize = new System.Drawing.Size(379, 224);
             this.Name = "FormRemoteAddEdit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
