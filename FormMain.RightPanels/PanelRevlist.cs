@@ -33,7 +33,7 @@ namespace git4win.FormMain_RightPanels
                 StringBuilder cmd = new StringBuilder("log --pretty=format:\"");
                 cmd.Append("%h%x09");       // Abbreviated commit hash
                 cmd.Append("%ct%x09");      // Committing time, UNIX-style
-                cmd.Append("%cn%x09");      // Committer name
+                cmd.Append("%an%x09");      // Author name
                 cmd.Append("%s");           // Subject
                 cmd.Append("\" HEAD");
                 // Limit the number of commits to show

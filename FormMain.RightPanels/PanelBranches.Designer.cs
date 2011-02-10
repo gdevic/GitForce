@@ -34,8 +34,10 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.treeBranches = new System.Windows.Forms.TreeView();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -72,8 +74,16 @@
             // 
             // contextMenu
             // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dummyMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(153, 26);
+            this.contextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // dummyMenuItem
+            // 
+            this.dummyMenuItem.Name = "dummyMenuItem";
+            this.dummyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dummyMenuItem.Text = "Menu Item";
             // 
             // imageList
             // 
@@ -93,6 +103,7 @@
             this.Size = new System.Drawing.Size(400, 400);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,5 +116,6 @@
         private System.Windows.Forms.TreeView treeBranches;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
     }
 }

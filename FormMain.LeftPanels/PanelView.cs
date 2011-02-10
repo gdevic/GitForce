@@ -110,7 +110,7 @@ namespace git4win.FormMain_LeftPanels
             menuSortFilesByExtension.Enabled = btListView.Enabled = App.Repos.Current != null;
 
             treeView.BeginUpdate();
-            treeView.Nodes.Clear();
+            treeView.NodesClear();
 
             if (App.Repos.Current != null)
             {
@@ -206,7 +206,7 @@ namespace git4win.FormMain_LeftPanels
         /// <summary>
         /// Callback called when user clicks on a node to expand it
         /// </summary>
-        private static void TreeViewAfterExpand(object sender, TreeViewEventArgs e)
+        private void TreeViewAfterExpand(object sender, TreeViewEventArgs e)
         {
             TreeNode tn = e.Node;
             App.Repos.Current.ExpansionSet(tn.Tag.ToString());
@@ -263,7 +263,7 @@ namespace git4win.FormMain_LeftPanels
             DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Move);
         }
 
-        private static void TreeViewDragEnter(object sender, DragEventArgs e)
+        private void TreeViewDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
@@ -357,8 +357,6 @@ namespace git4win.FormMain_LeftPanels
                     App.Repos.Current.Root;
             else
                 sel.SelPath = path;
-
-            App.Execute.Add(sel.SelPath + Environment.NewLine);
 
             ToolStripMenuItem mUpdate = CreateMenu("Update Changelist", MenuViewUpdateChangelistClick, sel);
             ToolStripMenuItem mRevert = CreateMenu("Revert", MenuViewRevertClick, sel);

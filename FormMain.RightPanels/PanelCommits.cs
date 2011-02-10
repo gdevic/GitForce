@@ -36,7 +36,7 @@ namespace git4win.FormMain_RightPanels
         private void CommitsRefresh()
         {
             treeCommits.BeginUpdate();
-            treeCommits.Nodes.Clear();
+            treeCommits.NodesClear();
 
             if (App.Repos.Current != null)
             {

@@ -38,7 +38,9 @@
             this.colEmail = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -97,8 +99,10 @@
             // 
             // contextMenu
             // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dummyMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(61, 4);
+            this.contextMenu.Size = new System.Drawing.Size(153, 48);
             // 
             // imageList
             // 
@@ -108,6 +112,12 @@
             this.imageList.Images.SetKeyName(1, "Repo1.ico");
             this.imageList.Images.SetKeyName(2, "Repo2.ico");
             this.imageList.Images.SetKeyName(3, "Repo3.ico");
+            // 
+            // dummyMenuItem
+            // 
+            this.dummyMenuItem.Name = "dummyMenuItem";
+            this.dummyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dummyMenuItem.Text = "Menu Item";
             // 
             // PanelRepos
             // 
@@ -119,6 +129,7 @@
             this.Size = new System.Drawing.Size(400, 400);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,5 +145,6 @@
         private System.Windows.Forms.ColumnHeader colEmail;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
     }
 }

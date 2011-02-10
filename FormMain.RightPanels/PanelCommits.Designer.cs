@@ -34,8 +34,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.treeCommits = new MultiSelectTreeview.MultiSelectTreeview();
+            this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeCommits = new git4win.TreeViewEx();
             this.toolStrip1.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -56,8 +58,16 @@
             // 
             // contextMenu
             // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dummyMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(61, 4);
+            this.contextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // dummyMenuItem
+            // 
+            this.dummyMenuItem.Name = "dummyMenuItem";
+            this.dummyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dummyMenuItem.Text = "Menu Item";
             // 
             // treeCommits
             // 
@@ -68,6 +78,8 @@
             this.treeCommits.Indent = 16;
             this.treeCommits.Location = new System.Drawing.Point(0, 25);
             this.treeCommits.Name = "treeCommits";
+            treeNode1.BackColor = System.Drawing.SystemColors.Window;
+            treeNode1.ForeColor = System.Drawing.SystemColors.WindowText;
             treeNode1.Name = "Node0";
             treeNode1.Text = "Staged Files";
             this.treeCommits.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
@@ -91,6 +103,7 @@
             this.Tag = "Commits";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -100,7 +113,8 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private MultiSelectTreeview.MultiSelectTreeview treeCommits;
+        private TreeViewEx treeCommits;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
     }
 }
