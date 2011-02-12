@@ -74,14 +74,5 @@ namespace git4win
         {
             Extra = textBoxExtraArgs.Text;
         }
-
-        /// <summary>
-        /// Clicking on the Pageant button starts the pageant process
-        /// </summary>
-        private static void BtPageantClick(object sender, EventArgs e)
-        {
-            FormPuTTY formPuTTY = new FormPuTTY();
-            formPuTTY.ShowDialog();
-        }
     }
 }

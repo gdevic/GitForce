@@ -1,6 +1,6 @@
 ﻿namespace git4win
 {
-    partial class FormPuTTY
+    partial class FormSSH
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPuTTY));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSSH));
             this.btOK = new System.Windows.Forms.Button();
             this.listBoxKeys = new System.Windows.Forms.ListBox();
             this.byAdd = new System.Windows.Forms.Button();
@@ -39,28 +39,40 @@
             this.btShowPf = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btImport = new System.Windows.Forms.Button();
+            this.btImport1 = new System.Windows.Forms.Button();
             this.btPuttygen = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btImport2 = new System.Windows.Forms.Button();
             this.textBoxInputPf = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabLocalKeys = new System.Windows.Forms.TabPage();
+            this.tabRemoteKeys = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btAddHost = new System.Windows.Forms.Button();
+            this.textBoxHost = new System.Windows.Forms.TextBox();
+            this.listHosts = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.tabLocalKeys.SuspendLayout();
+            this.tabRemoteKeys.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btOK
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(371, 338);
+            this.btOK.Location = new System.Drawing.Point(443, 389);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 2;
+            this.btOK.TabIndex = 1;
             this.btOK.Text = "Done";
             this.btOK.UseVisualStyleBackColor = true;
             // 
@@ -74,17 +86,17 @@
             this.listBoxKeys.IntegralHeight = false;
             this.listBoxKeys.Location = new System.Drawing.Point(6, 19);
             this.listBoxKeys.Name = "listBoxKeys";
-            this.listBoxKeys.Size = new System.Drawing.Size(341, 108);
-            this.listBoxKeys.TabIndex = 2;
+            this.listBoxKeys.Size = new System.Drawing.Size(399, 111);
+            this.listBoxKeys.TabIndex = 0;
             this.listBoxKeys.SelectedIndexChanged += new System.EventHandler(this.ListBoxKeysSelectedIndexChanged);
             // 
             // byAdd
             // 
             this.byAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.byAdd.Location = new System.Drawing.Point(353, 19);
+            this.byAdd.Location = new System.Drawing.Point(411, 19);
             this.byAdd.Name = "byAdd";
             this.byAdd.Size = new System.Drawing.Size(75, 23);
-            this.byAdd.TabIndex = 0;
+            this.byAdd.TabIndex = 1;
             this.byAdd.Text = "Add...";
             this.byAdd.UseVisualStyleBackColor = true;
             this.byAdd.Click += new System.EventHandler(this.ByAddClick);
@@ -93,10 +105,10 @@
             // 
             this.btRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btRemove.Enabled = false;
-            this.btRemove.Location = new System.Drawing.Point(353, 48);
+            this.btRemove.Location = new System.Drawing.Point(411, 48);
             this.btRemove.Name = "btRemove";
             this.btRemove.Size = new System.Drawing.Size(75, 23);
-            this.btRemove.TabIndex = 1;
+            this.btRemove.TabIndex = 2;
             this.btRemove.Text = "Remove";
             this.btRemove.UseVisualStyleBackColor = true;
             this.btRemove.Click += new System.EventHandler(this.BtRemoveClick);
@@ -110,18 +122,18 @@
             this.listBoxPf.IntegralHeight = false;
             this.listBoxPf.Location = new System.Drawing.Point(6, 45);
             this.listBoxPf.Name = "listBoxPf";
-            this.listBoxPf.Size = new System.Drawing.Size(341, 79);
-            this.listBoxPf.TabIndex = 2;
+            this.listBoxPf.Size = new System.Drawing.Size(399, 96);
+            this.listBoxPf.TabIndex = 1;
             this.listBoxPf.SelectedIndexChanged += new System.EventHandler(this.ListBoxPfSelectedIndexChanged);
             // 
             // btAddPf
             // 
             this.btAddPf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btAddPf.Enabled = false;
-            this.btAddPf.Location = new System.Drawing.Point(353, 17);
+            this.btAddPf.Location = new System.Drawing.Point(411, 17);
             this.btAddPf.Name = "btAddPf";
             this.btAddPf.Size = new System.Drawing.Size(75, 23);
-            this.btAddPf.TabIndex = 1;
+            this.btAddPf.TabIndex = 2;
             this.btAddPf.Text = "Add";
             this.btAddPf.UseVisualStyleBackColor = true;
             this.btAddPf.Click += new System.EventHandler(this.BtAddPClick);
@@ -130,7 +142,7 @@
             // 
             this.btRemovePf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btRemovePf.Enabled = false;
-            this.btRemovePf.Location = new System.Drawing.Point(353, 48);
+            this.btRemovePf.Location = new System.Drawing.Point(411, 46);
             this.btRemovePf.Name = "btRemovePf";
             this.btRemovePf.Size = new System.Drawing.Size(75, 23);
             this.btRemovePf.TabIndex = 3;
@@ -141,7 +153,7 @@
             // btShowPf
             // 
             this.btShowPf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btShowPf.Location = new System.Drawing.Point(353, 77);
+            this.btShowPf.Location = new System.Drawing.Point(411, 75);
             this.btShowPf.Name = "btShowPf";
             this.btShowPf.Size = new System.Drawing.Size(75, 23);
             this.btShowPf.TabIndex = 4;
@@ -156,7 +168,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(434, 53);
+            this.label1.Size = new System.Drawing.Size(506, 53);
             this.label1.TabIndex = 8;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -165,30 +177,31 @@
             this.openFileDialog.DefaultExt = "ppk";
             this.openFileDialog.Filter = "\"PuTTY Keys|*.ppk|All files|*.*\"";
             // 
-            // btImport
+            // btImport1
             // 
-            this.btImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btImport.Location = new System.Drawing.Point(12, 338);
-            this.btImport.Name = "btImport";
-            this.btImport.Size = new System.Drawing.Size(75, 23);
-            this.btImport.TabIndex = 0;
-            this.btImport.Text = "Import Now";
-            this.btImport.UseVisualStyleBackColor = true;
-            this.btImport.Click += new System.EventHandler(this.BtImportClick);
+            this.btImport1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btImport1.Location = new System.Drawing.Point(411, 77);
+            this.btImport1.Name = "btImport1";
+            this.btImport1.Size = new System.Drawing.Size(75, 23);
+            this.btImport1.TabIndex = 3;
+            this.btImport1.Text = "Import Now";
+            this.btImport1.UseVisualStyleBackColor = true;
+            this.btImport1.Click += new System.EventHandler(this.BtImportClick);
             // 
             // btPuttygen
             // 
             this.btPuttygen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btPuttygen.Location = new System.Drawing.Point(93, 338);
+            this.btPuttygen.Location = new System.Drawing.Point(12, 389);
             this.btPuttygen.Name = "btPuttygen";
             this.btPuttygen.Size = new System.Drawing.Size(75, 23);
-            this.btPuttygen.TabIndex = 1;
+            this.btPuttygen.TabIndex = 0;
             this.btPuttygen.Text = "PuTTYgen";
             this.btPuttygen.UseVisualStyleBackColor = true;
-            this.btPuttygen.Click += new System.EventHandler(BtPuttygenClick);
+            this.btPuttygen.Click += new System.EventHandler(this.BtPuttygenClick);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btImport2);
             this.groupBox1.Controls.Add(this.textBoxInputPf);
             this.groupBox1.Controls.Add(this.listBoxPf);
             this.groupBox1.Controls.Add(this.btAddPf);
@@ -197,10 +210,21 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(434, 130);
+            this.groupBox1.Size = new System.Drawing.Size(492, 147);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input the passphrases to import";
+            // 
+            // btImport2
+            // 
+            this.btImport2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btImport2.Location = new System.Drawing.Point(411, 104);
+            this.btImport2.Name = "btImport2";
+            this.btImport2.Size = new System.Drawing.Size(75, 23);
+            this.btImport2.TabIndex = 5;
+            this.btImport2.Text = "Import Now";
+            this.btImport2.UseVisualStyleBackColor = true;
+            this.btImport2.Click += new System.EventHandler(this.BtImportClick);
             // 
             // textBoxInputPf
             // 
@@ -209,7 +233,7 @@
             this.textBoxInputPf.Location = new System.Drawing.Point(6, 19);
             this.textBoxInputPf.MaxLength = 32;
             this.textBoxInputPf.Name = "textBoxInputPf";
-            this.textBoxInputPf.Size = new System.Drawing.Size(341, 20);
+            this.textBoxInputPf.Size = new System.Drawing.Size(399, 20);
             this.textBoxInputPf.TabIndex = 0;
             this.textBoxInputPf.UseSystemPasswordChar = true;
             this.textBoxInputPf.TextChanged += new System.EventHandler(this.TextBoxInputPfTextChanged);
@@ -218,21 +242,20 @@
             // 
             this.groupBox2.Controls.Add(this.listBoxKeys);
             this.groupBox2.Controls.Add(this.byAdd);
+            this.groupBox2.Controls.Add(this.btImport1);
             this.groupBox2.Controls.Add(this.btRemove);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(434, 133);
+            this.groupBox2.Size = new System.Drawing.Size(492, 135);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Select keys to import";
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(12, 65);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -243,28 +266,110 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(434, 267);
-            this.splitContainer1.SplitterDistance = 133;
+            this.splitContainer1.Size = new System.Drawing.Size(492, 286);
+            this.splitContainer1.SplitterDistance = 135;
             this.splitContainer1.TabIndex = 15;
             // 
-            // FormPuTTY
+            // tabControl
+            // 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Controls.Add(this.tabLocalKeys);
+            this.tabControl.Controls.Add(this.tabRemoteKeys);
+            this.tabControl.Location = new System.Drawing.Point(12, 65);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(506, 318);
+            this.tabControl.TabIndex = 1;
+            // 
+            // tabLocalKeys
+            // 
+            this.tabLocalKeys.BackColor = System.Drawing.SystemColors.Control;
+            this.tabLocalKeys.Controls.Add(this.splitContainer1);
+            this.tabLocalKeys.Location = new System.Drawing.Point(4, 22);
+            this.tabLocalKeys.Name = "tabLocalKeys";
+            this.tabLocalKeys.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLocalKeys.Size = new System.Drawing.Size(498, 292);
+            this.tabLocalKeys.TabIndex = 0;
+            this.tabLocalKeys.Text = "Local Keys";
+            // 
+            // tabRemoteKeys
+            // 
+            this.tabRemoteKeys.BackColor = System.Drawing.SystemColors.Control;
+            this.tabRemoteKeys.Controls.Add(this.groupBox3);
+            this.tabRemoteKeys.Location = new System.Drawing.Point(4, 22);
+            this.tabRemoteKeys.Name = "tabRemoteKeys";
+            this.tabRemoteKeys.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRemoteKeys.Size = new System.Drawing.Size(437, 286);
+            this.tabRemoteKeys.TabIndex = 1;
+            this.tabRemoteKeys.Text = "Remote Keys";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.btAddHost);
+            this.groupBox3.Controls.Add(this.textBoxHost);
+            this.groupBox3.Controls.Add(this.listHosts);
+            this.groupBox3.Location = new System.Drawing.Point(3, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(431, 153);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Known hosts";
+            // 
+            // btAddHost
+            // 
+            this.btAddHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAddHost.Enabled = false;
+            this.btAddHost.Location = new System.Drawing.Point(350, 120);
+            this.btAddHost.Name = "btAddHost";
+            this.btAddHost.Size = new System.Drawing.Size(75, 23);
+            this.btAddHost.TabIndex = 2;
+            this.btAddHost.Text = "Add Host";
+            this.btAddHost.UseVisualStyleBackColor = true;
+            this.btAddHost.Click += new System.EventHandler(this.BtAddHostClick);
+            // 
+            // textBoxHost
+            // 
+            this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxHost.Location = new System.Drawing.Point(6, 122);
+            this.textBoxHost.Name = "textBoxHost";
+            this.textBoxHost.Size = new System.Drawing.Size(338, 20);
+            this.textBoxHost.TabIndex = 1;
+            this.textBoxHost.TextChanged += new System.EventHandler(this.TextBoxHostTextChanged);
+            // 
+            // listHosts
+            // 
+            this.listHosts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listHosts.FormattingEnabled = true;
+            this.listHosts.IntegralHeight = false;
+            this.listHosts.Location = new System.Drawing.Point(6, 19);
+            this.listHosts.Name = "listHosts";
+            this.listHosts.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listHosts.Size = new System.Drawing.Size(419, 96);
+            this.listHosts.TabIndex = 0;
+            // 
+            // FormSSH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(458, 373);
-            this.Controls.Add(this.splitContainer1);
+            this.ClientSize = new System.Drawing.Size(530, 424);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.btPuttygen);
-            this.Controls.Add(this.btImport);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btOK);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(280, 362);
-            this.Name = "FormPuTTY";
+            this.MinimumSize = new System.Drawing.Size(280, 428);
+            this.Name = "FormSSH";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Manage PuTTY Keys";
+            this.Text = "Manage SSH Keys";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -272,6 +377,11 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
+            this.tabLocalKeys.ResumeLayout(false);
+            this.tabRemoteKeys.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -288,11 +398,19 @@
         private System.Windows.Forms.Button btShowPf;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.Button btImport;
+        private System.Windows.Forms.Button btImport1;
         private System.Windows.Forms.Button btPuttygen;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBoxInputPf;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage tabLocalKeys;
+        private System.Windows.Forms.TabPage tabRemoteKeys;
+        private System.Windows.Forms.Button btImport2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btAddHost;
+        private System.Windows.Forms.TextBox textBoxHost;
+        private System.Windows.Forms.ListBox listHosts;
     }
 }

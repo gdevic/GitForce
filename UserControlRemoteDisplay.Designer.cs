@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btSsh = new System.Windows.Forms.Button();
             this.textPushCmd = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btSsh = new System.Windows.Forms.Button();
             this.textPassword = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textUrlPush = new System.Windows.Forms.TextBox();
@@ -48,9 +48,9 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btSsh);
             this.groupBox1.Controls.Add(this.textPushCmd);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.btSsh);
             this.groupBox1.Controls.Add(this.textPassword);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.textUrlPush);
@@ -64,6 +64,17 @@
             this.groupBox1.Size = new System.Drawing.Size(422, 143);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // btSsh
+            // 
+            this.btSsh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSsh.Location = new System.Drawing.Point(341, 115);
+            this.btSsh.Name = "btSsh";
+            this.btSsh.Size = new System.Drawing.Size(75, 23);
+            this.btSsh.TabIndex = 10;
+            this.btSsh.Text = "SSH...";
+            this.btSsh.UseVisualStyleBackColor = true;
+            this.btSsh.Click += new System.EventHandler(this.btSsh_Click);
             // 
             // textPushCmd
             // 
@@ -83,18 +94,6 @@
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Cmd> push";
-            // 
-            // btSsh
-            // 
-            this.btSsh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSsh.Enabled = false;
-            this.btSsh.Location = new System.Drawing.Point(275, 116);
-            this.btSsh.Name = "btSsh";
-            this.btSsh.Size = new System.Drawing.Size(141, 23);
-            this.btSsh.TabIndex = 5;
-            this.btSsh.Text = "Import Remote SSH Key";
-            this.btSsh.UseVisualStyleBackColor = true;
-            this.btSsh.Click += new System.EventHandler(this.BtSshClick);
             // 
             // textPassword
             // 
@@ -202,8 +201,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textName;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btSsh;
         private System.Windows.Forms.TextBox textPushCmd;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btSsh;
     }
 }

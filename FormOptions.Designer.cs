@@ -107,14 +107,14 @@
             treeNode5,
             treeNode10,
             treeNode13});
-            this.treeSections.Size = new System.Drawing.Size(158, 243);
+            this.treeSections.Size = new System.Drawing.Size(158, 278);
             this.treeSections.TabIndex = 0;
             this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);
             // 
             // btApply
             // 
             this.btApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btApply.Location = new System.Drawing.Point(260, 232);
+            this.btApply.Location = new System.Drawing.Point(260, 267);
             this.btApply.Name = "btApply";
             this.btApply.Size = new System.Drawing.Size(75, 23);
             this.btApply.TabIndex = 1;
@@ -126,7 +126,7 @@
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(422, 232);
+            this.btCancel.Location = new System.Drawing.Point(422, 267);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 3;
@@ -137,7 +137,7 @@
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(341, 232);
+            this.btOK.Location = new System.Drawing.Point(341, 267);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 2;
@@ -152,14 +152,14 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panel.Location = new System.Drawing.Point(176, 12);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(321, 214);
+            this.panel.Size = new System.Drawing.Size(321, 249);
             this.panel.TabIndex = 4;
             // 
             // FormOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 267);
+            this.ClientSize = new System.Drawing.Size(509, 302);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancel);

@@ -38,7 +38,7 @@ namespace git4win
         public void Enable(bool name, bool all)
         {
             textName.ReadOnly = !name;
-            textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = btSsh.Enabled = !all;
+            textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = !all;
             SomeTextChanged(null, null);
         }
 
@@ -52,7 +52,6 @@ namespace git4win
             textUrlPush.Text = "";
             textPushCmd.Text = "";
             textPassword.Text = "";
-            btSsh.Enabled = false;
             textPassword.ReadOnly = true;
         }
 
@@ -75,19 +74,21 @@ namespace git4win
         /// <returns>Structure with values</returns>
         public ClassRemotes.Remote Get()
         {
-            // For SSH, make sure the URL string follows the strict format
-            if (_fetchUrl.Type == ClassUrl.UrlType.Ssh)
-                textUrlFetch.Text = ClassUrl.ToCanonical(textUrlFetch.Text);
-
-            if (_pushUrl.Type == ClassUrl.UrlType.Ssh)
-                textUrlPush.Text = ClassUrl.ToCanonical(textUrlPush.Text);
-
             ClassRemotes.Remote repo = new ClassRemotes.Remote();
             repo.Name = textName.Text;
-            repo.UrlFetch = textUrlFetch.Text;
-            repo.UrlPush = textUrlPush.Text;
             repo.PushCmd = textPushCmd.Text;
             repo.Password = textPassword.Text;
+
+            // For SSH, make sure the URL string follows the strict format
+            if (_fetchUrl.Type == ClassUrl.UrlType.Ssh)
+                repo.UrlFetch = ClassUrl.ToCanonical(textUrlFetch.Text);
+            else
+                repo.UrlFetch = textUrlFetch.Text;
+
+            if (_pushUrl.Type == ClassUrl.UrlType.Ssh)
+                repo.UrlPush = ClassUrl.ToCanonical(textUrlPush.Text);
+            else
+                repo.UrlPush = textUrlPush.Text;
 
             return repo;
         }
@@ -113,33 +114,31 @@ namespace git4win
             // Call the delegate and also reparse our fetch and push URLs
             AnyTextChanged(IsValid());
 
-            btSsh.Enabled = (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) ||
-                            (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh);
+            // Enable SSH button if one of the URLs uses SSH connection
+            btSsh.Enabled = false;
+            if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+            if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
 
             textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
         }
 
         /// <summary>
-        /// Initializes SSH remote key by running PLINK utility
-        /// PLINK code has been modified to silently accept the remote public key and store
-        /// it into our registry.
+        /// Manage SSH keys
         /// </summary>
-        private void BtSshClick(object sender, EventArgs e)
+        private void btSsh_Click(object sender, EventArgs e)
         {
-            btSsh.Enabled = false;
+            FormSSH formSsh = new FormSSH();
 
-            // We may need to run this twice only if the host for push differs from the host for fetch
-            if (_fetchUrl.Ok)
-            {
-                App.Putty.ImportRemoteSshKey(_fetchUrl);
-                MessageBox.Show("Public key from " + _fetchUrl.Host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            // Add one of the URLs from our input into the text box of a URL to add
+            if (_fetchUrl.Type == ClassUrl.UrlType.Ssh)
+                formSsh.AddHost(textUrlFetch.Text);
+            else
+                if (_pushUrl.Type == ClassUrl.UrlType.Ssh)
+                    formSsh.AddHost(textUrlPush.Text);
 
-            if (_pushUrl.Ok && _pushUrl.Host != _fetchUrl.Host)
-            {
-                App.Putty.ImportRemoteSshKey(_pushUrl);
-                MessageBox.Show("Public key from " + _pushUrl.Host + " successfully added to the registry.", "SSH", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            // Show the dialog. A previous call to AddHost will set the "Remote Keys" tab as current,
+            // with one of the host strings (URLs) added into the input text box, ready to click on Add Host.
+            formSsh.ShowDialog();
         }
     }
 }

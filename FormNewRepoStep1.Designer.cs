@@ -45,7 +45,7 @@
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(393, 293);
+            this.btCancel.Location = new System.Drawing.Point(369, 308);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 8;
@@ -56,7 +56,7 @@
             // 
             this.btNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btNext.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btNext.Location = new System.Drawing.Point(312, 293);
+            this.btNext.Location = new System.Drawing.Point(288, 308);
             this.btNext.Name = "btNext";
             this.btNext.Size = new System.Drawing.Size(75, 23);
             this.btNext.TabIndex = 7;
@@ -70,7 +70,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(456, 33);
+            this.label1.Size = new System.Drawing.Size(432, 33);
             this.label1.TabIndex = 2;
             this.label1.Text = "Select what kind of repository you are creating:";
             // 
@@ -119,7 +119,7 @@
             this.textBoxLocal.Location = new System.Drawing.Point(32, 107);
             this.textBoxLocal.Name = "textBoxLocal";
             this.textBoxLocal.ReadOnly = true;
-            this.textBoxLocal.Size = new System.Drawing.Size(355, 20);
+            this.textBoxLocal.Size = new System.Drawing.Size(331, 20);
             this.textBoxLocal.TabIndex = 3;
             this.textBoxLocal.TextChanged += new System.EventHandler(this.TextBoxLocalTextChanged);
             // 
@@ -136,7 +136,7 @@
             // 
             this.btBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btBrowse.Enabled = false;
-            this.btBrowse.Location = new System.Drawing.Point(393, 105);
+            this.btBrowse.Location = new System.Drawing.Point(369, 105);
             this.btBrowse.Name = "btBrowse";
             this.btBrowse.Size = new System.Drawing.Size(75, 23);
             this.btBrowse.TabIndex = 4;
@@ -151,14 +151,14 @@
             this.remoteDisplay.Location = new System.Drawing.Point(32, 153);
             this.remoteDisplay.MinimumSize = new System.Drawing.Size(309, 119);
             this.remoteDisplay.Name = "remoteDisplay";
-            this.remoteDisplay.Size = new System.Drawing.Size(436, 119);
+            this.remoteDisplay.Size = new System.Drawing.Size(412, 148);
             this.remoteDisplay.TabIndex = 6;
             // 
             // FormNewRepoStep1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 328);
+            this.ClientSize = new System.Drawing.Size(456, 343);
             this.Controls.Add(this.remoteDisplay);
             this.Controls.Add(this.btBrowse);
             this.Controls.Add(this.label2);
@@ -171,7 +171,7 @@
             this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(384, 348);
+            this.MinimumSize = new System.Drawing.Size(384, 377);
             this.Name = "FormNewRepoStep1";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

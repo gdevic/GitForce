@@ -158,7 +158,7 @@ namespace git4win
         /// Set the view mode by sending a menu item whose Tag contains the mode number.
         /// This function is called from a menu handlers that select view mode.
         /// </summary>
-        private static void ViewSetByMenuItem(object sender, EventArgs e)
+        private void ViewSetByMenuItem(object sender, EventArgs e)
         {
             PanelView.ViewSetByMenuItem(sender, e);
         }
@@ -176,14 +176,14 @@ namespace git4win
         /// <summary>
         /// This function is called when user changes a right panel
         /// </summary>
-        private static void ChangeRightPanel(string panelName)
+        private void ChangeRightPanel(string panelName)
         {
             UserControl panel = PanelsR[panelName];
             panel.BringToFront();
             Properties.Settings.Default.viewRightPanel = panelName;
         }
 
-        private static void RightPanelSelectionClick(object sender, EventArgs e)
+        private void RightPanelSelectionClick(object sender, EventArgs e)
         {
             ChangeRightPanel((sender as ToolStripItem).Tag.ToString());
         }
@@ -280,7 +280,7 @@ namespace git4win
         /// <summary>
         /// Settings menu selected
         /// </summary>
-        private static void MenuOptions(object sender, EventArgs e)
+        private void MenuOptions(object sender, EventArgs e)
         {
             FormOptions frmOptions = new FormOptions();
             frmOptions.ShowDialog();
@@ -289,7 +289,7 @@ namespace git4win
         /// <summary>
         /// Refresh Active Pane, but refresh everything
         /// </summary>
-        private static void MenuRefreshAll(object sender, EventArgs e)
+        private void MenuRefreshAll(object sender, EventArgs e)
         {
             App.Refresh();
         }
@@ -297,7 +297,7 @@ namespace git4win
         /// <summary>
         /// Edit the list of remote repositories
         /// </summary>
-        private static void MenuEditRemoteRepos(object sender, EventArgs e)
+        private void MenuEditRemoteRepos(object sender, EventArgs e)
         {
             FormRemoteEdit remoteEdit = new FormRemoteEdit(App.Repos.Current);
             if (remoteEdit.ShowDialog() == DialogResult.OK)
@@ -307,7 +307,7 @@ namespace git4win
         /// <summary>
         /// Pull from a remote repository
         /// </summary>
-        private static void MenuRepoPull(object sender, EventArgs e)
+        private void MenuRepoPull(object sender, EventArgs e)
         {
             App.Repos.Current.Run("pull " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
         }
@@ -316,7 +316,7 @@ namespace git4win
         /// Push to remote repository.
         /// Use either the standard form (example: "origin master"), or the user override
         /// </summary>
-        private static void MenuRepoPush(object sender, EventArgs e)
+        private void MenuRepoPush(object sender, EventArgs e)
         {
             string pushCmd = App.Repos.Current.Remotes.GetPushCmd();
             if (String.IsNullOrEmpty(pushCmd))
@@ -370,7 +370,7 @@ namespace git4win
         /// <summary>
         /// Show the standard About box
         /// </summary>
-        private static void AboutToolStripMenuItemClick(object sender, EventArgs e)
+        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
         {
             FormAbout about = new FormAbout();
             about.ShowDialog();
@@ -394,7 +394,7 @@ namespace git4win
         /// <summary>
         /// Select all files on the left pane
         /// </summary>
-        private static void MenuMainSelectAllClick(object sender, EventArgs e)
+        private void MenuMainSelectAllClick(object sender, EventArgs e)
         {
             PanelView.SelectAll();
         }
@@ -435,10 +435,10 @@ namespace git4win
         /// <summary>
         /// Manage PuTTY Keys
         /// </summary>
-        private static void MenuMainManageKeysClick(object sender, EventArgs e)
+        private void MenuMainManageKeysClick(object sender, EventArgs e)
         {
-            FormPuTTY formPuTTY = new FormPuTTY();
-            formPuTTY.ShowDialog();
+            FormSSH formSsh = new FormSSH();
+            formSsh.ShowDialog();
         }
     }
 }

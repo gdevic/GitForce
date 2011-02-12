@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace git4win.FormOptions_Panels
 {
@@ -37,11 +38,12 @@ namespace git4win.FormOptions_Panels
         }
 
         /// <summary>
-        /// Run PuTTYgen to manage SSL connections.
+        /// Open the dialog to manage SSH keys
         /// </summary>
-        private static void BtPuttyClick(object sender, EventArgs e)
+        private void btSshClick(object sender, EventArgs e)
         {
-            App.Putty.RunPuTTYgen();
+            FormSSH formSsh = new FormSSH();
+            formSsh.ShowDialog();
         }
     }
 }

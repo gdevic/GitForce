@@ -164,11 +164,11 @@
     <Compile Include="FormOptions.Panels\ControlViewEdit.Designer.cs">
       <DependentUpon>ControlViewEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPuTTY.cs">
+    <Compile Include="FormSSH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPuTTY.Designer.cs">
-      <DependentUpon>FormPuTTY.cs</DependentUpon>
+    <Compile Include="FormSSH.Designer.cs">
+      <DependentUpon>FormSSH.cs</DependentUpon>
     </Compile>
     <Compile Include="FormRemoteAddEdit.cs">
       <SubType>Form</SubType>
@@ -353,8 +353,8 @@
     <EmbeddedResource Include="FormOptions.Panels\ControlViewEdit.resx">
       <DependentUpon>ControlViewEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPuTTY.resx">
-      <DependentUpon>FormPuTTY.cs</DependentUpon>
+    <EmbeddedResource Include="FormSSH.resx">
+      <DependentUpon>FormSSH.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRemoteAddEdit.resx">
       <DependentUpon>FormRemoteAddEdit.cs</DependentUpon>

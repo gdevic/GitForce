@@ -3,21 +3,21 @@
   <Class Name="git4win.ClassBranches" Collapsed="true">
     <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAAABAAAAAAAAAAAAQgAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABQAAAAAACAAAAQAABAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ClassBranches.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ClassCommit" Collapsed="true">
     <Position X="10.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAIAAEAAAAAIAAAAAAAAAAAAAAAAAAAgAAABAA=</HashCode>
+      <HashCode>AAAACQAIAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABIA=</HashCode>
       <FileName>ClassCommit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ClassCommits">
     <Position X="4.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKQAAAAAAAA=</HashCode>
       <FileName>ClassCommits.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -31,21 +31,21 @@
   <Class Name="git4win.ClassDiff" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAEQAAAABAAAAAAEAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAAAAAAEQAAAABAAAAAAAAAAEBAAAAAAAAAAAA=</HashCode>
       <FileName>ClassDiff.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ClassException" Collapsed="true">
     <Position X="14.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>ClassException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ClassGit" Collapsed="true">
     <Position X="6.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAEAAAAQAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>ClassGit.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,7 +66,7 @@
   <Class Name="git4win.ClassPutty" Collapsed="true">
     <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACECAAAAAAAAAAAABAAAEAAAAAkgAAAAAAgBgABA=</HashCode>
+      <HashCode>AAAACECAAQAAAAAAACABAAAAAAAAAkAAAEAAAABABBA=</HashCode>
       <FileName>ClassPutty.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,25 +80,21 @@
       </Struct>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAApAAAAAAAAAgAAAAAAAAgAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAhAAAGAAAAAAAAAAAAAAgIQgAAAAAA=</HashCode>
       <FileName>ClassRemotes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ClassRepo">
     <Position X="3.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgAAAAAIAAAAgAAAAAAACAAACAQAAAQAAAAM=</HashCode>
+      <HashCode>AAAQgQAEAgAAACAAAAAAAAAAAAICAAAAAQAAAQAAAAI=</HashCode>
       <FileName>ClassRepo.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="remotes" />
-      <Field Name="commits" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="git4win.ClassRepos">
     <Position X="0.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAiIAAAAAAAoAAAACAAAAAgAEIAAAgAAAABAAAAAA=</HashCode>
+      <HashCode>AAIAiIAAAAAAAoAAAACAAAAAgAEIAAAgAAAAAAAAAAA=</HashCode>
       <FileName>ClassRepos.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -112,15 +108,8 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>CAgAAAAEAgMBAAAAQDAQAAAAABAAAAAgQAAAABAAAAA=</HashCode>
+      <HashCode>CAgAAAAAAgMBAAAAQDAQAAABABAAAAAgQAAAABAAAAA=</HashCode>
       <FileName>ClassStatus.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="git4win.ClassURL" Collapsed="true">
-    <Position X="19.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAAAAAEAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ClassURL.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.NativeMethods" Collapsed="true">
@@ -133,106 +122,99 @@
   <Class Name="git4win.FormAbout" Collapsed="true">
     <Position X="17.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAIABAAAACAQAACAIAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>IAAAAAAAACAIABAAAACAAAACAIAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>FormAbout.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormCommit" Collapsed="true">
     <Position X="19.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAACAAABAAJACEAAACQAAAAwAAIAIACEgGgAA=</HashCode>
+      <HashCode>AAAAABAEACAAABAAJACEAAACAAAAAwAAYAAACEhCgAA=</HashCode>
       <FileName>FormCommit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormDeleteBranch" Collapsed="true">
     <Position X="21.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAABAICAAABgAFCCAAAACAAAAAAAAAAAAgAAAgAI=</HashCode>
+      <HashCode>AAAAQABAASAAABgABCCAAQACAAAAAAAAAAAAAAAAICI=</HashCode>
       <FileName>FormDeleteBranch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormDeleteRepo" Collapsed="true">
     <Position X="9" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABCACAAABAABACAAACCAAAAAQAAAAAQAIAAAAA=</HashCode>
+      <HashCode>AAAAAABCECAAABAABCCAAAACAAQAABAAAAAAAIAAAAA=</HashCode>
       <FileName>FormDeleteRepo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormExecute" Collapsed="true">
     <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIACA0EACAADBACAACAAACCAAAkAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AAIACAkEECAACBgCAACAQBACAAAEAAAAAAAAACAAAAA=</HashCode>
       <FileName>FormExecute.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ClassRunCmd" Collapsed="true">
     <Position X="16" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CEQABAIAAAAIAAVAEAABAAAAABAAAgAAAEABCAAACAA=</HashCode>
+      <HashCode>CEAIAAgABAAAAAAACAABQAAAAJAAAAQAAAIBCAAEAAg=</HashCode>
       <FileName>FormExecute.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMain" Collapsed="true">
     <Position X="10.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gCoMR93gJKUEBCCUgojScVAGiYANBYBUChnCQFCBAQk=</HashCode>
+      <HashCode>QAgMA53AIKUECABhgoTzYUAHgd4YBYhUCx1IQBCqAV0=</HashCode>
       <FileName>FormMain.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMergeBranch" Collapsed="true">
     <Position X="12.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAICAQCAAABAABCCAAAACgAAAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>CAAAAICAQCAAABAABCCAAAACAAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>FormMergeBranch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormNewBranch" Collapsed="true">
     <Position X="14.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAAJCAQABAARCSAAGACAAAAAAAAkKFAgABAAAI=</HashCode>
+      <HashCode>AAAAQASABSAAAJAARCSAAAQCAACAFAAEECAAAABAAAI=</HashCode>
       <FileName>FormNewBranch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormNewRepoStep1" Collapsed="true">
     <Position X="16" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAUAABAAQiAAABAABBCAAABCAAABAAgAQESAAAAACAA=</HashCode>
+      <HashCode>AAUAAAAAwiAQABAABACAAAACAABAAAgAAUSAACAAAAA=</HashCode>
       <FileName>FormNewRepoStep1.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormNewRepoStep2" Collapsed="true">
     <Position X="17.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAQAIAAGAUABAABACAAABCAIAAAAoAiEAABAAAEAI=</HashCode>
+      <HashCode>AgAAQCAAACAAAhBAFACgAAACAIAAAAgEiEAAACAAEAI=</HashCode>
       <FileName>FormNewRepoStep2.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormOptions" Collapsed="true">
     <Position X="19.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAACAAIAAABACAAAACgIAAAAAAAIAEARBAAAA=</HashCode>
+      <HashCode>AAAAAAAAAiAAIAAABACAAEACEIAAABAAAAAABQBAgAA=</HashCode>
       <FileName>FormOptions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.ControlDirtyHelper" Collapsed="true">
     <Position X="12.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>FormOptions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormPathToGit" Collapsed="true">
     <Position X="21.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAgAAAAACAAABAAJACCQgBCAIAAAAgAAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAgAAAAACAAABIABACAQkACAIAAAAgAAAAAASBAAAA=</HashCode>
       <FileName>FormPathToGit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="git4win.FormPuTTY" Collapsed="true">
-    <Position X="9" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>SEAAUCCEAiAIABYAAAjAQAICAIhEAQIAAiBAEAICAAA=</HashCode>
-      <FileName>FormPuTTY.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormRemoteAddEdit" Collapsed="true">
@@ -252,21 +234,21 @@
   <Class Name="git4win.FormRepoEdit" Collapsed="true">
     <Position X="14.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAIAAABAGAAAACgIAAAAAAAIAEARBAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAIAAABACAQEACEIAAABAAAAAABQBAgAA=</HashCode>
       <FileName>FormRepoEdit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormSwitchToBranch" Collapsed="true">
     <Position X="16" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAICAAABAAHCCAAAACAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <HashCode>AAACQAAAACAAABAADCCAAQACAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>FormSwitchToBranch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.App" Collapsed="true">
     <Position X="3.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAAAAABABAAIRAAAAAABBAQAgAEAACAAAABAgAAAA=</HashCode>
+      <HashCode>AEAAAAAABABCAIRAAAAAABBAQAgAEAACAAAABAgAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -280,63 +262,63 @@
   <Class Name="git4win.UserControlBranchMergeStyle" Collapsed="true">
     <Position X="10.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAAAwAACAAAAAEAACAAAACgAABAgAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AEAAAAQAACAIAAAEAACACAACAAAAAgAAAAAABAAAABA=</HashCode>
       <FileName>UserControlBranchMergeType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.UserControlEditGitignore" Collapsed="true">
     <Position X="12.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAACAAAgACAACAAAASAAAQAQAAAEAAAIAAAAg=</HashCode>
+      <HashCode>AAAAAAAAACAAAgACAACAAAASAQAQAQAAAAAAAIBAAAg=</HashCode>
       <FileName>UserControlEditGitignore.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.RemoteDisplay" Collapsed="true">
     <Position X="19.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAABAAAKAADBBACASICEACAAAAAAAAAOAAACBAAAA=</HashCode>
+      <HashCode>AAQAAAAAAKAIBBBACAiJCAACAAAAAAAAAOAAACBIABI=</HashCode>
       <FileName>UserControlRemoteDisplay.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.RemoteEdit" Collapsed="true">
     <Position X="21.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAoABAQCAQiAAAEAGAAACSgAAAAAgIACAAAAEAAAA=</HashCode>
+      <HashCode>AAAAgBBAQCAAgABAAACAQBASAQQAAgAIACAABgAAAAA=</HashCode>
       <FileName>UserControlRemoteEdit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMain_LeftPanels.PanelView" Collapsed="true">
     <Position X="17.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>woAQCANEQKCAAAAAAEiggUACQAgAABQRCACBBAAAACI=</HashCode>
+      <HashCode>AgICCAEEQCYJCBIAAMiAgFACAAcAgBEYCACABAEAACA=</HashCode>
       <FileName>FormMain.LeftPanels\PanelView.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMain_RightPanels.PanelBranches" Collapsed="true">
     <Position X="10.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACACABAACAAAQEBQECAAAACAAAIKAAAAgCAAACACBA=</HashCode>
+      <HashCode>AICQCAABACAIAAABAECBAEASAAAIAAAAAACAEAAIiAA=</HashCode>
       <FileName>FormMain.RightPanels\PanelBranches.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMain_RightPanels.PanelCommits" Collapsed="true">
     <Position X="12.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAACAAEACAAAEAAAEGAAAQCCAAIUAAABACAAAoQABA=</HashCode>
+      <HashCode>QCAACEBUACAAAAAQgEKAAAASAAAAAQAAAACAEAIBAAA=</HashCode>
       <FileName>FormMain.RightPanels\PanelCommits.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMain_RightPanels.PanelRepos" Collapsed="true">
     <Position X="14.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAWAAAACAOAAQBAECAAAAGAAAAABAAAACAQAAICAA=</HashCode>
+      <HashCode>gAAAGQAAECACAACBAECEAIAWAAAABAAAAACAQAAQAAA=</HashCode>
       <FileName>FormMain.RightPanels\PanelRepos.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="git4win.FormMain_RightPanels.PanelRevlist" Collapsed="true">
     <Position X="16" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAABGiAAAACAAAAAAAAAgAAgAgAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAABGCAAAACAAACAACAAAAAgAgAAAA=</HashCode>
       <FileName>FormMain.RightPanels\PanelRevlist.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -351,7 +333,7 @@
   <Class Name="git4win.FormOptions_Panels.ControlCommits" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="9" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAACAgABAAAACAAACCAQgAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>ACAAAAAAACAAABAAAACAAACCAQgAAAEAAAACAAAAAAA=</HashCode>
       <FileName>FormOptions.Panels\ControlCommits.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -359,7 +341,7 @@
   <Class Name="git4win.FormOptions_Panels.ControlDiff" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="10.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAJCAAACACACCAEAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAACAAABCEAACAAACCAIAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>FormOptions.Panels\ControlDiff.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -367,7 +349,7 @@
   <Class Name="git4win.FormOptions_Panels.ControlDoubleClick" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAIAACAAACCAAAAAAAAAAAiAAAAAAI=</HashCode>
+      <HashCode>AAAAAAAAACAAABAAAACAAACCAgAAAAAAAAACAAAAABI=</HashCode>
       <FileName>FormOptions.Panels\ControlDoubleClick.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -383,7 +365,7 @@
   <Class Name="git4win.FormOptions_Panels.ControlGitignore" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="19.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAACAAACCAAAAAAAAACACQAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAACAAACCAAAAAAAABAACQAAAAAA=</HashCode>
       <FileName>FormOptions.Panels\ControlGitignore.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -399,7 +381,7 @@
   <Class Name="git4win.FormOptions_Panels.ControlSsl" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="9" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAAAACAAACCAAAAAAAAAAAiABAAAAI=</HashCode>
+      <HashCode>AAAAAAAAACAAABAACACAAACCAAAAAAAAAIACAAAAAAI=</HashCode>
       <FileName>FormOptions.Panels\ControlSsl.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -423,7 +405,7 @@
   <Class Name="git4win.FormOptions_Panels.ControlViewEdit" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="16" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAMAiACABAAAACAQACSAAAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAIAiACABAAAACAQACSAQAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>FormOptions.Panels\ControlViewEdit.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -431,7 +413,7 @@
   <Class Name="git4win.FormRepoEdit_Panels.ControlGitignore" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="17.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAACAAACCAAAAAAAAACACQAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAACAAACCAAAAAAAABAACQAAAAAA=</HashCode>
       <FileName>FormRepoEdit.Panels\ControlGitignore.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -443,13 +425,6 @@
       <FileName>FormRepoEdit.Panels\ControlUser.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="MultiSelectTreeview.MultiSelectTreeview" Collapsed="true">
-    <Position X="21.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IABQAAAACCAACAAAAAAAAAIAAAIAAAADIAiAAQACAAA=</HashCode>
-      <FileName>MultiSelectTreeview.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="git4win.Properties.Resources" Collapsed="true">
     <Position X="9" Y="6.5" Width="1.5" />
