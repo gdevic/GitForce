@@ -286,5 +286,41 @@ namespace git4win.Properties {
                 this["DiffActiveName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Courier New, 8.25pt")]
+        public global::System.Drawing.Font commitFont {
+            get {
+                return ((global::System.Drawing.Font)(this["commitFont"]));
+            }
+            set {
+                this["commitFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public decimal commitW1 {
+            get {
+                return ((decimal)(this["commitW1"]));
+            }
+            set {
+                this["commitW1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("72")]
+        public decimal commitW2 {
+            get {
+                return ((decimal)(this["commitW2"]));
+            }
+            set {
+                this["commitW2"] = value;
+            }
+        }
     }
 }

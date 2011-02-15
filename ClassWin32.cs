@@ -12,6 +12,7 @@ namespace git4win
     class NativeMethods
     {
         public const int SB_BOTTOM = 0x0007;
+        public const int WM_PAINT = 0x000F;
         public const int WM_VSCROLL = 0x0115;
         public const int HWND_BROADCAST = 0xffff;
 

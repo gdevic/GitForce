@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelRevlist));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.btBranch = new System.Windows.Forms.ToolStripDropDownButton();
+            this.masterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listRev = new System.Windows.Forms.ListView();
             this.colHash = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -41,7 +44,8 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1});
+            this.toolStripLabel1,
+            this.btBranch});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -54,6 +58,23 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(126, 22);
             this.toolStripLabel1.Text = "Submitted Changelists";
             // 
+            // btBranch
+            // 
+            this.btBranch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btBranch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btBranch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.masterToolStripMenuItem});
+            this.btBranch.Image = ((System.Drawing.Image)(resources.GetObject("btBranch.Image")));
+            this.btBranch.ImageTransparentColor = System.Drawing.Color.Black;
+            this.btBranch.Name = "btBranch";
+            this.btBranch.Size = new System.Drawing.Size(29, 22);
+            // 
+            // masterToolStripMenuItem
+            // 
+            this.masterToolStripMenuItem.Name = "masterToolStripMenuItem";
+            this.masterToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.masterToolStripMenuItem.Text = "master";
+            // 
             // listRev
             // 
             this.listRev.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -64,12 +85,15 @@
             this.listRev.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listRev.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listRev.FullRowSelect = true;
+            this.listRev.HideSelection = false;
             this.listRev.Location = new System.Drawing.Point(0, 25);
+            this.listRev.MultiSelect = false;
             this.listRev.Name = "listRev";
             this.listRev.Size = new System.Drawing.Size(400, 375);
             this.listRev.TabIndex = 1;
             this.listRev.UseCompatibleStateImageBehavior = false;
             this.listRev.View = System.Windows.Forms.View.Details;
+            this.listRev.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListRevMouseDoubleClick);
             // 
             // colHash
             // 
@@ -115,5 +139,7 @@
         private System.Windows.Forms.ColumnHeader colDate;
         private System.Windows.Forms.ColumnHeader colAuthor;
         private System.Windows.Forms.ColumnHeader colSubject;
+        private System.Windows.Forms.ToolStripDropDownButton btBranch;
+        private System.Windows.Forms.ToolStripMenuItem masterToolStripMenuItem;
     }
 }

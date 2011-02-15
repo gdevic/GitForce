@@ -40,7 +40,11 @@ namespace git4win
             textBox.Text += text.Substring(0, len) + Environment.NewLine;
 
             // Scroll to the bottom, but don't move the caret position.
-            NativeMethods.SendMessage(textBox.Handle, NativeMethods.WM_VSCROLL, (IntPtr)NativeMethods.SB_BOTTOM, IntPtr.Zero);
+//            NativeMethods.SendMessage(textBox.Handle, NativeMethods.WM_VSCROLL, (IntPtr)NativeMethods.SB_BOTTOM, IntPtr.Zero);
+
+            // Alternate way to do this, with moving caret to the end
+            textBox.SelectionStart = textBox.TextLength;
+            textBox.ScrollToCaret();
         }
 
         public string[] RunThread(string cmd, string args, Dictionary<string, string> env)

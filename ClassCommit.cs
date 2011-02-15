@@ -21,6 +21,11 @@ namespace git4win
             Description = desc;
         }
 
+        public override string ToString()
+        {
+            return Description;
+        }
+
         /// <summary>
         /// Add a set of files to the commit list.
         /// Do not create any duplicates!

@@ -45,6 +45,7 @@ namespace git4win
             { "DoubleClick", new ControlDoubleClick() },
             { "Aliases", new ControlAliases() },
             { "Ssl", new ControlSsl() },
+            { "Specifications", new ControlSpecifications() },
         };
 
         /// <summary>

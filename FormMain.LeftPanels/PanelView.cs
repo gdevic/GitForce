@@ -379,6 +379,7 @@ namespace git4win.FormMain_LeftPanels
             foreach (string s in progs)
                 mEdit.DropDownItems.Add(CreateMenu(Path.GetFileName(s), MenuViewEditClick, sel, s));
 
+            ToolStripMenuItem mRename = CreateMenu("Move/Rename...", MenuViewRenameClick, sel);
             ToolStripMenuItem mDelete = CreateMenu("Open for Delete", MenuViewOpenForDeleteClick, sel);
             ToolStripMenuItem mRemove = CreateMenu("Remove from File System", MenuViewRemoveFromFsClick, sel);
 
@@ -391,6 +392,7 @@ namespace git4win.FormMain_LeftPanels
                 mDiff,
                 mEdit,
                 new ToolStripSeparator(),
+                mRename,
                 mDelete,
                 mRemove,
                 new ToolStripSeparator(),
@@ -450,6 +452,22 @@ namespace git4win.FormMain_LeftPanels
                 Process.Start(sel.SelPath);
             else
                 Process.Start(sel.tag, sel.SelPath);
+        }
+
+        /// <summary>
+        /// Open a rename file dialog to rename or move one or a set of files
+        /// </summary>
+        private void MenuViewRenameClick(object sender, EventArgs e)
+        {
+            Selection sel = (Selection)(sender as ToolStripDropDownItem).Tag;
+            FormRename formRename = new FormRename();
+            if( formRename.LoadFiles(App.Repos.Current, sel.SelFiles) )
+                if( formRename.ShowDialog()==DialogResult.OK)
+                {
+                    List<string> cmds = formRename.GetGitCmds();
+                    foreach (string cmd in cmds)
+                        App.Repos.Current.Run(cmd);
+                }
         }
 
         /// <summary>

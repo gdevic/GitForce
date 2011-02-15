@@ -31,13 +31,13 @@
             this.btCancel = new System.Windows.Forms.Button();
             this.btCommit = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.textDescription = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listFiles = new System.Windows.Forms.CheckedListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.checkAmend = new System.Windows.Forms.CheckBox();
             this.btSelectAll = new System.Windows.Forms.Button();
             this.btUnselectAll = new System.Windows.Forms.Button();
+            this.textDescription = new git4win.TextBoxEx();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -88,18 +88,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(474, 366);
             this.splitContainer1.SplitterDistance = 185;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // textDescription
-            // 
-            this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textDescription.Location = new System.Drawing.Point(66, 0);
-            this.textDescription.Multiline = true;
-            this.textDescription.Name = "textDescription";
-            this.textDescription.Size = new System.Drawing.Size(412, 182);
-            this.textDescription.TabIndex = 1;
-            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
             // 
             // label1
             // 
@@ -166,6 +154,20 @@
             this.btUnselectAll.UseVisualStyleBackColor = true;
             this.btUnselectAll.Click += new System.EventHandler(this.BtUnselectAllClick);
             // 
+            // textDescription
+            // 
+            this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDescription.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.textDescription.Location = new System.Drawing.Point(66, 3);
+            this.textDescription.Multiline = true;
+            this.textDescription.Name = "textDescription";
+            this.textDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textDescription.Size = new System.Drawing.Size(408, 179);
+            this.textDescription.TabIndex = 1;
+            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
+            // 
             // FormCommit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,11 +204,11 @@
         private System.Windows.Forms.Button btCommit;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.CheckBox checkAmend;
-        private System.Windows.Forms.TextBox textDescription;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckedListBox listFiles;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btSelectAll;
         private System.Windows.Forms.Button btUnselectAll;
+        private TextBoxEx textDescription;
     }
 }

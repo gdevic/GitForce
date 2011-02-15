@@ -66,8 +66,16 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DiffActiveName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">
-                </Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="commitFont" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Courier New, 8.25pt</Value>
+    </Setting>
+    <Setting Name="commitW1" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="commitW2" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">72</Value>
     </Setting>
   </Settings>
 </SettingsFile>

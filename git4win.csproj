@@ -140,6 +140,12 @@
     <Compile Include="FormOptions.Panels\ControlMerge.Designer.cs">
       <DependentUpon>ControlMerge.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOptions.Panels\ControlSpecifications.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FormOptions.Panels\ControlSpecifications.Designer.cs">
+      <DependentUpon>ControlSpecifications.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormOptions.Panels\ControlSsl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -163,6 +169,18 @@
     </Compile>
     <Compile Include="FormOptions.Panels\ControlViewEdit.Designer.cs">
       <DependentUpon>ControlViewEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRename.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRename.Designer.cs">
+      <DependentUpon>FormRename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormShowChangelist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormShowChangelist.Designer.cs">
+      <DependentUpon>FormShowChangelist.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSSH.cs">
       <SubType>Form</SubType>
@@ -274,7 +292,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichTextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="TextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -341,6 +365,9 @@
     <EmbeddedResource Include="FormOptions.Panels\ControlMerge.resx">
       <DependentUpon>ControlMerge.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormOptions.Panels\ControlSpecifications.resx">
+      <DependentUpon>ControlSpecifications.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormOptions.Panels\ControlSsl.resx">
       <DependentUpon>ControlSsl.cs</DependentUpon>
     </EmbeddedResource>
@@ -352,6 +379,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptions.Panels\ControlViewEdit.resx">
       <DependentUpon>ControlViewEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRename.resx">
+      <DependentUpon>FormRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormShowChangelist.resx">
+      <DependentUpon>FormShowChangelist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSSH.resx">
       <DependentUpon>FormSSH.cs</DependentUpon>

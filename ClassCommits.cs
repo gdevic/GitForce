@@ -13,8 +13,9 @@ namespace git4win
     {
         /// <summary>
         /// List of commits
+        /// TODO: A good candidate for IEnumerable
         /// </summary>
-        public List<ClassCommit> Bundle = new List<ClassCommit>();
+        public readonly List<ClassCommit> Bundle = new List<ClassCommit>();
 
         /// <summary>
         /// Constructor for list of commits - always create at least one (empty) commit named "Default"

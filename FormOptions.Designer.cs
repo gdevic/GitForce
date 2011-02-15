@@ -47,10 +47,12 @@
             treeNode8,
             treeNode9});
             System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Aliases");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("SSL");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Options", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Specifications");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("SSL");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Options", new System.Windows.Forms.TreeNode[] {
             treeNode11,
-            treeNode12});
+            treeNode12,
+            treeNode13});
             this.treeSections = new System.Windows.Forms.TreeView();
             this.btApply = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
@@ -99,14 +101,17 @@
             treeNode11.Tag = "Aliases";
             treeNode11.Text = "Aliases";
             treeNode12.Name = "Node0";
-            treeNode12.Tag = "Ssl";
-            treeNode12.Text = "SSL";
-            treeNode13.Name = "Node2";
-            treeNode13.Text = "Options";
+            treeNode12.Tag = "Specifications";
+            treeNode12.Text = "Specifications";
+            treeNode13.Name = "Node0";
+            treeNode13.Tag = "Ssl";
+            treeNode13.Text = "SSL";
+            treeNode14.Name = "Node2";
+            treeNode14.Text = "Options";
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
             treeNode10,
-            treeNode13});
+            treeNode14});
             this.treeSections.Size = new System.Drawing.Size(158, 278);
             this.treeSections.TabIndex = 0;
             this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);

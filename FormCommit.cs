@@ -25,6 +25,9 @@ namespace git4win
         public FormCommit(bool forCommit, string description="")
         {
             InitializeComponent();
+
+            textDescription.Font = Properties.Settings.Default.commitFont;
+
             if (forCommit==false)
             {
                 checkAmend.Visible = false;
