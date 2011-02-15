@@ -42,8 +42,11 @@ namespace git4win.FormMain_RightPanels
                 if (string.IsNullOrEmpty(_logBranch))
                     _logBranch = branches.Current;
 
+                List<string> allBranches = new List<string>();
+                allBranches.AddRange(branches.Local);
+                allBranches.AddRange(branches.Remote);
                 btBranch.DropDownItems.Clear();
-                foreach (string s in branches.Local)
+                foreach (string s in allBranches)
                 {
                     var m = new ToolStripMenuItem(s) { Checked = s == _logBranch };
                     m.Click += LogBranchChanged;
