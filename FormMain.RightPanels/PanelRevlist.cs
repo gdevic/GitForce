@@ -59,7 +59,8 @@ namespace git4win.FormMain_RightPanels
                 cmd.Append("%ct%x09");      // Committing time, UNIX-style
                 cmd.Append("%an%x09");      // Author name
                 cmd.Append("%s");           // Subject
-                cmd.Append("\" " + _logBranch);
+                // Add the branch name using only the first token in order to handle links (br -> br)
+                cmd.Append("\" " + _logBranch.Split(' ').First());
                 // Limit the number of commits to show
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
