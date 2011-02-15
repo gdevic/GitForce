@@ -50,10 +50,10 @@ namespace git4win
         }
 
         /// <summary>
-        /// Creates the class status list by running a git command.
+        /// Creates the class status list by running a git status command.
         /// This is a first stage as the list needs to be "sealed".
         /// </summary>
-        public void SetListByCommand(string cmd)
+        public void SetListByStatusCommand(string cmd)
         {
             string[] response = Repo.Run(cmd)
                 .Replace('/','\\')      // From now on we use Windows slash only
@@ -61,9 +61,24 @@ namespace git4win
                 .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             _list = new List<string>(response.Length);
             _list.AddRange(response);
+
             // After being renamed, original file names are listed without any prefix,
             // immediately after the "R <new-file>" entries. Prune original names.
-            _list = _list.FindAll(delegate(string s) { return s.Length >= 3 && s[2] == ' '; });
+            _list = _list.FindAll(s => s.Length >= 3 && s[2] == ' ');
+        }
+
+        /// <summary>
+        /// Creates the class status list by running a git ls-tree command.
+        /// This is a first stage as the list needs to be "sealed".
+        /// </summary>
+        public void SetListByLsTreeCommand(string cmd)
+        {
+            string[] response = Repo.Run(cmd)
+                .Replace('/', '\\')      // From now on we use Windows slash only
+                .Split(("\0")
+                .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            _list = new List<string>(response.Length);
+            _list.AddRange(response);
         }
 
         /// <summary>

@@ -44,7 +44,7 @@ namespace git4win.FormMain_RightPanels
 
                 // List files that are updated in the index (code X is not ' ' or '?')
 
-                Status.SetListByCommand("status --porcelain -uno -z");
+                Status.SetListByStatusCommand("status --porcelain -uno -z");
                 Status.Filter(s => s[0] == ' ' || s[0] == '?');
                 Status.Seal();
 
@@ -93,7 +93,7 @@ namespace git4win.FormMain_RightPanels
             // Since files that are dropeed might have originated from anywhere, 
             // each file name needs to be compared against a set of git-permissible files for the current repo
             Status = new ClassStatus(App.Repos.Current);
-            Status.SetListByCommand("status --porcelain -uall -z *");
+            Status.SetListByStatusCommand("status --porcelain -uall -z *");
             Status.Seal();
 
             // Qualify files as those that are in the scope of the current repo

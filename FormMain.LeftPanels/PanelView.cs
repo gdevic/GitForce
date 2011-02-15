@@ -122,26 +122,26 @@ namespace git4win.FormMain_LeftPanels
                 switch (mode)
                 {
                     case 0:     // Git view of local files: status + untracked
-                        Status.SetListByCommand("status --porcelain -uall -z");
+                        Status.SetListByStatusCommand("status --porcelain -uall -z");
                         Status.Seal();
                         break;
                     case 1:     // Git view of files: status - untracked
-                        Status.SetListByCommand("status --porcelain -uno -z");
+                        Status.SetListByStatusCommand("status --porcelain -uno -z");
                         Status.Filter(s => s.StartsWith("??"));
                         Status.Seal();
                         break;
                     case 2:     // Git view of repo: ls-tree
-                        Status.SetListByCommand("ls-tree --abbrev -r -z HEAD");
+                        Status.SetListByLsTreeCommand("ls-tree --abbrev -r -z HEAD");
                         Status.ConvertSeal();
                         break;
                     case 3:     // Local file view: use local directory list
-                        Status.SetListByCommand("status --porcelain -uall -z");
+                        Status.SetListByStatusCommand("status --porcelain -uall -z");
                         Status.Seal();
                         Status.SetListByList(GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root));
                         Status.Seal();
                         break;
                     case 4:     // Local files not in repo: untracked only
-                        Status.SetListByCommand("status --porcelain -uall -z");
+                        Status.SetListByStatusCommand("status --porcelain -uall -z");
                         Status.Filter(s => !s.StartsWith("??"));
                         Status.Seal();
                         break;
