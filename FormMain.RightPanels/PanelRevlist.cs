@@ -77,6 +77,10 @@ namespace git4win.FormMain_RightPanels
 
                     // Trim any spaces in the subject line
                     cat[3] = cat[3].Trim();
+                    // Limit the subject line length to the length specified for that
+                    int c1 = Convert.ToInt32(Properties.Settings.Default.commitW1);
+                    if (cat[3].Length > c1)
+                        cat[3] = cat[3].Substring(0, c1) + "...";
 
                     ListViewItem li = new ListViewItem(cat);
                     li.Tag = cat[0];            // Tag contains the SHA1 of the commit

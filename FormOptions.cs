@@ -20,14 +20,14 @@ namespace git4win
         void ApplyChanges();
     }
 
-    public partial class FormOptions : Form
+    public sealed partial class FormOptions : Form
     {
         /// <summary>
         /// Get all global configuration strings and assign various panel controls.
         /// This is placed first, before initializing the user panels, so that the
         /// strings are accessible to individual panels if they want to use it.
         /// </summary>
-        protected string[] Config = ClassConfig.Run("--list -z").Split('\0');
+        private string[] Config = ClassConfig.Run("--list -z").Split('\0');
 
         /// <summary>
         /// Create a lookup from panel names (which are set in each corresponding node
@@ -57,6 +57,7 @@ namespace git4win
         {
             InitializeComponent();
 
+            Cursor = Cursors.WaitCursor;
             // Add all user panels to the base options panel; call their init
             foreach (KeyValuePair<string, UserControl> key in _panels)
             {
@@ -68,6 +69,7 @@ namespace git4win
             // Expand the tree and select the first node
             treeSections.ExpandAll();
             treeSections.SelectedNode = treeSections.Nodes[0].Nodes[0];
+            Cursor = Cursors.Default;
         }
 
         /// <summary>

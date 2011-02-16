@@ -1,6 +1,6 @@
 ﻿namespace git4win
 {
-    partial class FormOptions
+    sealed partial class FormOptions
     {
         /// <summary>
         /// Required designer variable.
