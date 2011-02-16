@@ -60,6 +60,7 @@
     <Compile Include="ClassRepos.cs" />
     <Compile Include="ClassStatus.cs" />
     <Compile Include="ClassURL.cs" />
+    <Compile Include="ClassUtils.cs" />
     <Compile Include="ClassView.cs" />
     <Compile Include="ClassWin32.cs" />
     <Compile Include="FormAbout.cs">
@@ -475,6 +476,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Git4WinUsersManual.pdf" />
     <None Include="Resources\TreeIcon4.ico" />
   </ItemGroup>
   <ItemGroup>

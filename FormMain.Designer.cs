@@ -61,6 +61,9 @@
             this.menuMainBranch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainRepository = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usersManualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusInfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -353,15 +356,37 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.websiteToolStripMenuItem,
+            this.usersManualToolStripMenuItem,
+            this.toolStripSeparator3,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // websiteToolStripMenuItem
+            // 
+            this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.websiteToolStripMenuItem.Text = "Visit github home";
+            this.websiteToolStripMenuItem.Click += new System.EventHandler(this.WebsiteToolStripMenuItemClick);
+            // 
+            // usersManualToolStripMenuItem
+            // 
+            this.usersManualToolStripMenuItem.Name = "usersManualToolStripMenuItem";
+            this.usersManualToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.usersManualToolStripMenuItem.Text = "Users Manual";
+            this.usersManualToolStripMenuItem.Click += new System.EventHandler(this.UsersManualToolStripMenuItemClick);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -656,6 +681,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuSelectClear;
         private System.Windows.Forms.ToolStripButton btPutty;
         private System.Windows.Forms.ToolStripMenuItem menuMainManageKeys;
+        private System.Windows.Forms.ToolStripMenuItem websiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem usersManualToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

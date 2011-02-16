@@ -81,6 +81,13 @@ namespace git4win.Properties {
             }
         }
         
+        public static byte[] Git4WinUsersManual {
+            get {
+                object obj = ResourceManager.GetObject("Git4WinUsersManual", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         public static byte[] p4merge {
             get {
                 object obj = ResourceManager.GetObject("p4merge", resourceCulture);

@@ -25,9 +25,9 @@ namespace git4win
         /// </summary>
         public ClassPutty()
         {
-            _pathPageant = WriteResourceToFile(Properties.Resources.pageant, "pageant.exe");
-            _pathPlink = WriteResourceToFile(Properties.Resources.plink, "plink.exe");
-            _pathPuttyGen = WriteResourceToFile(Properties.Resources.puttygen, "puttygen.exe");
+            _pathPageant = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "pageant.exe", Properties.Resources.pageant);
+            _pathPlink = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
+            _pathPuttyGen = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
 
             // Run the daemon process, update keys
             RunPageantUpdateKeys();
@@ -68,26 +68,6 @@ namespace git4win
         private static bool IsProcessRunning(string name)
         {
             return Process.GetProcesses().Any(proc => proc.ProcessName == name);
-        }
-
-        /// <summary>
-        /// Writes binary resource to a temporary file
-        /// </summary>
-        private static string WriteResourceToFile(byte[] buffer, string filename)
-        {
-            string path = Path.Combine(Path.GetTempPath(), filename);
-            try
-            {
-                using (var sw = new BinaryWriter(File.Open(path, FileMode.Create)))
-                {
-                    sw.Write(buffer);
-                }
-            }
-            catch(Exception ex)
-            {
-                App.Execute.Add(ex.Message);
-            }
-            return path;
         }
 
         /// <summary>

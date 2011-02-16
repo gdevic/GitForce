@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -433,12 +434,30 @@ namespace git4win
         #endregion
 
         /// <summary>
-        /// Manage PuTTY Keys
+        /// Manage SSH Keys
         /// </summary>
         private void MenuMainManageKeysClick(object sender, EventArgs e)
         {
             FormSSH formSsh = new FormSSH();
             formSsh.ShowDialog();
+        }
+
+        /// <summary>
+        /// User clicked on a Website menu item, open the website
+        /// </summary>
+        private void WebsiteToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/gdevic/git4win");
+        }
+
+        /// <summary>
+        /// User clicked on a User's Manual menu item, open the embedded PDF
+        /// </summary>
+        private void UsersManualToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            appPath = ClassUtils.WriteResourceToFile(appPath, "Git4WinUsersManual.pdf", Properties.Resources.Git4WinUsersManual);
+            Process.Start(appPath);
         }
     }
 }

@@ -154,36 +154,17 @@ namespace git4win
         {
             Diff diff = new Diff();
 
-            WriteResourceToFile(Properties.Resources.QtCore4, "QtCore4.dll");
-            WriteResourceToFile(Properties.Resources.QtGui4, "QtGui4.dll");
-            WriteResourceToFile(Properties.Resources.QtXml4, "QtXml4.dll");
-            diff.Path = WriteResourceToFile(Properties.Resources.p4merge, "p4merge.exe");
+            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            ClassUtils.WriteResourceToFile(appPath, "QtCore4.dll", Properties.Resources.QtCore4);
+            ClassUtils.WriteResourceToFile(appPath, "QtGui4.dll", Properties.Resources.QtGui4);
+            ClassUtils.WriteResourceToFile(appPath, "QtXml4.dll", Properties.Resources.QtXml4);
+
+            diff.Path = ClassUtils.WriteResourceToFile(appPath, "p4merge.exe", Properties.Resources.p4merge);
             diff.Difftool = "InternalP4Merge";
             diff.Args = "%1 %2";
             diff.Name = "Internal P4Merge";
 
             return diff;
-        }
-
-        /// <summary>
-        /// Writes binary resource to Application Data file
-        /// </summary>
-        private static string WriteResourceToFile(byte[] buffer, string filename)
-        {
-            string path = Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.LocalApplicationData), filename);
-            try
-            {
-                using (var sw = new BinaryWriter(File.Open(path, FileMode.Create)))
-                {
-                    sw.Write(buffer);
-                }
-            }
-            catch(Exception ex)
-            {
-                App.Execute.Add(ex.Message);
-            }
-            return path;
         }
     }
 }
