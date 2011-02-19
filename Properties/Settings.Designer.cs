@@ -169,18 +169,6 @@ namespace git4win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fastforward")]
-        public string mergeStyle {
-            get {
-                return ((string)(this["mergeStyle"]));
-            }
-            set {
-                this["mergeStyle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public int commitsRetrieveLast {
             get {

@@ -15,8 +15,6 @@ namespace git4win
         {
             InitializeComponent();
 
-            MergeStyle.SetStyle(Properties.Settings.Default.mergeStyle);
-
             labelCurrentBranchName.Text = "Current branch is \"" + branches.Current + "\"";
             listBranches.Items.AddRange(branches.Local.ToArray());
             listBranches.Items.AddRange(branches.Remote.ToArray());
@@ -28,20 +26,12 @@ namespace git4win
             }
         }
 
-        public bool DoMerge(string branch)
+        /// <summary>
+        /// Return the final merge git command
+        /// </summary>
+        public string GetCmd()
         {
-            const bool ret = false;
-            if (!string.IsNullOrEmpty(branch))
-            {
-
-
-            }
-            return ret;
-        }
-
-        private void BtMergeClick(object sender, EventArgs e)
-        {
-            DoMerge(listBranches.SelectedItem.ToString());
+            return "merge " + listBranches.SelectedItem;
         }
     }
 }

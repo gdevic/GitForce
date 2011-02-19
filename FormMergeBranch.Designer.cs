@@ -33,7 +33,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btCancel = new System.Windows.Forms.Button();
             this.btMerge = new System.Windows.Forms.Button();
-            this.MergeStyle = new git4win.UserControlBranchMergeStyle();
             this.SuspendLayout();
             // 
             // labelCurrentBranchName
@@ -47,12 +46,14 @@
             // 
             // listBranches
             // 
-            this.listBranches.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.listBranches.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBranches.FormattingEnabled = true;
+            this.listBranches.IntegralHeight = false;
             this.listBranches.Location = new System.Drawing.Point(147, 29);
             this.listBranches.Name = "listBranches";
-            this.listBranches.Size = new System.Drawing.Size(189, 82);
+            this.listBranches.Size = new System.Drawing.Size(185, 117);
             this.listBranches.TabIndex = 2;
             // 
             // label2
@@ -68,7 +69,7 @@
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(261, 267);
+            this.btCancel.Location = new System.Drawing.Point(257, 152);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 4;
@@ -80,36 +81,24 @@
             this.btMerge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btMerge.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btMerge.Enabled = false;
-            this.btMerge.Location = new System.Drawing.Point(180, 267);
+            this.btMerge.Location = new System.Drawing.Point(176, 152);
             this.btMerge.Name = "btMerge";
             this.btMerge.Size = new System.Drawing.Size(75, 23);
             this.btMerge.TabIndex = 5;
             this.btMerge.Text = "Merge";
             this.btMerge.UseVisualStyleBackColor = true;
-            this.btMerge.Click += new System.EventHandler(this.BtMergeClick);
-            // 
-            // MergeStyle
-            // 
-            this.MergeStyle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.MergeStyle.Location = new System.Drawing.Point(12, 117);
-            this.MergeStyle.Name = "MergeStyle";
-            this.MergeStyle.Size = new System.Drawing.Size(324, 139);
-            this.MergeStyle.TabIndex = 0;
             // 
             // FormMergeBranch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 302);
+            this.ClientSize = new System.Drawing.Size(344, 187);
             this.Controls.Add(this.btMerge);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBranches);
             this.Controls.Add(this.labelCurrentBranchName);
-            this.Controls.Add(this.MergeStyle);
-            this.MinimumSize = new System.Drawing.Size(284, 304);
+            this.MinimumSize = new System.Drawing.Size(283, 143);
             this.Name = "FormMergeBranch";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -122,7 +111,6 @@
 
         #endregion
 
-        private UserControlBranchMergeStyle MergeStyle;
         private System.Windows.Forms.Label labelCurrentBranchName;
         private System.Windows.Forms.ListBox listBranches;
         private System.Windows.Forms.Label label2;

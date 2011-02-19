@@ -303,12 +303,6 @@
     <Compile Include="TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControlBranchMergeType.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlBranchMergeType.Designer.cs">
-      <DependentUpon>UserControlBranchMergeType.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControlEditGitignore.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -451,9 +445,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UserControlBranchMergeType.resx">
-      <DependentUpon>UserControlBranchMergeType.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControlEditGitignore.resx">
       <DependentUpon>UserControlEditGitignore.cs</DependentUpon>
     </EmbeddedResource>

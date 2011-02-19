@@ -28,24 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Merge = new git4win.UserControlBranchMergeStyle();
             this.SuspendLayout();
-            // 
-            // userControlBranchMergeType1
-            // 
-            this.Merge.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.Merge.Location = new System.Drawing.Point(3, 3);
-            this.Merge.Name = "userControlBranchMergeType1";
-            this.Merge.Size = new System.Drawing.Size(294, 294);
-            this.Merge.TabIndex = 0;
             // 
             // ControlMerge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.Merge);
             this.Name = "ControlMerge";
             this.Size = new System.Drawing.Size(300, 300);
             this.ResumeLayout(false);
@@ -54,6 +42,5 @@
 
         #endregion
 
-        private UserControlBranchMergeStyle Merge;
     }
 }

@@ -186,11 +186,18 @@ namespace git4win.FormMain_RightPanels
             SetCurrent(GetSelectedNode());
         }
 
+        /// <summary>
+        /// Merge branch menu item
+        /// </summary>
         private void MenuMergeClick(object sender, EventArgs e)
         {
             FormMergeBranch mergeBranch = new FormMergeBranch(_branches);
             if (mergeBranch.ShowDialog() == DialogResult.OK)
+            {
+                string cmd = mergeBranch.GetCmd();
+                App.Repos.Current.Run(cmd);
                 App.Refresh();
+            }
         }
     }
 }

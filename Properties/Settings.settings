@@ -38,9 +38,6 @@
     <Setting Name="ShowExecuteWindow" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="mergeStyle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">fastforward</Value>
-    </Setting>
     <Setting Name="commitsRetrieveLast" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>

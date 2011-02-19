@@ -22,7 +22,6 @@ namespace git4win.FormOptions_Panels
         /// <param name="options">All git global settings</param>
         public void Init(string[] options)
         {
-            Merge.SetStyle(Properties.Settings.Default.mergeStyle);
         }
 
         /// <summary>
@@ -30,7 +29,6 @@ namespace git4win.FormOptions_Panels
         /// </summary>
         public void ApplyChanges()
         {
-            Properties.Settings.Default.mergeStyle = Merge.GetStyle();
         }
     }
 }
