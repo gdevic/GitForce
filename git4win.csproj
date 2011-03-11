@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassArguments.cs" />
     <Compile Include="ClassBranches.cs" />
     <Compile Include="ClassCommit.cs" />
     <Compile Include="ClassCommits.cs" />
