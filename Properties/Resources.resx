@@ -136,9 +136,6 @@
   <data name="TreeIcon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TreeIcon1.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TreeIcon10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon10.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="TreeIcon11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TreeIcon11.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -168,5 +165,8 @@
   </data>
   <data name="git" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\App\git.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon10.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

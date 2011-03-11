@@ -374,7 +374,9 @@ namespace Git4Win.Main.Left.Panels
             {' ', new[]{ FileOps.Rename, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
             {'M', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
             {'D', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert}},
-            {'R', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}}
+            {'R', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
+            {'U', new[]{ FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
+            {'A', new[]{ FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}}
         };
 
         /// <summary>

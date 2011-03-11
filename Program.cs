@@ -96,28 +96,28 @@ namespace Git4Win
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Arguments commandLine = new Arguments(args);
+            //Arguments commandLine = new Arguments(args);
 
-            if (commandLine["help"] == "true")
-            {
-                Console.WriteLine("Git4Win optional arguments:");
-                Console.WriteLine("  --version             Show the application version number.");
-                Console.WriteLine("  --reset-windows       Reset stored locations of windows and dialogs.");
+            //if (commandLine["help"] == "true")
+            //{
+            //    Console.WriteLine("Git4Win optional arguments:");
+            //    Console.WriteLine("  --version             Show the application version number.");
+            //    Console.WriteLine("  --reset-windows       Reset stored locations of windows and dialogs.");
 
-                return -1;
-            }
+            //    return -1;
+            //}
 
-            // --version Show the application version number and quit
-            if (commandLine["version"] == "true")
-            {
-                Console.WriteLine("Git4Win version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                return -1;
-            }
+            //// --version Show the application version number and quit
+            //if (commandLine["version"] == "true")
+            //{
+            //    Console.WriteLine("Git4Win version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+            //    return -1;
+            //}
 
-            // --reset-windows Reset the stored locations and sizes of all internal dialogs and forms
-            //                 At this time we dont reset the main window and the log window
-            if (commandLine["reset-windows"]=="true")
-                Properties.Settings.Default.WindowsGeometries = new StringCollection();
+            //// --reset-windows Reset the stored locations and sizes of all internal dialogs and forms
+            ////                 At this time we dont reset the main window and the log window
+            //if (commandLine["reset-windows"]=="true")
+            //    Properties.Settings.Default.WindowsGeometries = new StringCollection();
 
 
             // Make sure the application data folder directory exists

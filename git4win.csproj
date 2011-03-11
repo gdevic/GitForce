@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -64,7 +64,6 @@
     <Compile Include="ClassView.cs" />
     <Compile Include="ClassWin32.cs" />
     <Compile Include="ClassWinGeometry.cs" />
-    <Compile Include="CommandLine.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>

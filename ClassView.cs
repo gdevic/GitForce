@@ -57,21 +57,21 @@ namespace Git4Win
             il.ImageSize = new System.Drawing.Size(32, 16);
             il.ColorDepth = ColorDepth.Depth32Bit;
 
-            il.Images.Add(Properties.Resources.TreeIcon1);
-            il.Images.Add(Properties.Resources.TreeIcon2);
-            il.Images.Add(Properties.Resources.TreeIcon3);
-            il.Images.Add(Properties.Resources.TreeIcon4);
-            il.Images.Add(Properties.Resources.TreeIcon5);
-            il.Images.Add(Properties.Resources.TreeIcon6);
-            il.Images.Add(Properties.Resources.TreeIcon7);
-            il.Images.Add(Properties.Resources.TreeIcon8);
-            il.Images.Add(Properties.Resources.TreeIcon9);
-            il.Images.Add(Properties.Resources.TreeIcon10);
-            il.Images.Add(Properties.Resources.TreeIcon11);
-            il.Images.Add(Properties.Resources.TreeIcon11); // TODO: Add for unmerged
+            il.Images.Add(Properties.Resources.TreeIcon1);  // ID=0
+            il.Images.Add(Properties.Resources.TreeIcon2);  // ID=1
+            il.Images.Add(Properties.Resources.TreeIcon3);  // ID=2
+            il.Images.Add(Properties.Resources.TreeIcon4);  // ID=3
+            il.Images.Add(Properties.Resources.TreeIcon5);  // ID=4
+            il.Images.Add(Properties.Resources.TreeIcon6);  // ID=5
+            il.Images.Add(Properties.Resources.TreeIcon7);  // ID=6
+            il.Images.Add(Properties.Resources.TreeIcon8);  // ID=7
+            il.Images.Add(Properties.Resources.TreeIcon9);  // ID=8
+            il.Images.Add(Properties.Resources.TreeIcon10); // ID=9
+            il.Images.Add(Properties.Resources.TreeIcon11); // ID=10
+            il.Images.Add(Properties.Resources.TreeIcon11); // ID=11 TODO: Add for unmerged
 
-            il.Images.Add(Properties.Resources.Change0);
-            il.Images.Add(Properties.Resources.Change1);
+            il.Images.Add(Properties.Resources.Change0);    // ID=12
+            il.Images.Add(Properties.Resources.Change1);    // ID=13
 
             return il;
         }
