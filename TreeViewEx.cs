@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Yet another TreeViewEx control, written to be suitable for this project.
@@ -34,7 +34,7 @@ namespace git4win
         /// <summary>
         /// Return a single selected node
         /// </summary>
-        public new TreeNode SelectedNode { get; set; }
+        public new TreeNode SelectedNode { get; private set; }
 
         /// <summary>
         /// TreeViewEx constructor
@@ -85,6 +85,7 @@ namespace git4win
                 this.EndUpdate();
             }
             base.OnMouseDown(e);
+            this.OnAfterSelect(null);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -98,6 +99,7 @@ namespace git4win
                     SelectNone();
                     SetSelected(node, true);
                     SelectedNode = node;
+                    this.OnAfterSelect(null);
                 }
                 this.EndUpdate();
             }
@@ -120,6 +122,7 @@ namespace git4win
                 {
                     SelectNone();
                     SetSelected(node, true);
+                    this.OnAfterSelect(null);
                 }
             }
             base.OnItemDrag(e);
@@ -165,17 +168,19 @@ namespace git4win
             foreach (TreeNode node in this.Nodes)
                 SetSelectedDeep(node, true);
             this.EndUpdate();
+            this.OnAfterSelect(null);
         }
 
         /// <summary>
         /// Deselect all nodes in the tree
         /// </summary>
-        public void SelectNone()
+        private void SelectNone()
         {
             this.BeginUpdate();
             foreach (TreeNode node in this.Nodes)
                 SetSelectedDeep(node, false);
             this.EndUpdate();
+            this.OnAfterSelect(null);
         }
 
         /// <summary>
@@ -185,12 +190,13 @@ namespace git4win
         {
             _selectedNodes.Clear();
             this.Nodes.Clear();
+            this.OnAfterSelect(null);
         }
 
         /// <summary>
         /// Alternate way to select specific nodes by sending it a list
         /// </summary>
-        public void SetSelectedNodes(List<TreeNode> nodes)
+        private void SetSelectedNodes(List<TreeNode> nodes)
         {
             SelectNone();
             this.BeginUpdate();
@@ -200,6 +206,7 @@ namespace git4win
                 n.EnsureVisible();
             }
             this.EndUpdate();
+            this.OnAfterSelect(null);
         }
     }
 }

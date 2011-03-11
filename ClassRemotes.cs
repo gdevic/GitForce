@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Class containing a set of remotes for a given repository
@@ -34,8 +34,8 @@ namespace git4win
         public string Current = "";
 
         /// <summary>
-        /// Lookup dictionary of passwords for a given remote name
-        /// Implicitly, it also stores the list of remotes
+        /// Stores the current list of remotes and serves as a
+        /// lookup dictionary of passwords for a given remote name
         /// </summary>
         private Dictionary<string, Remote> _remotes = new Dictionary<string, Remote>();
 
@@ -119,7 +119,7 @@ namespace git4win
         /// Return the password for a given remote by name or
         /// the current remote (if name is empty string)
         /// </summary>
-        public string GetPassword(string name="")
+        public string GetPassword(string name)
         {
             Remote r;
             r.Password = "";
@@ -145,7 +145,7 @@ namespace git4win
         /// Return the push cmd for a given remote by name or
         /// the current remote (if name is empty string)
         /// </summary>
-        public string GetPushCmd(string name = "")
+        public string GetPushCmd(string name)
         {
             Remote r;
             r.PushCmd = "";

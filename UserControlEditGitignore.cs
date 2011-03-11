@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class UserControlEditGitignore : UserControl
     {
@@ -30,14 +29,15 @@ namespace git4win
         }
 
         /// <summary>
-        /// Loads specified text file as gitignore file
+        /// Loads specified text file as a gitignore file
         /// </summary>
         public bool LoadGitIgnore(string file)
         {
             bool result = true;
             try
             {
-                textBox.Text = File.ReadAllText(file).Replace("\n", Environment.NewLine);
+                using (StreamReader sr = new StreamReader(file))
+                    textBox.Text = sr.ReadToEnd();
                 FileName = file;
             }
             catch (Exception ex)
@@ -49,14 +49,15 @@ namespace git4win
         }
 
         /// <summary>
-        /// Saves the edited content of gitignore into a file
+        /// Saves the edited content of a gitignore listbox into a file
         /// </summary>
         public bool SaveGitIgnore(string file)
         {
             bool result = true;
             try
             {
-                File.WriteAllText(file, textBox.Text);
+                using(StreamWriter sw = new StreamWriter(file))
+                    sw.WriteLine(textBox.Text);
                 FileName = file;
             }
             catch (Exception ex)

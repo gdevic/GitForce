@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Class describing and working on a set of commits.
@@ -13,7 +13,6 @@ namespace git4win
     {
         /// <summary>
         /// List of commits
-        /// TODO: A good candidate for IEnumerable
         /// </summary>
         public readonly List<ClassCommit> Bundle = new List<ClassCommit>();
 
@@ -39,6 +38,20 @@ namespace git4win
             ClassCommit commit = new ClassCommit(description);
             commit.AddFiles(files);
             Bundle.Add(commit);
+        }
+
+        /// <summary>
+        /// Move or add each file in the list of files to a specified bundle.
+        /// Files in that list that are present in any other bundle will be moved.
+        /// </summary>
+        public void MoveOrAdd(ClassCommit bundle, List<string> files)
+        {
+            // Remove all listed files from any bundle in which they might appear
+            foreach (var c in Bundle)
+                c.Prune(files);
+
+            // Add listed files to a named bundle
+            bundle.AddFiles(files);
         }
 
         /// <summary>

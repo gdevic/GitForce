@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormSwitchToBranch : Form
     {
@@ -21,10 +21,19 @@ namespace git4win
         public FormSwitchToBranch()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
 
             // Initialize the list of local branches to switch to
             _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             FormNewBranch.ListAdd(ref listBranches, ref _localBranches);
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormSwitchToBranchFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

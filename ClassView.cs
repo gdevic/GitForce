@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// This class contains support functions and data definitions
@@ -121,7 +121,7 @@ namespace git4win
             foreach (GitDirectoryInfo d in dirs)
             {
                 TreeNode tn = new TreeNode(d.Name);
-                tn.Tag = d.FullName + @"\";
+                tn.Tag = d.FullName + Path.DirectorySeparatorChar;
                 tnRoot.Nodes.Add(tn);
                 BuildTreeRecurse(tn, d.List, sortBy);
             }

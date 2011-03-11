@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Class containing the status of a git repository.
@@ -56,7 +56,7 @@ namespace git4win
         public void SetListByStatusCommand(string cmd)
         {
             string[] response = Repo.Run(cmd)
-                .Replace('/','\\')      // From now on we use Windows slash only
+                .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
                 .Split(("\0")
                 .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             _list = new List<string>(response.Length);
@@ -74,7 +74,7 @@ namespace git4win
         public void SetListByLsTreeCommand(string cmd)
         {
             string[] response = Repo.Run(cmd)
-                .Replace('/', '\\')      // From now on we use Windows slash only
+                .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
                 .Split(("\0")
                 .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             _list = new List<string>(response.Length);
@@ -210,7 +210,7 @@ namespace git4win
                     status = name + ((x.Length>0 || y.Length>0) ? " ... <" + y + x + ">" : "");
                 }
             }
-            App.StatusInfo(status);
+            App.MainForm.SetStatusText(status);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class RemoteDisplay : UserControl
     {
@@ -120,12 +120,15 @@ namespace git4win
             if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
 
             textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
+
+            // WAR: Permanently disable SSH button if not on Windows OS
+            btSsh.Enabled = !ClassUtils.IsMono();
         }
 
         /// <summary>
         /// Manage SSH keys
         /// </summary>
-        private void btSsh_Click(object sender, EventArgs e)
+        private void BtSshClick(object sender, EventArgs e)
         {
             FormSSH formSsh = new FormSSH();
 

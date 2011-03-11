@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormShowChangelist : Form
     {
@@ -36,7 +36,7 @@ namespace git4win
             foreach (string s in response)
             {
                 // If a line starts with 'commit', insert a link
-                if(s.StartsWith("commit "))
+                if (s.StartsWith("commit "))
                 {
                     textChangelist.SelectedText = "Commit ";
                     textChangelist.InsertLink(s.Split(' ')[1]);
@@ -45,7 +45,7 @@ namespace git4win
                 else
                     textChangelist.SelectedText = s + Environment.NewLine;
             }
-            textChangelist.Select(0,0);
+            textChangelist.Select(0, 0);
         }
 
         /// <summary>
@@ -88,10 +88,10 @@ namespace git4win
         /// </summary>
         private void FormShowChangelistActivated(object sender, EventArgs e)
         {
-            if( _size.Width!=0)
+            if (_size.Width != 0)
             {
                 Location = _location;
-                Size = _size;                
+                Size = _size;
             }
         }
     }

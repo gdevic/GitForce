@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class UserControlEditGitignore
     {
@@ -28,69 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelFileName = new System.Windows.Forms.Label();
-            this.btAdd = new System.Windows.Forms.Button();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.textBox = new System.Windows.Forms.TextBox();
             this.listFilters = new System.Windows.Forms.ListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.textBox = new System.Windows.Forms.TextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btAdd = new System.Windows.Forms.Button();
+            this.labelFileName = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // labelFileName
-            // 
-            this.labelFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelFileName.Location = new System.Drawing.Point(-3, 0);
-            this.labelFileName.Name = "labelFileName";
-            this.labelFileName.Size = new System.Drawing.Size(359, 16);
-            this.labelFileName.TabIndex = 1;
-            this.labelFileName.Text = "File:";
-            // 
-            // btAdd
-            // 
-            this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAdd.Location = new System.Drawing.Point(2, 156);
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(178, 23);
-            this.btAdd.TabIndex = 3;
-            this.btAdd.Text = "<< Add Selected";
-            this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.BtAddClick);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(0, 19);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.textBox);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.listFilters);
-            this.splitContainer1.Panel2.Controls.Add(this.btAdd);
-            this.splitContainer1.Size = new System.Drawing.Size(356, 179);
-            this.splitContainer1.SplitterDistance = 172;
-            this.splitContainer1.TabIndex = 4;
-            // 
-            // textBox
-            // 
-            this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox.Location = new System.Drawing.Point(0, 0);
-            this.textBox.Multiline = true;
-            this.textBox.Name = "textBox";
-            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox.Size = new System.Drawing.Size(172, 179);
-            this.textBox.TabIndex = 0;
-            this.textBox.WordWrap = false;
             // 
             // listFilters
             // 
@@ -122,6 +68,59 @@
             this.listFilters.Size = new System.Drawing.Size(178, 147);
             this.listFilters.TabIndex = 4;
             // 
+            // textBox
+            // 
+            this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox.Location = new System.Drawing.Point(0, 0);
+            this.textBox.Multiline = true;
+            this.textBox.Name = "textBox";
+            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox.Size = new System.Drawing.Size(172, 179);
+            this.textBox.TabIndex = 0;
+            this.textBox.WordWrap = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(2, 19);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.textBox);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.listFilters);
+            this.splitContainer1.Panel2.Controls.Add(this.btAdd);
+            this.splitContainer1.Size = new System.Drawing.Size(356, 179);
+            this.splitContainer1.SplitterDistance = 172;
+            this.splitContainer1.TabIndex = 6;
+            // 
+            // btAdd
+            // 
+            this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAdd.Location = new System.Drawing.Point(2, 156);
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(178, 23);
+            this.btAdd.TabIndex = 3;
+            this.btAdd.Text = "<< Add Selected";
+            this.btAdd.UseVisualStyleBackColor = true;
+            this.btAdd.Click += new System.EventHandler(this.BtAddClick);
+            // 
+            // labelFileName
+            // 
+            this.labelFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelFileName.Location = new System.Drawing.Point(-1, 0);
+            this.labelFileName.Name = "labelFileName";
+            this.labelFileName.Size = new System.Drawing.Size(359, 16);
+            this.labelFileName.TabIndex = 5;
+            this.labelFileName.Text = "File:";
+            // 
             // UserControlEditGitignore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,7 +132,6 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -141,10 +139,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelFileName;
-        private System.Windows.Forms.Button btAdd;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.ListBox listFilters;
+        private System.Windows.Forms.TextBox textBox;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button btAdd;
+        private System.Windows.Forms.Label labelFileName;
     }
 }

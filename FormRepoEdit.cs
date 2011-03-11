@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using git4win.FormRepoEdit_Panels;
+using Git4Win.Repo.Edit.Panels;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Define an interface for option panels; at minimum they need to
@@ -44,12 +44,13 @@ namespace git4win
         public FormRepoEdit(ClassRepo repo)
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
             _repo = repo;
 
             // Get all local configuration strings and assign various panel controls.
             // This is placed first, before initializing the user panels, so that the
-            // strings are accessible to individual panels if they want to use it.
-            string[] config = ClassConfig.Run("--local --list -z", _repo).Split('\0');
+            // strings are accessible to individual panels should they need to use them.
+            string[] config = _repo.Run("config --local --list -z").Split('\0');
 
             // Add all user panels to the base repo edit panel; call their init
             foreach (KeyValuePair<string, UserControl> key in _panels)
@@ -62,6 +63,14 @@ namespace git4win
             // Expand the tree and select the first node
             treeSections.ExpandAll();
             treeSections.SelectedNode = treeSections.Nodes[0].Nodes[0];
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormRepoEditFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

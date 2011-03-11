@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormRemoteEdit
     {
@@ -28,20 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.userControlRemoteEdit = new Git4Win.RemoteEdit();
             this.btDone = new System.Windows.Forms.Button();
-            this.userControlRemoteEdit = new git4win.RemoteEdit();
             this.SuspendLayout();
-            // 
-            // btDone
-            // 
-            this.btDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btDone.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btDone.Location = new System.Drawing.Point(479, 212);
-            this.btDone.Name = "btDone";
-            this.btDone.Size = new System.Drawing.Size(75, 23);
-            this.btDone.TabIndex = 1;
-            this.btDone.Text = "Done";
-            this.btDone.UseVisualStyleBackColor = true;
             // 
             // userControlRemoteEdit
             // 
@@ -51,8 +40,19 @@
             this.userControlRemoteEdit.Location = new System.Drawing.Point(12, 12);
             this.userControlRemoteEdit.MinimumSize = new System.Drawing.Size(320, 165);
             this.userControlRemoteEdit.Name = "userControlRemoteEdit";
-            this.userControlRemoteEdit.Size = new System.Drawing.Size(542, 196);
+            this.userControlRemoteEdit.Size = new System.Drawing.Size(542, 197);
             this.userControlRemoteEdit.TabIndex = 0;
+            // 
+            // btDone
+            // 
+            this.btDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btDone.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btDone.Location = new System.Drawing.Point(479, 215);
+            this.btDone.Name = "btDone";
+            this.btDone.Size = new System.Drawing.Size(75, 23);
+            this.btDone.TabIndex = 2;
+            this.btDone.Text = "Done";
+            this.btDone.UseVisualStyleBackColor = true;
             // 
             // FormRemoteEdit
             // 
@@ -67,8 +67,9 @@
             this.Name = "FormRemoteEdit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Edit Remote Repositories";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRemoteEditFormClosing);
             this.ResumeLayout(false);
 
         }

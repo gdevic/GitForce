@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     public class ClassException : Exception
     {
-        public string Msg;
+        private readonly string _msg;
+
+        public override string Message
+        {
+            get { return _msg; }
+        }
 
         public ClassException(string message)
         {
-            Msg = message;
+            _msg = message;
         }
     }
 }

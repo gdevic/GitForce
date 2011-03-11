@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Reflection;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
-    /// Manage PuTTY, PLink and PuttyGen utilities
+    /// Manage PuTTY, PLink and PuttyGen utilities.
+    /// This class should be instantiated on Windows OS only.
     /// </summary>
     public class ClassPutty
     {
         private readonly string _pathPageant;
         private readonly string _pathPlink;
         private readonly string _pathPuttyGen;
-        private Process _procPageant = new Process();
+        private Process _procPageant;
 
         /// <summary>
         /// Constructor class function, create executables in temp space
@@ -28,6 +26,9 @@ namespace git4win
             _pathPageant = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "pageant.exe", Properties.Resources.pageant);
             _pathPlink = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
             _pathPuttyGen = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
+
+            ClassExecute.AddEnvar("PLINK_PROTOCOL", "ssh");
+            ClassExecute.AddEnvar("GIT_SSH", _pathPlink);
 
             // Run the daemon process, update keys
             RunPageantUpdateKeys();
@@ -45,16 +46,19 @@ namespace git4win
                 // Dont attempt to stop/remove Pageant if the user wanted to leave it running
                 if (Properties.Settings.Default.leavePageant == false)
                 {
-                    if (!_procPageant.HasExited)
+                    if (_procPageant != null)
                     {
-                        _procPageant.Kill();
-                        _procPageant.WaitForExit();
+                        if (!_procPageant.HasExited)
+                        {
+                            _procPageant.Kill();
+                            _procPageant.WaitForExit();
+                        }
+                        //File.Delete(_pathPageant);
                     }
-                    File.Delete(_pathPageant);
                 }
-
-                File.Delete(_pathPlink);
-                File.Delete(_pathPuttyGen);
+                // Note: We leave these files in to allow secondary application instances to co-exist
+                //File.Delete(_pathPlink);
+                //File.Delete(_pathPuttyGen);
             }
             catch(Exception ex)
             {
@@ -63,23 +67,11 @@ namespace git4win
         }
 
         /// <summary>
-        /// Checks the list of running processes in the system and returns true if a named process is running
-        /// </summary>
-        private static bool IsProcessRunning(string name)
-        {
-            return Process.GetProcesses().Any(proc => proc.ProcessName == name);
-        }
-
-        /// <summary>
         /// Run the PuTTYgen process and wait until it exits.
         /// </summary>
         public void RunPuTTYgen()
         {
-            Process procPuTTY = Process.Start(_pathPuttyGen);
-
-            // Block until PuTTY process closes. This is safer than dealing with
-            // various combinations of users starting multiple instances etc.
-            procPuTTY.WaitForExit();
+            Process.Start(_pathPuttyGen).WaitForExit();
         }
 
         /// <summary>
@@ -103,23 +95,18 @@ namespace git4win
                 args.Append(" \"" + s + "\"");
 
             // Run the pageant process if we have any (new) keys or phrases to import,
-            // otherwise, run it only if it already is not running to avoid its warning message
-            if (args.Length>0 || !IsProcessRunning("pageant"))
+            // or if the pageant process is not running
+            bool isPageantRunning = Process.GetProcesses().Any(proc => proc.ProcessName == "pageant");
+
+            if (args.Length > 0 || isPageantRunning==false)
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = _pathPageant;
-                startInfo.Arguments = args.ToString();
+                _procPageant = new Process();
+                _procPageant.StartInfo.FileName = _pathPageant;
+                _procPageant.StartInfo.Arguments = args.ToString();
 
-                _procPageant = Process.Start(startInfo);
+                // TODO: Handle unsuccessful process start
+                _procPageant.Start();                    
             }
-        }
-
-        /// <summary>
-        /// Returns full path name to PLINK used to set up GIT_SSH variable when running a command
-        /// </summary>
-        public string GetPlinkPath()
-        {
-            return _pathPlink;
         }
 
         /// <summary>
@@ -152,7 +139,7 @@ namespace git4win
                     Encoding.ASCII.GetBytes(s))).
                     ToList();
 
-            Properties.Settings.Default.PuTTYPf = String.Join("\0", pfs);
+            Properties.Settings.Default.PuTTYPf = String.Join("\0", pfs.ToArray());
         }
 
         /// <summary>
@@ -167,17 +154,7 @@ namespace git4win
                           " -l " + (string.IsNullOrEmpty(url.User) ? "anonymous" : url.User) +
                           " " + url.Host;
 
-            // Start the process silently and wait until it ends
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = _pathPlink;
-            startInfo.EnvironmentVariables.Add("PLINK_PROTOCOL", "ssh");
-            startInfo.UseShellExecute = false;
-//          startInfo.CreateNoWindow = true;
-            startInfo.Arguments = args;
-
-            Process procPlink = Process.Start(startInfo);
-
-            procPlink.WaitForExit();
+            ClassExecute.Run(_pathPlink, args);
         }
     }
 }

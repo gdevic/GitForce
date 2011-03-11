@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("git4win")]
-[assembly: AssemblyDescription("Graphical User Interface to the git source control system.")]
+[assembly: AssemblyTitle("Git4Win")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Goran Devic")]
-[assembly: AssemblyProduct("git4win")]
-[assembly: AssemblyCopyright("Copyright © Goran Devic 2011")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("Git4Win")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7c2490c5-1a52-48f3-993b-133d21640da1")]
+[assembly: Guid("ac46f858-a555-4b13-9a78-700d6dfaabb4")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormPathToGit
     {
@@ -141,7 +141,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "git4win Settings";
+            this.Text = "Git4Win";
             this.ResumeLayout(false);
             this.PerformLayout();
 

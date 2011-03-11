@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormNewBranch
     {
@@ -28,96 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btCancel = new System.Windows.Forms.Button();
-            this.btCreate = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBranchName = new System.Windows.Forms.TextBox();
-            this.checkCheckOut = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBranches = new System.Windows.Forms.ListBox();
             this.textSHA1 = new System.Windows.Forms.TextBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.btCancel = new System.Windows.Forms.Button();
+            this.checkCheckOut = new System.Windows.Forms.CheckBox();
+            this.textBranchName = new System.Windows.Forms.TextBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btCreate = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btCancel
-            // 
-            this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(365, 229);
-            this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancel.TabIndex = 0;
-            this.btCancel.Text = "Cancel";
-            this.btCancel.UseVisualStyleBackColor = true;
-            // 
-            // btCreate
-            // 
-            this.btCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btCreate.Enabled = false;
-            this.btCreate.Location = new System.Drawing.Point(284, 229);
-            this.btCreate.Name = "btCreate";
-            this.btCreate.Size = new System.Drawing.Size(75, 23);
-            this.btCreate.TabIndex = 1;
-            this.btCreate.Text = "Create";
-            this.btCreate.UseVisualStyleBackColor = true;
-            this.btCreate.Click += new System.EventHandler(this.BtCreateClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Name:";
-            // 
-            // textBranchName
-            // 
-            this.textBranchName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBranchName.Location = new System.Drawing.Point(56, 12);
-            this.textBranchName.Name = "textBranchName";
-            this.textBranchName.Size = new System.Drawing.Size(378, 20);
-            this.textBranchName.TabIndex = 3;
-            this.textBranchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(TextBranchNameKeyPress);
-            this.textBranchName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBranchNameKeyUp);
-            // 
-            // checkCheckOut
-            // 
-            this.checkCheckOut.AutoSize = true;
-            this.checkCheckOut.Checked = true;
-            this.checkCheckOut.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkCheckOut.Location = new System.Drawing.Point(56, 38);
-            this.checkCheckOut.Name = "checkCheckOut";
-            this.checkCheckOut.Size = new System.Drawing.Size(181, 17);
-            this.checkCheckOut.TabIndex = 4;
-            this.checkCheckOut.Text = "Checkout branch after creating it";
-            this.checkCheckOut.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.listBranches);
-            this.groupBox1.Controls.Add(this.textSHA1);
-            this.groupBox1.Controls.Add(this.radioButton5);
-            this.groupBox1.Controls.Add(this.radioButton4);
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(15, 61);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(425, 162);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Starting Revision";
             // 
             // listBranches
             // 
@@ -144,7 +69,7 @@
             this.textSHA1.Size = new System.Drawing.Size(223, 20);
             this.textSHA1.TabIndex = 5;
             this.textSHA1.TextChanged += new System.EventHandler(this.TextSha1TextChanged);
-            this.textSHA1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(TextBranchNameKeyPress);
+            this.textSHA1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBranchNameKeyPress);
             // 
             // radioButton5
             // 
@@ -194,6 +119,40 @@
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
+            // btCancel
+            // 
+            this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btCancel.Location = new System.Drawing.Point(365, 229);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.TabIndex = 6;
+            this.btCancel.Text = "Cancel";
+            this.btCancel.UseVisualStyleBackColor = true;
+            // 
+            // checkCheckOut
+            // 
+            this.checkCheckOut.AutoSize = true;
+            this.checkCheckOut.Checked = true;
+            this.checkCheckOut.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkCheckOut.Location = new System.Drawing.Point(56, 38);
+            this.checkCheckOut.Name = "checkCheckOut";
+            this.checkCheckOut.Size = new System.Drawing.Size(181, 17);
+            this.checkCheckOut.TabIndex = 10;
+            this.checkCheckOut.Text = "Checkout branch after creating it";
+            this.checkCheckOut.UseVisualStyleBackColor = true;
+            // 
+            // textBranchName
+            // 
+            this.textBranchName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBranchName.Location = new System.Drawing.Point(56, 12);
+            this.textBranchName.Name = "textBranchName";
+            this.textBranchName.Size = new System.Drawing.Size(378, 20);
+            this.textBranchName.TabIndex = 9;
+            this.textBranchName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBranchNameKeyUp);
+            this.textBranchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBranchNameKeyPress);
+            // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
@@ -208,25 +167,67 @@
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioBranchSourceCheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.listBranches);
+            this.groupBox1.Controls.Add(this.textSHA1);
+            this.groupBox1.Controls.Add(this.radioButton5);
+            this.groupBox1.Controls.Add(this.radioButton4);
+            this.groupBox1.Controls.Add(this.radioButton3);
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Location = new System.Drawing.Point(15, 61);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(425, 162);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Starting Revision";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Name:";
+            // 
+            // btCreate
+            // 
+            this.btCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btCreate.Enabled = false;
+            this.btCreate.Location = new System.Drawing.Point(284, 229);
+            this.btCreate.Name = "btCreate";
+            this.btCreate.Size = new System.Drawing.Size(75, 23);
+            this.btCreate.TabIndex = 7;
+            this.btCreate.Text = "Create";
+            this.btCreate.UseVisualStyleBackColor = true;
+            this.btCreate.Click += new System.EventHandler(this.BtCreateClick);
+            // 
             // FormNewBranch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 264);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btCancel);
             this.Controls.Add(this.checkCheckOut);
             this.Controls.Add(this.textBranchName);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btCreate);
-            this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(347, 288);
             this.Name = "FormNewBranch";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Create New Branch";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormNewBranchFormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -236,18 +237,18 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.Button btCreate;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBranchName;
-        private System.Windows.Forms.CheckBox checkCheckOut;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ListBox listBranches;
         private System.Windows.Forms.TextBox textSHA1;
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Button btCancel;
+        private System.Windows.Forms.CheckBox checkCheckOut;
+        private System.Windows.Forms.TextBox textBranchName;
         private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.ListBox listBranches;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btCreate;
     }
 }

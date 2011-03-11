@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormNewRepoStep1
     {
@@ -38,7 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btBrowse = new System.Windows.Forms.Button();
             this.folderDlg = new System.Windows.Forms.FolderBrowserDialog();
-            this.remoteDisplay = new git4win.RemoteDisplay();
+            this.remoteDisplay = new Git4Win.RemoteDisplay();
             this.SuspendLayout();
             // 
             // btCancel
@@ -175,8 +175,9 @@
             this.Name = "FormNewRepoStep1";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "New Repository (step 1 of 2)";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormNewRepoStep1FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,5 +196,6 @@
         private System.Windows.Forms.Button btBrowse;
         private RemoteDisplay remoteDisplay;
         private System.Windows.Forms.FolderBrowserDialog folderDlg;
+
     }
 }

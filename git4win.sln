@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "git4win", "git4win.csproj", "{C4A9F174-5D72-4F41-B789-C5A9BF1CD328}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git4Win", "Git4Win.csproj", "{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4A9F174-5D72-4F41-B789-C5A9BF1CD328}.Debug|x86.ActiveCfg = Debug|x86
-		{C4A9F174-5D72-4F41-B789-C5A9BF1CD328}.Debug|x86.Build.0 = Debug|x86
-		{C4A9F174-5D72-4F41-B789-C5A9BF1CD328}.Release|x86.ActiveCfg = Release|x86
-		{C4A9F174-5D72-4F41-B789-C5A9BF1CD328}.Release|x86.Build.0 = Release|x86
+		{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}.Debug|x86.ActiveCfg = Debug|x86
+		{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}.Debug|x86.Build.0 = Debug|x86
+		{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}.Release|x86.ActiveCfg = Release|x86
+		{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

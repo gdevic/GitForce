@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Class containing NativeMethods interoperbility helper functions

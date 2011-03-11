@@ -112,76 +112,61 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="TreeIcon3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon11.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon8" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon8.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon9" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon9.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon6.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon10.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon7.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="git" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\App\git.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Change0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Changelist\Change0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Changelist\Change0.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Change1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Changelist\Change1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Changelist\Change1.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pageant" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PuTTY\pageant.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\PuTTY\pageant.exe;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="plink" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PuTTY\plink.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\PuTTY\plink.exe;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="puttygen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PuTTY\puttygen.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\PuTTY\puttygen.exe;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="p4merge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Diff\p4merge.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TreeIcon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon1.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="QtCore4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Diff\QtCore4.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TreeIcon10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon10.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="QtGui4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Diff\QtGui4.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TreeIcon11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon11.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="QtXml4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Diff\QtXml4.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TreeIcon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon2.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Git4WinUsersManual" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Git4WinUsersManual.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TreeIcon3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon3.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon4.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon5.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon6.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon7.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon8.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIcon9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TreeIcon9.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="git" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\App\git.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

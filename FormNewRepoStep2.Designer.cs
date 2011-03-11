@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormNewRepoStep2
     {
@@ -157,8 +157,9 @@
             this.Name = "FormNewRepoStep2";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "New Repository (step 2 of 2)";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormNewRepoStep2FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

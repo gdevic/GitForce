@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormRepoEdit
     {
@@ -33,46 +33,22 @@
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Repo Objects", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2});
-            this.btCancel = new System.Windows.Forms.Button();
-            this.btOK = new System.Windows.Forms.Button();
-            this.btApply = new System.Windows.Forms.Button();
-            this.treeSections = new System.Windows.Forms.TreeView();
             this.panel = new System.Windows.Forms.Panel();
+            this.treeSections = new System.Windows.Forms.TreeView();
+            this.btApply = new System.Windows.Forms.Button();
+            this.btOK = new System.Windows.Forms.Button();
+            this.btCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btCancel
+            // panel
             // 
-            this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(422, 219);
-            this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancel.TabIndex = 3;
-            this.btCancel.Text = "Cancel";
-            this.btCancel.UseVisualStyleBackColor = true;
-            // 
-            // btOK
-            // 
-            this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(341, 219);
-            this.btOK.Name = "btOK";
-            this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 2;
-            this.btOK.Text = "OK";
-            this.btOK.UseVisualStyleBackColor = true;
-            this.btOK.Click += new System.EventHandler(this.BtOkClick);
-            // 
-            // btApply
-            // 
-            this.btApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btApply.Location = new System.Drawing.Point(260, 219);
-            this.btApply.Name = "btApply";
-            this.btApply.Size = new System.Drawing.Size(75, 23);
-            this.btApply.TabIndex = 1;
-            this.btApply.Text = "Apply";
-            this.btApply.UseVisualStyleBackColor = true;
-            this.btApply.Click += new System.EventHandler(this.BtApplyClick);
+            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel.Location = new System.Drawing.Point(176, 12);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(321, 201);
+            this.panel.TabIndex = 9;
             // 
             // treeSections
             // 
@@ -91,18 +67,42 @@
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode3});
             this.treeSections.Size = new System.Drawing.Size(158, 230);
-            this.treeSections.TabIndex = 0;
+            this.treeSections.TabIndex = 5;
             this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);
             // 
-            // panel
+            // btApply
             // 
-            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel.Location = new System.Drawing.Point(176, 12);
-            this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(321, 201);
-            this.panel.TabIndex = 4;
+            this.btApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btApply.Location = new System.Drawing.Point(260, 219);
+            this.btApply.Name = "btApply";
+            this.btApply.Size = new System.Drawing.Size(75, 23);
+            this.btApply.TabIndex = 6;
+            this.btApply.Text = "Apply";
+            this.btApply.UseVisualStyleBackColor = true;
+            this.btApply.Click += new System.EventHandler(this.BtApplyClick);
+            // 
+            // btOK
+            // 
+            this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btOK.Location = new System.Drawing.Point(341, 219);
+            this.btOK.Name = "btOK";
+            this.btOK.Size = new System.Drawing.Size(75, 23);
+            this.btOK.TabIndex = 7;
+            this.btOK.Text = "OK";
+            this.btOK.UseVisualStyleBackColor = true;
+            this.btOK.Click += new System.EventHandler(this.BtOkClick);
+            // 
+            // btCancel
+            // 
+            this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btCancel.Location = new System.Drawing.Point(422, 219);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.TabIndex = 8;
+            this.btCancel.Text = "Cancel";
+            this.btCancel.UseVisualStyleBackColor = true;
             // 
             // FormRepoEdit
             // 
@@ -120,18 +120,19 @@
             this.Name = "FormRepoEdit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Edit Repository";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRepoEditFormClosing);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.Button btOK;
-        private System.Windows.Forms.Button btApply;
-        private System.Windows.Forms.TreeView treeSections;
         private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.TreeView treeSections;
+        private System.Windows.Forms.Button btApply;
+        private System.Windows.Forms.Button btOK;
+        private System.Windows.Forms.Button btCancel;
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormNewBranch : Form
     {
@@ -27,6 +27,15 @@ namespace git4win
         public FormNewBranch()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormNewBranchFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>
@@ -127,7 +136,7 @@ namespace git4win
         /// </summary>
         private void ListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            _origin = listBranches.SelectedItem.ToString(); 
+            _origin = listBranches.SelectedItem.ToString();
         }
 
         /// <summary>
@@ -143,9 +152,9 @@ namespace git4win
         /// Limit the character set that can be used to specify the branch name
         /// or SHA1 key (somewhat loosely in order to reuse the function)
         /// </summary>
-        private static void TextBranchNameKeyPress(object sender, KeyPressEventArgs e)
+        private void TextBranchNameKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar!='_' && !char.IsControl(e.KeyChar))
+            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != '_' && !char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 

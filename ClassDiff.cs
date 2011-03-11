@@ -4,18 +4,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Manage various diff programs and diff execution
     ///
-    /// Common diff utilities:
+    /// Common diff utilities for Windows OS:
     /// 
     /// Perforce merge and diff tool :  C:\Program Files (x86)\Perforce\P4Merge.exe
     /// WinMerge :                      C:\Program Files (x86)\WinMerge\WinMergeU.exe
     /// Beyond Compare diff tool :      C:\Program Files (x86)\Beyond Compare 3\BComp.exe
     /// KDiff3 :                        C:\Program Files (x86)\KDiff3\kdiff3.exe
+    ///
+    /// Common diff utilities for Linux OS:
+    ///
+    /// meld :                          /usr/bin/meld
+    /// kdiff3 :                        /usr/bin/kdiff3
+    /// xxdiff :                        /usr/bin/xxdiff
+    ///
     /// </summary>
     public class ClassDiff
     {
@@ -54,7 +62,8 @@ namespace git4win
         }
 
         /// <summary>
-        /// List of diff programs recognized by the application
+        /// List of diff programs recognized by the application.
+        /// Return false if no diff utility was found and user wanted to quit the app.
         /// </summary>
         public List<Diff> Diffs;
         
@@ -66,13 +75,17 @@ namespace git4win
             // Find selected diff programs installed and add them to the list
             Diffs = FindKnownDiffProgs();
 
-            // If none of preset diff apps are present, extract our internal one
+            // If none of preset diff apps are present, show the missing diff dialog
+            // and return with its selection of whether to continue or quit the app
             if (Diffs.Count == 0)
-                Diffs.Add(GetInternalDiff());
+            {
+                FormDiffMissing formDiffMissing = new FormDiffMissing();
+                return formDiffMissing.ShowDialog() == DialogResult.OK;
+            }
 
             // Assign the active diff utility or the first one on the list
             string activeName = Properties.Settings.Default.DiffActiveName;
-            if (string.IsNullOrWhiteSpace(activeName))
+            if (ClassUtils.IsNullOrWhiteSpace(activeName))
                 activeName = Diffs[0].Name;
 
             Diff active = Diffs[0];
@@ -102,14 +115,14 @@ namespace git4win
                     string path = d.Path.Replace('\\', '/');
                     string usr = d.Args.Replace("%1", "$LOCAL").Replace("%2", "$REMOTE");
                     string arg = "'" + path + "' " + usr;
-                    ClassConfig.Set("difftool." + d.Difftool + ".cmd", arg);
+                    ClassConfig.SetGlobal("difftool." + d.Difftool + ".cmd", arg);
                 }
 
                 // Make sure the prompt will be off for visual diff
-                ClassConfig.Set("difftool.prompt", "false");
+                ClassConfig.SetGlobal("difftool.prompt", "false");
 
                 // Set the active diff tool
-                ClassConfig.Set("diff.tool", active.Difftool);
+                ClassConfig.SetGlobal("diff.tool", active.Difftool);
 
                 return true;
             }
@@ -124,19 +137,27 @@ namespace git4win
         public static List<Diff> FindKnownDiffProgs()
         {
             List<Diff> diffs = new List<Diff>();
+            // We jam together Windows and Linux diff utilities
             List<Diff> candidates = new List<Diff> {
-                new Diff( "p4merge", "Perforce Merge", @"Perforce\P4Merge.exe", "%1 %2" ), 
-                new Diff( "WinMerge", "WinMerge", @"WinMerge\WinMergeU.exe", "%1 %2" ), 
-                new Diff( "BC3", "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" ), 
-                new Diff( "KDiff3", "KDiff3", @"KDiff3\kdiff3.exe", "%1 %2" )
+                //         Config      User name          Path                           Arguments
+                // Windows OS:
+                new Diff( "p4merge",  "Perforce Merge",   @"Perforce\P4Merge.exe",       "%1 %2" ),
+                new Diff( "WinMerge", "WinMerge",         @"WinMerge\WinMergeU.exe",     "%1 %2" ),
+                new Diff( "BC3",      "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" ),
+                new Diff( "KDiff3",   "KDiff3",           @"KDiff3\kdiff3.exe",          "%1 %2" ),
+                // Linux OS:
+                new Diff( "Meld",     "Meld",             @"/usr/bin/meld",              "%1 %2" ),
+                new Diff( "KDiff3",   "KDiff3",           @"/usr/bin/kdiff3",            "%1 %2" ),
+                new Diff( "xxdiff",   "xxdiff",           @"/usr/bin/xxdiff",            "%1 %2" )
             };
 
             // From the list of known tools ("candidates"), pick those which could be
             // found at the indicated folder locations and add them to the final list
             foreach (var d in candidates)
             {
+                // On Linux OS, ProgramFiles expands into "", and only our stored path is in effect
                 string path = Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.ProgramFilesX86), d.Path);
+                    Environment.SpecialFolder.ProgramFiles), d.Path);
                 if (File.Exists(path))
                 {
                     Diff diff = d;
@@ -145,26 +166,6 @@ namespace git4win
                 }
             }
             return diffs;
-        }
-
-        /// <summary>
-        /// Extract internal diff program into Application data
-        /// </summary>
-        public static Diff GetInternalDiff()
-        {
-            Diff diff = new Diff();
-
-            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            ClassUtils.WriteResourceToFile(appPath, "QtCore4.dll", Properties.Resources.QtCore4);
-            ClassUtils.WriteResourceToFile(appPath, "QtGui4.dll", Properties.Resources.QtGui4);
-            ClassUtils.WriteResourceToFile(appPath, "QtXml4.dll", Properties.Resources.QtXml4);
-
-            diff.Path = ClassUtils.WriteResourceToFile(appPath, "p4merge.exe", Properties.Resources.p4merge);
-            diff.Difftool = "InternalP4Merge";
-            diff.Args = "%1 %2";
-            diff.Name = "Internal P4Merge";
-
-            return diff;
         }
     }
 }

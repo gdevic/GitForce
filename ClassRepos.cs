@@ -6,7 +6,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Class containing a set of repos that the program knows about.
@@ -15,79 +15,117 @@ namespace git4win
     public class ClassRepos
     {
         /// <summary>
-        /// Location of the repos data file containing a list of repositories.
-        /// They are kept in a separate file located in the user app data directory.
-        /// </summary>
-        private readonly string _reposDataFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) 
-                                    + @"\git4win-repos.dat";
-
-        /// <summary>
-        /// Contains a list of repos that the program knows about
+        /// Contains a list of repos in this workspace
         /// </summary>
         public List<ClassRepo> Repos = new List<ClassRepo>();
 
         /// <summary>
-        /// Name of the default repo to switch to upon start
+        /// Pointer to the default repo to switch to upon start
         /// </summary>
-        private string _defaultRepo = "";
+        public ClassRepo Default { get; set; }
 
+        /// <summary>
+        /// Pointer to the currently active repo
+        /// </summary>
         public ClassRepo Current { get; private set; }
 
         /// <summary>
-        /// Load a set of repositories from a file. This is called only once at
-        /// the start of execution. Setting the current repo will refresh panes.
+        /// ToString override returns the number of repos.
         /// </summary>
-        public void Load()
+        public override string ToString()
         {
-            if (File.Exists(_reposDataFile))
-            {
-                FileStream file = new FileStream(_reposDataFile, FileMode.Open);
-                try
-                {
-                    BinaryFormatter rd = new BinaryFormatter();
-                    Repos = new List<ClassRepo>();
-                    Repos = (List<ClassRepo>)rd.Deserialize(file);
-                    _defaultRepo = (string)rd.Deserialize(file);
+            return Repos.Count.ToString();
+        }
 
-                    // Upon load, set the current based on the default repo
-                    SetCurrent(Repos.Find(r => r.Root == _defaultRepo));
-                }
-                catch (Exception ex)
+        /// <summary>
+        /// Load a set of repositories from a file.
+        /// Returns null if workspace loaded, error string otherwise.
+        /// </summary>
+        public string WorkspaceLoad(string fileName)
+        {
+            string error = null;
+            App.Log.Print("Load workspace " + fileName);
+            Repos = new List<ClassRepo>();
+
+            // Wrap the opening of a repository database with an outer handler
+            try
+            {
+                using (FileStream file = new FileStream(fileName, FileMode.Open))
                 {
-                    App.Log(ex.Message);
-                }
-                finally
-                {
-                    file.Close();
-                    App.Refresh();
+                    try
+                    {
+                        BinaryFormatter rd = new BinaryFormatter();
+                        Repos = (List<ClassRepo>)rd.Deserialize(file);
+                        string defaultRepo = (string)rd.Deserialize(file);
+
+                        // WAR: Mono 2.6.7 does not support serialization of a HashSet.
+                        foreach (var classRepo in Repos)
+                            classRepo.ExpansionReset(null);
+
+                        // Upon load, set the current based on the default repo
+                        Default = Repos.Find(r => r.Root == defaultRepo);
+                        SetCurrent(Default);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ClassException(ex.Message);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                App.Log.Print(ex.Message);
+                error = ex.Message;
+            }
+
+            return error;
         }
 
         /// <summary>
         /// Saves the current set of repositories to a file.
-        /// This is called once the program is about to terminate.
+        /// Returns null if workspace saved, error string otherwise.
         /// </summary>
-        public void Save()
+        public string WorkspaceSave(string fileName)
         {
-            try
+            string error = null;
+            App.Log.Print("Save workspace " + fileName);
+            using (FileStream file = new FileStream(fileName, FileMode.Create))
             {
-                FileStream file = new FileStream(_reposDataFile, FileMode.Create);
-                BinaryFormatter wr = new BinaryFormatter();
-                wr.Serialize(file, Repos);
-                wr.Serialize(file, _defaultRepo);
-                file.Close();
+                try
+                {
+                    BinaryFormatter wr = new BinaryFormatter();
+                    wr.Serialize(file, Repos);
+                    wr.Serialize(file, Default == null ? "" : Default.Root);
+                }
+                catch (Exception ex)
+                {
+                    App.Log.Print(ex.Message);
+                    error = ex.Message;
+                    System.Windows.Forms.MessageBox.Show(ex.Message);
+                }                
             }
-            catch (Exception ex)
+            return error;
+        }
+
+        /// <summary>
+        /// Loads username/email for all repos in this workspace.
+        /// Removes repos that are not valid.
+        /// </summary>
+        public void Refresh()
+        {
+            // Get the user name and email for each repo adding invalid ones to the list
+            List<ClassRepo> invalidRepos = Repos.Where(r => r.Init() == false).ToList();
+
+            // Remove all invalid repos from the workspace
+            foreach (var r in invalidRepos)
             {
-                // TODO: App is exiting, so this will not be seen. Perhaps find another way?
-                App.Log(ex.Message);
+                App.PrintStatusMessage("Removing invalid repo " + r);
+                Delete(r);
             }
         }
 
         /// <summary>
-        /// Add a new repository with the root at the given path. Create a
-        /// directory if it does not exist.
+        /// Add a new repository with the root at the given path. Create a directory if it does not exist.
         /// This function throws exceptions!
         /// </summary>
         /// <param name="root">The root path of a new repository</param>
@@ -100,18 +138,21 @@ namespace git4win
 
             Directory.CreateDirectory(root);
             ClassRepo repo = new ClassRepo(root);
+            if (!repo.Init())
+                throw new ClassException("Unable to initialize git repository!");
+
             Repos.Add(repo);
 
-            // If this is the firs repo, set it as default
+            // If this is a very first repo, set it as default and current
             if (Repos.Count == 1)
-                _defaultRepo = repo.Root;
+                Current = Default = repo;
+
             return repo;
         }
 
         /// <summary>
         /// Delete a repository given by its class variable
         /// </summary>
-        /// <param name="repo">Repository class to remove from repos</param>
         public void Delete(ClassRepo repo)
         {
             Repos.Remove(repo);
@@ -120,32 +161,20 @@ namespace git4win
             if (repo == Current)
                 SetCurrent(Repos.Count > 0 ? Repos[0] : null);
 
-            // Refresh since the current might not have changed
-            App.Refresh();
+            // Reset the default if that one has been deleted
+            if (repo == Default)
+                Default = Current;
         }
 
+        /// <summary>
+        /// Set the new current repo.
+        /// Given repo can be null.
+        /// </summary>
         public void SetCurrent(ClassRepo repo)
         {
-            Current = repo;                        // Set the new current repo
+            Current = repo;
             if (Current != null)
                 Current.Remotes.Refresh(Current);   // Refresh the list of remote repos
-            App.Refresh();                          // Multicast refresh delegate
-        }
-
-        /// <summary>
-        /// Sets the default repo to be loaded on the next repo data load
-        /// </summary>
-        public void SetDefault(ClassRepo repo)
-        {
-            _defaultRepo = repo.Root;
-        }
-
-        /// <summary>
-        /// Returns the default repo
-        /// </summary>
-        public string GetDefault()
-        {
-            return _defaultRepo;
         }
     }
 }

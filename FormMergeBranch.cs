@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormMergeBranch : Form
     {
         public FormMergeBranch(ClassBranches branches)
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
 
             labelCurrentBranchName.Text = "Current branch is \"" + branches.Current + "\"";
             listBranches.Items.AddRange(branches.Local.ToArray());
@@ -24,6 +25,14 @@ namespace git4win
                 listBranches.SelectedIndex = 0;
                 btMerge.Enabled = true;
             }
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormMergeBranchFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

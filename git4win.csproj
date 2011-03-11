@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C4A9F174-5D72-4F41-B789-C5A9BF1CD328}</ProjectGuid>
+    <ProjectGuid>{4C92D7E3-885E-4A70-9E56-13DAD0BCF8D7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>git4win</RootNamespace>
-    <AssemblyName>git4win</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <RootNamespace>Git4Win</RootNamespace>
+    <AssemblyName>Git4Win</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -38,7 +37,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -52,8 +50,10 @@
     <Compile Include="ClassConfig.cs" />
     <Compile Include="ClassDiff.cs" />
     <Compile Include="ClassException.cs" />
+    <Compile Include="ClassExecute.cs" />
     <Compile Include="ClassGit.cs" />
     <Compile Include="ClassGitDirectory.cs" />
+    <Compile Include="ClassGitPasswd.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />
     <Compile Include="ClassRepo.cs" />
@@ -63,167 +63,13 @@
     <Compile Include="ClassUtils.cs" />
     <Compile Include="ClassView.cs" />
     <Compile Include="ClassWin32.cs" />
+    <Compile Include="ClassWinGeometry.cs" />
+    <Compile Include="CommandLine.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormDeleteRepo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDeleteRepo.Designer.cs">
-      <DependentUpon>FormDeleteRepo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormExecute.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormExecute.Designer.cs">
-      <DependentUpon>FormExecute.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMergeBranch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormMergeBranch.Designer.cs">
-      <DependentUpon>FormMergeBranch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormNewRepoStep1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormNewRepoStep1.Designer.cs">
-      <DependentUpon>FormNewRepoStep1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormNewRepoStep2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormNewRepoStep2.Designer.cs">
-      <DependentUpon>FormNewRepoStep2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlAliases.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlAliases.Designer.cs">
-      <DependentUpon>ControlAliases.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlCommits.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlCommits.Designer.cs">
-      <DependentUpon>ControlCommits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlDiff.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlDiff.Designer.cs">
-      <DependentUpon>ControlDiff.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlDoubleClick.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlDoubleClick.Designer.cs">
-      <DependentUpon>ControlDoubleClick.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlFiles.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlFiles.Designer.cs">
-      <DependentUpon>ControlFiles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlGitignore.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlGitignore.Designer.cs">
-      <DependentUpon>ControlGitignore.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlMerge.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlMerge.Designer.cs">
-      <DependentUpon>ControlMerge.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlSpecifications.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlSpecifications.Designer.cs">
-      <DependentUpon>ControlSpecifications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlSsl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlSsl.Designer.cs">
-      <DependentUpon>ControlSsl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlStatus.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlStatus.Designer.cs">
-      <DependentUpon>ControlStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlUser.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlUser.Designer.cs">
-      <DependentUpon>ControlUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlViewEdit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormOptions.Panels\ControlViewEdit.Designer.cs">
-      <DependentUpon>ControlViewEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormRename.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormRename.Designer.cs">
-      <DependentUpon>FormRename.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormShowChangelist.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormShowChangelist.Designer.cs">
-      <DependentUpon>FormShowChangelist.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormSSH.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSSH.Designer.cs">
-      <DependentUpon>FormSSH.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormRemoteAddEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormRemoteAddEdit.Designer.cs">
-      <DependentUpon>FormRemoteAddEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormRemoteEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormRemoteEdit.Designer.cs">
-      <DependentUpon>FormRemoteEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormRepoEdit.Panels\ControlGitignore.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormRepoEdit.Panels\ControlGitignore.Designer.cs">
-      <DependentUpon>ControlGitignore.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormRepoEdit.Panels\ControlUser.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormRepoEdit.Panels\ControlUser.Designer.cs">
-      <DependentUpon>ControlUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormRepoEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormRepoEdit.Designer.cs">
-      <DependentUpon>FormRepoEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormSwitchToBranch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSwitchToBranch.Designer.cs">
-      <DependentUpon>FormSwitchToBranch.cs</DependentUpon>
     </Compile>
     <Compile Include="FormCommit.cs">
       <SubType>Form</SubType>
@@ -237,47 +83,29 @@
     <Compile Include="FormDeleteBranch.Designer.cs">
       <DependentUpon>FormDeleteBranch.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.LeftPanels\PanelView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormMain.LeftPanels\PanelView.Designer.cs">
-      <DependentUpon>PanelView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelBranches.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelBranches.Designer.cs">
-      <DependentUpon>PanelBranches.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelCommits.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelCommits.Designer.cs">
-      <DependentUpon>PanelCommits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelRepos.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelRepos.Designer.cs">
-      <DependentUpon>PanelRepos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelRevlist.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FormMain.RightPanels\PanelRevlist.Designer.cs">
-      <DependentUpon>PanelRevlist.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormNewBranch.cs">
+    <Compile Include="FormDeleteRepo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormNewBranch.Designer.cs">
-      <DependentUpon>FormNewBranch.cs</DependentUpon>
+    <Compile Include="FormDeleteRepo.Designer.cs">
+      <DependentUpon>FormDeleteRepo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPathToGit.cs">
+    <Compile Include="FormDiffMissing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPathToGit.Designer.cs">
-      <DependentUpon>FormPathToGit.cs</DependentUpon>
+    <Compile Include="FormDiffMissing.Designer.cs">
+      <DependentUpon>FormDiffMissing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormGitRun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGitRun.Designer.cs">
+      <DependentUpon>FormGitRun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -285,20 +113,226 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormOptions.cs">
+    <Compile Include="FormMergeBranch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormOptions.Designer.cs">
-      <DependentUpon>FormOptions.cs</DependentUpon>
+    <Compile Include="FormMergeBranch.Designer.cs">
+      <DependentUpon>FormMergeBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewBranch.Designer.cs">
+      <DependentUpon>FormNewBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewRepoScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewRepoScan.Designer.cs">
+      <DependentUpon>FormNewRepoScan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewRepoScanAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewRepoScanAdd.Designer.cs">
+      <DependentUpon>FormNewRepoScanAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewRepoScanProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewRepoScanProgress.Designer.cs">
+      <DependentUpon>FormNewRepoScanProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewRepoStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewRepoStep1.Designer.cs">
+      <DependentUpon>FormNewRepoStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewRepoStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewRepoStep2.Designer.cs">
+      <DependentUpon>FormNewRepoStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPathToGit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPathToGit.designer.cs">
+      <DependentUpon>FormPathToGit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRemoteAddEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRemoteAddEdit.Designer.cs">
+      <DependentUpon>FormRemoteAddEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRemoteEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRemoteEdit.Designer.cs">
+      <DependentUpon>FormRemoteEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRename.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRename.Designer.cs">
+      <DependentUpon>FormRename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRepoEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRepoEdit.Designer.cs">
+      <DependentUpon>FormRepoEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReset.Designer.cs">
+      <DependentUpon>FormReset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormShowChangelist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormShowChangelist.Designer.cs">
+      <DependentUpon>FormShowChangelist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSSH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSSH.Designer.cs">
+      <DependentUpon>FormSSH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSwitchToBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSwitchToBranch.Designer.cs">
+      <DependentUpon>FormSwitchToBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.Left.Panels\PanelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main.Left.Panels\PanelView.Designer.cs">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelBranches.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelBranches.Designer.cs">
+      <DependentUpon>PanelBranches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelCommits.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelCommits.Designer.cs">
+      <DependentUpon>PanelCommits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelRepos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelRepos.Designer.cs">
+      <DependentUpon>PanelRepos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelRevlist.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main.Right.Panels\PanelRevlist.Designer.cs">
+      <DependentUpon>PanelRevlist.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repo.Edit.Panels\ControlGitignore.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlGitignore.Designer.cs">
+      <DependentUpon>ControlGitignore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlUser.Designer.cs">
+      <DependentUpon>ControlUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="RichTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="TextBoxEx.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Settings.Panels\ControlAliases.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlAliases.Designer.cs">
+      <DependentUpon>ControlAliases.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlCommits.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlCommits.Designer.cs">
+      <DependentUpon>ControlCommits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlDiff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlDiff.Designer.cs">
+      <DependentUpon>ControlDiff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlDoubleClick.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlDoubleClick.Designer.cs">
+      <DependentUpon>ControlDoubleClick.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlFiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlFiles.Designer.cs">
+      <DependentUpon>ControlFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlGitignore.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlGitignore.Designer.cs">
+      <DependentUpon>ControlGitignore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlMerge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlMerge.Designer.cs">
+      <DependentUpon>ControlMerge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlSpecifications.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlSpecifications.Designer.cs">
+      <DependentUpon>ControlSpecifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlSsl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlSsl.Designer.cs">
+      <DependentUpon>ControlSsl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlStatus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlStatus.Designer.cs">
+      <DependentUpon>ControlStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlUser.Designer.cs">
+      <DependentUpon>ControlUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlViewEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlViewEdit.Designer.cs">
+      <DependentUpon>ControlViewEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="TreeViewEx.cs">
       <SubType>Component</SubType>
@@ -324,14 +358,41 @@
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCommit.resx">
+      <DependentUpon>FormCommit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDeleteBranch.resx">
+      <DependentUpon>FormDeleteBranch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDeleteRepo.resx">
       <DependentUpon>FormDeleteRepo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormExecute.resx">
-      <DependentUpon>FormExecute.cs</DependentUpon>
+    <EmbeddedResource Include="FormDiffMissing.resx">
+      <DependentUpon>FormDiffMissing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGitRun.resx">
+      <DependentUpon>FormGitRun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMergeBranch.resx">
       <DependentUpon>FormMergeBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewBranch.resx">
+      <DependentUpon>FormNewBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewRepoScan.resx">
+      <DependentUpon>FormNewRepoScan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewRepoScanAdd.resx">
+      <DependentUpon>FormNewRepoScanAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewRepoScanProgress.resx">
+      <DependentUpon>FormNewRepoScanProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewRepoStep1.resx">
       <DependentUpon>FormNewRepoStep1.cs</DependentUpon>
@@ -339,50 +400,8 @@
     <EmbeddedResource Include="FormNewRepoStep2.resx">
       <DependentUpon>FormNewRepoStep2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlAliases.resx">
-      <DependentUpon>ControlAliases.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlCommits.resx">
-      <DependentUpon>ControlCommits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlDiff.resx">
-      <DependentUpon>ControlDiff.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlDoubleClick.resx">
-      <DependentUpon>ControlDoubleClick.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlFiles.resx">
-      <DependentUpon>ControlFiles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlGitignore.resx">
-      <DependentUpon>ControlGitignore.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlMerge.resx">
-      <DependentUpon>ControlMerge.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlSpecifications.resx">
-      <DependentUpon>ControlSpecifications.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlSsl.resx">
-      <DependentUpon>ControlSsl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlStatus.resx">
-      <DependentUpon>ControlStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlUser.resx">
-      <DependentUpon>ControlUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.Panels\ControlViewEdit.resx">
-      <DependentUpon>ControlViewEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormRename.resx">
-      <DependentUpon>FormRename.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowChangelist.resx">
-      <DependentUpon>FormShowChangelist.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormSSH.resx">
-      <DependentUpon>FormSSH.cs</DependentUpon>
+    <EmbeddedResource Include="FormPathToGit.resx">
+      <DependentUpon>FormPathToGit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRemoteAddEdit.resx">
       <DependentUpon>FormRemoteAddEdit.cs</DependentUpon>
@@ -390,50 +409,42 @@
     <EmbeddedResource Include="FormRemoteEdit.resx">
       <DependentUpon>FormRemoteEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRepoEdit.Panels\ControlGitignore.resx">
-      <DependentUpon>ControlGitignore.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormRepoEdit.Panels\ControlUser.resx">
-      <DependentUpon>ControlUser.cs</DependentUpon>
+    <EmbeddedResource Include="FormRename.resx">
+      <DependentUpon>FormRename.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRepoEdit.resx">
       <DependentUpon>FormRepoEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReset.resx">
+      <DependentUpon>FormReset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormShowChangelist.resx">
+      <DependentUpon>FormShowChangelist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSSH.resx">
+      <DependentUpon>FormSSH.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSwitchToBranch.resx">
       <DependentUpon>FormSwitchToBranch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCommit.resx">
-      <DependentUpon>FormCommit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormDeleteBranch.resx">
-      <DependentUpon>FormDeleteBranch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.LeftPanels\PanelView.resx">
+    <EmbeddedResource Include="Main.Left.Panels\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.RightPanels\PanelBranches.resx">
+    <EmbeddedResource Include="Main.Right.Panels\PanelBranches.resx">
       <DependentUpon>PanelBranches.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.RightPanels\PanelCommits.resx">
+    <EmbeddedResource Include="Main.Right.Panels\PanelCommits.resx">
       <DependentUpon>PanelCommits.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.RightPanels\PanelRepos.resx">
+    <EmbeddedResource Include="Main.Right.Panels\PanelRepos.resx">
       <DependentUpon>PanelRepos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.RightPanels\PanelRevlist.resx">
+    <EmbeddedResource Include="Main.Right.Panels\PanelRevlist.resx">
       <DependentUpon>PanelRevlist.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormNewBranch.resx">
-      <DependentUpon>FormNewBranch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormPathToGit.resx">
-      <DependentUpon>FormPathToGit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOptions.resx">
-      <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -445,6 +456,48 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Repo.Edit.Panels\ControlGitignore.resx">
+      <DependentUpon>ControlGitignore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Repo.Edit.Panels\ControlUser.resx">
+      <DependentUpon>ControlUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlAliases.resx">
+      <DependentUpon>ControlAliases.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlCommits.resx">
+      <DependentUpon>ControlCommits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlDiff.resx">
+      <DependentUpon>ControlDiff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlDoubleClick.resx">
+      <DependentUpon>ControlDoubleClick.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlFiles.resx">
+      <DependentUpon>ControlFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlGitignore.resx">
+      <DependentUpon>ControlGitignore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlMerge.resx">
+      <DependentUpon>ControlMerge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlSpecifications.resx">
+      <DependentUpon>ControlSpecifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlSsl.resx">
+      <DependentUpon>ControlSsl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlStatus.resx">
+      <DependentUpon>ControlStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlUser.resx">
+      <DependentUpon>ControlUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlViewEdit.resx">
+      <DependentUpon>ControlViewEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControlEditGitignore.resx">
       <DependentUpon>UserControlEditGitignore.cs</DependentUpon>
     </EmbeddedResource>
@@ -455,7 +508,6 @@
       <DependentUpon>UserControlRemoteEdit.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -467,8 +519,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Git4WinUsersManual.pdf" />
-    <None Include="Resources\TreeIcon4.ico" />
+    <None Include="Resources\App\git.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diff\p4merge.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diff\QtCore4.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diff\QtGui4.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diff\QtXml4.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PuTTY\pageant.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PuTTY\plink.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PuTTY\puttygen.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Changelist\Change0.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Changelist\Change1.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TreeIcon1.ico" />
@@ -478,6 +556,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TreeIcon3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TreeIcon4.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TreeIcon5.ico" />
@@ -499,36 +580,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TreeIcon11.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\App\git.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Changelist\Change0.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Changelist\Change1.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PuTTY\pageant.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PuTTY\plink.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PuTTY\puttygen.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\p4merge.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\QtCore4.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\QtGui4.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\QtXml4.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

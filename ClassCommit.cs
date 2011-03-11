@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Class describing and working on one commit
@@ -16,11 +16,17 @@ namespace git4win
         public string Description;
         public bool IsDefault;
 
+        /// <summary>
+        /// Create a commit with the given description
+        /// </summary>
         public ClassCommit(string desc)
         {
             Description = desc;
         }
 
+        /// <summary>
+        /// ToString override returns the commit description
+        /// </summary>
         public override string ToString()
         {
             return Description;

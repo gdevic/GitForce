@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// List of branches for the current repo, and a set of functions to operate on them
     /// </summary>
+    [Serializable]
     public class ClassBranches
     {
         /// <summary>

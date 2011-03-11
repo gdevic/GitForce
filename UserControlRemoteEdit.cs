@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class RemoteEdit : UserControl
     {
@@ -122,7 +122,7 @@ namespace git4win
                     _repo.Remotes.SetPassword(remote.Name, remote.Password);
                 }
 
-                if(remote.PushCmd != _current.PushCmd)
+                if (remote.PushCmd != _current.PushCmd)
                 {
                     // Change the push command
                     _repo.Remotes.SetPushCmd(remote.Name, remote.PushCmd);

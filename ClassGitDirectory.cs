@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     public sealed class GitFileInfo
     {
@@ -74,7 +74,7 @@ namespace git4win
             foreach (string s in List)
             {
                 // Pick only directories from the list and create a new directory node
-                int index = s.IndexOf('\\');
+                int index = s.IndexOf(Path.DirectorySeparatorChar);
                 if (index > 0)
                 {
                     string name = s.Substring(0, index);
@@ -102,7 +102,7 @@ namespace git4win
         public GitFileInfo[] GetFiles(SortBy sortBy)
         {
             List<GitFileInfo> files = (from s in List
-                                       where s.IndexOf('\\') < 0
+                                       where s.IndexOf(Path.DirectorySeparatorChar) < 0
                                        select Path.Combine(FullName, s)
                                        into path select new GitFileInfo(path)).ToList();
 
@@ -141,7 +141,7 @@ namespace git4win
                     result.AddRange(Directory.GetFiles(dir, "*.*"));
 
                     foreach (string d in
-                        Directory.GetDirectories(dir).Where(d => !d.EndsWith("\\.git")
+                        Directory.GetDirectories(dir).Where(d => !d.EndsWith(Path.DirectorySeparatorChar + ".git")
                         || Properties.Settings.Default.ShowDotGitFolders))
                     {
                         stack.Push(d);
@@ -149,7 +149,7 @@ namespace git4win
                 }
                 catch (Exception ex)
                 {
-                    App.Log(ex.Message);
+                    App.Log.Print(ex.Message);
                 }
             }
             return result;

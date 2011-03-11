@@ -8,28 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormPathToGit : Form
     {
         /// <summary>
         /// Default path is the user's program files
         /// </summary>
-        public string Path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+        public string Path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
         public FormPathToGit()
         {
             InitializeComponent();
 
             textBoxPath.Text = Path;
-            labelInfo.Text = "git4win is a GUI front-end to the command line git. " +
+            labelInfo.Text = "Git4Win is a GUI front-end to the command line git. " +
             "That means you have to have git already installed. You can download git for Windows from the link below.";
         }
 
         private void BtBrowseClick(object sender, EventArgs e)
         {
             OpenFileDialog fileDlg = new OpenFileDialog();
-            fileDlg.InitialDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+            fileDlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             if (fileDlg.ShowDialog() == DialogResult.OK)
             {
                 textBoxPath.Text = fileDlg.FileName;

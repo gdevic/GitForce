@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormDeleteBranch : Form
     {
@@ -26,10 +26,19 @@ namespace git4win
         public FormDeleteBranch()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
 
             // Initialize local branches as the default selection
             _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             FormNewBranch.ListAdd(ref listBranches, ref _localBranches);
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormDeleteBranchFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

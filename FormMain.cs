@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using git4win.FormMain_RightPanels;
-using git4win.FormMain_LeftPanels;
+using Git4Win.Main.Left.Panels;
+using Git4Win.Main.Right.Panels;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormMain : Form
     {
-        // Left panels
-        private static readonly PanelView PanelView = new PanelView();
+        #region Initialization
+
+        /// <summary>
+        /// Location of the repos data file containing a list of repositories.
+        /// </summary>
+        private readonly string _reposDataFile;
 
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
@@ -33,6 +36,9 @@ namespace git4win
             { "Branches", PanelBranches },
         };
 
+        // Left panels
+        private static readonly PanelView PanelView = new PanelView();
+
         /// <summary>
         /// This is the main entry point to the application main form. Doing all the initialization here.
         /// </summary>
@@ -44,66 +50,71 @@ namespace git4win
             if (WindowState == FormWindowState.Normal)
             {
                 Location = Properties.Settings.Default.FormMainLocation;
-                Size = Properties.Settings.Default.FormMainClientSize;
+                Size = Properties.Settings.Default.FormMainSize;
             }
 
+            // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
+            if (ClassUtils.IsMono())
+                statusStrip.SizingGrip = false;
+
             // Initialize panels
-            // Left pane:
+            // Left panel:
             splitContainer2.Panel1.Controls.Add(PanelView);
             PanelView.Dock = DockStyle.Fill;
 
-            // Right set of panes:
+            // Right set of panels:
             foreach (UserControl control in PanelsR.Select(uc => uc.Value))
             {
                 splitContainer2.Panel2.Controls.Add(control);
                 control.Dock = DockStyle.Fill;
             }
-            // Current right panel view is kept in Properties.Settings.Default.viewRightPanel (string)
-            ChangeRightPanel(Properties.Settings.Default.viewRightPanel);
 
-            // Form Execute is already created but it is hidden. Show it depending on the last state
-            // which is kept in Properties.Settings.Default.ShowExecuteWindow (bool)
-            menuViewExecuteWindow.Checked = Properties.Settings.Default.ShowExecuteWindow;
-            App.Execute.Show(menuViewExecuteWindow.Checked);
+            // Enable SSH only if the PuTTY support class has been instantiated
+            if (App.Putty != null)
+            {
+                btSsh.Enabled = true;
+                menuMainManageKeys.Enabled = true;
+            }
+
             // We prevent Execute form closing by getting a FormClosing event within which we set "e.Cancel" to True
-            App.Execute.FormClosing += MenuShowExecuteWindow;
-
+            App.Log.FormClosing += LogWindowToolStripMenuItemClick;
+            menuViewLogWindow.Checked = Properties.Settings.Default.ShowLogWindow;
+			
             // Add all callback handlers
-            App.Log = LogFunction;              // Log, to add strings to the app log window
-            App.Refresh += FormMainRefresh;     // Refresh, when any component wants to update the global state
-            App.StatusInfo += SetInfo;          // Info message, to update status bar on the bottom of the app window
-            App.StatusBusy += SetBusy;          // Busy flag set or reset
+            App.Refresh += FormMainRefresh;         // Refresh, when any component wants to update the global state
+            App.PrintStatusMessage += PrintStatus;  // Print a line of status message
+            App.StatusBusy += SetBusy;              // Busy flag set or reset
 
-            // Load all repos. This will also call the global refresh to update all panes.
-            App.Repos.Load();
+            // Register toolbar file buttons with the View panel
+            PanelView.RegisterToolstripFileButtons(new Dictionary
+                <PanelView.FileOps, ToolStripButton>()
+                {
+                    { PanelView.FileOps.Add, btAdd },
+                    { PanelView.FileOps.Update, btUpdate },
+                    { PanelView.FileOps.UpdateAll, btUpdateAll },
+                    { PanelView.FileOps.Revert, btRevert },
+                    { PanelView.FileOps.Delete, btDelete },
+                    { PanelView.FileOps.DeleteFs, btDeleteFs },
+                    { PanelView.FileOps.Edit, btEdit }
+                });
+
+            // Load default set of repositories
+            _reposDataFile = Path.Combine(App.AppHome, "repos.dat");
+            App.Repos.WorkspaceLoad(_reposDataFile);
 
             // If there is no current repo, switch the right panel view to Repos
-            if (App.Repos.Current == null)
-                ChangeRightPanel("Repos");
-        }
+            // Otherwise, restore the last view panel
+            ChangeRightPanel(App.Repos.Current == null ? 
+                "Repos" : 
+                Properties.Settings.Default.viewRightPanel);
 
-        /// <summary>
-        /// Capture the notification of a custom message sent by a new instance of this application,
-        /// Based on:
-        /// http://www.sanity-free.com/143/csharp_dotnet_single_instance_application.html
-        /// </summary>
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == NativeMethods.WmShowme)
-                ShowMe();
-            base.WndProc(ref m);
-        }
+            // In the status label, initially show the version
+            statusInfoLabel.Text = String.Format("Version {0}, {1}",
+                Assembly.GetExecutingAssembly().GetName().Version,
+                new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToLongTimeString());
 
-        /// <summary>
-        /// Bring this form to the top of all other windows
-        /// </summary>
-        private void ShowMe()
-        {
-            if (WindowState == FormWindowState.Minimized)
-                WindowState = FormWindowState.Normal;
-            bool top = TopMost;     // Get our current "TopMost" value (ours will always be false though)
-            TopMost = true;         // Make our form jump to the top of everything
-            TopMost = top;          // Set it back to whatever it was
+            // Initiate the first global refresh
+            App.Refresh();
         }
 
         /// <summary>
@@ -114,9 +125,14 @@ namespace git4win
             if (WindowState == FormWindowState.Normal)
             {
                 Properties.Settings.Default.FormMainLocation = Location;
-                Properties.Settings.Default.FormMainClientSize = Size;
+                Properties.Settings.Default.FormMainSize = Size;
             }
-            App.Repos.Save();
+
+            // Save windows geometry database
+            ClassWinGeometry.SaveGeometryDatabase();
+
+            // Save current workspace
+            App.Repos.WorkspaceSave(_reposDataFile);
         }
 
         /// <summary>
@@ -127,13 +143,15 @@ namespace git4win
             Close();
         }
 
+        #endregion
+
         /// <summary>
         /// Main File menu drop down
         /// </summary>
         private void MenuMainFileDropDownOpening(object sender, EventArgs e)
         {
             menuMainFile.DropDownItems.Clear();
-            menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown, string.Empty));
+            menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown));
 
             ToolStripMenuItem mExit = new ToolStripMenuItem("Exit", null, MenuExit, Keys.Alt | Keys.F4);
 
@@ -152,7 +170,7 @@ namespace git4win
                 menuView0, menuView1, menuView2, menuView3, menuView4 };
             foreach (var m in viewMenus)
                 m.Checked = false;
-            viewMenus[mode].Checked = true;            
+            viewMenus[mode].Checked = true;
         }
 
         /// <summary>
@@ -190,15 +208,10 @@ namespace git4win
         }
 
         /// <summary>
-        /// Log function called with a message to print into the log window
-        /// For performance resons, if a message is too long (?), we trim it.
+        /// Print into the status pane (and the aux log window)
         /// </summary>
-        private void LogFunction(string message)
+        private void PrintStatus(string message)
         {
-            // Trim down the message if it is too long
-            if (message.Length > 160)
-                message = message.Substring(0, 160);
-
             // Prepend the current time, if that option is requested, in either 12 or 24-hr format
             if (Properties.Settings.Default.logTime)
                 message = DateTime.Now.ToString
@@ -207,24 +220,54 @@ namespace git4win
 
             listStatus.Items.Add(message);
             listStatus.TopIndex = listStatus.Items.Count - 1;
+
+            App.Log.Print(message);
         }
 
         /// <summary>
         /// Set the info message into the main form status line (located at the bottom)
         /// </summary>
-        private void SetInfo(string infoMessage)
+        public void SetStatusText(string infoMessage)
         {
             statusInfoLabel.Text = infoMessage;
         }
 
         /// <summary>
         /// Set or clear the busy flag (small "stop" icon on the toolbar)
+        /// Use timer to turn the GUI elements off to avoid rapid on/off cycles
+        /// caused by a number of successive toggles. Store the true state of busy-ness
+        /// in the timerTick.Tag, so when the tick triggers, it will know what was the
+        /// true busy state.
         /// </summary>
         private void SetBusy(bool isBusy)
         {
-            Cursor = isBusy ? Cursors.WaitCursor : Cursors.Default;
-            btCancelOperation.Enabled = isBusy;
-            Application.DoEvents();     // Give app the chance to redraw the icon
+            // If the signal is to clear the busy flag, arm the timer to do it few ms later
+            if( isBusy==false)
+            {
+                timerBusy.Interval = 300;
+                timerBusy.Enabled = true;
+            }
+            else
+            {
+                Cursor = Cursors.WaitCursor;
+                btCancelOperation.Enabled = true;
+                Application.DoEvents();     // Give app the chance to redraw the icon
+            }
+            timerBusy.Tag = isBusy;
+        }
+
+        /// <summary>
+        /// Busy signal timer tick handler
+        /// </summary>
+        private void TimerBusyTick(object sender, EventArgs e)
+        {
+            if((bool)timerBusy.Tag==false)
+            {
+                Cursor = Cursors.Default;
+                btCancelOperation.Enabled = false;
+                timerBusy.Enabled = false;
+                Application.DoEvents();     // Give app the chance to redraw the icon
+            }
         }
 
         /// <summary>
@@ -234,7 +277,7 @@ namespace git4win
         {
             // Change the window title and display the default remote name
 
-            StringBuilder title = new StringBuilder("git4win ");
+            StringBuilder title = new StringBuilder("Git4Win ");
 
             if (PanelBranches.GetCurrent() != "")
                 title.Append("- " + PanelBranches.GetCurrent());
@@ -246,6 +289,7 @@ namespace git4win
 
             // Build the menu with the list of remote repos
             menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainEditRemoteRepo.Enabled = menuMainSwitchRemoteRepo.Enabled = false;
+            btPull.Enabled = btPush.Enabled = false;
 
             menuMainSwitchRemoteRepo.DropDownItems.Clear();
             if (App.Repos.Current != null && App.Repos.Current.Remotes.Current != "")
@@ -253,14 +297,24 @@ namespace git4win
                 List<string> remotes = App.Repos.Current.Remotes.GetListNames();
                 foreach (string s in remotes)
                 {
-                    ToolStripMenuItem m = new ToolStripMenuItem(s);
-                    m.Checked = App.Repos.Current.Remotes.Current == s;
-                    m.Click += RemoteChangedEvent;
+                    // Create a new menu items for each remote repository
+                    ToolStripMenuItem m = new ToolStripMenuItem(s, null, RemoteChanged) {Checked = false};
                     menuMainSwitchRemoteRepo.DropDownItems.Add(m);
-                }
-                RemoteChangedEvent = RemoteChanged;
 
-                menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainSwitchRemoteRepo.Enabled = true;
+                    // For the current repository, add a checkmark and enable corresponding
+                    // menus for push and pull both in the menu and tool box buttons
+                    if (App.Repos.Current.Remotes.Current == s)
+                    {
+                        m.Checked = true;
+
+                        if (!string.IsNullOrEmpty(App.Repos.Current.Remotes.Get(s).UrlPush))
+                            menuMainPushToRemote.Enabled = btPush.Enabled = true;
+
+                        if (!string.IsNullOrEmpty(App.Repos.Current.Remotes.Get(s).UrlFetch))
+                            menuMainPullFromRemote.Enabled = btPull.Enabled = true;
+                    }
+                }
+                menuMainSwitchRemoteRepo.Enabled = true;
             }
 
             if (App.Repos.Current != null)
@@ -268,12 +322,11 @@ namespace git4win
         }
 
         /// <summary>
-        /// Event handler delegate and the actual event handler for switching
-        /// the remote repo. Called when user selects one of the pre-built menu items
+        /// Switch the remote repo. The new repo name is given as sender name.
         /// </summary>
-        private event EventHandler RemoteChangedEvent;
         private void RemoteChanged(object sender, EventArgs e)
         {
+            PrintStatus("Changed remote repository to " + sender);
             App.Repos.Current.Remotes.Current = sender.ToString();
             FormMainRefresh();
         }
@@ -283,12 +336,12 @@ namespace git4win
         /// </summary>
         private void MenuOptions(object sender, EventArgs e)
         {
-            FormOptions frmOptions = new FormOptions();
+            FormSettings frmOptions = new FormSettings();
             frmOptions.ShowDialog();
         }
 
         /// <summary>
-        /// Refresh Active Pane, but refresh everything
+        /// Refresh Active Pane (do a global refresh for now)
         /// </summary>
         private void MenuRefreshAll(object sender, EventArgs e)
         {
@@ -310,7 +363,9 @@ namespace git4win
         /// </summary>
         private void MenuRepoPull(object sender, EventArgs e)
         {
-            App.Repos.Current.Run("pull " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
+            string args = App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent();
+            PrintStatus("Pull from a remote repo: " + args);
+            App.Repos.Current.Run("pull " + args);
         }
 
         /// <summary>
@@ -319,22 +374,22 @@ namespace git4win
         /// </summary>
         private void MenuRepoPush(object sender, EventArgs e)
         {
-            string pushCmd = App.Repos.Current.Remotes.GetPushCmd();
-            if (String.IsNullOrEmpty(pushCmd))
-                App.Repos.Current.Run("push " + App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent());
-            else
-                App.Repos.Current.Run("push " + pushCmd);
+            string args = App.Repos.Current.Remotes.GetPushCmd("");
+            if (String.IsNullOrEmpty(args))
+                args = App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent();
+            PrintStatus("Push to a remote repo: " + args);
+            App.Repos.Current.Run("push " + args);
         }
 
         /// <summary>
         /// Toggle the execute window between Show and Hide states. This form should not
-        /// be closed for the application depends on it for cmd execution.
+        /// be closed as it accumulates all log messages even when hidden.
         /// </summary>
-        private void MenuShowExecuteWindow(object sender, EventArgs e)
+        private void LogWindowToolStripMenuItemClick(object sender, EventArgs e)
         {
-            bool @checked = menuViewExecuteWindow.Checked;
-            Properties.Settings.Default.ShowExecuteWindow = menuViewExecuteWindow.Checked = !@checked;
-            App.Execute.Show(!@checked);
+            bool @checked = menuViewLogWindow.Checked;
+            Properties.Settings.Default.ShowLogWindow = menuViewLogWindow.Checked = !@checked;
+            App.Log.Show(!@checked);
 
             // We prevent Execute form closing by servicing a FormExecute.FormClosing event with this event,
             // so disable closure by setting Cancel to true only if the caller used that type of arguments
@@ -350,9 +405,8 @@ namespace git4win
             menuMainRepository.DropDownItems.Clear();
             menuMainRepository.DropDownItems.AddRange(PanelRepos.GetContextMenu(menuMainRepository.DropDown));
 
-            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionClick, Keys.F10);
-            mRepos.Tag = "Repos";
-            menuMainRepository.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRepos });            
+            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionClick, Keys.F10) {Tag = "Repos"};
+            menuMainRepository.DropDownItems.AddRange(new ToolStripItem[] { mRepos });
         }
 
         /// <summary>
@@ -363,18 +417,8 @@ namespace git4win
             menuMainBranch.DropDownItems.Clear();
             menuMainBranch.DropDownItems.AddRange(PanelBranches.GetContextMenu(menuMainBranch.DropDown, null));
 
-            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8);
-            mRefresh.Tag = "Branches";
+            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8) {Tag = "Branches"};
             menuMainBranch.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
-        }
-
-        /// <summary>
-        /// Show the standard About box
-        /// </summary>
-        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            FormAbout about = new FormAbout();
-            about.ShowDialog();
         }
 
         /// <summary>
@@ -382,13 +426,16 @@ namespace git4win
         /// </summary>
         private void MenuMainChangelistDropDownOpening(object sender, EventArgs e)
         {
+            // Add the menu items from the commit pane followed menu items from the revisions pane
             menuMainChangelist.DropDownItems.Clear();
             menuMainChangelist.DropDownItems.AddRange(PanelCommits.GetContextMenu(menuMainChangelist.DropDown, null));
 
-            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionClick, Keys.F6);
-            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionClick, Keys.F7);
-            mPending.Tag = "Commits";
-            mSubmitted.Tag = "Revisions";
+            // Add the revision list menu only if the revlist right pane is active
+            if (Properties.Settings.Default.viewRightPanel == "Revisions")
+                menuMainChangelist.DropDownItems.AddRange(PanelRevlist.GetContextMenu(menuMainChangelist.DropDown));
+
+            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionClick, Keys.F6) {Tag = "Commits"};
+            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionClick, Keys.F7) {Tag = "Revisions"};
             menuMainChangelist.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mPending, mSubmitted });
         }
 
@@ -447,7 +494,7 @@ namespace git4win
         /// </summary>
         private void WebsiteToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/gdevic/git4win");
+            Process.Start((sender as ToolStripMenuItem).Tag.ToString());
         }
 
         /// <summary>
@@ -456,8 +503,26 @@ namespace git4win
         private void UsersManualToolStripMenuItemClick(object sender, EventArgs e)
         {
             string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            appPath = ClassUtils.WriteResourceToFile(appPath, "Git4WinUsersManual.pdf", Properties.Resources.Git4WinUsersManual);
-            Process.Start(appPath);
+// TODO: Users manual
+//            appPath = ClassUtils.WriteResourceToFile(appPath, "Git4WinUsersManual.pdf", Properties.Resources.Git4WinUsersManual);
+//            Process.Start(appPath);
+        }
+
+        /// <summary>
+        /// Stops any currently executing git command thread
+        /// </summary>
+        private void BtCancelOperationClick(object sender, EventArgs e)
+        {
+            ClassExecute.KillJob();
+        }
+
+        /// <summary>
+        /// Show the standard About box
+        /// </summary>
+        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            FormAbout about = new FormAbout();
+            about.ShowDialog();
         }
     }
 }

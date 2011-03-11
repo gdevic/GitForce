@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormRemoteAddEdit : Form
     {
@@ -19,6 +19,15 @@ namespace git4win
         public FormRemoteAddEdit()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormRemoteAddEditFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         public void Prepare(Function fn, ClassRemotes.Remote remote)

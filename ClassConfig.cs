@@ -3,54 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
-    /// Class Config gets and sets values to either global configuration
-    /// depot or a local repository
+    /// Class Config gets and sets values of either global git configuration or a local repository
     /// </summary>
     public static class ClassConfig
     {
-        public static string Run(string cmd, ClassRepo repo = null)
-        {
-            if (repo == null)
-                return App.Git.Run("config --global " + cmd);
-            else
-                return repo.Run("config --local " + cmd);
-        }
-
         /// <summary>
-        /// Sets or removes a configuration value. If the value is null or empty string,
-        /// the value will be unset.
+        /// Sets or removes a global git configuration value.
+        /// If the value is null or empty string, the key will be removed (unset).
         /// </summary>
-        /// <param name="key">Key to set, example "user.name"</param>
-        /// <param name="value">Value to set the key to, if empty, the key will be removed</param>
-        /// <param name="repo">Optional repository to set the local key instead of a global</param>
-        public static void Set(string key, string value, ClassRepo repo = null)
+        public static void SetGlobal(string key, string value)
         {
-            string setkey = string.IsNullOrEmpty(value)? "--unset " : "";
+            string setkey = string.IsNullOrEmpty(value) ? "--unset " : "";
             string val = string.IsNullOrEmpty(value) ? "" : " \"" + value + "\"";
             string cmd = setkey + key + val;
 
-            if (repo == null)
-                App.Git.Run("config --global " + cmd);
-            else
-                repo.Run("config --local " + cmd);
+            ClassGit.Run("config --global " + cmd);
         }
 
         /// <summary>
-        /// Gets a value for the given configuration key.
-        /// The value will have removed newlines for easier handling.
+        /// Sets or removes a local git configuration value.
+        /// If the value is null or empty string, the key will be removed (unset).
         /// </summary>
-        /// <param name="key">Key to get a value of, example "user.name"</param>
-        /// <param name="repo">Optional repository from which to get the value</param>
-        /// <returns>String containing the result of the get operation</returns>
-        public static string Get(string key, ClassRepo repo = null)
+        public static void SetLocal(ClassRepo repo, string key, string value)
         {
-            if (repo == null)
-                return App.Git.Run("config --global --get " + key).Replace("\n", "");
-            else
-                return repo.Run("config --local --get " + key).Replace("\n", "");
+            string setkey = string.IsNullOrEmpty(value) ? "--unset " : "";
+            string val = string.IsNullOrEmpty(value) ? "" : " \"" + value + "\"";
+            string cmd = setkey + key + val;
+
+            repo.Run("config " + cmd);
+        }
+
+        /// <summary>
+        /// Returns a value of a global git configuration key
+        /// </summary>
+        public static string GetGlobal(string key)
+        {
+            return ClassGit.Run("config --global --get " + key).Replace("\n", "");
+        }
+
+        /// <summary>
+        /// Returns a value of a local git configuration key
+        /// </summary>
+        public static string GetLocal(ClassRepo repo, string key)
+        {
+            return repo.Run("config --get " + key).Replace("\n", "");
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormNewRepoStep2 : Form
     {
@@ -28,6 +27,15 @@ namespace git4win
         public FormNewRepoStep2()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormNewRepoStep2FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

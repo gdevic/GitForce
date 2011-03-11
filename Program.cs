@@ -1,11 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Threading;
 
-namespace git4win
+namespace Git4Win
 {
     static class App
     {
@@ -19,20 +20,16 @@ namespace git4win
         private static void VoidRefresh() { }
 
         /// <summary>
-        /// Delegate to call in order to print into the app-wide log class
+        /// Delegate to main form to print a status message in the status pane.
+        /// We do it via delegate since it might be called before the main form is created.
         /// </summary>
-        public delegate void LogDelegate(string message);
-        public static LogDelegate Log = VoidLog;
-        private static void VoidLog(string message) { }
+        public delegate void PrintStatusMessageHandler(string message);
+        public static PrintStatusMessageHandler PrintStatusMessage = VoidMessage;
+        private static void VoidMessage(string m) { }
 
         /// <summary>
-        /// Delegate for hooking up status pane info notifications back to the main form
-        /// </summary>
-        public delegate void StatusInfoEventHandler(string infoMessage);
-        public static StatusInfoEventHandler StatusInfo;
-
-        /// <summary>
-        /// Delegate to main form to set the busy status
+        /// Delegate to main form to set the busy status.
+        /// We do it via delegate since it might be called before the main form is created.
         /// </summary>
         public delegate void SetBusyStatusHandler(bool isBusy);
         public static SetBusyStatusHandler StatusBusy = VoidBusy;
@@ -43,9 +40,9 @@ namespace git4win
         #region Static forms and classes
 
         /// <summary>
-        /// Form execute with command execution threads
+        /// Static form with log output
         /// </summary>
-        public static FormExecute Execute;
+        public static FormLog Log;
 
         /// <summary>
         /// Static git class helper containing git-execution services
@@ -68,58 +65,94 @@ namespace git4win
         public static ClassPutty Putty;
 
         /// <summary>
+        /// Static class managing Git HTTPS password helper file
+        /// </summary>
+        public static ClassGitPasswd GitPasswd;
+
+        /// <summary>
         /// Static main form class
         /// </summary>
         public static FormMain MainForm;
 
         #endregion
 
+        #region Global variables
+
         /// <summary>
-        /// Application-wide mutex preventing multiple instances
+        /// Define a path to the application data folder
         /// </summary>
-        static readonly Mutex AppMutex = new Mutex(true, "{3486D9C7-4D52-43D7-A30F-6A9B74789C5F}");
+        public static string AppHome = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Git4Win");
+
+        #endregion
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static int Main(string[] args)
         {
-            if (AppMutex.WaitOne(TimeSpan.Zero, true))
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-                // Initialize global application static classes in this order:
-                Execute = new FormExecute();
-                Git = new ClassGit();
+            Arguments commandLine = new Arguments(args);
+
+            if (commandLine["help"] == "true")
+            {
+                Console.WriteLine("Git4Win optional arguments:");
+                Console.WriteLine("  --version             Show the application version number.");
+                Console.WriteLine("  --reset-windows       Reset stored locations of windows and dialogs.");
+
+                return -1;
+            }
+
+            // --version Show the application version number and quit
+            if (commandLine["version"] == "true")
+            {
+                Console.WriteLine("Git4Win version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                return -1;
+            }
+
+            // --reset-windows Reset the stored locations and sizes of all internal dialogs and forms
+            //                 At this time we dont reset the main window and the log window
+            if (commandLine["reset-windows"]=="true")
+                Properties.Settings.Default.WindowsGeometries = new StringCollection();
+
+
+            // Make sure the application data folder directory exists
+            Directory.CreateDirectory(AppHome);
+            
+            // Initialize logging and git execute support
+            Log = new FormLog();
+            Git = new ClassGit();
+
+            // Before we can start, we need to have a functional git executable);
+            if (Git.Initialize())
+            {
                 Diff = new ClassDiff();
-                Repos = new ClassRepos();
-                Putty = new ClassPutty();
-
-                // Before we can start, we need to have a functional git executable
-                if (Git.Initialize())
+                // Initialize external diff program
+                if( Diff.Initialize())
                 {
-                    // Initialize external diff program
-                    if (Diff.Initialize())
-                    {
-                        // Add known text editors if needed
-                        FormOptions_Panels.ControlViewEdit.AddKnownEditors();
+                    // Add known text editors
+                    Settings.Panels.ControlViewEdit.AddKnownEditors();
 
-                        MainForm = new FormMain();
-                        Application.Run(MainForm);
+                    // Instantiate PuTTY support only on Windows OS
+                    if (!ClassUtils.IsMono())
+                        Putty = new ClassPutty();
 
-                        Properties.Settings.Default.Save();
-                    }
+                    // Create HTTPS password helper file
+                    GitPasswd = new ClassGitPasswd();
+
+                    Repos = new ClassRepos();
+
+                    MainForm = new FormMain();
+                    Application.Run(MainForm);
+
+                    Properties.Settings.Default.Save();                        
                 }
-                AppMutex.ReleaseMutex();
             }
-            else
-            {
-                // Send our NativeMethods message to make the currently running instance
-                // jump on top of all the other windows
-                NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WmShowme, IntPtr.Zero, IntPtr.Zero);
-            }
+            return 0;
         }
     }
 }

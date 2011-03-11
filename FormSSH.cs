@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace git4win
+namespace Git4Win
 {
     public partial class FormSSH : Form
     {
@@ -31,6 +28,7 @@ namespace git4win
         public FormSSH()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
 
             string[] keys = Properties.Settings.Default.PuTTYKeys.
                 Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -39,6 +37,14 @@ namespace git4win
             _phrases = App.Putty.GetPassPhrases();
             RefreshPf();
             RefreshRemoteHosts();
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormSshFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>
@@ -128,8 +134,8 @@ namespace git4win
             listBoxPf.Items.Clear();
             listBoxPf.Items.AddRange(
                 _phrases.Select(
-                    item => _isPlain ? 
-                        item : 
+                    item => _isPlain ?
+                        item :
                         item[0] + new String('*', item.Length)).ToArray());
         }
 
@@ -173,7 +179,7 @@ namespace git4win
         /// </summary>
         private void ListBoxPfSelectedIndexChanged(object sender, EventArgs e)
         {
-            btRemovePf.Enabled = (sender as ListBox).SelectedItem!=null;
+            btRemovePf.Enabled = (sender as ListBox).SelectedItem != null;
         }
 
         /// <summary>
@@ -181,7 +187,7 @@ namespace git4win
         /// </summary>
         private void TextBoxInputPfTextChanged(object sender, EventArgs e)
         {
-            btAddPf.Enabled = !string.IsNullOrWhiteSpace(textBoxInputPf.Text);
+            btAddPf.Enabled = !ClassUtils.IsNullOrWhiteSpace(textBoxInputPf.Text);
         }
 
         #endregion

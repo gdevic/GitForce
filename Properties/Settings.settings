@@ -1,60 +1,39 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="git4win.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Git4Win.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="gitPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="logTime" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="logTime24" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="logCommands" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="logStatus" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="logBuffer" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5000</Value>
-    </Setting>
     <Setting Name="FormMainLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">300, 300</Value>
     </Setting>
-    <Setting Name="FormMainClientSize" Type="System.Drawing.Size" Scope="User">
+    <Setting Name="FormMainSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">650, 450</Value>
     </Setting>
-    <Setting Name="viewMode" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="GitPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FormLogLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">20, 20</Value>
+    </Setting>
+    <Setting Name="FormLogSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">300, 300</Value>
+    </Setting>
+    <Setting Name="ShowLogWindow" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ShowDotGitFolders" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="viewRightPanel" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Repos</Value>
-    </Setting>
-    <Setting Name="ShowExecuteWindow" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="commitsRetrieveLast" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="commitsRetrieveAll" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="leavePageant" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="PuTTYKeys" Type="System.String" Scope="User">
+    <Setting Name="DiffActiveName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PuTTYPf" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="EditViewPrograms" Type="System.String" Scope="User">
+    <Setting Name="PuTTYKeys" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="leavePageant" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DoubleClick" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -62,17 +41,50 @@
     <Setting Name="DoubleClickProgram" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="DiffActiveName" Type="System.String" Scope="User">
+    <Setting Name="EditViewPrograms" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="viewMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="viewRightPanel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Repos</Value>
     </Setting>
     <Setting Name="commitFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Courier New, 8.25pt</Value>
+    </Setting>
+    <Setting Name="commitsRetrieveAll" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="commitsRetrieveLast" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="commitW1" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="commitW2" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">72</Value>
+    </Setting>
+    <Setting Name="logCommands" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="logTime" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="logTime24" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowExecuteWindow" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RepoDeepScan" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="WindowsGeometries" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string /&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

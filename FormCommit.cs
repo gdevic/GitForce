@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// This form is used for:
@@ -22,19 +20,28 @@ namespace git4win
         /// <summary>
         /// Create a commit form or new/update form
         /// </summary>
-        public FormCommit(bool forCommit, string description="")
+        public FormCommit(bool forCommit, string description)
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
 
             textDescription.Font = Properties.Settings.Default.commitFont;
 
-            if (forCommit==false)
+            if (forCommit == false)
             {
                 checkAmend.Visible = false;
                 btCommit.Text = "Update";
             }
             textDescription.Text = description;
             textDescription.SelectAll();
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormCommitFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class FormShowChangelist
     {
@@ -29,44 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShowChangelist));
-            this.btClose = new System.Windows.Forms.Button();
-            this.btNext = new System.Windows.Forms.Button();
-            this.btPrev = new System.Windows.Forms.Button();
             this.textChangelist = new RichTextBoxLinks.RichTextBoxEx();
+            this.btPrev = new System.Windows.Forms.Button();
+            this.btNext = new System.Windows.Forms.Button();
+            this.btClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btClose
-            // 
-            this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btClose.Location = new System.Drawing.Point(608, 491);
-            this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(75, 23);
-            this.btClose.TabIndex = 1;
-            this.btClose.Text = "Close";
-            this.btClose.UseVisualStyleBackColor = true;
-            // 
-            // btNext
-            // 
-            this.btNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btNext.Image = ((System.Drawing.Image)(resources.GetObject("btNext.Image")));
-            this.btNext.Location = new System.Drawing.Point(12, 491);
-            this.btNext.Name = "btNext";
-            this.btNext.Size = new System.Drawing.Size(75, 23);
-            this.btNext.TabIndex = 2;
-            this.btNext.UseVisualStyleBackColor = true;
-            this.btNext.Click += new System.EventHandler(this.BtNextClick);
-            // 
-            // btPrev
-            // 
-            this.btPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btPrev.Image = ((System.Drawing.Image)(resources.GetObject("btPrev.Image")));
-            this.btPrev.Location = new System.Drawing.Point(93, 491);
-            this.btPrev.Name = "btPrev";
-            this.btPrev.Size = new System.Drawing.Size(75, 23);
-            this.btPrev.TabIndex = 3;
-            this.btPrev.UseVisualStyleBackColor = true;
-            this.btPrev.Click += new System.EventHandler(this.BtPrevClick);
             // 
             // textChangelist
             // 
@@ -78,9 +45,42 @@
             this.textChangelist.Name = "textChangelist";
             this.textChangelist.ReadOnly = true;
             this.textChangelist.Size = new System.Drawing.Size(671, 473);
-            this.textChangelist.TabIndex = 4;
+            this.textChangelist.TabIndex = 8;
             this.textChangelist.Text = "";
             this.textChangelist.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextChangelistLinkClicked);
+            // 
+            // btPrev
+            // 
+            this.btPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btPrev.Image = ((System.Drawing.Image)(resources.GetObject("btPrev.Image")));
+            this.btPrev.Location = new System.Drawing.Point(93, 491);
+            this.btPrev.Name = "btPrev";
+            this.btPrev.Size = new System.Drawing.Size(75, 23);
+            this.btPrev.TabIndex = 7;
+            this.btPrev.UseVisualStyleBackColor = true;
+            this.btPrev.Click += new System.EventHandler(this.BtPrevClick);
+            // 
+            // btNext
+            // 
+            this.btNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btNext.Image = ((System.Drawing.Image)(resources.GetObject("btNext.Image")));
+            this.btNext.Location = new System.Drawing.Point(12, 491);
+            this.btNext.Name = "btNext";
+            this.btNext.Size = new System.Drawing.Size(75, 23);
+            this.btNext.TabIndex = 6;
+            this.btNext.UseVisualStyleBackColor = true;
+            this.btNext.Click += new System.EventHandler(this.BtNextClick);
+            // 
+            // btClose
+            // 
+            this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btClose.Location = new System.Drawing.Point(608, 491);
+            this.btClose.Name = "btClose";
+            this.btClose.Size = new System.Drawing.Size(75, 23);
+            this.btClose.TabIndex = 5;
+            this.btClose.Text = "Close";
+            this.btClose.UseVisualStyleBackColor = true;
             // 
             // FormShowChangelist
             // 
@@ -91,6 +91,8 @@
             this.Controls.Add(this.btPrev);
             this.Controls.Add(this.btNext);
             this.Controls.Add(this.btClose);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormShowChangelist";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -104,9 +106,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btClose;
-        private System.Windows.Forms.Button btNext;
-        private System.Windows.Forms.Button btPrev;
         private RichTextBoxLinks.RichTextBoxEx textChangelist;
+        private System.Windows.Forms.Button btPrev;
+        private System.Windows.Forms.Button btNext;
+        private System.Windows.Forms.Button btClose;
     }
 }

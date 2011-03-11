@@ -1,4 +1,4 @@
-﻿namespace git4win
+﻿namespace Git4Win
 {
     partial class RemoteDisplay
     {
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btSsh = new System.Windows.Forms.Button();
             this.textPushCmd = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -36,34 +35,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textUrlPush = new System.Windows.Forms.TextBox();
             this.textUrlFetch = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.btSsh);
-            this.groupBox1.Controls.Add(this.textPushCmd);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textPassword);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textUrlPush);
-            this.groupBox1.Controls.Add(this.textUrlFetch);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textName);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(422, 143);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
             // 
             // btSsh
             // 
@@ -74,7 +52,7 @@
             this.btSsh.TabIndex = 10;
             this.btSsh.Text = "SSH...";
             this.btSsh.UseVisualStyleBackColor = true;
-            this.btSsh.Click += new System.EventHandler(this.btSsh_Click);
+            this.btSsh.Click += new System.EventHandler(this.BtSshClick);
             // 
             // textPushCmd
             // 
@@ -139,6 +117,28 @@
             this.textUrlFetch.TabIndex = 1;
             this.textUrlFetch.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btSsh);
+            this.groupBox1.Controls.Add(this.textPushCmd);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.textPassword);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.textUrlPush);
+            this.groupBox1.Controls.Add(this.textUrlFetch);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textName);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Location = new System.Drawing.Point(1, 2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(422, 143);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -192,17 +192,18 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btSsh;
+        private System.Windows.Forms.TextBox textPushCmd;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textPassword;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textUrlPush;
         private System.Windows.Forms.TextBox textUrlFetch;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textName;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textPushCmd;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btSsh;
+
     }
 }

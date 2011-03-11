@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,9 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
-namespace git4win
+namespace Git4Win
 {
     /// <summary>
     /// Dialog to rename or move file or a set of files
@@ -18,10 +18,19 @@ namespace git4win
         private ClassRepo _repo;
         private string _multiFileCommonPath;
         private readonly List<string> _inFiles = new List<string>();
-        
+
         public FormRename()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormRenameFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>
@@ -35,7 +44,7 @@ namespace git4win
             // Load the original list of files into the text box to show what will be renamed
             // Only load files, not directories
             foreach (string file in files)
-                if( !file.EndsWith(@"\"))
+                if (!file.EndsWith(Convert.ToString(Path.DirectorySeparatorChar)))
                     _inFiles.Add(repo.Win2GitPath(file));
 
             if (_inFiles.Count == 0)
@@ -47,7 +56,7 @@ namespace git4win
                 textOriginalNames.Text += @"//" + file + Environment.NewLine;
 
             // Set the New Name(s) accordingly
-            if (_inFiles.Count==1)
+            if (_inFiles.Count == 1)
             {
                 // Single file - initial proposed new name is the same
                 textNewName.Text = _inFiles[0];
@@ -58,7 +67,7 @@ namespace git4win
                 int i;
                 bool fDone = false;
                 // Iteratively find the common path prefix
-                for(i=0; !fDone; i++)
+                for (i = 0; !fDone; i++)
                 {
                     char c = _inFiles[0][i];
                     foreach (string file in _inFiles)
