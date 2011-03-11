@@ -61,9 +61,8 @@
             this.menuMainBranch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainRepository = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.visitGitHubHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usersManualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.visitGitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usersManualMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusInfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -367,47 +366,39 @@
             // menuMainHelp
             // 
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.visitGitHubHomeToolStripMenuItem,
-            this.websiteToolStripMenuItem,
-            this.usersManualToolStripMenuItem,
+            this.visitGitHubHomeMenuItem,
+            this.usersManualMenuItem,
             this.toolStripSeparator6,
             this.aboutToolStripMenuItem});
             this.menuMainHelp.Name = "menuMainHelp";
             this.menuMainHelp.Size = new System.Drawing.Size(44, 20);
             this.menuMainHelp.Text = "Help";
             // 
-            // visitGitHubHomeToolStripMenuItem
+            // visitGitHubHomeMenuItem
             // 
-            this.visitGitHubHomeToolStripMenuItem.Name = "visitGitHubHomeToolStripMenuItem";
-            this.visitGitHubHomeToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.visitGitHubHomeToolStripMenuItem.Tag = "https://github.com/gdevic/git4win";
-            this.visitGitHubHomeToolStripMenuItem.Text = "Visit GitHub Home";
-            this.visitGitHubHomeToolStripMenuItem.Click += new System.EventHandler(this.WebsiteToolStripMenuItemClick);
+            this.visitGitHubHomeMenuItem.Name = "visitGitHubHomeMenuItem";
+            this.visitGitHubHomeMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.visitGitHubHomeMenuItem.Tag = "https://github.com/gdevic/git4win";
+            this.visitGitHubHomeMenuItem.Text = "Visit GitHub Home";
+            this.visitGitHubHomeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
-            // websiteToolStripMenuItem
+            // usersManualMenuItem
             // 
-            this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.websiteToolStripMenuItem.Tag = "http://sourceforge.net/p/git4win/home/";
-            this.websiteToolStripMenuItem.Text = "Visit SourceForge Home";
-            this.websiteToolStripMenuItem.Click += new System.EventHandler(this.WebsiteToolStripMenuItemClick);
-            // 
-            // usersManualToolStripMenuItem
-            // 
-            this.usersManualToolStripMenuItem.Name = "usersManualToolStripMenuItem";
-            this.usersManualToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.usersManualToolStripMenuItem.Text = "Users Manual";
-            this.usersManualToolStripMenuItem.Click += new System.EventHandler(this.UsersManualToolStripMenuItemClick);
+            this.usersManualMenuItem.Name = "usersManualMenuItem";
+            this.usersManualMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.usersManualMenuItem.Tag = "http://gdevic.github.com/git4win";
+            this.usersManualMenuItem.Text = "Users Manual";
+            this.usersManualMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(198, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(170, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -808,12 +799,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainEditRemoteRepo;
         private System.Windows.Forms.ToolStripMenuItem menuMainPullFromRemote;
         private System.Windows.Forms.ToolStripMenuItem menuMainPushToRemote;
-        private System.Windows.Forms.ToolStripMenuItem websiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem usersManualToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem usersManualMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripStatusLabel statusInfoLabel;
         private System.Windows.Forms.Timer timerBusy;
-        private System.Windows.Forms.ToolStripMenuItem visitGitHubHomeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem visitGitHubHomeMenuItem;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton btUpdate;

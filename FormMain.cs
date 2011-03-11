@@ -492,20 +492,9 @@ namespace Git4Win
         /// <summary>
         /// User clicked on a Website menu item, open the website
         /// </summary>
-        private void WebsiteToolStripMenuItemClick(object sender, EventArgs e)
+        private void WebsiteClick(object sender, EventArgs e)
         {
             Process.Start((sender as ToolStripMenuItem).Tag.ToString());
-        }
-
-        /// <summary>
-        /// User clicked on a User's Manual menu item, open the embedded PDF
-        /// </summary>
-        private void UsersManualToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-// TODO: Users manual
-//            appPath = ClassUtils.WriteResourceToFile(appPath, "Git4WinUsersManual.pdf", Properties.Resources.Git4WinUsersManual);
-//            Process.Start(appPath);
         }
 
         /// <summary>
