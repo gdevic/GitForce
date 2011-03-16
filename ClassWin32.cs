@@ -26,5 +26,18 @@ namespace Git4Win
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll")]
+        static extern bool AttachConsole(int dwProcessId);
+        private const int ATTACH_PARENT_PROCESS = -1;
+
+        /// <summary>
+        /// Attaches a console so we can use Console class to print.
+        /// This is needed only on Windows implementation where WinForms app detaches from its console.
+        /// </summary>
+        public static void AttachConsole()
+        {
+            AttachConsole(ATTACH_PARENT_PROCESS);            
+        }
     }
 }

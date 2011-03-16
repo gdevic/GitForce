@@ -51,16 +51,16 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(304, 43);
+            this.label1.Size = new System.Drawing.Size(348, 43);
             this.label1.TabIndex = 0;
             this.label1.Text = "Could not locate a diff utility! This program will have some of its functionality" +
-                " limited until you install a diff program.";
+                " limited until you install a Diff program.";
             // 
             // btClose
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btClose.Location = new System.Drawing.Point(241, 238);
+            this.btClose.Location = new System.Drawing.Point(285, 227);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(75, 23);
             this.btClose.TabIndex = 1;
@@ -71,9 +71,9 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(12, 66);
+            this.label2.Location = new System.Drawing.Point(12, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(304, 23);
+            this.label2.Size = new System.Drawing.Size(348, 23);
             this.label2.TabIndex = 2;
             this.label2.Text = "Currently known diff utilities are:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -81,7 +81,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 89);
+            this.label3.Location = new System.Drawing.Point(12, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 13);
             this.label3.TabIndex = 3;
@@ -90,7 +90,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(12, 102);
+            this.linkLabel1.Location = new System.Drawing.Point(12, 100);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(172, 13);
             this.linkLabel1.TabIndex = 4;
@@ -102,7 +102,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(12, 115);
+            this.linkLabel2.Location = new System.Drawing.Point(12, 113);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(56, 13);
             this.linkLabel2.TabIndex = 5;
@@ -114,7 +114,7 @@
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(13, 128);
+            this.linkLabel3.Location = new System.Drawing.Point(13, 126);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(97, 13);
             this.linkLabel3.TabIndex = 6;
@@ -126,7 +126,7 @@
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(13, 141);
+            this.linkLabel4.Location = new System.Drawing.Point(13, 139);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(36, 13);
             this.linkLabel4.TabIndex = 7;
@@ -138,7 +138,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(229, 89);
+            this.label4.Location = new System.Drawing.Point(229, 87);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 8;
@@ -147,7 +147,7 @@
             // linkLabel5
             // 
             this.linkLabel5.AutoSize = true;
-            this.linkLabel5.Location = new System.Drawing.Point(230, 102);
+            this.linkLabel5.Location = new System.Drawing.Point(230, 100);
             this.linkLabel5.Name = "linkLabel5";
             this.linkLabel5.Size = new System.Drawing.Size(30, 13);
             this.linkLabel5.TabIndex = 9;
@@ -159,7 +159,7 @@
             // linkLabel6
             // 
             this.linkLabel6.AutoSize = true;
-            this.linkLabel6.Location = new System.Drawing.Point(230, 115);
+            this.linkLabel6.Location = new System.Drawing.Point(230, 113);
             this.linkLabel6.Name = "linkLabel6";
             this.linkLabel6.Size = new System.Drawing.Size(36, 13);
             this.linkLabel6.TabIndex = 10;
@@ -171,7 +171,7 @@
             // linkLabel7
             // 
             this.linkLabel7.AutoSize = true;
-            this.linkLabel7.Location = new System.Drawing.Point(230, 128);
+            this.linkLabel7.Location = new System.Drawing.Point(230, 126);
             this.linkLabel7.Name = "linkLabel7";
             this.linkLabel7.Size = new System.Drawing.Size(31, 13);
             this.linkLabel7.TabIndex = 11;
@@ -185,9 +185,9 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(12, 167);
+            this.label5.Location = new System.Drawing.Point(12, 165);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(304, 68);
+            this.label5.Size = new System.Drawing.Size(348, 57);
             this.label5.TabIndex = 12;
             this.label5.Text = "Git4Win will automatically recognize these if they are installed. In Linux, for e" +
                 "xample, you can install one by simply issuing \"sudo apt-get install xxdiff\" comm" +
@@ -197,7 +197,7 @@
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(160, 238);
+            this.btOK.Location = new System.Drawing.Point(204, 227);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 13;
@@ -208,7 +208,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 273);
+            this.ClientSize = new System.Drawing.Size(372, 262);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.linkLabel7);
@@ -230,7 +230,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Missing diff utility!";
+            this.Text = "Missing Diff utility!";
             this.ResumeLayout(false);
             this.PerformLayout();
 

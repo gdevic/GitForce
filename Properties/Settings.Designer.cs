@@ -110,18 +110,6 @@ namespace Git4Win.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DiffActiveName {
-            get {
-                return ((string)(this["DiffActiveName"]));
-            }
-            set {
-                this["DiffActiveName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PuTTYPf {
             get {
                 return ((string)(this["PuTTYPf"]));
@@ -346,6 +334,30 @@ namespace Git4Win.Properties {
             }
             set {
                 this["WindowsGeometries"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DiffAppHelper {
+            get {
+                return ((string)(this["DiffAppHelper"]));
+            }
+            set {
+                this["DiffAppHelper"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MergeAppHelper {
+            get {
+                return ((string)(this["MergeAppHelper"]));
+            }
+            set {
+                this["MergeAppHelper"] = value;
             }
         }
     }

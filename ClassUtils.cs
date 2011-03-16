@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Git4Win
 {
@@ -29,7 +24,7 @@ namespace Git4Win
         /// </summary>
         public static bool IsLastError()
         {
-            return !(_lastError == String.Empty);
+            return _lastError != String.Empty;
         }
 
         /// <summary>
@@ -75,9 +70,7 @@ namespace Git4Win
         {
             if (s == null)
                 return true;
-            if (s.Trim().Length == 0)
-                return true;
-            return false;
+            return s.Trim().Length == 0;
         }
     }
 }

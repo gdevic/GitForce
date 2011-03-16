@@ -203,12 +203,18 @@ namespace Git4Win.Main.Right.Panels
             ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) {Tag = tag};
             ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, MenuRevertClick) {Tag = tag};
 
+            // Build the "Resolve" submenu
+            ToolStripMenuItem mResolveTool = new ToolStripMenuItem("Run Merge Tool...", null, MenuMergeTool) { Tag = tag };
+            ToolStripMenuItem mResolve = new ToolStripMenuItem("Resolve");
+            mResolve.DropDownItems.AddRange(new ToolStripItem[] { mResolveTool });
+
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
                 mDiff, mSub, 
                 new ToolStripSeparator(),
                 mNew, mEdit, mDel,
                 new ToolStripSeparator(),
-                mRevert
+                mRevert,
+                mResolve
             });
 
             if (treeCommits.Nodes.Count == 0 || tag == treeCommits.Nodes[0].Tag)
@@ -222,6 +228,9 @@ namespace Git4Win.Main.Right.Panels
 
             if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
                 mDel.Enabled = false;
+
+            if (!((tag is string) && Status.IsMarked(tag as string) && Status.GetXcode(tag as string) == 'U'))
+                mResolve.Enabled = false;
 
             return menu;
         }
@@ -380,6 +389,17 @@ Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Informa
                     App.Refresh();
                 }
             }
+        }
+
+        /// <summary>
+        /// Run the merge tool
+        /// </summary>
+        private void MenuMergeTool(object sender, EventArgs e)
+        {
+            string file = (sender as ToolStripMenuItem).Tag.ToString();
+            string cmd = "mergetool " + ClassMerge.GetMergeCmd() + Status.Repo.Win2GitPath(file);
+            Status.Repo.Run(cmd);
+            App.Refresh();
         }
     }
 }

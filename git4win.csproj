@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassAppHelper.cs" />
     <Compile Include="ClassArguments.cs" />
     <Compile Include="ClassBranches.cs" />
+    <Compile Include="ClassCommandLine.cs" />
     <Compile Include="ClassCommit.cs" />
     <Compile Include="ClassCommits.cs" />
     <Compile Include="ClassConfig.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="ClassGit.cs" />
     <Compile Include="ClassGitDirectory.cs" />
     <Compile Include="ClassGitPasswd.cs" />
+    <Compile Include="ClassMerge.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />
     <Compile Include="ClassRepo.cs" />
@@ -118,6 +121,12 @@
     </Compile>
     <Compile Include="FormMergeBranch.Designer.cs">
       <DependentUpon>FormMergeBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMergeMissing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMergeMissing.Designer.cs">
+      <DependentUpon>FormMergeMissing.cs</DependentUpon>
     </Compile>
     <Compile Include="FormNewBranch.cs">
       <SubType>Form</SubType>
@@ -381,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMergeBranch.resx">
       <DependentUpon>FormMergeBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMergeMissing.resx">
+      <DependentUpon>FormMergeMissing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBranch.resx">
       <DependentUpon>FormNewBranch.cs</DependentUpon>

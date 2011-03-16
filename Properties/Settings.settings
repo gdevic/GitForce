@@ -23,9 +23,6 @@
     <Setting Name="ShowDotGitFolders" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="DiffActiveName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="PuTTYPf" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -85,6 +82,12 @@
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string /&gt;
 &lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="DiffAppHelper" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MergeAppHelper" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

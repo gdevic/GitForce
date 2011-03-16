@@ -108,13 +108,27 @@ namespace Git4Win
                 App.StatusBusy(true);
                 App.Log.Print(String.Format("$ {0} {1}", cmd, arg));
 
-                Process p = new Process();
-                p.StartInfo.FileName = cmd;
-                p.StartInfo.Arguments = arg;
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.CreateNoWindow = true;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.RedirectStandardError = true;
+                Process p = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = cmd,
+                        Arguments = arg,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    }
+                };
+
+                // TODO: This is a hack for mergetool: We need to show the window to ask the user if the merge succeeded.
+                // The problem is with .NET (and MONO!) buffering of streams prevents us to catching the question on time.
+                if (arg.StartsWith("mergetool "))
+                {
+                    p.StartInfo.CreateNoWindow = false;
+                    p.StartInfo.RedirectStandardOutput = false;
+                    p.StartInfo.RedirectStandardError = false;
+                }
 
                 // Add all environment variables listed
                 foreach (var variable in Env)

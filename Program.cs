@@ -55,6 +55,11 @@ namespace Git4Win
         public static ClassDiff Diff;
 
         /// <summary>
+        /// Static class containing merge tool helpers
+        /// </summary>
+        public static ClassMerge Merge;
+
+        /// <summary>
         /// Static class of repos containing operations on a set of repositories
         /// </summary>
         public static ClassRepos Repos;
@@ -79,9 +84,14 @@ namespace Git4Win
         #region Global variables
 
         /// <summary>
+        /// Store a path to the application executing instance
+        /// </summary>
+        public static readonly string AppPath = Application.ExecutablePath;
+
+        /// <summary>
         /// Define a path to the application data folder
         /// </summary>
-        public static string AppHome = Path.Combine(
+        public static readonly string AppHome = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Git4Win");
 
@@ -96,29 +106,13 @@ namespace Git4Win
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Get and process command line arguments
             Arguments commandLine = new Arguments(args);
 
-            if (commandLine["help"] == "true")
-            {
-                Console.WriteLine("Git4Win optional arguments:");
-                Console.WriteLine("  --version             Show the application version number.");
-                Console.WriteLine("  --reset-windows       Reset stored locations of windows and dialogs.");
-
-                return -1;
-            }
-
-            // --version Show the application version number and quit
-            if (commandLine["version"] == "true")
-            {
-                Console.WriteLine("Git4Win version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                return -1;
-            }
-
-            // --reset-windows Reset the stored locations and sizes of all internal dialogs and forms
-            //                 At this time we dont reset the main window and the log window
-            if (commandLine["reset-windows"] == "true")
-                Properties.Settings.Default.WindowsGeometries = new StringCollection();
-
+            // If the processing requested program termination,
+            // return using the error code created by that class
+            if (ClassCommandLine.Execute(commandLine) == false)
+                return ClassCommandLine.ReturnCode;
 
             // Make sure the application data folder directory exists
             Directory.CreateDirectory(AppHome);
@@ -134,25 +128,32 @@ namespace Git4Win
                 // Initialize external diff program
                 if( Diff.Initialize())
                 {
-                    // Add known text editors
-                    Settings.Panels.ControlViewEdit.AddKnownEditors();
+                    Merge = new ClassMerge();
+                    // Initialize external Merge program
+                    if (Merge.Initialize())
+                    {
+                        // Add known text editors
+                        Settings.Panels.ControlViewEdit.AddKnownEditors();
 
-                    // Instantiate PuTTY support only on Windows OS
-                    if (!ClassUtils.IsMono())
-                        Putty = new ClassPutty();
+                        // Instantiate PuTTY support only on Windows OS
+                        if (!ClassUtils.IsMono())
+                            Putty = new ClassPutty();
 
-                    // Create HTTPS password helper file
-                    GitPasswd = new ClassGitPasswd();
+                        // Create HTTPS password helper file
+                        GitPasswd = new ClassGitPasswd();
 
-                    Repos = new ClassRepos();
+                        Repos = new ClassRepos();
 
-                    MainForm = new FormMain();
-                    Application.Run(MainForm);
+                        MainForm = new FormMain();
+                        Application.Run(MainForm);
 
-                    Properties.Settings.Default.Save();                        
+                        Properties.Settings.Default.Save();
+
+                        return 0;   // Return no error code
+                    }
                 }
             }
-            return 0;
+            return -1;
         }
     }
 }

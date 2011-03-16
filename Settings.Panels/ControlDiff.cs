@@ -27,7 +27,7 @@ namespace Git4Win.Settings.Panels
         {
             // Add names of diff tools that were found on the system
             _diffs = App.Diff.Diffs;
-            string activeName = Properties.Settings.Default.DiffActiveName;
+            string activeName = Properties.Settings.Default.DiffAppHelper;
             foreach (var s in _diffs)
                 listBoxDiffs.Items.Add(s.Name, s.Name == activeName);
         }
@@ -37,7 +37,7 @@ namespace Git4Win.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            Properties.Settings.Default.DiffActiveName = _diffs[_checkedIndex].Name;
+            Properties.Settings.Default.DiffAppHelper = _diffs[_checkedIndex].Name;
             ClassDiff.Configure(_diffs, _diffs[_checkedIndex]);
         }
 

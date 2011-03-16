@@ -63,12 +63,12 @@ namespace Git4Win
 
         /// <summary>
         /// List of diff programs recognized by the application.
-        /// Return false if no diff utility was found and user wanted to quit the app.
         /// </summary>
         public List<Diff> Diffs;
         
         /// <summary>
         /// Init code to be called on the application startup.
+        /// Return false if no diff utility was found and user wanted to quit the app.
         /// </summary>
         public bool Initialize()
         {
@@ -84,7 +84,7 @@ namespace Git4Win
             }
 
             // Assign the active diff utility or the first one on the list
-            string activeName = Properties.Settings.Default.DiffActiveName;
+            string activeName = Properties.Settings.Default.DiffAppHelper;
             if (ClassUtils.IsNullOrWhiteSpace(activeName))
                 activeName = Diffs[0].Name;
 
@@ -92,7 +92,7 @@ namespace Git4Win
             foreach (var d in Diffs.Where(d => d.Name == activeName))
                 active = d;
 
-            Properties.Settings.Default.DiffActiveName = active.Name;
+            Properties.Settings.Default.DiffAppHelper = active.Name;
 
             // Lastly, configure the git by setting all optional diffs and the active one
             return Configure(Diffs, active);
