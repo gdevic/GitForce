@@ -17,8 +17,7 @@ namespace Git4Win
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            // Set the current version string from AssemblyInfo.cs
-            labelVersion.Text = "Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            labelVersion.Text = "Version " + App.Version;
 
             textLic.Text = 
                 "THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR " +

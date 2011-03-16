@@ -405,8 +405,8 @@
             // statusInfoLabel
             // 
             this.statusInfoLabel.Name = "statusInfoLabel";
-            this.statusInfoLabel.Size = new System.Drawing.Size(49, 17);
-            this.statusInfoLabel.Text = "STATUS";
+            this.statusInfoLabel.Size = new System.Drawing.Size(154, 17);
+            this.statusInfoLabel.Text = "Git4Win - A Git Visual Client";
             // 
             // statusStrip
             // 

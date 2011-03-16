@@ -108,10 +108,7 @@ namespace Git4Win
                 "Repos" : 
                 Properties.Settings.Default.viewRightPanel);
 
-            // In the status label, initially show the version
-            statusInfoLabel.Text = String.Format("Version {0}, {1}",
-                Assembly.GetExecutingAssembly().GetName().Version,
-                new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToLongTimeString());
+            PrintStatus("Git4Win version " + App.Version);
 
             // Initiate the first global refresh
             App.Refresh();

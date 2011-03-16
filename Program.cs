@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Git4Win
@@ -94,6 +96,19 @@ namespace Git4Win
         public static readonly string AppHome = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Git4Win");
+
+        /// <summary>
+        /// Program version number
+        /// </summary>
+        public static string Version
+        {
+            get
+            {
+                Assembly asm = Assembly.GetExecutingAssembly();
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
+                return String.Format("{0}.{1}", fvi.ProductMajorPart, fvi.ProductMinorPart);
+            }
+        }
 
         #endregion
 

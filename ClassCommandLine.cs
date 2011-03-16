@@ -40,7 +40,7 @@ namespace Git4Win
             // --version Show the application version number and quit
             if (commandLine["version"] == "true")
             {
-                Console.WriteLine("Git4Win version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Console.WriteLine("Git4Win version " + App.Version);
 
                 ReturnCode = 0;
                 return false;
