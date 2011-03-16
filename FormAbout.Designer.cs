@@ -28,15 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbout));
             this.btOK = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.textLic = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btOK
@@ -49,17 +46,6 @@
             this.btOK.TabIndex = 0;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(362, 63);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(95, 93);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -89,7 +75,7 @@
             this.textLic.Multiline = true;
             this.textLic.Name = "textLic";
             this.textLic.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textLic.Size = new System.Drawing.Size(344, 155);
+            this.textLic.Size = new System.Drawing.Size(445, 155);
             this.textLic.TabIndex = 4;
             // 
             // label2
@@ -106,13 +92,13 @@
             // 
             this.linkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(379, 159);
+            this.linkLabel.Location = new System.Drawing.Point(429, 12);
             this.linkLabel.Name = "linkLabel";
-            this.linkLabel.Size = new System.Drawing.Size(55, 13);
+            this.linkLabel.Size = new System.Drawing.Size(28, 13);
             this.linkLabel.TabIndex = 6;
             this.linkLabel.TabStop = true;
             this.linkLabel.Tag = "http://www.gnu.org/licenses/gpl.html";
-            this.linkLabel.Text = "GNU GPL";
+            this.linkLabel.Text = "GPL";
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
             // 
             // FormAbout
@@ -124,7 +110,6 @@
             this.Controls.Add(this.textLic);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.linkLabel);
             this.MaximizeBox = false;
@@ -136,7 +121,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "About Git4Win";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAboutFormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,7 +129,6 @@
         #endregion
 
         private System.Windows.Forms.Button btOK;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.TextBox textLic;
