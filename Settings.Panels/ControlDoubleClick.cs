@@ -35,6 +35,8 @@ namespace Git4Win.Settings.Panels
             Dictionary<string, RadioButton> rb = new Dictionary<string, RadioButton> {
                 { "0", radioButton0 }, { "1", radioButton1 }, { "2", radioButton2 } };
 
+            if (!rb.ContainsKey(_option))
+                _option = "1";
             rb[_option].Checked = true;
             comboApps.Enabled = _option == "2";
         }
