@@ -124,8 +124,8 @@ namespace Git4Win
             // Before we can start, we need to have a functional git executable);
             if (Git.Initialize())
             {
-                Diff = new ClassDiff();
                 // Initialize external diff program
+                Diff = new ClassDiff();
                 if( Diff.Initialize())
                 {
                     Merge = new ClassMerge();

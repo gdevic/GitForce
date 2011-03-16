@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -11,13 +12,19 @@ namespace Git4Win.Settings.Panels
 {
     public partial class ControlDiff : UserControl, IUserSettings
     {
+        /// <summary>
+        /// List of helper programs
+        /// </summary>
+        private List<AppHelper> _helpers;
+
         public ControlDiff()
         {
             InitializeComponent();
-        }
 
-        private List<ClassDiff.Diff> _diffs;
-        private int _checkedIndex = -1;
+            textDesc.Text = "A diff utility needs to support these arguments:" + Environment.NewLine +
+                            "%1 - Local file ($LOCAL)" + Environment.NewLine +
+                            "%2 - Remote file ($REMOTE)";
+        }
 
         /// <summary>
         /// Initialize pertinent settings
@@ -25,11 +32,20 @@ namespace Git4Win.Settings.Panels
         /// <param name="options">All git global settings</param>
         public void Init(string[] options)
         {
-            // Add names of diff tools that were found on the system
-            _diffs = App.Diff.Diffs;
-            string activeName = Properties.Settings.Default.DiffAppHelper;
-            foreach (var s in _diffs)
-                listBoxDiffs.Items.Add(s.Name, s.Name == activeName);
+            // Detect all diff utilities on the system and populate a listbox
+            _helpers = ClassDiff.GetDetected();
+            comboBoxPath.Items.Clear();
+            foreach (var appHelper in _helpers)
+                comboBoxPath.Items.Add(appHelper.Path);
+
+            // Get our program default diff tool and set the listbox text
+            AppHelper app = new AppHelper(Properties.Settings.Default.DiffAppHelper);
+            comboBoxPath.Text = app.Path;
+            textArgs.Text = app.Args;
+
+            // Add the dirty (modified) value changed helper
+            comboBoxPath.TextChanged += ControlDirtyHelper.ControlDirty;
+            textArgs.TextChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>
@@ -37,21 +53,35 @@ namespace Git4Win.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            Properties.Settings.Default.DiffAppHelper = _diffs[_checkedIndex].Name;
-            ClassDiff.Configure(_diffs, _diffs[_checkedIndex]);
+            if (comboBoxPath.Tag != null || textArgs.Tag !=null)
+            {
+                string name = Path.GetFileNameWithoutExtension(comboBoxPath.Text);
+                AppHelper app = new AppHelper(name, comboBoxPath.Text, textArgs.Text);
+                Properties.Settings.Default.DiffAppHelper = app.ToString();
+
+                ClassDiff.Configure(app);                
+            }
         }
 
         /// <summary>
-        /// User clicked on an diff tool to select it as the active one
+        /// Browse for a utility using a file open dialog
         /// </summary>
-        private void ListBoxDiffsItemCheck(object sender, ItemCheckEventArgs e)
+        private void BtBrowseClick(object sender, EventArgs e)
         {
-            if (e.NewValue == CheckState.Checked)
+            if(openApp.ShowDialog()==DialogResult.OK)
             {
-                foreach (int i in listBoxDiffs.CheckedIndices)
-                    listBoxDiffs.SetItemCheckState(i, CheckState.Unchecked);
-                _checkedIndex = e.Index;
+                comboBoxPath.Text = openApp.FileName;
+                textArgs.Text = "%1 %2";
             }
+        }
+
+        /// <summary>
+        /// Item was selected from the drop-down list
+        /// </summary>
+        private void ComboBoxPathSelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox senderComboBox = (ComboBox) sender;
+            textArgs.Text = _helpers[senderComboBox.SelectedIndex].Args;
         }
     }
 }

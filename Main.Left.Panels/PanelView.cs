@@ -716,7 +716,7 @@ namespace Git4Win.Main.Left.Panels
             Selection sel = new Selection(treeView, Status);
             string opt = (sender as ToolStripMenuItem).Tag.ToString();
 
-            App.Repos.Current.Run("difftool " + opt + " -- " + sel.SelPathGitFormat());
+            App.Repos.Current.Run("difftool " + ClassDiff.GetDiffCmd() + opt + " -- " + sel.SelPathGitFormat());
         }
 
         #endregion

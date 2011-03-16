@@ -10,162 +10,99 @@ namespace Git4Win
 {
     /// <summary>
     /// Manage various diff programs and diff execution
-    ///
-    /// Common diff utilities for Windows OS:
-    /// 
-    /// Perforce merge and diff tool :  C:\Program Files (x86)\Perforce\P4Merge.exe
-    /// WinMerge :                      C:\Program Files (x86)\WinMerge\WinMergeU.exe
-    /// Beyond Compare diff tool :      C:\Program Files (x86)\Beyond Compare 3\BComp.exe
-    /// KDiff3 :                        C:\Program Files (x86)\KDiff3\kdiff3.exe
-    ///
-    /// Common diff utilities for Linux OS:
-    ///
-    /// meld :                          /usr/bin/meld
-    /// kdiff3 :                        /usr/bin/kdiff3
-    /// xxdiff :                        /usr/bin/xxdiff
-    ///
     /// </summary>
     public class ClassDiff
     {
-        /// <summary>
-        /// Structure describing a diff utility
-        /// </summary>
-        public struct Diff
-        {
-            /// <summary>
-            /// Git configuration name for diff tool
-            /// </summary>
-            public string Difftool;
+        // Common diff utilities:
+        //
+        // We jam together Windows and Linux utilities
+        private static string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        private static readonly List<AppHelper> Candidates = new List<AppHelper> {
+                //   Config    Short name        Path                                                      Arguments
+                // Windows OS:
+                new AppHelper( "p4merge",        Path.Combine(ProgramFiles,@"Perforce\P4Merge.exe"),       "%1 %2" ),
+                new AppHelper( "WinMerge",       Path.Combine(ProgramFiles,@"WinMerge\WinMergeU.exe"),     "/e /x /u %1 %2" ),
+                new AppHelper( "BC3",            Path.Combine(ProgramFiles,@"Beyond Compare 3\BComp.com"), "%1 %1" ),
+                new AppHelper( "KDiff3",         Path.Combine(ProgramFiles,@"KDiff3\kdiff3.exe"),          "%1 %2" ),
 
-            /// <summary>
-            /// User-friendly name of the diff utility
-            /// </summary>
-            public string Name;
+                // Linux OS:
+                new AppHelper( "KDiff3",         @"/usr/bin/kdiff3",   "%1 %2" ),
+                new AppHelper( "TKDiff",         @"/usr/bin/tkdiff",   "%1 %2" ),
+                new AppHelper( "Meld",           @"/usr/bin/meld",     "%1 %2" ),
+                new AppHelper( "xxdiff",         @"/usr/bin/xxdiff",   "%1 %2" ),
+                new AppHelper( "Diffuse",        @"/usr/bin/diffuse",  "%1 %2" ),
+        };
 
-            /// <summary>
-            /// Full path/name to the diff utility
-            /// </summary>
-            public string Path;
+        private List<AppHelper> _diff = new List<AppHelper>();
 
-            /// <summary>
-            /// Arguments needed to execute a 2-file diff
-            /// </summary>
-            public string Args;
-
-            public Diff(string diffTool, string name, string path, string args)
-            {
-                Difftool = diffTool;
-                Name = name;
-                Path = path;
-                Args = args;
-            }
-        }
-
-        /// <summary>
-        /// List of diff programs recognized by the application.
-        /// </summary>
-        public List<Diff> Diffs;
-        
         /// <summary>
         /// Init code to be called on the application startup.
         /// Return false if no diff utility was found and user wanted to quit the app.
         /// </summary>
         public bool Initialize()
         {
-            // Find selected diff programs installed and add them to the list
-            Diffs = FindKnownDiffProgs();
+            // Verify the application default diff utility
+            AppHelper app = new AppHelper(Properties.Settings.Default.DiffAppHelper);
+            if (File.Exists(app.Path))
+            {
+                Configure(app);
+                return true;
+            }
 
-            // If none of preset diff apps are present, show the missing diff dialog
+            // Search for any of the predefined tools
+            _diff = GetDetected();
+
+            // If none of the pre-set diff apps are present, show the missing diff dialog
             // and return with its selection of whether to continue or quit the app
-            if (Diffs.Count == 0)
+            if (_diff.Count == 0)
             {
                 FormDiffMissing formDiffMissing = new FormDiffMissing();
                 return formDiffMissing.ShowDialog() == DialogResult.OK;
             }
 
-            // Assign the active diff utility or the first one on the list
-            string activeName = Properties.Settings.Default.DiffAppHelper;
-            if (ClassUtils.IsNullOrWhiteSpace(activeName))
-                activeName = Diffs[0].Name;
+            // Otherwise, at least one diff app is present, select it as default
+            Properties.Settings.Default.MergeAppHelper = _diff[0].ToString();
 
-            Diff active = Diffs[0];
-            foreach (var d in Diffs.Where(d => d.Name == activeName))
-                active = d;
-
-            Properties.Settings.Default.DiffAppHelper = active.Name;
-
-            // Lastly, configure the git by setting all optional diffs and the active one
-            return Configure(Diffs, active);
+            Configure(_diff[0]);
+            return true;
         }
 
         /// <summary>
-        /// Configure git's external diff application by adding all tools from the given
-        /// list into git's difftool sections and picking the active as the current app to use
-        /// when doing the visual diff.
-        /// Returns false if the list is empty, making no changes to the git config.
+        /// Configure a given application helper to be a Git diff utility
         /// </summary>
-        public static bool Configure(List<Diff> diffs, Diff active)
+        public static void Configure(AppHelper app)
         {
-            // Set up global git config with each given diff program
-            if (diffs.Count > 0)
-            {
-                foreach (var d in diffs)
-                {
-                    // All all diff tools to git global config as sections we can select from
-                    string path = d.Path.Replace('\\', '/');
-                    string usr = d.Args.Replace("%1", "$LOCAL").Replace("%2", "$REMOTE");
-                    string arg = "'" + path + "' " + usr;
-                    ClassConfig.SetGlobal("difftool." + d.Difftool + ".cmd", arg);
-                }
+            string path = app.Path.Replace('\\', '/');
+            string usr = app.Args.
+                Replace("%1", "$LOCAL").
+                Replace("%2", "$REMOTE");
+            string arg = "'" + path + "' " + usr;
+            ClassConfig.SetGlobal("difftool." + app.Name + ".path", path);
+            ClassConfig.SetGlobal("difftool." + app.Name + ".cmd", arg);
 
-                // Make sure the prompt will be off for visual diff
-                ClassConfig.SetGlobal("difftool.prompt", "false");
-
-                // Set the active diff tool
-                ClassConfig.SetGlobal("diff.tool", active.Difftool);
-
-                return true;
-            }
-            return false;
+            // TODO: This might be an option: Set our default tool to be the Git gui tool?
+            // ClassConfig.SetGlobal("diff.guitool", app.Name);
         }
 
         /// <summary>
-        /// Searches for the known diff programs and returns a list of those
-        /// installed on the system. The list might be empty, if none of known
-        /// diff tools are found.
+        /// Return a proper diff command.
+        /// This function is called from the actual menu item to diff files.
         /// </summary>
-        public static List<Diff> FindKnownDiffProgs()
+        public static string GetDiffCmd()
         {
-            List<Diff> diffs = new List<Diff>();
-            // We jam together Windows and Linux diff utilities
-            List<Diff> candidates = new List<Diff> {
-                //         Config      User name          Path                           Arguments
-                // Windows OS:
-                new Diff( "p4merge",  "Perforce Merge",   @"Perforce\P4Merge.exe",       "%1 %2" ),
-                new Diff( "WinMerge", "WinMerge",         @"WinMerge\WinMergeU.exe",     "%1 %2" ),
-                new Diff( "BC3",      "Beyond Compare 3", @"Beyond Compare 3\BComp.exe", "%1 %2" ),
-                new Diff( "KDiff3",   "KDiff3",           @"KDiff3\kdiff3.exe",          "%1 %2" ),
-                // Linux OS:
-                new Diff( "Meld",     "Meld",             @"/usr/bin/meld",              "%1 %2" ),
-                new Diff( "KDiff3",   "KDiff3",           @"/usr/bin/kdiff3",            "%1 %2" ),
-                new Diff( "xxdiff",   "xxdiff",           @"/usr/bin/xxdiff",            "%1 %2" )
-            };
+            // Get the application default diff utility
+            AppHelper app = new AppHelper(Properties.Settings.Default.DiffAppHelper);
+            string cmd = string.Format(" --tool={0} --gui --no-prompt ", app.Name);
 
-            // From the list of known tools ("candidates"), pick those which could be
-            // found at the indicated folder locations and add them to the final list
-            foreach (var d in candidates)
-            {
-                // On Linux OS, ProgramFiles expands into "", and only our stored path is in effect
-                string path = Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.ProgramFiles), d.Path);
-                if (File.Exists(path))
-                {
-                    Diff diff = d;
-                    diff.Path = path;
-                    diffs.Add(diff);
-                }
-            }
-            return diffs;
+            return cmd;
+        }
+
+        /// <summary>
+        /// Returns a list of detected diff application helpers
+        /// </summary>
+        public static List<AppHelper> GetDetected()
+        {
+            return AppHelper.Scan(Candidates);
         }
     }
 }

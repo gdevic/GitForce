@@ -17,7 +17,7 @@ namespace Git4Win
         // We jam together Windows and Linux utilities
         private static string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
         private static readonly List<AppHelper> Candidates = new List<AppHelper> {
-                //   Config     User name          Path                                                      Arguments
+                //   Config    Short name        Path                                                      Arguments
                 // Windows OS:
                 new AppHelper( "p4merge",        Path.Combine(ProgramFiles,@"Perforce\P4Merge.exe"),       "%1 %2 %3 %4" ),
                 new AppHelper( "WinMerge",       Path.Combine(ProgramFiles,@"WinMerge\WinMergeU.exe"),     "/e /x /u %2 %3 %4" ),
@@ -25,18 +25,18 @@ namespace Git4Win
                 new AppHelper( "KDiff3",         Path.Combine(ProgramFiles,@"KDiff3\kdiff3.exe"),          "%1 %2 %3 -o %4" ),
 
                 // Linux OS:
-                new AppHelper( "KDiff3",         @"/usr/bin/kdiff3",            "%1 %2 %3 %4" ), // Native to git
-                new AppHelper( "TKDiff",         @"/usr/bin/tkdiff",            "%2 %3 -o %4" ), // Native to git
-                new AppHelper( "Meld",           @"/usr/bin/meld",              "%1 %2 %3 %4" ), // Native to git
-                new AppHelper( "xxdiff",         @"/usr/bin/xxdiff",            "%2 %3 -M %4" ), // Native to git
-                new AppHelper( "Diffuse",        @"/usr/bin/diffuse",           "%1 %2 %3"    ), // Native to git
+                new AppHelper( "KDiff3",         @"/usr/bin/kdiff3",            "%1 %2 %3 %4" ),
+                new AppHelper( "TKDiff",         @"/usr/bin/tkdiff",            "%2 %3 -o %4" ),
+                new AppHelper( "Meld",           @"/usr/bin/meld",              "%1 %2 %3 %4" ),
+                new AppHelper( "xxdiff",         @"/usr/bin/xxdiff",            "%2 %3 -M %4" ),
+                new AppHelper( "Diffuse",        @"/usr/bin/diffuse",           "%1 %2 %3"    ),
 
-                new AppHelper( "Emerge",         @"/usr/bin/emerge",            "%1 %2 %3 %4" ), // Native to git - not tested!
-                new AppHelper( "vimdiff",        @"/usr/bin/vimdiff",           "%1 %2 %3 %4" ), // Native to git - not tested!
-                new AppHelper( "gvimdiff",       @"/usr/bin/gvimdiff",          "%1 %2 %3 %4" ), // Native to git - not tested!
-                new AppHelper( "ecmerge",        @"/usr/bin/ecmerge",           "%1 %2 %3 %4" ), // Native to git - not tested!
-                new AppHelper( "tortoisemerge",  @"/usr/bin/tortoisemerge",     "%1 %2 %3 %4" ), // Native to git - not tested!
-                new AppHelper( "opendiff",       @"/usr/bin/opendiff",          "%1 %2 %3 %4" ), // Native to git - not tested!
+                new AppHelper( "Emerge",         @"/usr/bin/emerge",            "%1 %2 %3 %4" ), // Not tested!
+                new AppHelper( "vimdiff",        @"/usr/bin/vimdiff",           "%1 %2 %3 %4" ), // Not tested!
+                new AppHelper( "gvimdiff",       @"/usr/bin/gvimdiff",          "%1 %2 %3 %4" ), // Not tested!
+                new AppHelper( "ecmerge",        @"/usr/bin/ecmerge",           "%1 %2 %3 %4" ), // Not tested!
+                new AppHelper( "tortoisemerge",  @"/usr/bin/tortoisemerge",     "%1 %2 %3 %4" ), // Not tested!
+                new AppHelper( "opendiff",       @"/usr/bin/opendiff",          "%1 %2 %3 %4" ), // Not tested!
         };
 
         private List<AppHelper> _merge = new List<AppHelper>();

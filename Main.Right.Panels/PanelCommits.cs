@@ -348,7 +348,7 @@ namespace Git4Win.Main.Right.Panels
             {
                 string file = (sender as ToolStripMenuItem).Tag as string;
                 file = file.Substring(Status.Repo.Root.Length + 1);
-                string cmd = "difftool --cached -- \"" + file + "\"";
+                string cmd = "difftool " + ClassDiff.GetDiffCmd() + "--cached -- \"" + file + "\"";
                 Status.Repo.Run(cmd);
                 App.Refresh();
             }
