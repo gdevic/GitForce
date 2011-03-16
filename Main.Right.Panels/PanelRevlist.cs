@@ -57,13 +57,14 @@ namespace Git4Win.Main.Right.Panels
                 }
 
                 // Get the list of revisions by running a git command
-                StringBuilder cmd = new StringBuilder("log --pretty=format:\"");
+                StringBuilder cmd = new StringBuilder("log --pretty=format:");
                 cmd.Append("%h%x09");       // Abbreviated commit hash
                 cmd.Append("%ct%x09");      // Committing time, UNIX-style
                 cmd.Append("%an%x09");      // Author name
-                cmd.Append("%s");           // Subject
+                cmd.Append("%s");         // Subject
                 // Add the branch name using only the first token in order to handle links (br -> br)
-                cmd.Append("\" " + _logBranch.Split(' ').First());
+                if(_logBranch!="(no branch)")
+                    cmd.Append(" " + _logBranch.Split(' ').First());
                 // Limit the number of commits to show
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
