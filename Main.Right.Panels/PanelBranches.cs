@@ -32,6 +32,9 @@ namespace Git4Win.Main.Right.Panels
         {
             _branches.Refresh();
 
+            // MONO BUG: Treeview faults when expanding past the need to scroll in this particular case
+            //            Workaround is to turn off scrollable while expaning and then turn them back on
+            treeBranches.Scrollable = false;
             treeBranches.BeginUpdate();
             treeBranches.Nodes.Clear();
 
@@ -62,6 +65,7 @@ namespace Git4Win.Main.Right.Panels
             treeBranches.ExpandAll();
 
             treeBranches.EndUpdate();
+            treeBranches.Scrollable = true;
         }
 
         /// <summary>

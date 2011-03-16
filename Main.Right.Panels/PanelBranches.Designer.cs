@@ -65,6 +65,7 @@
             this.treeBranches.ImageList = this.imageList;
             this.treeBranches.Location = new System.Drawing.Point(0, 25);
             this.treeBranches.Name = "treeBranches";
+            this.treeBranches.Scrollable = false;
             this.treeBranches.SelectedImageIndex = 0;
             this.treeBranches.Size = new System.Drawing.Size(400, 375);
             this.treeBranches.TabIndex = 1;
@@ -77,12 +78,12 @@
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dummyMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(153, 48);
+            this.contextMenu.Size = new System.Drawing.Size(133, 26);
             // 
             // dummyMenuItem
             // 
             this.dummyMenuItem.Name = "dummyMenuItem";
-            this.dummyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dummyMenuItem.Size = new System.Drawing.Size(132, 22);
             this.dummyMenuItem.Text = "Menu Item";
             // 
             // imageList
