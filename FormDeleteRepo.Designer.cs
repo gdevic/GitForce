@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormDeleteRepo
     {
@@ -91,7 +91,7 @@
             this.radioDelete0.TabIndex = 1;
             this.radioDelete0.TabStop = true;
             this.radioDelete0.Tag = "0";
-            this.radioDelete0.Text = "Only remove it from the Git4Win list. All files will be intact.";
+            this.radioDelete0.Text = "Only remove it from the GitForce list. All files will be intact.";
             this.radioDelete0.UseVisualStyleBackColor = true;
             this.radioDelete0.Click += new System.EventHandler(this.RadioButtonClicked);
             // 

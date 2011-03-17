@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormMergeMissing
     {
@@ -89,7 +89,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(348, 57);
             this.label5.TabIndex = 23;
-            this.label5.Text = "Git4Win will automatically recognize these if they are installed. In Linux, for e" +
+            this.label5.Text = "GitForce will automatically recognize these if they are installed. In Linux, for e" +
                 "xample, you can install one by simply issuing \"sudo apt-get install xxdiff\" comm" +
                 "and.";
             // 

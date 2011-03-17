@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormRemoteEdit
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userControlRemoteEdit = new Git4Win.RemoteEdit();
+            this.userControlRemoteEdit = new RemoteEdit();
             this.btDone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 

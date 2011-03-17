@@ -6,7 +6,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Class containing a set of repos that the program knows about.

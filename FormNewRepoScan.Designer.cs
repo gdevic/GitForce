@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormNewRepoScan
     {

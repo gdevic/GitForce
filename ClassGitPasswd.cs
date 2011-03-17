@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Manages git HTTPS password helper file

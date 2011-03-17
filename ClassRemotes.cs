@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Class containing a set of remotes for a given repository

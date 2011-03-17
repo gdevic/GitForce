@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormCommit
     {
@@ -183,7 +183,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Git4Win Commit Specification";
+            this.Text = "GitForce Commit Specification";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCommitFormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

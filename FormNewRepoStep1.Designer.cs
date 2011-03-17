@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormNewRepoStep1
     {
@@ -38,7 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btBrowse = new System.Windows.Forms.Button();
             this.folderDlg = new System.Windows.Forms.FolderBrowserDialog();
-            this.remoteDisplay = new Git4Win.RemoteDisplay();
+            this.remoteDisplay = new RemoteDisplay();
             this.SuspendLayout();
             // 
             // btCancel

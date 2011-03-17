@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormAbout
     {
@@ -119,7 +119,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "About Git4Win";
+            this.Text = "About GitForce";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAboutFormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

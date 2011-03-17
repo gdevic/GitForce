@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Git4Win.Repo.Edit.Panels;
+using GitForce.Repo.Edit.Panels;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Define an interface for option panels; at minimum they need to

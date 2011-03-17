@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Text;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Manage various merge programs and merge execution

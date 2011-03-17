@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Static helper class that parses URLs into various protocol variations

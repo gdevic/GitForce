@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Class containing the status of a git repository.

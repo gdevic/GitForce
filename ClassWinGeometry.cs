@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Save and restore individual form's location and sizes

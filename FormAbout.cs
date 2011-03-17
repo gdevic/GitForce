@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace Git4Win
+namespace GitForce
 {
     public partial class FormAbout : Form
     {

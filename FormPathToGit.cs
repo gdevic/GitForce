@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     public partial class FormPathToGit : Form
     {
@@ -22,7 +22,7 @@ namespace Git4Win
             InitializeComponent();
 
             textBoxPath.Text = Path;
-            labelInfo.Text = "Git4Win is a GUI front-end to the command line git. " +
+            labelInfo.Text = "GitForce is a GUI front-end to the command line git. " +
             "That means you have to have git already installed. You can download git for Windows from the link below.";
         }
 

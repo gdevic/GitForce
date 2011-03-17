@@ -8,7 +8,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Add a set of repositories to the workspace

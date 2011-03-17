@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Contains functions to execute a native OS command

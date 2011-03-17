@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// List of branches for the current repo, and a set of functions to operate on them

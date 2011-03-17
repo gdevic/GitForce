@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Git4Win.Properties;
+using GitForce.Properties;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// This class contains support functions and data definitions

@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormSettings
     {
@@ -32,7 +32,7 @@
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Commits");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Gitignore");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Status");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Git4win Objects", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("GitForce Objects", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
             treeNode3,
@@ -125,7 +125,7 @@
             treeNode4.Tag = "Status";
             treeNode4.Text = "Status";
             treeNode5.Name = "Node0";
-            treeNode5.Text = "Git4win Objects";
+            treeNode5.Text = "GitForce Objects";
             treeNode6.Name = "Node4";
             treeNode6.Tag = "ViewEdit";
             treeNode6.Text = "View / Edit";
@@ -177,7 +177,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Git4Win Settings";
+            this.Text = "GitForce Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSettingsFormClosing);
             this.ResumeLayout(false);
 

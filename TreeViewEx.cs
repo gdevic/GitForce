@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Yet another TreeViewEx control, written to be suitable for this project.

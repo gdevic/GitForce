@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Process command line arguments
@@ -30,7 +30,7 @@ namespace Git4Win
             if (commandLine["help"] == "true")
             {
                 Console.WriteLine(Environment.NewLine +
-                                  "Git4Win optional arguments:" + Environment.NewLine +
+                                  "GitForce optional arguments:" + Environment.NewLine +
                                   "  --version             Show the application version number." + Environment.NewLine +
                                   "  --reset-windows       Reset stored locations of windows and dialogs." + Environment.NewLine);
                 ReturnCode = 0;
@@ -40,7 +40,7 @@ namespace Git4Win
             // --version Show the application version number and quit
             if (commandLine["version"] == "true")
             {
-                Console.WriteLine("Git4Win version " + App.Version);
+                Console.WriteLine("GitForce version " + App.Version);
 
                 ReturnCode = 0;
                 return false;

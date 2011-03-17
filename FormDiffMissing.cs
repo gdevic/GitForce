@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     public partial class FormDiffMissing : Form
     {

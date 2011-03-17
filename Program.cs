@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Git4Win
+namespace GitForce
 {
     static class App
     {
@@ -95,7 +95,7 @@ namespace Git4Win
         /// </summary>
         public static readonly string AppHome = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Git4Win");
+            "GitForce");
 
         /// <summary>
         /// Program version number

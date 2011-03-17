@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace Git4Win
+namespace GitForce
 {
     public partial class FormSSH : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class RemoteEdit
     {
@@ -30,7 +30,7 @@
         {
             this.btRename = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.userControlRemoteDisplay = new Git4Win.RemoteDisplay();
+            this.userControlRemoteDisplay = new RemoteDisplay();
             this.listRemotes = new System.Windows.Forms.ListBox();
             this.btDelete = new System.Windows.Forms.Button();
             this.btAdd = new System.Windows.Forms.Button();

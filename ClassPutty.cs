@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Git4Win
+namespace GitForce
 {
     /// <summary>
     /// Manage PuTTY, PLink and PuttyGen utilities.
@@ -39,7 +39,7 @@ namespace Git4Win
         /// </summary>
         ~ClassPutty()
         {
-            // No real harm done if we fail to remove these temp files. Next time git4win is
+            // No real harm done if we fail to remove these temp files. Next time GitForce is
             // run we will reuse the same file names, so the junk will not grow in the temp folder.
             try
             {

@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Main.Left.Panels
+﻿namespace GitForce.Main.Left.Panels
 {
     partial class PanelView
     {
@@ -44,7 +44,7 @@
             this.btListView = new System.Windows.Forms.ToolStripButton();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView = new Git4Win.TreeViewEx();
+            this.treeView = new TreeViewEx();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();

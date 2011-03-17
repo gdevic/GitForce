@@ -1,4 +1,4 @@
-﻿namespace Git4Win
+﻿namespace GitForce
 {
     partial class FormMain
     {
@@ -378,7 +378,7 @@
             // 
             this.visitGitHubHomeMenuItem.Name = "visitGitHubHomeMenuItem";
             this.visitGitHubHomeMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.visitGitHubHomeMenuItem.Tag = "https://github.com/gdevic/git4win";
+            this.visitGitHubHomeMenuItem.Tag = "https://github.com/gdevic/GitForce";
             this.visitGitHubHomeMenuItem.Text = "Visit GitHub Home";
             this.visitGitHubHomeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
@@ -386,7 +386,7 @@
             // 
             this.usersManualMenuItem.Name = "usersManualMenuItem";
             this.usersManualMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.usersManualMenuItem.Tag = "http://gdevic.github.com/git4win";
+            this.usersManualMenuItem.Tag = "http://gdevic.github.com/GitForce";
             this.usersManualMenuItem.Text = "Users Manual";
             this.usersManualMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
@@ -406,7 +406,7 @@
             // 
             this.statusInfoLabel.Name = "statusInfoLabel";
             this.statusInfoLabel.Size = new System.Drawing.Size(154, 17);
-            this.statusInfoLabel.Text = "Git4Win - A Git Visual Client";
+            this.statusInfoLabel.Text = "GitForce - A Git Visual Client";
             // 
             // statusStrip
             // 
@@ -697,7 +697,7 @@
             this.btOptions.ImageTransparentColor = System.Drawing.Color.Black;
             this.btOptions.Name = "btOptions";
             this.btOptions.Size = new System.Drawing.Size(23, 22);
-            this.btOptions.Text = "Set Git4Win Options";
+            this.btOptions.Text = "Set GitForce Options";
             this.btOptions.Click += new System.EventHandler(this.MenuOptions);
             // 
             // btSsh
@@ -729,7 +729,7 @@
             this.MainMenuStrip = this.menuMain;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Git4Win";
+            this.Text = "GitForce";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMainFormClosing);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();

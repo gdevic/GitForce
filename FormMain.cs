@@ -9,10 +9,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using Git4Win.Main.Left.Panels;
-using Git4Win.Main.Right.Panels;
+using GitForce.Main.Left.Panels;
+using GitForce.Main.Right.Panels;
 
-namespace Git4Win
+namespace GitForce
 {
     public partial class FormMain : Form
     {
@@ -108,7 +108,7 @@ namespace Git4Win
                 "Repos" : 
                 Properties.Settings.Default.viewRightPanel);
 
-            PrintStatus("Git4Win version " + App.Version);
+            PrintStatus("GitForce version " + App.Version);
 
             // Initiate the first global refresh
             App.Refresh();
@@ -274,7 +274,7 @@ namespace Git4Win
         {
             // Change the window title and display the default remote name
 
-            StringBuilder title = new StringBuilder("Git4Win ");
+            StringBuilder title = new StringBuilder("GitForce ");
 
             if (PanelBranches.GetCurrent() != "")
                 title.Append("- " + PanelBranches.GetCurrent());
