@@ -561,37 +561,40 @@
     <None Include="Resources\Changelist\Change1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon1.ico" />
+    <None Include="Resources\Tree\TreeIconC.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon2.ico" />
+    <None Include="Resources\Tree\TreeIconD.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon3.ico" />
+    <None Include="Resources\Tree\TreeIconDB.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon4.ico" />
+    <None Include="Resources\Tree\TreeIconFC.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon5.ico" />
+    <None Include="Resources\Tree\TreeIconFF.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon6.ico" />
+    <None Include="Resources\Tree\TreeIconFO.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon7.ico" />
+    <None Include="Resources\Tree\TreeIconM.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon8.ico" />
+    <None Include="Resources\Tree\TreeIconQ.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon9.ico" />
+    <None Include="Resources\Tree\TreeIconR.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon10.ico" />
+    <None Include="Resources\Tree\TreeIconU.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TreeIcon11.ico" />
+    <None Include="Resources\Tree\TreeIconX.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tree\TreeIconA.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

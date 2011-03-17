@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Git4Win.Properties;
 
 namespace Git4Win
 {
@@ -14,38 +16,59 @@ namespace Git4Win
     public static class ClassView
     {
         /// <summary>
-        /// Enumeration of icons for files in different stage
+        /// Enumeration of icons for files at different stage
         /// </summary>
-        public enum Img
-        {
-            FolderClosed,           // ID=0
-            FolderOpened,           // ID=1
-            DatabaseClosed,         // ID=2
-            DatabaseOpened,         // ID=3
-            FileUnmodified,         // ID=5
-            FileUntracked,          // ID=6
-            FileDeleted,            // ID=7
-            FileAdded,              // ID=8
-            FileModified,           // ID=9
-            FileCopied,             // ID=10
-            FileRenamed,            // ID=11
-            FileUnmerged,           // ID=12
-            ChangeAll,              // ID=13
-            ChangeOne,              // ID=14
+        public enum Img {
+            FileUnmodified,
+            FileModified,
+            FileAdded,
+            FileDeleted,
+            FileRenamed,
+            FileCopied,
+            FileUnmerged,
+            FileUntracked,
+
+            FolderClosed,
+            FolderOpened,
+            DatabaseClosed,
+            DatabaseOpened,
+            ChangelistRoot,
+            Changelist,
         }
+
+        /// <summary>
+        /// Describes a mapping from image number into the resource icon
+        /// </summary>
+        private static readonly Dictionary<Img, System.Drawing.Icon> Res = new Dictionary<Img, System.Drawing.Icon> {
+            { Img.FileUnmodified,   Resources.TreeIconU },
+            { Img.FileModified,     Resources.TreeIconM },
+            { Img.FileAdded,        Resources.TreeIconA },
+            { Img.FileDeleted,      Resources.TreeIconD },
+            { Img.FileRenamed,      Resources.TreeIconR },
+            { Img.FileCopied,       Resources.TreeIconC },
+            { Img.FileUnmerged,     Resources.TreeIconX },
+            { Img.FileUntracked,    Resources.TreeIconQ },
+
+            { Img.FolderClosed,     Resources.TreeIconFC },
+            { Img.FolderOpened,     Resources.TreeIconFO },
+            { Img.DatabaseClosed,   Resources.TreeIconDB },
+            { Img.DatabaseOpened,   Resources.TreeIconDB },
+            { Img.ChangelistRoot,   Resources.Change0 },
+            { Img.Changelist,       Resources.Change1 },
+        };
 
         /// <summary>
         /// Describes a mapping from a git file status code to the image associated with it
         /// </summary>
         private static readonly Dictionary<char, Img> Staticons = new Dictionary<char, Img> {
             { ' ', Img.FileUnmodified },
-            { '?', Img.FileUntracked },
-            { 'D', Img.FileDeleted },
-            { 'A', Img.FileAdded },
             { 'M', Img.FileModified },
-            { 'C', Img.FileCopied },
+            { 'A', Img.FileAdded },
+            { 'D', Img.FileDeleted },
             { 'R', Img.FileRenamed },
-            { 'U', Img.FileUnmerged }
+            { 'C', Img.FileCopied },
+            { 'U', Img.FileUnmerged },
+            { '?', Img.FileUntracked },
         };
 
         /// <summary>
@@ -56,22 +79,8 @@ namespace Git4Win
             ImageList il = new ImageList();
             il.ImageSize = new System.Drawing.Size(32, 16);
             il.ColorDepth = ColorDepth.Depth32Bit;
-
-            il.Images.Add(Properties.Resources.TreeIcon1);  // ID=0
-            il.Images.Add(Properties.Resources.TreeIcon2);  // ID=1
-            il.Images.Add(Properties.Resources.TreeIcon3);  // ID=2
-            il.Images.Add(Properties.Resources.TreeIcon4);  // ID=3
-            il.Images.Add(Properties.Resources.TreeIcon5);  // ID=4
-            il.Images.Add(Properties.Resources.TreeIcon6);  // ID=5
-            il.Images.Add(Properties.Resources.TreeIcon7);  // ID=6
-            il.Images.Add(Properties.Resources.TreeIcon8);  // ID=7
-            il.Images.Add(Properties.Resources.TreeIcon9);  // ID=8
-            il.Images.Add(Properties.Resources.TreeIcon10); // ID=9
-            il.Images.Add(Properties.Resources.TreeIcon11); // ID=10
-            il.Images.Add(Properties.Resources.TreeIcon11); // ID=11 TODO: Add for unmerged
-
-            il.Images.Add(Properties.Resources.Change0);    // ID=12
-            il.Images.Add(Properties.Resources.Change1);    // ID=13
+            foreach (var kvp in Res)
+                il.Images.Add(kvp.Value);
 
             return il;
         }
@@ -95,7 +104,7 @@ namespace Git4Win
                 }
                 else
                 {
-                    tn.ImageIndex = isIndex ? (int)Img.ChangeOne : (int)Img.FolderClosed;
+                    tn.ImageIndex = isIndex ? (int)Img.Changelist : (int)Img.FolderClosed;
                 }
                 ViewAssignIcon(status, tn, isIndex);
             }

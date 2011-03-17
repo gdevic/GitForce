@@ -54,7 +54,7 @@ namespace Git4Win.Main.Right.Panels
                 treeCommits.Nodes.Add(node);
 
                 // Set the first node (root) image according to the view mode
-                node.ImageIndex = (int)ClassView.Img.ChangeAll;
+                node.ImageIndex = (int)ClassView.Img.ChangelistRoot;
 
                 // Assign the icons to the nodes of tree view
                 ClassView.ViewAssignIcon(Status, node, true);

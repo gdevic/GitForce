@@ -133,40 +133,43 @@
   <data name="puttygen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PuTTY\puttygen.exe;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TreeIcon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon1.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon11.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon2.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon3.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon4.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon5.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon6.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon7.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon8" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon8.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TreeIcon9" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon9.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="git" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\App\git.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TreeIcon10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TreeIcon10.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TreeIconA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconA.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconC.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconD.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconDB.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconFC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconFC.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconFF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconFF.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconFO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconFO.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconM.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconQ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconQ.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconR.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconU.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconX.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

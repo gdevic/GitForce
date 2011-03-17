@@ -102,79 +102,86 @@ namespace Git4Win.Properties {
             }
         }
         
-        public static System.Drawing.Icon TreeIcon1 {
+        public static System.Drawing.Icon TreeIconA {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon1", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconA", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon10 {
+        public static System.Drawing.Icon TreeIconC {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon10", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconC", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon11 {
+        public static System.Drawing.Icon TreeIconD {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon11", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconD", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon2 {
+        public static System.Drawing.Icon TreeIconDB {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon2", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconDB", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon3 {
+        public static System.Drawing.Icon TreeIconFC {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon3", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconFC", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon4 {
+        public static System.Drawing.Icon TreeIconFF {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon4", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconFF", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon5 {
+        public static System.Drawing.Icon TreeIconFO {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon5", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconFO", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon6 {
+        public static System.Drawing.Icon TreeIconM {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon6", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconM", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon7 {
+        public static System.Drawing.Icon TreeIconQ {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon7", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconQ", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon8 {
+        public static System.Drawing.Icon TreeIconR {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon8", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconR", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        public static System.Drawing.Icon TreeIcon9 {
+        public static System.Drawing.Icon TreeIconU {
             get {
-                object obj = ResourceManager.GetObject("TreeIcon9", resourceCulture);
+                object obj = ResourceManager.GetObject("TreeIconU", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        public static System.Drawing.Icon TreeIconX {
+            get {
+                object obj = ResourceManager.GetObject("TreeIconX", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
