@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win.Repo.Edit.Panels
+namespace GitForce.Repo.Edit.Panels
 {
     public partial class ControlGitignore : UserControl, IRepoSettings
     {

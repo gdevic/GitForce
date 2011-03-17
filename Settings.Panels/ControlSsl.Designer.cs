@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Settings.Panels
+﻿namespace GitForce.Settings.Panels
 {
     partial class ControlSsl
     {
@@ -43,7 +43,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(300, 29);
             this.label1.TabIndex = 1;
-            this.label1.Text = "On Windows OS, Git4Win uses PuTTY internally to manage SSL connections.";
+            this.label1.Text = "On Windows OS, GitForce uses PuTTY internally to manage SSL connections.";
             // 
             // checkBoxLeavePageant
             // 
@@ -52,7 +52,7 @@
             this.checkBoxLeavePageant.Name = "checkBoxLeavePageant";
             this.checkBoxLeavePageant.Size = new System.Drawing.Size(289, 17);
             this.checkBoxLeavePageant.TabIndex = 3;
-            this.checkBoxLeavePageant.Text = "Leave Pageant daemon running after git4win has exited";
+            this.checkBoxLeavePageant.Text = "Leave Pageant daemon running after GitForce has exited";
             this.checkBoxLeavePageant.UseVisualStyleBackColor = true;
             // 
             // label2

@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Settings.Panels
+﻿namespace GitForce.Settings.Panels
 {
     partial class ControlDiff
     {
@@ -99,7 +99,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(300, 37);
             this.label1.TabIndex = 10;
-            this.label1.Text = "Chose a diff utility to use with Git4Win, or select one from those detected on yo" +
+            this.label1.Text = "Chose a diff utility to use with GitForce, or select one from those detected on yo" +
                 "ur system:";
             // 
             // ControlDiff

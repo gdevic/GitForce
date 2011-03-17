@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win.Settings.Panels
+namespace GitForce.Settings.Panels
 {
     public partial class ControlDoubleClick : UserControl, IUserSettings
     {

@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Settings.Panels
+﻿namespace GitForce.Settings.Panels
 {
     partial class ControlFiles
     {

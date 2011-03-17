@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Main.Right.Panels
+﻿namespace GitForce.Main.Right.Panels
 {
     partial class PanelCommits
     {
@@ -35,7 +35,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeCommits = new Git4Win.TreeViewEx();
+            this.treeCommits = new TreeViewEx();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();

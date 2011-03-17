@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Settings.Panels
+﻿namespace GitForce.Settings.Panels
 {
     partial class ControlGitignore
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userControlEditGitignore = new Git4Win.UserControlEditGitignore();
+            this.userControlEditGitignore = new UserControlEditGitignore();
             this.SuspendLayout();
             // 
             // userControlEditGitignore

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Git4Win.Properties {
+namespace GitForce.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

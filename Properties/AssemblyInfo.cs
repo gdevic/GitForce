@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Git4Win")]
+[assembly: AssemblyTitle("GitForce")]
 [assembly: AssemblyDescription("A Visual Git Frontend Tool")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Git4Win")]
-[assembly: AssemblyProduct("Git4Win")]
+[assembly: AssemblyCompany("GitForce")]
+[assembly: AssemblyProduct("GitForce")]
 [assembly: AssemblyCopyright("Copyright © Goran Devic 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

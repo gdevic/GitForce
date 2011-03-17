@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Main.Right.Panels
+﻿namespace GitForce.Main.Right.Panels
 {
     partial class PanelBranches
     {

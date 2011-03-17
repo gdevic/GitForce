@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Git4Win.Main.Right.Panels
+namespace GitForce.Main.Right.Panels
 {
     public partial class PanelRevlist : UserControl
     {

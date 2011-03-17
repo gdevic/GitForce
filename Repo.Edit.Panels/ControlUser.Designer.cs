@@ -1,4 +1,4 @@
-﻿namespace Git4Win.Repo.Edit.Panels
+﻿namespace GitForce.Repo.Edit.Panels
 {
     partial class ControlUser
     {

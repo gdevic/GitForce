@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using Git4Win.Main.Right.Panels;
+using GitForce.Main.Right.Panels;
 
-namespace Git4Win.Main.Left.Panels
+namespace GitForce.Main.Left.Panels
 {
     public partial class PanelView : UserControl
     {
