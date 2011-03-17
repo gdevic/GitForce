@@ -12,6 +12,7 @@
     <AssemblyName>Git4Win</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ApplicationIcon>git.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -595,6 +596,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Tree\TreeIconA.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="git.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
