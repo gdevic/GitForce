@@ -535,24 +535,7 @@ namespace Git4Win.Main.Left.Panels
             Selection sel = new Selection(treeView, Status);
             string dir = Path.GetDirectoryName(sel.SelPath);
             if (dir != null)
-            {
-                Directory.SetCurrentDirectory(dir);
-                try
-                {
-                    // WAR: Opening a command window/terminal is platform-specific
-                    if (ClassUtils.IsMono())
-                    {
-                        // TODO: Start a terminal on Unix in a more flexible way
-                        Process.Start(@"/usr/bin/gnome-terminal", "--working-directory=" + dir);
-                    }
-                    else
-                        Process.Start("cmd.exe");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+                ClassUtils.CommandPromptHere(dir);
         }
 
         #region Handlers for file actions related to Git

@@ -101,12 +101,13 @@ namespace Git4Win.Main.Right.Panels
             ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteRepoClick);
             ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, ListReposDoubleClick);
             ToolStripMenuItem mSetDefault = new ToolStripMenuItem("Set Default to...", null, MenuSetDefaultRepoToClick);
+            ToolStripMenuItem mCommand = new ToolStripMenuItem("Command Prompt...", null, MenuViewCommandClick);
             ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
                 mNew, mScan, mEdit, mDelete,
                 new ToolStripSeparator(),
-                mSwitchTo, mSetDefault,
+                mSwitchTo, mSetDefault, mCommand,
                 new ToolStripSeparator(),
                 mRefresh
             });
@@ -115,7 +116,7 @@ namespace Git4Win.Main.Right.Panels
             ClassRepo repo = GetSelectedRepo();
 
             if (repo == null)
-                mEdit.Enabled = mDelete.Enabled = mSwitchTo.Enabled = mSetDefault.Enabled = false;
+                mEdit.Enabled = mDelete.Enabled = mSwitchTo.Enabled = mSetDefault.Enabled = mCommand.Enabled = false;
             else
             {
                 if (repo == App.Repos.Current)
@@ -126,7 +127,10 @@ namespace Git4Win.Main.Right.Panels
             }
             // We can delete a number of repos
             if (listRepos.SelectedIndices.Count > 1)
+            {
                 mDelete.Enabled = true;
+                mCommand.Enabled = false;
+            }
 
             // Add the specific singular repo name
             if (listRepos.SelectedIndices.Count == 1)
@@ -274,6 +278,16 @@ namespace Git4Win.Main.Right.Panels
         {
             App.Repos.Default = GetSelectedRepo();
             ReposRefresh();
+        }
+
+        /// <summary>
+        /// Open a command prompt at the root directory of a selected repo,
+        /// not necessarily the current repo
+        /// </summary>
+        private void MenuViewCommandClick(object sender, EventArgs e)
+        {
+            ClassRepo repo = GetSelectedRepo();
+            ClassUtils.CommandPromptHere(repo.Root);
         }
 
         /// <summary>

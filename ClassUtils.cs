@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Git4Win
 {
@@ -61,6 +63,29 @@ namespace Git4Win
         public static bool IsMono()
         {
             return Type.GetType("Mono.Runtime") != null;
+        }
+
+        /// <summary>
+        /// Open a command prompt at the specific directory
+        /// </summary>
+        public static void CommandPromptHere(string where)
+        {
+            Directory.SetCurrentDirectory(where);
+            try
+            {
+                // WAR: Opening a command window/terminal is platform-specific
+                if (ClassUtils.IsMono())
+                {
+                    // TODO: Start a terminal on Unix in a more flexible way
+                    Process.Start(@"/usr/bin/gnome-terminal", "--working-directory=" + where);
+                }
+                else
+                    Process.Start("cmd.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
         }
 
         /// <summary>
