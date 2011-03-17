@@ -128,6 +128,14 @@ namespace Git4Win.Main.Right.Panels
             if (listRepos.SelectedIndices.Count > 1)
                 mDelete.Enabled = true;
 
+            // Add the specific singular repo name
+            if (listRepos.SelectedIndices.Count == 1)
+            {
+                string repoName = listRepos.SelectedItems[0].Text.Replace('\\', '/').Split('/').Last();
+                mSwitchTo.Text = "Switch to " + repoName;
+                mSetDefault.Text = "Set Default to " + repoName;
+            }
+
             return menu;
         }
 
