@@ -26,6 +26,9 @@ namespace Git4Win
                 Size = Properties.Settings.Default.FormLogSize;
             }
 
+            // Reuse the same font selected as fixed-pitch
+            textBox.Font = Properties.Settings.Default.commitFont;
+
             Show(Properties.Settings.Default.ShowLogWindow);
         }
 

@@ -50,6 +50,7 @@
             this.textBox.Size = new System.Drawing.Size(492, 414);
             this.textBox.TabIndex = 0;
             this.textBox.Text = "";
+            this.textBox.WordWrap = false;
             // 
             // contextMenu
             // 

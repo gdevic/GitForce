@@ -30,6 +30,9 @@ namespace Git4Win
             InitializeComponent();
             _cmd = cmd;
             _args = args;
+
+            // Reuse the same font selected as fixed-pitch
+            textStdout.Font = Properties.Settings.Default.commitFont;
         }
 
         /// <summary>
