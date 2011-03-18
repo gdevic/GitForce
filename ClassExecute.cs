@@ -35,7 +35,7 @@ namespace GitForce
         {
         }
 
-        public delegate void PCompleteDelegate();
+        public delegate void PCompleteDelegate(object exitCode);
 
         public struct ThreadedParameters
         {
@@ -48,6 +48,9 @@ namespace GitForce
 
         private static Process proc;
 
+        /// <summary>
+        /// Executes a command using a thread
+        /// </summary>
         public static void RunThreaded(object argument)
         {
             ThreadedParameters p = (ThreadedParameters) argument;
@@ -83,9 +86,8 @@ namespace GitForce
             proc.BeginErrorReadLine();
 
             proc.WaitForExit();
+            p.FComplete(proc.ExitCode);
             proc.Close();
-
-            p.FComplete();
         }
 
         public static void TerminateThreaded()

@@ -21,6 +21,8 @@ namespace GitForce
         private readonly string _cmd;
         private readonly string _args;
         private Thread _thRun;
+        private string _lastError;
+        private int _ec;
 
         /// <summary>
         /// Class constructor that also presets command to be run
@@ -33,6 +35,8 @@ namespace GitForce
 
             // Reuse the same font selected as fixed-pitch
             textStdout.Font = Properties.Settings.Default.commitFont;
+            textStdout.Text += cmd + Environment.NewLine;
+            textStdout.Text += args + Environment.NewLine;
         }
 
         /// <summary>
@@ -64,7 +68,7 @@ namespace GitForce
                 BeginInvoke((MethodInvoker) (() => POutputDataReceived(sender, e)));
             else
             {
-                textStdout.Text += e.Data;
+                textStdout.Text += e.Data + Environment.NewLine;
                 textStdout.Refresh();
             }
         }
@@ -79,6 +83,7 @@ namespace GitForce
                 BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
             else
             {
+                _lastError = e.Data;
                 toolStripStatus.Text = e.Data;
             }
         }
@@ -86,14 +91,24 @@ namespace GitForce
         /// <summary>
         /// Callback that handles process completion event
         /// </summary>
-        private void PComplete()
+        private void PComplete(object exitCode)
         {
-            if (InvokeRequired)
-                BeginInvoke((MethodInvoker)(PComplete));
-            else
+            if(InvokeRequired)
             {
-                btCancel.Text = "Done";
+                BeginInvoke((MethodInvoker) delegate {
+                    _ec = (int)exitCode;
+                    textStdout.Text += _lastError + Environment.NewLine;
+                    btCancel.Text = "Done";
+                });
             }
+        }
+
+        /// <summary>
+        /// Returns a string containing the result of Git command as printed to stdout stream
+        /// </summary>
+        public string GetStdout()
+        {
+            return textStdout.Text;
         }
 
         /// <summary>
@@ -111,6 +126,9 @@ namespace GitForce
             }
             else
             {
+                if (_ec != 0)
+                    ClassUtils.LastError = _lastError;
+
                 if (btCancel.Text == "Done")
                     DialogResult = DialogResult.OK;
                 if (btCancel.Text == "Close")

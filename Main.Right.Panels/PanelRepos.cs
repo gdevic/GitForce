@@ -156,7 +156,7 @@ namespace GitForce.Main.Right.Panels
             {
                 // Enforce target directory being empty for clone operations
                 newRepoStep2.EnforceDirEmpty = newRepoStep1.Type != "empty";
-
+                BackToStep2:
                 DialogResult result = newRepoStep2.ShowDialog();
 
                 // Clicking on the <<Prev button will return "Retry" result, so we loop back to the first form...
@@ -194,6 +194,8 @@ namespace GitForce.Main.Right.Panels
 
                         Directory.SetCurrentDirectory(root);
                         ClassGit.Run(init);
+                        if(ClassUtils.IsLastError())
+                            throw new ClassException(ClassUtils.LastError);
                         ClassRepo repo = App.Repos.Add(root);
 
                         // Switch the view mode to Local File View and Local Pending Changelists
@@ -206,6 +208,7 @@ namespace GitForce.Main.Right.Panels
                     catch (ClassException ex)
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        goto BackToStep2;
                     }
                 }
             }

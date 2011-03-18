@@ -71,6 +71,8 @@ namespace GitForce
         /// </summary>
         public static string Run(string gitcmd)
         {
+            string result;
+
             // Pick up git commands that take long time to execute and run them
             // using a threaded execution
             if (gitcmd.StartsWith("clone --progress") || 
@@ -79,10 +81,12 @@ namespace GitForce
             {
                 FormGitRun formGitRun = new FormGitRun(Properties.Settings.Default.GitPath, gitcmd);
                 formGitRun.ShowDialog();
-                return "";
+                result = formGitRun.GetStdout();
             }
             else
-                return ClassExecute.Run(Properties.Settings.Default.GitPath, gitcmd);
+                result = ClassExecute.Run(Properties.Settings.Default.GitPath, gitcmd);
+
+            return result;
         }
     }
 }
