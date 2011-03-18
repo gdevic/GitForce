@@ -154,7 +154,7 @@ namespace GitForce
         /// </summary>
         private void TextBranchNameKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != '_' && !char.IsControl(e.KeyChar))
+            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != '_' && e.KeyChar != '-' && !char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 
