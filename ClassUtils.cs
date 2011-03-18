@@ -97,5 +97,63 @@ namespace GitForce
                 return true;
             return s.Trim().Length == 0;
         }
+
+        /// <summary>
+        /// Remove given folder and all files and subfolders under it.
+        /// If fPreserveGit is true, all folders that are named ".git" will be preserved (not removed)
+        /// If fPreserveRootFolder is true, the first (root) folder will also be preserved
+        /// Return false if the function could not remove all folders, true otherwise.
+        /// </summary>
+        public static bool DeleteFolder(DirectoryInfo dirInfo, bool fPreserveGit, bool fPreserveRootFolder)
+        {
+            ClearLastError();
+            try
+            {
+                DeleteRecursiveFolder(dirInfo, fPreserveGit, fPreserveRootFolder);
+            }
+            catch (Exception ex)
+            {
+                _lastError = ex.Message;
+            }
+            return !IsLastError();
+        }
+
+        /// <summary>
+        /// Delete a directory and all files and subdirectories under it.
+        /// TODO: This particular case could probably be optimized: do we really need 2 booleans coming in
+        /// </summary>
+        private static void DeleteRecursiveFolder(DirectoryInfo dirInfo, bool fPreserveGit, bool fPreserveRootFolder)
+        {
+            foreach (var subDir in dirInfo.GetDirectories())
+            {
+                if (fPreserveGit == false || !subDir.Name.EndsWith(".git"))
+                    DeleteRecursiveFolder(subDir, false, false);
+            }
+
+            foreach (var file in dirInfo.GetFiles())
+            {
+                file.Attributes = FileAttributes.Normal;
+                try
+                {
+                    file.Delete();
+                }
+                catch(Exception ex)
+                {
+                    _lastError = ex.Message;
+                }
+            }
+
+            if (fPreserveRootFolder == false)
+            {
+                try
+                {
+                    dirInfo.Delete();
+                }
+                catch(Exception ex)
+                {
+                    _lastError = ex.Message;
+                }
+            }
+        }
     }
 }

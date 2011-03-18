@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -32,7 +33,8 @@ namespace GitForce
                 Console.WriteLine(Environment.NewLine +
                                   "GitForce optional arguments:" + Environment.NewLine +
                                   "  --version             Show the application version number." + Environment.NewLine +
-                                  "  --reset-windows       Reset stored locations of windows and dialogs." + Environment.NewLine);
+                                  "  --reset-windows       Reset stored locations of windows and dialogs." + Environment.NewLine +
+                                  "  --reset-config        Reset program configuration (repos etc.)." + Environment.NewLine);
                 ReturnCode = 0;
                 return false;
             }
@@ -54,6 +56,36 @@ namespace GitForce
 
                 ReturnCode = 0;
                 return false;
+            }
+
+            // --reset-config   Reset stored configuration items (repos, settings)
+            if (commandLine["reset-config"] == "true")
+            {
+                List<string> toWhack = new List<string>();
+
+                // This is very much dependent on the platform, load a list of directories to whack appropriately
+                if(ClassUtils.IsMono())
+                {
+                    string home = Environment.GetEnvironmentVariable("HOME");
+                    if(!string.IsNullOrEmpty(home))
+                    {
+                        toWhack.Add(Path.Combine(home, ".config/GitForce"));
+                        toWhack.Add(Path.Combine(home, ".local/share/GitForce"));                        
+                    }
+                }
+                else
+                {
+                    toWhack.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GitForce"));
+                    toWhack.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GitForce"));
+                }
+                // Now that we have a list of directories to remove, delete them
+                foreach (var dir in toWhack)
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                    ClassUtils.DeleteFolder(dirInfo, false, false);
+                    if(ClassUtils.IsLastError())
+                        Console.Write(ClassUtils.LastError);
+                }
             }
             return true;
         }
