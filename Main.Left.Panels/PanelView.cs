@@ -639,8 +639,7 @@ namespace GitForce.Main.Left.Panels
                 Status.Repo.GitDelete(sel.Opclass['M']);
             if (sel.Opclass.ContainsKey('R'))
                 Status.Repo.GitDelete(sel.Opclass['R']);
-
-            ViewRefresh();
+            App.Refresh();
         }
 
         /// <summary>
@@ -649,17 +648,12 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewRemoveFromFsClick(object sender, EventArgs e)
         {
             Selection sel = new Selection(treeView, Status);
+            App.PrintStatusMessage("Removing " + string.Join(" ", sel.SelFiles.ToArray()));
+
             foreach (string s in sel.SelFiles)
             {
-                try
-                {
-                    File.SetAttributes(s, FileAttributes.Normal);
-                    File.Delete(s);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                if (!ClassUtils.DeleteFile(s))
+                    App.PrintStatusMessage("Error: " + ClassUtils.LastError);
             }
             ViewRefresh();
         }

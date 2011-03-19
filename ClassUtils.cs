@@ -131,17 +131,7 @@ namespace GitForce
             }
 
             foreach (var file in dirInfo.GetFiles())
-            {
-                file.Attributes = FileAttributes.Normal;
-                try
-                {
-                    file.Delete();
-                }
-                catch(Exception ex)
-                {
-                    _lastError = ex.Message;
-                }
-            }
+                DeleteFile(file.FullName);
 
             if (fPreserveRootFolder == false)
             {
@@ -154,6 +144,26 @@ namespace GitForce
                     _lastError = ex.Message;
                 }
             }
+        }
+
+        /// <summary>
+        /// Deletes a file from the local file system.
+        /// Returns true if delete succeeded, false otherwise, with the _lastError set.
+        /// </summary>
+        public static bool DeleteFile(string name)
+        {
+            ClearLastError();
+            try
+            {
+                FileInfo file = new FileInfo(name) {Attributes = FileAttributes.Normal};
+                file.Delete();
+            }
+            catch (Exception ex)
+            {
+                _lastError = ex.Message;
+                return false;
+            }
+            return true;
         }
     }
 }
