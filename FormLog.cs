@@ -29,6 +29,11 @@ namespace GitForce
             // Reuse the same font selected as fixed-pitch
             textBox.Font = Properties.Settings.Default.commitFont;
 
+            // Debug builds start with log window open
+#if DEBUG
+            Print("Debug build.");
+            Properties.Settings.Default.ShowLogWindow = true;
+#endif
             Show(Properties.Settings.Default.ShowLogWindow);
         }
 
