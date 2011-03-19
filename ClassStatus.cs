@@ -25,6 +25,14 @@ namespace GitForce
         private readonly Dictionary<string, string> _lookup = new Dictionary<string, string>();
 
         /// <summary>
+        /// Lookup dictionary for file names that are renames of known files kept in _lookup.
+        /// Contains the old-name keyed by the new-name:   R old-name -> new-name
+        /// Two of these dictionaries, one holds the relative path, the other one absolute path to files.
+        /// </summary>
+        private readonly Dictionary<string, string> _renamesRel = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _renamesAbs = new Dictionary<string, string>();
+
+        /// <summary>
         /// List of file nodes. This is an intermediate step when building code dictionary.
         /// List contains files relative to the Repo root.
         /// </summary>
@@ -60,12 +68,59 @@ namespace GitForce
                 .Split(("\0")
                 .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             _list = new List<string>(response.Length);
-            _list.AddRange(response);
 
-            // After being renamed, original file names are listed without any prefix,
-            // immediately after the "R <new-file>" entries. Prune original names.
-            _list = _list.FindAll(s => s.Length >= 3 && s[2] == ' ');
+            // When git detects that a file has been renamed in index, it lists the new name correctly,
+            // but the old name is listed without any status tags immediately after the new name.
+            // For each such occurrence, we build dictionaries to store old names and abstract
+            // operations with renamed files as they were a single file (git really messed up with this).
+            _renamesRel.Clear();
+            _renamesAbs.Clear();
+            for (int i = 0; i < response.Length; i++ )
+            {
+                // Only renamed ('R') and copied ('C') files will add entries to these extra dictionaries
+                if("RC".Contains(response[i][0]))
+                {
+                    _list.Add(response[i]);
+                    _renamesRel.Add(response[i].Substring(3), response[i+1]);
+                    _renamesAbs.Add(Path.Combine(Repo.Root, response[i].Substring(3)),
+                                    Path.Combine(Repo.Root, response[i + 1]));
+                    i++;
+                }
+                else
+                    _list.Add(response[i]);
+            }
         }
+
+        #region Deal with renamed files
+
+        /// <summary>
+        /// Given a list of files, return a list of their original names.
+        /// Use paths relative to the repo root.
+        /// </summary>
+        public List<string> GetRenamesRel(List<string> names)
+        {
+            return (from name in names where _renamesRel.ContainsKey(name) select _renamesRel[name]).ToList();
+        }
+
+        /// <summary>
+        /// Given a list of files, return a list of their original names.
+        /// Use absolute path to files.
+        /// </summary>
+        public List<string> GetRenamesAbs(List<string> names)
+        {
+            return (from name in names where _renamesAbs.ContainsKey(name) select _renamesAbs[name]).ToList();
+        }
+
+        /// <summary>
+        /// Reverse lookup to the original file name given the new (renamed) file name.
+        /// Use absolute path to files.
+        /// </summary>
+        public string GetRenamesOldNameAbs(string newname)
+        {
+            return _renamesAbs.Where(key => key.Value == newname).Select(key => key.Key).FirstOrDefault();
+        }
+
+        #endregion
 
         /// <summary>
         /// Creates the class status list by running a git ls-tree command.

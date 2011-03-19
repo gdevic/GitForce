@@ -305,6 +305,9 @@ namespace GitForce.Main.Right.Panels
                     string tempFile = Path.GetTempFileName();
                     File.WriteAllText(tempFile, commitForm.GetDescription());
 
+                    // Add renamed/copied file names
+                    final.AddRange(Status.GetRenamesRel(final));
+
                     // Form the final command with the description file, optional amend and
                     // the final list of files which are then quoted
                     string cmd = "commit -F " + tempFile +
@@ -383,6 +386,10 @@ namespace GitForce.Main.Right.Panels
                 if (MessageBox.Show(@"Revert will unstage all the selected files and will lose the changes.
 Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
+                    // Add renamed/copied file names using their absolute path
+                    List<string> renames = Status.GetRenamesAbs(c.Files);
+                    c.Files.AddRange(renames);
+
                     // There are 2 ways to unstage a file:
                     // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
                     // Can't figure out how to find out which one to use at this moment, so use both.
@@ -395,6 +402,16 @@ Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Informa
                         App.PrintStatusMessage("Retrying using the `rm` option...");
                         cmd = "rm --cached -- " + String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToArray());
                         Status.Repo.RunCmd(cmd);                        
+                    }
+
+                    // The last step is to fix up renamed files back to their original names
+                    foreach (var s in renames)
+                    {
+                        try
+                        {
+                            File.Move(Status.GetRenamesOldNameAbs(s), s);
+                        }
+                        catch (Exception ex) { App.PrintStatusMessage("File revert: `" + s + "`: " + ex.Message); }
                     }
 
                     App.Refresh();
