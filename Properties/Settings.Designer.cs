@@ -37,7 +37,7 @@ namespace GitForce.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("650, 450")]
+        [global::System.Configuration.DefaultSettingValueAttribute("800, 540")]
         public global::System.Drawing.Size FormMainSize {
             get {
                 return ((global::System.Drawing.Size)(this["FormMainSize"]));

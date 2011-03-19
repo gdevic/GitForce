@@ -622,6 +622,7 @@ namespace GitForce.Main.Left.Panels
                     List<string> cmds = formRename.GetGitCmds();
                     foreach (string cmd in cmds)
                         App.Repos.Current.Run(cmd);
+                    App.Refresh();
                 }
         }
 
@@ -674,6 +675,7 @@ namespace GitForce.Main.Left.Panels
             Directory.SetCurrentDirectory(Path.GetDirectoryName(sel.SelPath));
             try
             {
+                App.PrintStatusMessage("Editing " + sel.SelPath);
                 if (sender is ToolStripMenuItem)
                 {
                     object opt = (sender as ToolStripMenuItem).Tag;

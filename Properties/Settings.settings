@@ -6,7 +6,7 @@
       <Value Profile="(Default)">300, 300</Value>
     </Setting>
     <Setting Name="FormMainSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">650, 450</Value>
+      <Value Profile="(Default)">800, 540</Value>
     </Setting>
     <Setting Name="GitPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

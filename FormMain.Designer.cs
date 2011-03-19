@@ -119,7 +119,7 @@
             this.menuMainHelp});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(708, 24);
+            this.menuMain.Size = new System.Drawing.Size(784, 24);
             this.menuMain.TabIndex = 0;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -412,9 +412,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusInfoLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 465);
+            this.statusStrip.Location = new System.Drawing.Point(0, 480);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(708, 22);
+            this.statusStrip.Size = new System.Drawing.Size(784, 22);
             this.statusStrip.TabIndex = 1;
             // 
             // splitContainer1
@@ -432,8 +432,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listStatus);
-            this.splitContainer1.Size = new System.Drawing.Size(708, 416);
-            this.splitContainer1.SplitterDistance = 195;
+            this.splitContainer1.Size = new System.Drawing.Size(784, 431);
+            this.splitContainer1.SplitterDistance = 239;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
@@ -442,8 +442,8 @@
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Size = new System.Drawing.Size(708, 195);
-            this.splitContainer2.SplitterDistance = 334;
+            this.splitContainer2.Size = new System.Drawing.Size(784, 239);
+            this.splitContainer2.SplitterDistance = 373;
             this.splitContainer2.TabIndex = 0;
             // 
             // listStatus
@@ -455,7 +455,7 @@
             this.listStatus.Location = new System.Drawing.Point(0, 0);
             this.listStatus.Name = "listStatus";
             this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listStatus.Size = new System.Drawing.Size(708, 217);
+            this.listStatus.Size = new System.Drawing.Size(784, 188);
             this.listStatus.TabIndex = 0;
             // 
             // menuStatus
@@ -519,7 +519,7 @@
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip.Size = new System.Drawing.Size(708, 25);
+            this.toolStrip.Size = new System.Drawing.Size(784, 25);
             this.toolStrip.TabIndex = 3;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -720,7 +720,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 487);
+            this.ClientSize = new System.Drawing.Size(784, 502);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);

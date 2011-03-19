@@ -115,6 +115,7 @@ namespace GitForce.Main.Right.Panels
                 status.Repo.GitDelete(opclass['D']);
             if (opclass.ContainsKey('R'))
                 status.Repo.GitRename(opclass['R']);
+            App.Refresh();
         }
 
         /// <summary>
@@ -269,6 +270,7 @@ namespace GitForce.Main.Right.Panels
                 List<string> removedFiles = c.Renew(commitForm.GetFiles());
                 Status.Repo.Commits.Bundle[0].AddFiles(removedFiles);
                 CommitsRefresh();
+                App.Refresh();
             }
         }
 
@@ -353,7 +355,6 @@ namespace GitForce.Main.Right.Panels
                 file = file.Substring(Status.Repo.Root.Length + 1);
                 string cmd = "difftool " + ClassDiff.GetDiffCmd() + "--cached -- \"" + file + "\"";
                 Status.Repo.Run(cmd);
-                App.Refresh();
             }
         }
 

@@ -137,7 +137,7 @@ namespace GitForce
         {
             string list = string.Join(" ", files.ToArray());
             App.PrintStatusMessage("Adding " + list);
-            Run("add -- " + list);
+            RunCmd("add -- " + list);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace GitForce
         {
             string list = string.Join(" ", files.ToArray());
             App.PrintStatusMessage("Updating " + list);
-            Run("add -- " + list);
+            RunCmd("add -- " + list);
         }
 
         /// <summary>
@@ -157,17 +157,17 @@ namespace GitForce
         {
             string list = string.Join(" ", files.ToArray());
             App.PrintStatusMessage("Removing " + list);
-            Run("rm -- " + list);            
+            RunCmd("rm -- " + list);            
         }
 
         /// <summary>
-        /// Rename a list of files (huh?)
+        /// Rename a list of files
         /// </summary>
         public void GitRename(List<string> files)
         {
             string list = string.Join(" ", files.ToArray());
             App.PrintStatusMessage("Renaming " + list);
-            Run("add -- " + list);
+            RunCmd("add -- " + list);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace GitForce
         {
             string list = string.Join(" ", files.ToArray());
             App.PrintStatusMessage("Reverting " + list);
-            Run("checkout -- " + list);
+            RunCmd("checkout -- " + list);
         }
 
         /// <summary>

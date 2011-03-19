@@ -86,6 +86,8 @@ namespace GitForce
                     if(ClassUtils.IsLastError())
                         Console.Write(ClassUtils.LastError);
                 }
+                Console.WriteLine("Configuration has been reset.");
+                return false;
             }
             return true;
         }

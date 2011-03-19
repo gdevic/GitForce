@@ -54,8 +54,6 @@ namespace GitForce.Main.Right.Panels
             // Make columns auto-adjust to fit the width of the largest item
             foreach (ColumnHeader l in listRepos.Columns) l.Width = -2;
             listRepos.EndUpdate();
-
-            App.PrintStatusMessage("Number of repos: " + App.Repos);
         }
 
         /// <summary>
