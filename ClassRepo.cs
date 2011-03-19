@@ -182,6 +182,28 @@ namespace GitForce
 
         /// <summary>
         /// Repo class function that runs a git command in the context of a repository.
+        /// Use this function with all user-initiated commands in order to have them printed into the status window.
+        /// </summary>
+        public string RunCmd(string args)
+        {
+            // Print the actual command line to the status window only if user selected that setting
+            if(Properties.Settings.Default.logCommands)
+                App.PrintStatusMessage(args);
+
+            // Run the command and print the response to the status window in any case
+            string ret = Run(args);
+            if (!string.IsNullOrEmpty(ret))
+                App.PrintStatusMessage(ret);
+
+            // If the command caused an error, print it also
+            if (ClassUtils.IsLastError())
+                App.PrintStatusMessage(ClassUtils.LastError);
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Repo class function that runs a git command in the context of a repository.
         /// </summary>
         public string Run(string args)
         {

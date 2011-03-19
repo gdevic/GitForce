@@ -383,9 +383,20 @@ namespace GitForce.Main.Right.Panels
                 if (MessageBox.Show(@"Revert will unstage all the selected files and will lose the changes.
 Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
-                    string cmd = "reset HEAD -- " +
-                    String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToArray());
-                    Status.Repo.Run(cmd);
+                    // There are 2 ways to unstage a file:
+                    // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
+                    // Can't figure out how to find out which one to use at this moment, so use both.
+                    string cmd = "reset HEAD -- " + String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToArray());
+                    Status.Repo.RunCmd(cmd);
+
+                    // If the error is not being able to resolve HEAD, retry with other version of the command
+                    if(ClassUtils.LastError.Contains("HEAD"))
+                    {
+                        App.PrintStatusMessage("Retrying using the `rm` option...");
+                        cmd = "rm --cached -- " + String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToArray());
+                        Status.Repo.RunCmd(cmd);                        
+                    }
+
                     App.Refresh();
                 }
             }
