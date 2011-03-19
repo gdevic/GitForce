@@ -137,11 +137,11 @@ namespace GitForce.Main.Left.Panels
 
                 switch (mode)
                 {
-                    case 0:     // Git view of local files: status + untracked
+                    case 0:     // Git status of all files: status + untracked
                         Status.SetListByStatusCommand("status --porcelain -uall -z");
                         Status.Seal();
                         break;
-                    case 1:     // Git view of files: status - untracked
+                    case 1:     // Git status of files: status - untracked
                         Status.SetListByStatusCommand("status --porcelain -uno -z");
                         Status.Filter(s => s.StartsWith("??"));
                         Status.Seal();

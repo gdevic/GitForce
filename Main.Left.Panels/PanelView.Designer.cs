@@ -44,7 +44,7 @@
             this.btListView = new System.Windows.Forms.ToolStripButton();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView = new TreeViewEx();
+            this.treeView = new GitForce.TreeViewEx();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +91,7 @@
             this.menuView0.Name = "menuView0";
             this.menuView0.Size = new System.Drawing.Size(194, 22);
             this.menuView0.Tag = "0";
-            this.menuView0.Text = "Git View of Local Files";
+            this.menuView0.Text = "Git Status of All Files";
             this.menuView0.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView1
@@ -99,7 +99,7 @@
             this.menuView1.Name = "menuView1";
             this.menuView1.Size = new System.Drawing.Size(194, 22);
             this.menuView1.Tag = "1";
-            this.menuView1.Text = "Git View of Files";
+            this.menuView1.Text = "Git Status";
             this.menuView1.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView2

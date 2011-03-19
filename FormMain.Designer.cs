@@ -214,7 +214,7 @@
             this.menuView0.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D1)));
             this.menuView0.Size = new System.Drawing.Size(230, 22);
             this.menuView0.Tag = "0";
-            this.menuView0.Text = "Git View of Local Files";
+            this.menuView0.Text = "Git Status of All Files";
             this.menuView0.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView1
@@ -223,7 +223,7 @@
             this.menuView1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D2)));
             this.menuView1.Size = new System.Drawing.Size(230, 22);
             this.menuView1.Tag = "1";
-            this.menuView1.Text = "Git View of Files";
+            this.menuView1.Text = "Git Status";
             this.menuView1.Click += new System.EventHandler(this.ViewSetByMenuItem);
             // 
             // menuView2
@@ -405,7 +405,7 @@
             // statusInfoLabel
             // 
             this.statusInfoLabel.Name = "statusInfoLabel";
-            this.statusInfoLabel.Size = new System.Drawing.Size(154, 17);
+            this.statusInfoLabel.Size = new System.Drawing.Size(156, 17);
             this.statusInfoLabel.Text = "GitForce - A Git Visual Client";
             // 
             // statusStrip
