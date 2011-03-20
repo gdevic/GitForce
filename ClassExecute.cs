@@ -158,6 +158,8 @@ namespace GitForce
         private static void POutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data)) return;
+            if (stdout != string.Empty)
+                stdout += '\n';
             stdout += e.Data;
         }
 
