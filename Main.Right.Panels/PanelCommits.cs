@@ -316,7 +316,7 @@ namespace GitForce.Main.Right.Panels
                         (commitForm.GetCheckAmend() ? " --amend -- " : " -- ") +
                         String.Join(" ", final.Select(s => "\"" + s + "\"").ToArray());
 
-                    Status.Repo.Run(cmd);
+                    Status.Repo.RunCmd(cmd);
 
                     File.Delete(tempFile);
 
@@ -354,7 +354,7 @@ namespace GitForce.Main.Right.Panels
                 string file = (sender as ToolStripMenuItem).Tag as string;
                 file = file.Substring(Status.Repo.Root.Length + 1);
                 string cmd = "difftool " + ClassDiff.GetDiffCmd() + "--cached -- \"" + file + "\"";
-                Status.Repo.Run(cmd);
+                Status.Repo.RunCmd(cmd);
             }
         }
 
@@ -427,7 +427,7 @@ Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Informa
         {
             string file = (sender as ToolStripMenuItem).Tag.ToString();
             string cmd = "mergetool " + ClassMerge.GetMergeCmd() + Status.Repo.Win2GitPath(file);
-            Status.Repo.Run(cmd);
+            Status.Repo.RunCmd(cmd);
             App.Refresh();
         }
     }
