@@ -510,21 +510,8 @@ namespace GitForce.Main.Left.Panels
         {
             Selection sel = new Selection(treeView, Status);
             string dir = Path.GetDirectoryName(sel.SelPath);
-            try
-            {
-                // WAR: Opening an "Explorer" is platform-specific
-                if (ClassUtils.IsMono())
-                {
-                    // TODO: Start a Linux (Ubuntu?) file explorer in a more flexible way
-                    Process.Start(@"/usr/bin/nautilus", "--browser " + dir);
-                }
-                else
-                    Process.Start("explorer.exe", "/e, /select," + sel.SelPath);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            if (dir != null)
+                ClassUtils.ExplorerHere(dir, sel.SelPath);
         }
 
         /// <summary>
@@ -695,7 +682,7 @@ namespace GitForce.Main.Left.Panels
             Selection sel = new Selection(treeView, Status);
             string opt = (sender as ToolStripMenuItem).Tag.ToString();
 
-            App.Repos.Current.Run("difftool " + ClassDiff.GetDiffCmd() + opt + " -- " + sel.SelPathGitFormat());
+            App.Repos.Current.RunCmd("difftool " + ClassDiff.GetDiffCmd() + opt + " -- " + sel.SelPathGitFormat());
         }
 
         #endregion

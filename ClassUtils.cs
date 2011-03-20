@@ -73,14 +73,40 @@ namespace GitForce
             Directory.SetCurrentDirectory(where);
             try
             {
+                App.PrintStatusMessage("Command prompt at " + where);
+
                 // WAR: Opening a command window/terminal is platform-specific
-                if (ClassUtils.IsMono())
+                if (IsMono())
                 {
                     // TODO: Start a terminal on Unix in a more flexible way
                     Process.Start(@"/usr/bin/gnome-terminal", "--working-directory=" + where);
                 }
                 else
                     Process.Start("cmd.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
+        }
+
+        /// <summary>
+        /// Open a file browser/Explorer at the specific directory, optionally selecting a file
+        /// </summary>
+        public static void ExplorerHere(string where, string selFile)
+        {
+            try
+            {
+                App.PrintStatusMessage("Opening a file browser at " + where);
+
+                // WAR: Opening an "Explorer" is platform-specific
+                if (ClassUtils.IsMono())
+                {
+                    // TODO: Start a Linux (Ubuntu?) file explorer in a more flexible way
+                    Process.Start(@"/usr/bin/nautilus", "--browser " + where);
+                }
+                else
+                    Process.Start("explorer.exe", "/e, /select," + selFile);
             }
             catch (Exception ex)
             {
