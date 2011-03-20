@@ -44,10 +44,10 @@ namespace GitForce
         /// </summary>
         private void FormGitRunShown(object sender, EventArgs e)
         {
-            // Create a start an execution thread with various
+            // Create and start an execution thread with various
             // callbacks for stdout, stderr and command completion
             ClassExecute.ThreadedParameters parameters;
-            _thRun = new Thread(ClassExecute.RunThreaded);
+            _thRun = new Thread(ClassExecute.RunNativeProcess);
 
             parameters.Cmd = _cmd;
             parameters.Args = _args;
