@@ -22,7 +22,7 @@ namespace GitForce
         private readonly string _args;
         private Thread _thRun;
         private string _lastError;
-        private int _ec;
+        private string _ec;
 
         /// <summary>
         /// Class constructor that also presets command to be run
@@ -96,7 +96,7 @@ namespace GitForce
             if(InvokeRequired)
             {
                 BeginInvoke((MethodInvoker) delegate {
-                    _ec = (int)exitCode;
+                    _ec = (string)exitCode;
                     textStdout.Text += _lastError + Environment.NewLine;
                     btCancel.Text = "Done";
                 });
@@ -126,7 +126,7 @@ namespace GitForce
             }
             else
             {
-                if (_ec != 0)
+                if (_ec != "0")
                     ClassUtils.LastError = _lastError;
 
                 if (btCancel.Text == "Done")
