@@ -99,13 +99,20 @@ namespace GitForce
                     proc.StartInfo.EnvironmentVariables.Add(variable.Key, variable.Value);
             }
 
-            proc.Start();
+            try
+            {
+                proc.Start();
 
-            proc.BeginOutputReadLine();
-            proc.BeginErrorReadLine();
+                proc.BeginOutputReadLine();
+                proc.BeginErrorReadLine();
 
-            proc.WaitForExit();
-            p.FComplete(proc.ExitCode);
+                proc.WaitForExit();
+                p.FComplete(proc.ExitCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                p.FComplete(ex.Message);
+            }
             proc.Close();
         }
 
@@ -121,7 +128,7 @@ namespace GitForce
 
         private static string stdout;
         private static string stderr;
-        private static int ec;
+        private static string ec;
 
         /// <summary>
         /// Executes a command
@@ -171,8 +178,8 @@ namespace GitForce
         private static void PErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data)) return;
-            if (App.MainForm.InvokeRequired)
-                App.MainForm.BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
+            if (App.Log.InvokeRequired)
+                App.Log.BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
             else
             {
                 App.PrintStatusMessage(e.Data);
@@ -183,9 +190,9 @@ namespace GitForce
         /// <summary>
         /// Callback that handles process completion event
         /// </summary>
-        private static void PComplete(object exitCode)
+        private static void PComplete(object completionMsg)
         {
-            ec = (int)exitCode;
+            ec = (string)completionMsg;
         }
     }
 }
