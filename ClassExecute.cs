@@ -121,6 +121,7 @@ namespace GitForce
 
         private static string stdout;
         private static string stderr;
+        private static int ec;
 
         /// <summary>
         /// Executes a command
@@ -184,8 +185,7 @@ namespace GitForce
         /// </summary>
         private static void PComplete(object exitCode)
         {
-            if ((int)exitCode != 0)
-                ClassUtils.LastError = "Error: Exit code=" + (int)exitCode;
+            ec = (int)exitCode;
         }
     }
 }
