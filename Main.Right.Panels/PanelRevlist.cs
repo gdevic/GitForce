@@ -88,7 +88,7 @@ namespace GitForce.Main.Right.Panels
 
                 // Convert the date/time from UNIX second based to C# date structure
                 DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(cat[1])).ToLocalTime();
-                cat[1] = date.ToShortDateString() + " " + date.ToShortTimeString();
+                cat[1] = String.Format("{0:yyyy/MM/dd  HH:mm:ss}", date);
 
                 // Trim any spaces in the subject line
                 cat[3] = cat[3].Trim();
