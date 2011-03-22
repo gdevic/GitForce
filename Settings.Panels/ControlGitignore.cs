@@ -30,11 +30,13 @@ namespace GitForce.Settings.Panels
         {
             // Get a path to user excludes file, or create that file if it is not defined
             _excludesFile = options.FirstOrDefault(s => s.Contains("core.excludesfile"));
-            _excludesFile = _excludesFile == null ?
-                Path.Combine(App.AppHome, ".gitexcludesfile")
-                : _excludesFile.Split('\n').Last();
 
-            // If the user file does not exists, create it
+            // If the file does not exist, reset it
+            if (_excludesFile == null)
+                _excludesFile = Path.Combine(App.AppHome, ".gitexcludesfile");
+
+            _excludesFile = _excludesFile.Split('\n').Last();
+
             if (!File.Exists(_excludesFile))
                 File.CreateText(_excludesFile).Close();
 
