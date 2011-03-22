@@ -41,6 +41,10 @@
             this.colSubject = new System.Windows.Forms.ColumnHeader();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btRefresh = new System.Windows.Forms.ToolStripButton();
+            this.btSetFilter = new System.Windows.Forms.ToolStripButton();
+            this.btClearFilter = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +53,11 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.btBranch});
+            this.btBranch,
+            this.toolStripSeparator1,
+            this.btClearFilter,
+            this.btSetFilter,
+            this.btRefresh});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -72,11 +80,12 @@
             this.btBranch.ImageTransparentColor = System.Drawing.Color.Black;
             this.btBranch.Name = "btBranch";
             this.btBranch.Size = new System.Drawing.Size(29, 22);
+            this.btBranch.Text = "Branch Selection";
             // 
             // masterToolStripMenuItem
             // 
             this.masterToolStripMenuItem.Name = "masterToolStripMenuItem";
-            this.masterToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.masterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.masterToolStripMenuItem.Text = "master";
             // 
             // listRev
@@ -131,9 +140,49 @@
             // menuItem
             // 
             this.menuItem.Name = "menuItem";
-            this.menuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuItem.Size = new System.Drawing.Size(132, 22);
             this.menuItem.Text = "Menu Item";
             this.menuItem.Click += new System.EventHandler(this.MenuResetClick);
+            // 
+            // btRefresh
+            // 
+            this.btRefresh.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btRefresh.Image")));
+            this.btRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btRefresh.Name = "btRefresh";
+            this.btRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btRefresh.Text = "Refresh";
+            this.btRefresh.Click += new System.EventHandler(this.MenuRefreshClick);
+            // 
+            // btSetFilter
+            // 
+            this.btSetFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btSetFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btSetFilter.Image = ((System.Drawing.Image)(resources.GetObject("btSetFilter.Image")));
+            this.btSetFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btSetFilter.Name = "btSetFilter";
+            this.btSetFilter.Size = new System.Drawing.Size(23, 22);
+            this.btSetFilter.Text = "Set Filter";
+            this.btSetFilter.Click += new System.EventHandler(this.MenuSetFilterClick);
+            // 
+            // btClearFilter
+            // 
+            this.btClearFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btClearFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btClearFilter.Enabled = false;
+            this.btClearFilter.Image = ((System.Drawing.Image)(resources.GetObject("btClearFilter.Image")));
+            this.btClearFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btClearFilter.Name = "btClearFilter";
+            this.btClearFilter.Size = new System.Drawing.Size(23, 22);
+            this.btClearFilter.Text = "Clear Filter";
+            this.btClearFilter.Click += new System.EventHandler(this.MenuClearFilterClick);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // PanelRevlist
             // 
@@ -164,5 +213,9 @@
         private System.Windows.Forms.ToolStripMenuItem masterToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem menuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton btClearFilter;
+        private System.Windows.Forms.ToolStripButton btSetFilter;
+        private System.Windows.Forms.ToolStripButton btRefresh;
     }
 }

@@ -12,6 +12,12 @@ namespace GitForce.Main.Right.Panels
     public partial class PanelRevlist : UserControl
     {
         /// <summary>
+        /// Use static filter form class in order to preserve fields during the application run
+        /// and to be able to get the current filtering string out of it at any time.
+        /// </summary>
+        readonly FormChangelistFilter formFilter = new FormChangelistFilter();
+
+        /// <summary>
         /// Branch name the log is using to display history
         /// </summary>
         private string _logBranch;
@@ -57,11 +63,17 @@ namespace GitForce.Main.Right.Panels
                 }
 
                 // Get the list of revisions by running a git command
-                StringBuilder cmd = new StringBuilder("log --pretty=format:");
-                cmd.Append("%h%x09");       // Abbreviated commit hash
-                cmd.Append("%ct%x09");      // Committing time, UNIX-style
-                cmd.Append("%an%x09");      // Author name
-                cmd.Append("%s");         // Subject
+                StringBuilder cmd = new StringBuilder("log ");
+
+                // If we are filtering, append the filter string
+                if (btClearFilter.Enabled == true)
+                    cmd.Append(formFilter.gitFilter);
+
+                cmd.Append(" --pretty=format:");        // Start formatting section
+                cmd.Append("%h%x09");                   // Abbreviated commit hash
+                cmd.Append("%ct%x09");                  // Committing time, UNIX-style
+                cmd.Append("%an%x09");                  // Author name
+                cmd.Append("%s");                       // Subject
                 // Add the branch name using only the first token in order to handle links (br -> br)
                 if(_logBranch!="(no branch)")
                     cmd.Append(" " + _logBranch.Split(' ').First());
@@ -258,5 +270,28 @@ namespace GitForce.Main.Right.Panels
         /// Shortcut function to the panel refresh
         /// </summary>
         private void MenuRefreshClick(object sender, EventArgs e) { RevlistRefresh(); }
+
+        /// <summary>
+        /// Set the log filter using the custom dialog
+        /// </summary>
+        private void MenuSetFilterClick(object sender, EventArgs e)
+        {
+            if(formFilter.ShowDialog()==DialogResult.OK)
+            {
+                // btClearFilter enable is keeping the flag if we are filtering or not
+                btClearFilter.Enabled = true;
+                RevlistRefresh();
+            }
+        }
+
+        /// <summary>
+        /// Clear the log filter
+        /// </summary>
+        private void MenuClearFilterClick(object sender, EventArgs e)
+        {
+            // btClearFilter enable is keeping the flag if we are filtering or not
+            btClearFilter.Enabled = false;
+            RevlistRefresh();
+        }
     }
 }
