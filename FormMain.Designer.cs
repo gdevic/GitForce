@@ -34,6 +34,9 @@
             this.menuMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuMainStash = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainUnstash = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainPendingChanges = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainSubmittedChanges = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,7 +136,10 @@
             // menuMainEdit
             // 
             this.menuMainEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuMainSelectAll});
+            this.menuMainSelectAll,
+            this.toolStripSeparator9,
+            this.menuMainStash,
+            this.menuMainUnstash});
             this.menuMainEdit.Name = "menuMainEdit";
             this.menuMainEdit.Size = new System.Drawing.Size(39, 20);
             this.menuMainEdit.Text = "Edit";
@@ -145,6 +151,27 @@
             this.menuMainSelectAll.Size = new System.Drawing.Size(164, 22);
             this.menuMainSelectAll.Text = "Select All";
             this.menuMainSelectAll.Click += new System.EventHandler(this.MenuMainSelectAllClick);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(161, 6);
+            // 
+            // menuMainStash
+            // 
+            this.menuMainStash.Enabled = false;
+            this.menuMainStash.Name = "menuMainStash";
+            this.menuMainStash.Size = new System.Drawing.Size(164, 22);
+            this.menuMainStash.Text = "Stash";
+            this.menuMainStash.Click += new System.EventHandler(this.MenuMainStashClick);
+            // 
+            // menuMainUnstash
+            // 
+            this.menuMainUnstash.Enabled = false;
+            this.menuMainUnstash.Name = "menuMainUnstash";
+            this.menuMainUnstash.Size = new System.Drawing.Size(164, 22);
+            this.menuMainUnstash.Text = "Unstash";
+            this.menuMainUnstash.Click += new System.EventHandler(this.MenuMainUnstashClick);
             // 
             // menuMainView
             // 
@@ -815,6 +842,9 @@
         private System.Windows.Forms.ToolStripButton btPush;
         private System.Windows.Forms.ToolStripButton btUpdateAll;
         private System.Windows.Forms.ToolStripButton btRevert;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem menuMainStash;
+        private System.Windows.Forms.ToolStripMenuItem menuMainUnstash;
     }
 }
 

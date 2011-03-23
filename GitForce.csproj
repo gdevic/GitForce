@@ -225,11 +225,23 @@
     <Compile Include="FormSSH.Designer.cs">
       <DependentUpon>FormSSH.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStash.Designer.cs">
+      <DependentUpon>FormStash.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSwitchToBranch.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSwitchToBranch.Designer.cs">
       <DependentUpon>FormSwitchToBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUnstash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUnstash.Designer.cs">
+      <DependentUpon>FormUnstash.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.Left.Panels\PanelView.cs">
       <SubType>UserControl</SubType>
@@ -474,9 +486,15 @@
       <DependentUpon>FormSSH.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormStash.resx">
+      <DependentUpon>FormStash.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSwitchToBranch.resx">
       <DependentUpon>FormSwitchToBranch.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUnstash.resx">
+      <DependentUpon>FormUnstash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.Left.Panels\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>

@@ -268,16 +268,20 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Refresh main form items based on the new repository
+        /// Refresh main form items, part of the global refresh chain
         /// </summary>
         private void FormMainRefresh()
         {
             // Change the window title and display the default remote name
-
             StringBuilder title = new StringBuilder("GitForce ");
 
+            menuMainStash.Enabled = menuMainUnstash.Enabled = false;
+
+            // Do specific enables based on the availability of the current repo
             if (App.Repos.Current != null)
             {
+                menuMainStash.Enabled = menuMainUnstash.Enabled = true;
+
                 title.Append("- " + App.Repos.Current.Branches.Current);
 
                 if (App.Repos.Current.Remotes.Current != "")
@@ -511,6 +515,26 @@ namespace GitForce
         {
             FormAbout about = new FormAbout();
             about.ShowDialog();
+        }
+
+        /// <summary>
+        /// User clicked on the Stash menu item
+        /// </summary>
+        private void MenuMainStashClick(object sender, EventArgs e)
+        {
+            FormStash formStash = new FormStash();
+            if (formStash.ShowDialog() == DialogResult.OK)
+                App.Refresh();                
+        }
+
+        /// <summary>
+        /// User clicked on the Unstash menu item
+        /// </summary>
+        private void MenuMainUnstashClick(object sender, EventArgs e)
+        {
+            FormUnstash formUnstash = new FormUnstash();
+            if (formUnstash.ShowDialog() == DialogResult.OK)
+                App.Refresh();
         }
     }
 }

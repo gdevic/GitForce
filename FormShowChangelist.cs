@@ -9,6 +9,12 @@ using System.Windows.Forms;
 
 namespace GitForce
 {
+    /// <summary>
+    /// Shows a changelist or stash with the ability to "walk" the chain.
+    /// Returns "DialogResult.No" to load a previous change
+    /// Returns "DialogResult.Yes" to load a next change
+    /// Otherwise returns "DialogResult.Cancel"
+    /// </summary>
     public partial class FormShowChangelist : Form
     {
         private Point _location;
@@ -32,7 +38,9 @@ namespace GitForce
             string cmd = "show -t " + sha;
             string[] response = App.Repos.Current.Run(cmd).Split(("\n").ToCharArray());
 
+            // Note: Clear() should remote all text, but for some reason it does not
             textChangelist.Clear();
+            textChangelist.Text = "";
             foreach (string s in response)
             {
                 // If a line starts with 'commit', insert a link
