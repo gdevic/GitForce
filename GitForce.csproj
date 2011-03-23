@@ -69,6 +69,7 @@
     <Compile Include="ClassView.cs" />
     <Compile Include="ClassWin32.cs" />
     <Compile Include="ClassWinGeometry.cs" />
+    <Compile Include="ClassWorkspace.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>

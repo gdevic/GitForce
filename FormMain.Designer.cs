@@ -99,6 +99,8 @@
             this.btOptions = new System.Windows.Forms.ToolStripButton();
             this.btSsh = new System.Windows.Forms.ToolStripButton();
             this.timerBusy = new System.Windows.Forms.Timer(this.components);
+            this.loadWk = new System.Windows.Forms.OpenFileDialog();
+            this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -743,6 +745,18 @@
             this.timerBusy.Interval = 200;
             this.timerBusy.Tick += new System.EventHandler(this.TimerBusyTick);
             // 
+            // loadWk
+            // 
+            this.loadWk.DefaultExt = "*.giw";
+            this.loadWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
+            this.loadWk.Title = "Load Workspace";
+            // 
+            // saveWk
+            // 
+            this.saveWk.DefaultExt = "*.giw";
+            this.saveWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
+            this.saveWk.Title = "Save Workspace As";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -845,6 +859,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem menuMainStash;
         private System.Windows.Forms.ToolStripMenuItem menuMainUnstash;
+        private System.Windows.Forms.OpenFileDialog loadWk;
+        private System.Windows.Forms.SaveFileDialog saveWk;
     }
 }
 

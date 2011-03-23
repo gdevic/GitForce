@@ -39,12 +39,11 @@ namespace GitForce
 
         /// <summary>
         /// Load a set of repositories from a file.
-        /// Returns null if workspace loaded, error string otherwise.
+        /// Returns true if load succeeded.
         /// </summary>
-        public string WorkspaceLoad(string fileName)
+        public bool Load(string fileName)
         {
-            string error = null;
-            App.Log.Print("Load workspace " + fileName);
+            bool ret = false;
             Repos = new List<ClassRepo>();
 
             // Wrap the opening of a repository database with an outer handler
@@ -65,6 +64,8 @@ namespace GitForce
                         // Upon load, set the current based on the default repo
                         Default = Repos.Find(r => r.Root == defaultRepo);
                         SetCurrent(Default);
+
+                        ret = true;
                     }
                     catch (Exception ex)
                     {
@@ -75,36 +76,40 @@ namespace GitForce
             catch (Exception ex)
             {
                 App.Log.Print(ex.Message);
-                error = ex.Message;
             }
-
-            return error;
+            return ret;
         }
 
         /// <summary>
         /// Saves the current set of repositories to a file.
-        /// Returns null if workspace saved, error string otherwise.
+        /// Returns true if save succeeded.
         /// </summary>
-        public string WorkspaceSave(string fileName)
+        public bool Save(string fileName)
         {
-            string error = null;
-            App.Log.Print("Save workspace " + fileName);
-            using (FileStream file = new FileStream(fileName, FileMode.Create))
+            bool ret = false;
+            try
             {
-                try
+                using (FileStream file = new FileStream(fileName, FileMode.Create))
                 {
-                    BinaryFormatter wr = new BinaryFormatter();
-                    wr.Serialize(file, Repos);
-                    wr.Serialize(file, Default == null ? "" : Default.Root);
+                    try
+                    {
+                        BinaryFormatter wr = new BinaryFormatter();
+                        wr.Serialize(file, Repos);
+                        wr.Serialize(file, Default == null ? "" : Default.Root);
+
+                        ret = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ClassException(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    App.Log.Print(ex.Message);
-                    error = ex.Message;
-                    System.Windows.Forms.MessageBox.Show(ex.Message);
-                }                
             }
-            return error;
+            catch (Exception ex)
+            {
+                App.Log.Print(ex.Message);
+            }
+            return ret;
         }
 
         /// <summary>

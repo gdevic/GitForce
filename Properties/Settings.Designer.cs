@@ -360,5 +360,29 @@ namespace GitForce.Properties {
                 this["MergeAppHelper"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WorkspaceLRU {
+            get {
+                return ((string)(this["WorkspaceLRU"]));
+            }
+            set {
+                this["WorkspaceLRU"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WorkspaceFile {
+            get {
+                return ((string)(this["WorkspaceFile"]));
+            }
+            set {
+                this["WorkspaceFile"] = value;
+            }
+        }
     }
 }

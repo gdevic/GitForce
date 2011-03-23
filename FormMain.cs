@@ -18,11 +18,6 @@ namespace GitForce
     {
         #region Initialization
 
-        /// <summary>
-        /// Location of the repos data file containing a list of repositories.
-        /// </summary>
-        private readonly string _reposDataFile;
-
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
         private static readonly PanelCommits PanelCommits = new PanelCommits();
@@ -98,17 +93,16 @@ namespace GitForce
                     { PanelView.FileOps.Edit, btEdit }
                 });
 
+            PrintStatus("GitForce version " + App.Version);
+
             // Load default set of repositories
-            _reposDataFile = Path.Combine(App.AppHome, "repos.dat");
-            App.Repos.WorkspaceLoad(_reposDataFile);
+            ClassWorkspace.Load(null);
 
             // If there is no current repo, switch the right panel view to Repos
             // Otherwise, restore the last view panel
             ChangeRightPanel(App.Repos.Current == null ? 
                 "Repos" : 
                 Properties.Settings.Default.viewRightPanel);
-
-            PrintStatus("GitForce version " + App.Version);
 
             // Initiate the first global refresh
             App.Refresh();
@@ -129,7 +123,7 @@ namespace GitForce
             ClassWinGeometry.SaveGeometryDatabase();
 
             // Save current workspace
-            App.Repos.WorkspaceSave(_reposDataFile);
+            ClassWorkspace.Save(null);
         }
 
         /// <summary>
@@ -150,9 +144,73 @@ namespace GitForce
             menuMainFile.DropDownItems.Clear();
             menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown));
 
+            // Add the workspace menu items
+            ToolStripMenuItem mWkNew = new ToolStripMenuItem("New Workspace", null, WorkspaceNewMenuItem);
+            ToolStripMenuItem mWkLoad = new ToolStripMenuItem("Load Workspace...", null, WorkspaceLoadMenuItem);
+            ToolStripMenuItem mWkSave = new ToolStripMenuItem("Save Workspace As...", null, WorkspaceSaveMenuItem);
+            ToolStripMenuItem mWkLru = new ToolStripMenuItem("Recent Workspaces", null, WorkspaceLoadLruMenuItem);
             ToolStripMenuItem mExit = new ToolStripMenuItem("Exit", null, MenuExit, Keys.Alt | Keys.F4);
 
-            menuMainFile.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mExit });
+            // Fill in the last recently used workspace list of items
+            List<string> lru = ClassWorkspace.GetLRU();
+            foreach (var file in lru)
+                mWkLru.DropDownItems.Add(new ToolStripMenuItem(file, null, WorkspaceLoadLruMenuItem) { Tag = file });
+            mWkLru.Enabled = lru.Count > 0;
+            mWkSave.Enabled = App.Repos.Current != null;
+
+            menuMainFile.DropDownItems.AddRange(new ToolStripItem[] {
+                    new ToolStripSeparator(), 
+                    mWkNew, mWkLoad, mWkSave, mWkLru,
+                    new ToolStripSeparator(),
+                    mExit });
+        }
+
+        /// <summary>
+        /// Clear current workspace
+        /// </summary>
+        private void WorkspaceNewMenuItem(object sender, EventArgs e)
+        {
+            // Save existing workspace before zapping it
+            if(MessageBox.Show("Current workspace will be cleared from all git repositories. Continue?", 
+                "New Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)==DialogResult.Yes)
+            {
+                if (ClassWorkspace.Save(null))
+                    ClassWorkspace.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Select and load a specific workspace
+        /// </summary>
+        private void WorkspaceLoadMenuItem(object sender, EventArgs e)
+        {
+            if (loadWk.ShowDialog() == DialogResult.OK)
+            {
+                // Save existing workspace before trying to load a new one
+                if (ClassWorkspace.Save(null))
+                    ClassWorkspace.Load(loadWk.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Load a workspace selected by the last recently used menu
+        /// </summary>
+        private void WorkspaceLoadLruMenuItem(object sender, EventArgs e)
+        {
+            string name = (sender as ToolStripMenuItem).Tag as string;
+
+            // Save existing workspace before trying to load a new one
+            if (ClassWorkspace.Save(null))
+                ClassWorkspace.Load(name);
+        }
+
+        /// <summary>
+        /// Save current workspace
+        /// </summary>
+        private void WorkspaceSaveMenuItem(object sender, EventArgs e)
+        {
+            if(saveWk.ShowDialog()==DialogResult.OK)
+                ClassWorkspace.Save(saveWk.FileName);
         }
 
         /// <summary>
