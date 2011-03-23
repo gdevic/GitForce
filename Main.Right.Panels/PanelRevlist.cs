@@ -37,36 +37,35 @@ namespace GitForce.Main.Right.Panels
             // Clear the current lists in preparation for the refresh
             listRev.Items.Clear();
             btBranch.DropDownItems.Clear();
+            labelLogBranch.Text = "";
 
             if (App.Repos.Current != null)
             {
-                // Fill in available branch names
-                ClassBranches branches = App.Repos.Current.Branches = new ClassBranches();
-                branches.Refresh();
+                ClassBranches branches = App.Repos.Current.Branches;
 
                 // Initialize our tracking branch
-                if (string.IsNullOrEmpty(_logBranch))
+                if (!branches.Local.Contains(_logBranch) && !branches.Remote.Contains(_logBranch))
                     _logBranch = branches.Current;
 
                 // If the repo does not have a branch at all (new repo that was just initialized), exit
                 if (string.IsNullOrEmpty(_logBranch))
                     return;
 
-                List<string> allBranches = new List<string>();
-                allBranches.AddRange(branches.Local);
-                allBranches.AddRange(branches.Remote);
-                foreach (string s in allBranches)
-                {
-                    var m = new ToolStripMenuItem(s) { Checked = s == _logBranch };
-                    m.Click += LogBranchChanged;
-                    btBranch.DropDownItems.Add(m);
-                }
+                if (_logBranch != branches.Current)
+                    labelLogBranch.Text = String.Format(" (Branch: \"{0}\")", _logBranch);
+
+                // Populate the drop-down list of branches: local and remote)
+                foreach (var branch in branches.Local)
+                    btBranch.DropDownItems.Add(new ToolStripMenuItem(branch, null, LogBranchChanged));
+
+                foreach (var branch in branches.Remote)
+                    btBranch.DropDownItems.Add(new ToolStripMenuItem(branch, null, LogBranchChanged));
 
                 // Get the list of revisions by running a git command
                 StringBuilder cmd = new StringBuilder("log ");
 
                 // If we are filtering, append the filter string
-                if (btClearFilter.Enabled == true)
+                if (btClearFilter.Enabled)
                     cmd.Append(formFilter.gitFilter);
 
                 cmd.Append(" --pretty=format:");        // Start formatting section
@@ -81,7 +80,6 @@ namespace GitForce.Main.Right.Panels
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
-                //App.Repos.Current.Run(cmd.ToString(), UpdateList);
                 UpdateList(App.Repos.Current.Run(cmd.ToString()));
             }
         }
@@ -234,7 +232,7 @@ namespace GitForce.Main.Right.Panels
                 if( formReset.ShowDialog()==DialogResult.OK)
                 {
                     string cmd = String.Format("reset {0} {1}", formReset.cmd, sha);
-                    App.Repos.Current.Run(cmd);
+                    App.Repos.Current.RunCmd(cmd);
                     App.Refresh();                    
                 }
             }
@@ -249,7 +247,7 @@ namespace GitForce.Main.Right.Panels
             if (sha != null)
             {
                 string cmd = "cherry-pick --no-commit " + sha;
-                App.Repos.Current.Run(cmd);
+                App.Repos.Current.RunCmd(cmd);
                 App.Refresh();
             }
         }

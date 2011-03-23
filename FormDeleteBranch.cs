@@ -9,14 +9,15 @@ using System.Windows.Forms;
 
 namespace GitForce
 {
+    /// <summary>
+    /// Form to delete a selected branch
+    /// </summary>
     public partial class FormDeleteBranch : Form
     {
         /// <summary>
-        /// Cache the origin lists of branches, so we fetch them only once,
-        /// and also are able to populate them dynamically as the user selects a radio button
+        /// Shortcut variable to the main app's current repo
         /// </summary>
-        private string[] _localBranches;
-        private string[] _remoteBranches;
+        private readonly ClassBranches _branches;
 
         /// <summary>
         /// Singular branch name selected among options for local or remote
@@ -28,9 +29,11 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
+            _branches = App.Repos.Current.Branches;
+
             // Initialize local branches as the default selection
-            _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            FormNewBranch.ListAdd(ref listBranches, ref _localBranches);
+            foreach (var branch in _branches.Local)
+                listBranches.Items.Add(branch);
         }
 
         /// <summary>
@@ -46,17 +49,13 @@ namespace GitForce
         /// </summary>
         private void DeleteClick(object sender, EventArgs e)
         {
-            StringBuilder cmd = new StringBuilder("branch ");
-
-            cmd.Append(checkForce.Checked ? "-D " : "-d ");
-
-            if (radioButton2.Checked)
-                cmd.Append("-r ");
-
-            cmd.Append(_branchName);
+            string cmd = String.Format("branch {0} {1} {2}",
+                checkForce.Checked? "-D" : "-d",
+                radioButton2.Checked? "-r": "",
+                _branchName );
 
             // Execute the final branch command
-            App.Repos.Current.Run(cmd.ToString());
+            App.Repos.Current.RunCmd(cmd);
         }
 
         /// <summary>
@@ -67,15 +66,17 @@ namespace GitForce
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
+                listBranches.Items.Clear();
+
                 switch (rb.Tag.ToString())
                 {
                     case "Local":
-                        FormNewBranch.ListAdd(ref listBranches, ref _localBranches);
+                        foreach (var branch in _branches.Local)
+                            listBranches.Items.Add(branch);
                         break;
                     case "Remote":
-                        if (_remoteBranches == null)
-                            _remoteBranches = App.Repos.Current.Run("branch -r").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        FormNewBranch.ListAdd(ref listBranches, ref _remoteBranches);
+                        foreach (var branch in _branches.Remote)
+                            listBranches.Items.Add(branch);
                         break;
                 }
             }

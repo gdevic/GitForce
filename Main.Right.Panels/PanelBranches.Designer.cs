@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Branches");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Remote Branches");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelBranches));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -65,7 +67,13 @@
             this.treeBranches.ImageList = this.imageList;
             this.treeBranches.Location = new System.Drawing.Point(0, 25);
             this.treeBranches.Name = "treeBranches";
-            this.treeBranches.Scrollable = false;
+            treeNode1.Name = "tnLocal";
+            treeNode1.Text = "Local Branches";
+            treeNode2.Name = "tnRemote";
+            treeNode2.Text = "Remote Branches";
+            this.treeBranches.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
             this.treeBranches.SelectedImageIndex = 0;
             this.treeBranches.Size = new System.Drawing.Size(400, 375);
             this.treeBranches.TabIndex = 1;
@@ -114,9 +122,9 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.TreeView treeBranches;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
+        private System.Windows.Forms.TreeView treeBranches;
     }
 }

@@ -19,12 +19,12 @@ namespace GitForce
         /// <summary>
         /// List of local branches by their name
         /// </summary>
-        public List<string> Local = new List<string>();
+        public readonly List<string> Local = new List<string>();
 
         /// <summary>
         /// List of remote branches by their name
         /// </summary>
-        public List<string> Remote = new List<string>();
+        public readonly List<string> Remote = new List<string>();
 
         /// <summary>
         /// Refresh the list of branches and assign local and remote
@@ -37,7 +37,7 @@ namespace GitForce
 
             if (App.Repos.Current != null)
             {
-                string[] response = App.Repos.Current.Run("branch -a").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                string[] response = App.Repos.Current.RunCmd("branch -a").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 foreach (string s in response)
                 {
                     // Recognize current branch - it is marked by an asterisk
@@ -61,7 +61,7 @@ namespace GitForce
             // Make sure the given branch name is a valid local branch
             if (!string.IsNullOrEmpty(name) && Local.IndexOf(name) >= 0)
             {
-                App.Repos.Current.Run("checkout " + name);
+                App.Repos.Current.RunCmd("checkout " + name);
                 return true;
             }
             return false;

@@ -9,10 +9,11 @@ using System.Windows.Forms;
 
 namespace GitForce
 {
+    /// <summary>
+    /// Form to switch a branch to the one selected
+    /// </summary>
     public partial class FormSwitchToBranch : Form
     {
-        private readonly string[] _localBranches;
-
         /// <summary>
         /// Singular branch name that is selected to be switched to
         /// </summary>
@@ -24,8 +25,8 @@ namespace GitForce
             ClassWinGeometry.Restore(this);
 
             // Initialize the list of local branches to switch to
-            _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            FormNewBranch.ListAdd(ref listBranches, ref _localBranches);
+            foreach (var branch in App.Repos.Current.Branches.Local)
+                listBranches.Items.Add(branch);
         }
 
         /// <summary>
@@ -41,12 +42,8 @@ namespace GitForce
         /// </summary>
         private void SwitchBranchClick(object sender, EventArgs e)
         {
-            StringBuilder cmd = new StringBuilder("checkout ");
-
-            cmd.Append(_branchName);
-
             // Execute the final branch command
-            App.Repos.Current.Run(cmd.ToString());
+            App.Repos.Current.Branches.SwitchTo(_branchName);
         }
 
         /// <summary>

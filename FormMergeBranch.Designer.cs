@@ -46,6 +46,7 @@
             this.btMerge.TabIndex = 10;
             this.btMerge.Text = "Merge";
             this.btMerge.UseVisualStyleBackColor = true;
+            this.btMerge.Click += new System.EventHandler(BtMergeClick);
             // 
             // btCancel
             // 

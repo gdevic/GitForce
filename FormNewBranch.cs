@@ -9,25 +9,27 @@ using System.Windows.Forms;
 
 namespace GitForce
 {
+    /// <summary>
+    /// Form to create a new branch from a list of options.
+    /// </summary>
     public partial class FormNewBranch : Form
     {
         /// <summary>
-        /// Cache the origin lists of branches and tags, so we fetch them only once,
-        /// and also are able to populate them dynamically as the user selects a radio button
+        /// Shortcut variable to the main app's current repo
         /// </summary>
-        private string[] _localBranches;
-        private string[] _remoteBranches;
-        private string[] _tags;
+        private readonly ClassBranches _branches;
 
         /// <summary>
         /// Singular branch origin selected among various options with a radio button
         /// </summary>
-        private string _origin;
+        private string _origin = "";
 
         public FormNewBranch()
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
+
+            _branches = App.Repos.Current.Branches;
         }
 
         /// <summary>
@@ -36,28 +38,6 @@ namespace GitForce
         private void FormNewBranchFormClosing(object sender, FormClosingEventArgs e)
         {
             ClassWinGeometry.Save(this);
-        }
-
-        /// <summary>
-        /// Add a set of branches or tags to a given listBox, trimming as necessary
-        /// to arrive at a workable name. This function also enables the list box.
-        /// This function is also called from Delete branch form, so it is static.
-        /// </summary>
-        /// <param name="listBranches"></param>
-        /// <param name="list"></param>
-        public static void ListAdd(ref ListBox listBranches, ref string[] list)
-        {
-            listBranches.Items.Clear();
-            foreach (string name in
-                list.Select(s => s.Replace(" remotes/", "").Replace("*", " ").Trim()).
-                Select(name => name.Split((" ").ToCharArray())[0]))
-            {
-                listBranches.Items.Add(name);
-            }
-            if (listBranches.Items.Count > 0)
-                listBranches.SelectedItem = listBranches.Items[0];
-            listBranches.Enabled = true;
-            listBranches.BackColor = SystemColors.Window;
         }
 
         /// <summary>
@@ -90,19 +70,26 @@ namespace GitForce
                         textSHA1.Enabled = true;
                         break;
                     case "Local":
-                        if (_localBranches == null)
-                            _localBranches = App.Repos.Current.Run("branch").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        ListAdd(ref listBranches, ref _localBranches);
+                        listBranches.Items.Clear();
+                        foreach (var branch in _branches.Local)
+                            listBranches.Items.Add(branch);
+                        listBranches.Enabled = true;
+                        listBranches.BackColor = SystemColors.Window;
                         break;
                     case "Remote":
-                        if (_remoteBranches == null)
-                            _remoteBranches = App.Repos.Current.Run("branch -r").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        ListAdd(ref listBranches, ref _remoteBranches);
+                        listBranches.Items.Clear();
+                        foreach (var branch in _branches.Remote)
+                            listBranches.Items.Add(branch);
+                        listBranches.Enabled = true;
+                        listBranches.BackColor = SystemColors.Window;
                         break;
                     case "Tag":
-                        if (_tags == null)
-                            _tags = App.Repos.Current.Run("tag").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        ListAdd(ref listBranches, ref _tags);
+                        string[] tags = App.Repos.Current.Run("tag").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        listBranches.Items.Clear();
+                        foreach (var tag in tags)
+                            listBranches.Items.Add(tag);
+                        listBranches.Enabled = true;
+                        listBranches.BackColor = SystemColors.Window;
                         break;
                     default:
                         break;
@@ -117,17 +104,15 @@ namespace GitForce
         {
             string name = textBranchName.Text.Trim();
 
-            StringBuilder cmd = new StringBuilder();
+            string cmd = String.Format("branch {0} {1}", name, _origin);
+            App.Repos.Current.RunCmd(cmd);
 
-            cmd.Append(checkCheckOut.Checked ? "checkout -b " : "branch ");
-
-            cmd.Append(name);
-
-            if (_origin != null)
-                cmd.Append(" " + _origin);
-
-            // Execute the final branch command
-            App.Repos.Current.Run(cmd.ToString());
+            if(!ClassUtils.IsLastError())
+            {
+                // Check out the branch if needed
+                if (checkCheckOut.Checked)
+                    App.Repos.Current.RunCmd("checkout " + name);
+            }
         }
 
         /// <summary>

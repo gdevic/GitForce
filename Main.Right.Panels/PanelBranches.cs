@@ -13,11 +13,6 @@ namespace GitForce.Main.Right.Panels
     {
         enum BranchIcons { Branch, BranchIdle, BranchSelected };
 
-        /// <summary>
-        /// Class containing sets of branches for the current repo
-        /// </summary>
-        private readonly ClassBranches _branches = new ClassBranches();
-
         public PanelBranches()
         {
             InitializeComponent();
@@ -30,71 +25,48 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void BranchesRefresh()
         {
-            _branches.Refresh();
-
             // MONO BUG: Treeview faults when expanding past the need to scroll in this particular case
             //            Workaround is to turn off scrollable while expaning and then turn them back on
-            treeBranches.Scrollable = false;
-            treeBranches.BeginUpdate();
-            treeBranches.Nodes.Clear();
+            // NOTE: This can not be reproduced any more after some code changes. Leaving this note in for reminder.
 
-            // We always list local and remote branches nodes
-            TreeNode tnLocal = new TreeNode("Local Branches");
-            TreeNode tnRemote = new TreeNode("Remote Branches");
+            // Use predefined [0] for local and [1] for remote branches
+            treeBranches.Nodes[0].Nodes.Clear();
+            treeBranches.Nodes[1].Nodes.Clear();
 
-            // Add all local branches to the tree
-            foreach (string s in _branches.Local)
+            if (App.Repos.Current != null)
             {
-                TreeNode tn = new TreeNode(s, (int)BranchIcons.BranchIdle, (int)BranchIcons.BranchIdle);
-                tn.Tag = s;
-                if (s == _branches.Current)
-                    tn.SelectedImageIndex = tn.ImageIndex = (int)BranchIcons.BranchSelected;
-                tnLocal.Nodes.Add(tn);
+                ClassBranches branches = App.Repos.Current.Branches;
+                branches.Refresh();
+
+                // Add all local branches to the tree
+                foreach (string s in branches.Local)
+                {
+                    TreeNode tn = new TreeNode(s, (int)BranchIcons.BranchIdle, (int)BranchIcons.BranchIdle);
+                    tn.Tag = s;
+                    if (s == branches.Current)
+                        tn.SelectedImageIndex = tn.ImageIndex = (int)BranchIcons.BranchSelected;
+                    treeBranches.Nodes[0].Nodes.Add(tn);
+                }
+
+                // Add all remote branches to the tree
+                foreach (string s in branches.Remote)
+                {
+                    TreeNode tn = new TreeNode(s, (int)BranchIcons.BranchIdle, (int)BranchIcons.BranchIdle);
+                    tn.Tag = s;
+                    treeBranches.Nodes[1].Nodes.Add(tn);
+                }
             }
-
-            // Add all remote branches to the tree
-            foreach (string s in _branches.Remote)
-            {
-                TreeNode tn = new TreeNode(s, (int)BranchIcons.BranchIdle, (int)BranchIcons.BranchIdle);
-                tn.Tag = s;
-                tnRemote.Nodes.Add(tn);
-            }
-
-            treeBranches.Nodes.Add(tnLocal);
-            treeBranches.Nodes.Add(tnRemote);
-            treeBranches.ExpandAll();
-
-            treeBranches.EndUpdate();
-            treeBranches.Scrollable = true;
-        }
-
-        /// <summary>
-        /// Return the name of a current branch
-        /// </summary>
-        public string GetCurrent()
-        {
-            return _branches.Current;
-        }
-
-        /// <summary>
-        /// Switch to a new branch name
-        /// </summary>
-        public void SetCurrent(string name)
-        {
-            if (_branches.SwitchTo(name))
-                App.Refresh();
         }
 
         /// <summary>
         /// Helper function that returns selected branch name in the tree view or null
         /// if no valid branch node was selected
         /// </summary>
-        private string GetSelectedNode()
+        private string GetSelectedBranch()
         {
             if (treeBranches.SelectedNode != null && treeBranches.SelectedNode.Tag != null)
                 return treeBranches.SelectedNode.Tag.ToString();
-            else
-                return null;
+            return null;
         }
 
         /// <summary>
@@ -107,16 +79,22 @@ namespace GitForce.Main.Right.Panels
                 // Build the context menu to be shown
                 treeBranches.SelectedNode = treeBranches.GetNodeAt(e.X, e.Y);
                 contextMenu.Items.Clear();
-                contextMenu.Items.AddRange(GetContextMenu(contextMenu, GetSelectedNode()));
+                contextMenu.Items.AddRange(GetContextMenu(contextMenu));
             }
         }
 
         /// <summary>
         /// Builds ands returns a context menu for branches
         /// </summary>
-        public ToolStripItemCollection GetContextMenu(ToolStrip owner, string selected)
+        public ToolStripItemCollection GetContextMenu(ToolStrip owner)
         {
-            string sel = GetSelectedNode();
+            // If the repo is not valid, simply return a separator item
+            if(App.Repos.Current==null)
+                return new ToolStripItemCollection(owner, new ToolStripItem[] {new ToolStripSeparator()});
+
+            ClassBranches branches = App.Repos.Current.Branches;
+
+            string sel = GetSelectedBranch();
 
             // Menus are set in this order:
             //  [0]  New...        -> always open a dialog
@@ -128,13 +106,13 @@ namespace GitForce.Main.Right.Panels
             ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteBranchClick);
 
             ToolStripMenuItem mSwitchTo;
-            if (sel != _branches.Current && _branches.Local.IndexOf(sel) >= 0)
+            if (sel != branches.Current && branches.Local.IndexOf(sel) >= 0)
                 mSwitchTo = new ToolStripMenuItem("Switch to " + sel, null, TreeBranchesDoubleClick);
             else
                 mSwitchTo = new ToolStripMenuItem("Switch to...", null, MenuSwitchClick);
 
             ToolStripMenuItem mMergeWith;
-            if (sel != _branches.Current && (_branches.Local.IndexOf(sel) >= 0 || _branches.Remote.IndexOf(sel) >= 0))
+            if (sel != branches.Current && (branches.Local.IndexOf(sel) >= 0 || branches.Remote.IndexOf(sel) >= 0))
                 mMergeWith = new ToolStripMenuItem("Merge with " + sel, null, MenuMergeClick);
             else
                 mMergeWith = new ToolStripMenuItem("Merge with...", null, MenuMergeClick);
@@ -146,9 +124,29 @@ namespace GitForce.Main.Right.Panels
             if (sel == null)
                 mDelete.Enabled = mSwitchTo.Enabled = mMergeWith.Enabled = false;
 
-            mNew.Enabled = App.Repos.Current != null;
-
             return menu;
+        }
+
+        #region Operations on a branch
+
+        /// <summary>
+        /// Double-clicking on a local branch name will switch to it.
+        /// Also a context menu handler.
+        /// </summary>
+        private void TreeBranchesDoubleClick(object sender, EventArgs e)
+        {
+            App.Repos.Current.Branches.SwitchTo(GetSelectedBranch());
+            App.Refresh();
+        }
+
+        /// <summary>
+        /// Switch to a branch using a dialog to select the branch
+        /// </summary>
+        private static void MenuSwitchClick(object sender, EventArgs e)
+        {
+            FormSwitchToBranch switchBranch = new FormSwitchToBranch();
+            if (switchBranch.ShowDialog() == DialogResult.OK)
+                App.Refresh();
         }
 
         /// <summary>
@@ -172,36 +170,15 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// Switch to a branch using a dialog to select the branch
-        /// </summary>
-        private static void MenuSwitchClick(object sender, EventArgs e)
-        {
-            FormSwitchToBranch switchBranch = new FormSwitchToBranch();
-            if (switchBranch.ShowDialog() == DialogResult.OK)
-                App.Refresh();
-        }
-
-        /// <summary>
-        /// Double-clicking on a local branch name will switch to it
-        /// This is also a handler to switch to a selected branch using context menu
-        /// </summary>
-        private void TreeBranchesDoubleClick(object sender, EventArgs e)
-        {
-            SetCurrent(GetSelectedNode());
-        }
-
-        /// <summary>
-        /// Merge branch menu item
+        /// Merge branch using a dialog to select the branch
         /// </summary>
         private void MenuMergeClick(object sender, EventArgs e)
         {
-            FormMergeBranch mergeBranch = new FormMergeBranch(_branches);
+            FormMergeBranch mergeBranch = new FormMergeBranch();
             if (mergeBranch.ShowDialog() == DialogResult.OK)
-            {
-                string cmd = mergeBranch.GetCmd();
-                App.Repos.Current.Run(cmd);
                 App.Refresh();
-            }
         }
+
+        #endregion
     }
 }

@@ -276,11 +276,13 @@ namespace GitForce
 
             StringBuilder title = new StringBuilder("GitForce ");
 
-            if (PanelBranches.GetCurrent() != "")
-                title.Append("- " + PanelBranches.GetCurrent());
+            if (App.Repos.Current != null)
+            {
+                title.Append("- " + App.Repos.Current.Branches.Current);
 
-            if (App.Repos.Current != null && App.Repos.Current.Remotes.Current != "")
-                title.Append(" : " + App.Repos.Current.Remotes.Current);
+                if (App.Repos.Current.Remotes.Current != "")
+                    title.Append(" : " + App.Repos.Current.Remotes.Current);
+            }
 
             Text = title.ToString();
 
@@ -360,7 +362,7 @@ namespace GitForce
         /// </summary>
         private void MenuRepoPull(object sender, EventArgs e)
         {
-            string args = App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent();
+            string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
             PrintStatus("Pull from a remote repo: " + args);
             App.Repos.Current.Run("pull " + args);
         }
@@ -373,7 +375,7 @@ namespace GitForce
         {
             string args = App.Repos.Current.Remotes.GetPushCmd("");
             if (String.IsNullOrEmpty(args))
-                args = App.Repos.Current.Remotes.Current + " " + PanelBranches.GetCurrent();
+                args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
             PrintStatus("Push to a remote repo: " + args);
             App.Repos.Current.Run("push " + args);
         }
@@ -412,7 +414,7 @@ namespace GitForce
         private void MenuMainBranchDropDownOpening(object sender, EventArgs e)
         {
             menuMainBranch.DropDownItems.Clear();
-            menuMainBranch.DropDownItems.AddRange(PanelBranches.GetContextMenu(menuMainBranch.DropDown, null));
+            menuMainBranch.DropDownItems.AddRange(PanelBranches.GetContextMenu(menuMainBranch.DropDown));
 
             ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8) {Tag = "Branches"};
             menuMainBranch.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });

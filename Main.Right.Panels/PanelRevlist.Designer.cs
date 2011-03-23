@@ -34,6 +34,10 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.btBranch = new System.Windows.Forms.ToolStripDropDownButton();
             this.masterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btClearFilter = new System.Windows.Forms.ToolStripButton();
+            this.btSetFilter = new System.Windows.Forms.ToolStripButton();
+            this.btRefresh = new System.Windows.Forms.ToolStripButton();
             this.listRev = new System.Windows.Forms.ListView();
             this.colHash = new System.Windows.Forms.ColumnHeader();
             this.colDate = new System.Windows.Forms.ColumnHeader();
@@ -41,10 +45,7 @@
             this.colSubject = new System.Windows.Forms.ColumnHeader();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btRefresh = new System.Windows.Forms.ToolStripButton();
-            this.btSetFilter = new System.Windows.Forms.ToolStripButton();
-            this.btClearFilter = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.labelLogBranch = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +58,8 @@
             this.toolStripSeparator1,
             this.btClearFilter,
             this.btSetFilter,
-            this.btRefresh});
+            this.btRefresh,
+            this.labelLogBranch});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -85,8 +87,48 @@
             // masterToolStripMenuItem
             // 
             this.masterToolStripMenuItem.Name = "masterToolStripMenuItem";
-            this.masterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.masterToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.masterToolStripMenuItem.Text = "master";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btClearFilter
+            // 
+            this.btClearFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btClearFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btClearFilter.Enabled = false;
+            this.btClearFilter.Image = ((System.Drawing.Image)(resources.GetObject("btClearFilter.Image")));
+            this.btClearFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btClearFilter.Name = "btClearFilter";
+            this.btClearFilter.Size = new System.Drawing.Size(23, 22);
+            this.btClearFilter.Text = "Clear Filter";
+            this.btClearFilter.Click += new System.EventHandler(this.MenuClearFilterClick);
+            // 
+            // btSetFilter
+            // 
+            this.btSetFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btSetFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btSetFilter.Image = ((System.Drawing.Image)(resources.GetObject("btSetFilter.Image")));
+            this.btSetFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btSetFilter.Name = "btSetFilter";
+            this.btSetFilter.Size = new System.Drawing.Size(23, 22);
+            this.btSetFilter.Text = "Set Filter";
+            this.btSetFilter.Click += new System.EventHandler(this.MenuSetFilterClick);
+            // 
+            // btRefresh
+            // 
+            this.btRefresh.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btRefresh.Image")));
+            this.btRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btRefresh.Name = "btRefresh";
+            this.btRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btRefresh.Text = "Refresh";
+            this.btRefresh.Click += new System.EventHandler(this.MenuRefreshClick);
             // 
             // listRev
             // 
@@ -144,45 +186,10 @@
             this.menuItem.Text = "Menu Item";
             this.menuItem.Click += new System.EventHandler(this.MenuResetClick);
             // 
-            // btRefresh
+            // labelLogBranch
             // 
-            this.btRefresh.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btRefresh.Image")));
-            this.btRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btRefresh.Name = "btRefresh";
-            this.btRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btRefresh.Text = "Refresh";
-            this.btRefresh.Click += new System.EventHandler(this.MenuRefreshClick);
-            // 
-            // btSetFilter
-            // 
-            this.btSetFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btSetFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btSetFilter.Image = ((System.Drawing.Image)(resources.GetObject("btSetFilter.Image")));
-            this.btSetFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btSetFilter.Name = "btSetFilter";
-            this.btSetFilter.Size = new System.Drawing.Size(23, 22);
-            this.btSetFilter.Text = "Set Filter";
-            this.btSetFilter.Click += new System.EventHandler(this.MenuSetFilterClick);
-            // 
-            // btClearFilter
-            // 
-            this.btClearFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btClearFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btClearFilter.Enabled = false;
-            this.btClearFilter.Image = ((System.Drawing.Image)(resources.GetObject("btClearFilter.Image")));
-            this.btClearFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btClearFilter.Name = "btClearFilter";
-            this.btClearFilter.Size = new System.Drawing.Size(23, 22);
-            this.btClearFilter.Text = "Clear Filter";
-            this.btClearFilter.Click += new System.EventHandler(this.MenuClearFilterClick);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.labelLogBranch.Name = "labelLogBranch";
+            this.labelLogBranch.Size = new System.Drawing.Size(0, 22);
             // 
             // PanelRevlist
             // 
@@ -217,5 +224,6 @@
         private System.Windows.Forms.ToolStripButton btClearFilter;
         private System.Windows.Forms.ToolStripButton btSetFilter;
         private System.Windows.Forms.ToolStripButton btRefresh;
+        private System.Windows.Forms.ToolStripLabel labelLogBranch;
     }
 }
