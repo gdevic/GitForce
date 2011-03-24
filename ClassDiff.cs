@@ -61,7 +61,7 @@ namespace GitForce
             }
 
             // Otherwise, at least one diff app is present, select it as default
-            Properties.Settings.Default.MergeAppHelper = _diff[0].ToString();
+            Properties.Settings.Default.DiffAppHelper = _diff[0].ToString();
 
             Configure(_diff[0]);
             return true;
