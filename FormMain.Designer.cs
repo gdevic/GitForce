@@ -479,8 +479,10 @@
             // 
             this.listStatus.ContextMenuStrip = this.menuStatus;
             this.listStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listStatus.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listStatus.FormattingEnabled = true;
             this.listStatus.IntegralHeight = false;
+            this.listStatus.ItemHeight = 15;
             this.listStatus.Location = new System.Drawing.Point(0, 0);
             this.listStatus.Name = "listStatus";
             this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
