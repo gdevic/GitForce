@@ -38,7 +38,14 @@ namespace GitForce.Settings.Panels
             _excludesFile = _excludesFile.Split('\n').Last();
 
             if (!File.Exists(_excludesFile))
-                File.CreateText(_excludesFile).Close();
+                try
+                {
+                    File.CreateText(_excludesFile).Close();
+                }
+                catch (Exception ex)
+                {
+                    App.PrintStatusMessage("Error loading " + _excludesFile + ": " + ex.Message);
+                }
 
             userControlEditGitignore.LoadGitIgnore(_excludesFile);
         }
