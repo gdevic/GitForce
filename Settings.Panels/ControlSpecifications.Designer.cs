@@ -49,9 +49,9 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.SystemColors.Info;
-            this.label1.Location = new System.Drawing.Point(-3, 0);
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(303, 46);
+            this.label1.Size = new System.Drawing.Size(300, 46);
             this.label1.TabIndex = 0;
             this.label1.Text = "Select fixed width font for commit specificaitons. Also chose wrap around columns" +
                 ".";
@@ -126,7 +126,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(-3, 235);
+            this.label6.Location = new System.Drawing.Point(0, 235);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(177, 13);
             this.label6.TabIndex = 8;
@@ -136,7 +136,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(-3, 261);
+            this.label7.Location = new System.Drawing.Point(0, 256);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(220, 13);
             this.label7.TabIndex = 9;

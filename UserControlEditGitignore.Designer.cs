@@ -65,7 +65,7 @@
             this.listFilters.Location = new System.Drawing.Point(2, 3);
             this.listFilters.Name = "listFilters";
             this.listFilters.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listFilters.Size = new System.Drawing.Size(178, 147);
+            this.listFilters.Size = new System.Drawing.Size(173, 147);
             this.listFilters.TabIndex = 4;
             // 
             // textBox
@@ -105,7 +105,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.btAdd.Location = new System.Drawing.Point(2, 156);
             this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(178, 23);
+            this.btAdd.Size = new System.Drawing.Size(173, 23);
             this.btAdd.TabIndex = 3;
             this.btAdd.Text = "<< Add Selected";
             this.btAdd.UseVisualStyleBackColor = true;
@@ -115,9 +115,9 @@
             // 
             this.labelFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelFileName.Location = new System.Drawing.Point(-1, 0);
+            this.labelFileName.Location = new System.Drawing.Point(0, 0);
             this.labelFileName.Name = "labelFileName";
-            this.labelFileName.Size = new System.Drawing.Size(359, 16);
+            this.labelFileName.Size = new System.Drawing.Size(355, 19);
             this.labelFileName.TabIndex = 5;
             this.labelFileName.Text = "File:";
             // 

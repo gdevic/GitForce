@@ -53,9 +53,9 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.SystemColors.Info;
-            this.label1.Location = new System.Drawing.Point(-3, 0);
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(303, 29);
+            this.label1.Size = new System.Drawing.Size(300, 29);
             this.label1.TabIndex = 1;
             this.label1.Text = "Select a list of programs to be available to edit or view a file:";
             // 
