@@ -34,6 +34,12 @@ namespace GitForce
         // Left panels
         private static readonly PanelView PanelView = new PanelView();
 
+        // Custom tools
+        private static ClassCustomTools CustomTools = new ClassCustomTools();
+
+        // Path to the default custom tools file
+        private static readonly string DefaultCustomToolsFile = Path.Combine(App.AppHome, "CustomTools.xml");
+
         /// <summary>
         /// This is the main entry point to the application main form. Doing all the initialization here.
         /// </summary>
@@ -92,6 +98,9 @@ namespace GitForce
             // Load default set of repositories
             ClassWorkspace.Load(null);
 
+            // Load custom tools
+            CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile);
+
             // If there is no current repo, switch the right panel view to Repos
             // Otherwise, restore the last view panel
             ChangeRightPanel(App.Repos.Current == null ? 
@@ -107,7 +116,11 @@ namespace GitForce
         /// </summary>
         private void FormMainFormClosing(object sender, FormClosingEventArgs e)
         {
+            // Store geometry of _this_ window
             ClassWinGeometry.Save(this);
+
+            // Save custom tools to their default location
+            CustomTools.Save(DefaultCustomToolsFile);
 
             // Close the log windown manually in order to save its geometry
             App.Log.Close();
@@ -587,5 +600,53 @@ namespace GitForce
             if (formUnstash.ShowDialog() == DialogResult.OK)
                 App.Refresh();
         }
+
+        #region Customize Tools menu handlers
+
+        /// <summary>
+        /// User clicked on the Tools' Customize menu item
+        /// </summary>
+        private void CustomizeToolMenuItemClick(object sender, EventArgs e)
+        {
+            FormCustomizeTools formCustomizeTools = new FormCustomizeTools(CustomTools);
+            if (formCustomizeTools.ShowDialog() == DialogResult.OK)
+                CustomTools = formCustomizeTools.CustomTools.Copy();
+        }
+
+        /// <summary>
+        /// Import a set of custom tools from a file
+        /// </summary>
+        private void ImportToolMenuItemClick(object sender, EventArgs e)
+        {
+            if(openTools.ShowDialog()==DialogResult.OK)
+            {
+                ClassCustomTools newTools = ClassCustomTools.Load(openTools.FileName);
+                if(!ClassUtils.IsLastError())
+                {
+                    CustomTools = newTools;
+                    App.PrintStatusMessage("Loaded custom tools from " + openTools.FileName);
+                }
+                else
+                    App.PrintStatusMessage("Error loading custom tools from " + 
+                        openTools.FileName + ": " + ClassUtils.LastError);
+            }
+        }
+
+        /// <summary>
+        /// Export current set of custom tools to a file
+        /// </summary>
+        private void ExportToolMenuItemClick(object sender, EventArgs e)
+        {
+            if(saveTools.ShowDialog()==DialogResult.OK)
+            {
+                if( CustomTools.Save(saveTools.FileName))
+                    App.PrintStatusMessage("Saved custom tools to " + saveTools.FileName);
+                else
+                    App.PrintStatusMessage("Error saving custom tools to " + 
+                        saveTools.FileName + ": " + ClassUtils.LastError);
+            }
+        }
+
+        #endregion
     }
 }

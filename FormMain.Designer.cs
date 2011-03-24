@@ -63,6 +63,10 @@
             this.menuMainChangelist = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainBranch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainRepository = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.customizeToolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expoToolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.visitGitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersManualMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +105,8 @@
             this.timerBusy = new System.Windows.Forms.Timer(this.components);
             this.loadWk = new System.Windows.Forms.OpenFileDialog();
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
+            this.openTools = new System.Windows.Forms.OpenFileDialog();
+            this.saveTools = new System.Windows.Forms.SaveFileDialog();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -121,6 +127,7 @@
             this.menuMainChangelist,
             this.menuMainBranch,
             this.menuMainRepository,
+            this.menuMainTools,
             this.menuMainHelp});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
@@ -391,6 +398,37 @@
             this.menuMainRepository.Size = new System.Drawing.Size(75, 20);
             this.menuMainRepository.Text = "Repository";
             this.menuMainRepository.DropDownOpening += new System.EventHandler(this.MenuMainRepositoryDropDownOpening);
+            // 
+            // menuMainTools
+            // 
+            this.menuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.customizeToolMenuItem,
+            this.importToolMenuItem,
+            this.expoToolMenuItem});
+            this.menuMainTools.Name = "menuMainTools";
+            this.menuMainTools.Size = new System.Drawing.Size(48, 20);
+            this.menuMainTools.Text = "Tools";
+            // 
+            // customizeToolMenuItem
+            // 
+            this.customizeToolMenuItem.Name = "customizeToolMenuItem";
+            this.customizeToolMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.customizeToolMenuItem.Text = "Customize";
+            this.customizeToolMenuItem.Click += new System.EventHandler(this.CustomizeToolMenuItemClick);
+            // 
+            // importToolMenuItem
+            // 
+            this.importToolMenuItem.Name = "importToolMenuItem";
+            this.importToolMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.importToolMenuItem.Text = "Import";
+            this.importToolMenuItem.Click += new System.EventHandler(this.ImportToolMenuItemClick);
+            // 
+            // expoToolMenuItem
+            // 
+            this.expoToolMenuItem.Name = "expoToolMenuItem";
+            this.expoToolMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.expoToolMenuItem.Text = "Export";
+            this.expoToolMenuItem.Click += new System.EventHandler(this.ExportToolMenuItemClick);
             // 
             // menuMainHelp
             // 
@@ -759,6 +797,18 @@
             this.saveWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
             this.saveWk.Title = "Save Workspace As";
             // 
+            // openTools
+            // 
+            this.openTools.DefaultExt = "*.xml";
+            this.openTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
+            this.openTools.Title = "Read Custom Tools from a File";
+            // 
+            // saveTools
+            // 
+            this.saveTools.DefaultExt = "*.xml";
+            this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
+            this.saveTools.Title = "Save Custom Tools to a File";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -864,6 +914,12 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainUnstash;
         private System.Windows.Forms.OpenFileDialog loadWk;
         private System.Windows.Forms.SaveFileDialog saveWk;
+        private System.Windows.Forms.ToolStripMenuItem menuMainTools;
+        private System.Windows.Forms.ToolStripMenuItem customizeToolMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importToolMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expoToolMenuItem;
+        private System.Windows.Forms.OpenFileDialog openTools;
+        private System.Windows.Forms.SaveFileDialog saveTools;
     }
 }
 
