@@ -428,6 +428,17 @@ namespace GitForce.Main.Left.Panels
                 // Build the context menu to be shown
                 contextMenu.Items.Clear();
                 contextMenu.Items.AddRange(GetContextMenu(contextMenu));
+
+                // Add custom tools, if any
+                if (App.CustomTools.Tools.Count > 0)
+                {
+                    contextMenu.Items.Add(new ToolStripSeparator());
+                    foreach (var tool in App.CustomTools.Tools)
+                    {
+                        if (tool.IsAddToContextMenu())
+                            contextMenu.Items.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
+                    }
+                }
             }
         }
 
@@ -501,6 +512,17 @@ namespace GitForce.Main.Left.Panels
                 menus[allowedOp].Enabled = true;
 
             return menu;
+        }
+
+        /// <summary>
+        /// A specific custom tool is clicked (selected).
+        /// Tag contains the tool class.
+        /// </summary>
+        private void CustomToolClicked(object sender, EventArgs e)
+        {
+            ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
+            App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args));
+            App.PrintStatusMessage(tool.Run());            
         }
 
         /// <summary>

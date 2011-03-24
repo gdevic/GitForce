@@ -100,7 +100,7 @@ namespace GitForce
                 App.PrintStatusMessage("Opening a file browser at " + where);
 
                 // WAR: Opening an "Explorer" is platform-specific
-                if (ClassUtils.IsMono())
+                if (IsMono())
                 {
                     // TODO: Start a Linux (Ubuntu?) file explorer in a more flexible way
                     Process.Start(@"/usr/bin/nautilus", "--browser " + where);
@@ -112,6 +112,28 @@ namespace GitForce
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
+        }
+
+        /// <summary>
+        /// Returns a string to the CMD/SHELL command interpreter
+        /// </summary>
+        public static string GetShell()
+        {
+            if(IsMono())
+                return Environment.GetEnvironmentVariable("SHELL");
+            else
+                return Environment.GetEnvironmentVariable("ComSpec");
+        }
+
+        /// <summary>
+        /// Returns a string to be used by CMD/SHELL as argument when executing a command line command
+        /// </summary>
+        public static string GetShellExecFlags()
+        {
+            if (IsMono())
+                return "-c";
+            else
+                return "/K";
         }
 
         /// <summary>

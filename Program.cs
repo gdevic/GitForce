@@ -77,6 +77,11 @@ namespace GitForce
         public static ClassGitPasswd GitPasswd;
 
         /// <summary>
+        /// Static class containing custom tools
+        /// </summary>
+        public static ClassCustomTools CustomTools;
+
+        /// <summary>
         /// Static main form class
         /// </summary>
         public static FormMain MainForm;

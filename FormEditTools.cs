@@ -37,6 +37,10 @@ namespace GitForce
             checkRefresh.Checked = tool.Checks[4];
             checkPrompt.Checked = tool.Checks[5];
             checkBrowse.Checked = tool.Checks[6];
+
+            // Adjust the enables (in this order)
+            CheckCloseUponExitCheckedChanged(null, null);
+            CheckConsoleAppCheckedChanged(null, null);
         }
 
         /// <summary>
@@ -80,9 +84,7 @@ namespace GitForce
         private void BtBrowseClick(object sender, EventArgs e)
         {
             if(openFile.ShowDialog()==DialogResult.OK)
-            {
                 textCmd.Text = openFile.FileName;
-            }
         }
 
         /// <summary>
@@ -91,9 +93,7 @@ namespace GitForce
         private void BtBrowseDirClick(object sender, EventArgs e)
         {
             if(folderBrowser.ShowDialog()==DialogResult.OK)
-            {
                 textDir.Text = folderBrowser.SelectedPath;
-            }
         }
 
         /// <summary>
@@ -106,6 +106,33 @@ namespace GitForce
             string name = textName.Text.Trim();
             string cmd = textCmd.Text.Trim();
             btOK.Enabled = !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(cmd);
+        }
+
+        /// <summary>
+        /// Checkbox changed for the console app vs. GUI app
+        /// </summary>
+        private void CheckConsoleAppCheckedChanged(object sender, EventArgs e)
+        {
+            // If this is a console app, we can have control over the stdout redirection
+            // and closing the command upon exit, otherwise these options do not make sense
+            if(checkConsoleApp.Checked==false)
+                checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = false;
+            else
+                checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = true;
+        }
+
+        /// <summary>
+        /// Checkbox changed for the Close upon exit vs. leave the console up
+        /// </summary>
+        private void CheckCloseUponExitCheckedChanged(object sender, EventArgs e)
+        {
+            // If we are running a command line tool, we can redirect the stdout only
+            // if the tool is run directly (thus closing upon exit), otherwise we need
+            // to leave the CMD/SHELL open and cannot redirect the output
+            if (checkCloseUponExit.Checked == true)
+                checkWriteToStatus.Enabled = true;
+            else
+                checkWriteToStatus.Enabled = false;
         }
     }
 }

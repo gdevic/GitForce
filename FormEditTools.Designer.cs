@@ -161,6 +161,7 @@
             this.checkCloseUponExit.TabIndex = 9;
             this.checkCloseUponExit.Text = "Close window upon exit";
             this.checkCloseUponExit.UseVisualStyleBackColor = true;
+            this.checkCloseUponExit.CheckedChanged += new System.EventHandler(this.CheckCloseUponExitCheckedChanged);
             // 
             // checkRefresh
             // 
@@ -194,6 +195,7 @@
             this.checkConsoleApp.TabIndex = 7;
             this.checkConsoleApp.Text = "Console application";
             this.checkConsoleApp.UseVisualStyleBackColor = true;
+            this.checkConsoleApp.CheckedChanged += new System.EventHandler(this.CheckConsoleAppCheckedChanged);
             // 
             // checkAddToContextMenu
             // 
@@ -305,7 +307,7 @@
             // openFile
             // 
             this.openFile.DefaultExt = "*.*";
-            this.openFile.Filter = "Executable file (*.exe)|*.exe|All files (*.*)|*.*";
+            this.openFile.Filter = "Executable file (*.*)|*.*|All files (*.*)|*.*";
             this.openFile.Title = "Select the command";
             // 
             // folderBrowser
