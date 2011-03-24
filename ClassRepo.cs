@@ -188,7 +188,7 @@ namespace GitForce
         {
             // Print the actual command line to the status window only if user selected that setting
             if(Properties.Settings.Default.logCommands)
-                App.PrintStatusMessage(args);
+                App.PrintStatusMessage("git " + args);
 
             // Run the command and print the response to the status window in any case
             string ret = Run(args);
