@@ -95,6 +95,12 @@
     <Compile Include="FormCustomizeTools.Designer.cs">
       <DependentUpon>FormCustomizeTools.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCustomToolArgs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCustomToolArgs.Designer.cs">
+      <DependentUpon>FormCustomToolArgs.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDeleteBranch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -410,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCustomizeTools.resx">
       <DependentUpon>FormCustomizeTools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCustomToolArgs.resx">
+      <DependentUpon>FormCustomToolArgs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDeleteBranch.resx">
       <DependentUpon>FormDeleteBranch.cs</DependentUpon>

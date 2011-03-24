@@ -50,6 +50,8 @@
             this.textCmd = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
+            this.openFile = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,6 +70,7 @@
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btOK.Enabled = false;
             this.btOK.Location = new System.Drawing.Point(300, 266);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
@@ -239,6 +242,7 @@
             this.btBrowseDir.TabIndex = 5;
             this.btBrowseDir.Text = "Browse...";
             this.btBrowseDir.UseVisualStyleBackColor = true;
+            this.btBrowseDir.Click += new System.EventHandler(this.BtBrowseDirClick);
             // 
             // textArgs
             // 
@@ -267,6 +271,7 @@
             this.btBrowse.TabIndex = 2;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
+            this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
             // 
             // textCmd
             // 
@@ -276,6 +281,7 @@
             this.textCmd.Name = "textCmd";
             this.textCmd.Size = new System.Drawing.Size(238, 20);
             this.textCmd.TabIndex = 1;
+            this.textCmd.TextChanged += new System.EventHandler(this.NameCmdChanged);
             // 
             // label1
             // 
@@ -294,6 +300,18 @@
             this.textName.Name = "textName";
             this.textName.Size = new System.Drawing.Size(319, 20);
             this.textName.TabIndex = 0;
+            this.textName.TextChanged += new System.EventHandler(this.NameCmdChanged);
+            // 
+            // openFile
+            // 
+            this.openFile.DefaultExt = "*.*";
+            this.openFile.Filter = "Executable file (*.exe)|*.exe|All files (*.*)|*.*";
+            this.openFile.Title = "Select the command";
+            // 
+            // folderBrowser
+            // 
+            this.folderBrowser.Description = "Select the folder you want GitForce to use as a working directory for this tool:";
+            this.folderBrowser.Tag = "";
             // 
             // FormEditTools
             // 
@@ -343,5 +361,7 @@
         private System.Windows.Forms.CheckBox checkWriteToStatus;
         private System.Windows.Forms.CheckBox checkConsoleApp;
         private System.Windows.Forms.CheckBox checkAddToContextMenu;
+        private System.Windows.Forms.OpenFileDialog openFile;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowser;
     }
 }

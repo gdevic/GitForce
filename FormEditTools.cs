@@ -73,5 +73,39 @@ namespace GitForce
         {
             textName.Focus();
         }
+
+        /// <summary>
+        /// User clicked on the Browse button to select a command to run
+        /// </summary>
+        private void BtBrowseClick(object sender, EventArgs e)
+        {
+            if(openFile.ShowDialog()==DialogResult.OK)
+            {
+                textCmd.Text = openFile.FileName;
+            }
+        }
+
+        /// <summary>
+        /// User clicked on the Browse button to select the initial working directory
+        /// </summary>
+        private void BtBrowseDirClick(object sender, EventArgs e)
+        {
+            if(folderBrowser.ShowDialog()==DialogResult.OK)
+            {
+                textDir.Text = folderBrowser.SelectedPath;
+            }
+        }
+
+        /// <summary>
+        /// Called when tool name or command input text have changed.
+        /// We can allow OK button to be enabled (and the tool accepted) only
+        /// when the tool name is not empty and the command exists.
+        /// </summary>
+        private void NameCmdChanged(object sender, EventArgs e)
+        {
+            string name = textName.Text.Trim();
+            string cmd = textCmd.Text.Trim();
+            btOK.Enabled = !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(cmd);
+        }
     }
 }

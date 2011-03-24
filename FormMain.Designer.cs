@@ -64,9 +64,6 @@
             this.menuMainBranch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainRepository = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainTools = new System.Windows.Forms.ToolStripMenuItem();
-            this.customizeToolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.expoToolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.visitGitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersManualMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -401,34 +398,10 @@
             // 
             // menuMainTools
             // 
-            this.menuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.customizeToolMenuItem,
-            this.importToolMenuItem,
-            this.expoToolMenuItem});
             this.menuMainTools.Name = "menuMainTools";
             this.menuMainTools.Size = new System.Drawing.Size(48, 20);
             this.menuMainTools.Text = "Tools";
-            // 
-            // customizeToolMenuItem
-            // 
-            this.customizeToolMenuItem.Name = "customizeToolMenuItem";
-            this.customizeToolMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.customizeToolMenuItem.Text = "Customize";
-            this.customizeToolMenuItem.Click += new System.EventHandler(this.CustomizeToolMenuItemClick);
-            // 
-            // importToolMenuItem
-            // 
-            this.importToolMenuItem.Name = "importToolMenuItem";
-            this.importToolMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.importToolMenuItem.Text = "Import";
-            this.importToolMenuItem.Click += new System.EventHandler(this.ImportToolMenuItemClick);
-            // 
-            // expoToolMenuItem
-            // 
-            this.expoToolMenuItem.Name = "expoToolMenuItem";
-            this.expoToolMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.expoToolMenuItem.Text = "Export";
-            this.expoToolMenuItem.Click += new System.EventHandler(this.ExportToolMenuItemClick);
+            this.menuMainTools.DropDownOpening += new System.EventHandler(this.MenuMainToolsDropDownOpening);
             // 
             // menuMainHelp
             // 
@@ -915,9 +888,6 @@
         private System.Windows.Forms.OpenFileDialog loadWk;
         private System.Windows.Forms.SaveFileDialog saveWk;
         private System.Windows.Forms.ToolStripMenuItem menuMainTools;
-        private System.Windows.Forms.ToolStripMenuItem customizeToolMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importToolMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem expoToolMenuItem;
         private System.Windows.Forms.OpenFileDialog openTools;
         private System.Windows.Forms.SaveFileDialog saveTools;
     }

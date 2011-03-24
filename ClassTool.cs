@@ -18,7 +18,7 @@ namespace GitForce
         public string Args;
         public string Dir;
         public string Desc;
-        public readonly bool[] Checks = new bool[7];
+        public bool[] Checks = new bool[7];
 
         /// <summary>
         /// Implements the clonable interface.
@@ -26,6 +26,24 @@ namespace GitForce
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        // A set of access functions to return a specific boolean tool's settings
+        public bool isAddToContextMenu() { return Checks[0]; }
+        public bool isConsoleApp() { return Checks[1]; }
+        public bool isWriteOutput() { return Checks[2]; }
+        public bool isCloseWindowOnExit() { return Checks[3]; }
+        public bool isRefresh() { return Checks[4]; }
+        public bool isPromptForArgs() { return Checks[5]; }
+        public bool isAddBrowse() { return Checks[6]; }
+
+        /// <summary>
+        /// ToString override dumps all tool information for debug.
+        /// </summary>
+        public override string ToString()
+        {
+            return String.Format("Name: {0}\nCmd: {1}\nArgs: {2}\nDir: {3}\n",
+                                 Name, Cmd, Args, Dir);
         }
     }
 

@@ -604,6 +604,27 @@ namespace GitForce
         #region Customize Tools menu handlers
 
         /// <summary>
+        /// Custom Tools menu drop down
+        /// </summary>
+        private void MenuMainToolsDropDownOpening(object sender, EventArgs e)
+        {
+            // Add menu items that are always there, following by tools items
+            menuMainTools.DropDownItems.Clear();
+            menuMainTools.DropDownItems.AddRange(new ToolStripItem[] {
+                new ToolStripMenuItem("Customize", null, CustomizeToolMenuItemClick),
+                new ToolStripMenuItem("Import", null, ImportToolMenuItemClick),
+                new ToolStripMenuItem("Export", null, ExportToolMenuItemClick) });
+
+            // Add all custom tools to the tools menu
+            if(CustomTools.Tools.Count>0)
+            {
+                menuMainTools.DropDownItems.Add(new ToolStripSeparator());
+                foreach (var tool in CustomTools.Tools)
+                    menuMainTools.DropDownItems.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) {Tag = tool});
+            }
+        }
+
+        /// <summary>
         /// User clicked on the Tools' Customize menu item
         /// </summary>
         private void CustomizeToolMenuItemClick(object sender, EventArgs e)
@@ -645,6 +666,72 @@ namespace GitForce
                     App.PrintStatusMessage("Error saving custom tools to " + 
                         saveTools.FileName + ": " + ClassUtils.LastError);
             }
+        }
+
+        /// <summary>
+        /// A specific custom tool is clicked (selected).
+        /// Tag contains the tool class.
+        /// </summary>
+        private void CustomToolClicked(object sender, EventArgs e)
+        {
+            ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
+            App.Log.Print("Custom tool: " + tool);
+
+            // Run the custom tool in various ways...
+            string args = tool.Args;
+
+            // TODO: expand argments using macros..
+            if(App.Repos.Current!=null)
+                args.Replace("%r", App.Repos.Current.Root);
+
+            // Consider custom arguments if we need to prompt for it
+            if(tool.isPromptForArgs())
+            {
+                // Use the description of the question for arguments
+                string desc = tool.Name;
+                if (!string.IsNullOrEmpty(tool.Desc)) desc += ": " + tool.Desc;
+
+                FormCustomToolArgs formCustomToolArgs = new FormCustomToolArgs(desc, args, tool.isAddBrowse());
+                if( formCustomToolArgs.ShowDialog()==DialogResult.Cancel)
+                    return;
+                args = formCustomToolArgs.GetArgs();
+            }
+
+            // Prepare the process to be run
+            Process proc = new Process();
+            proc.StartInfo.FileName = tool.Cmd;
+            proc.StartInfo.Arguments = args;
+            proc.StartInfo.WorkingDirectory = tool.Dir;
+            proc.StartInfo.UseShellExecute = false;
+
+            // Run the custom tool in two ways (console app and GUI app)
+            if (tool.isConsoleApp())
+            {
+                proc.StartInfo.CreateNoWindow = false;
+                proc.StartInfo.RedirectStandardOutput = tool.isWriteOutput();
+            }
+            else
+            {
+                proc.StartInfo.CreateNoWindow = true;
+            }
+
+            PrintStatus(String.Format("{0} {1}", tool.Cmd, tool.Args));
+
+            // Start the process and wait for it to finish
+            proc.Start();
+            proc.WaitForExit();
+
+            // If we redirected standard out, capture it now and print to status window
+            if (tool.isWriteOutput())
+            {
+                string stdout = proc.StandardOutput.ReadToEnd();
+                PrintStatus(stdout);
+            }
+
+            proc.Close();
+
+            if (tool.isRefresh())
+                App.Refresh();
         }
 
         #endregion
