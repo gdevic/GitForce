@@ -18,13 +18,7 @@ namespace GitForce
         public FormLog()
         {
             InitializeComponent();
-
-            // Restore log window initial position and size
-            if (WindowState == FormWindowState.Normal)
-            {
-                Location = Properties.Settings.Default.FormLogLocation;
-                Size = Properties.Settings.Default.FormLogSize;
-            }
+            ClassWinGeometry.Restore(this);
 
             // Reuse the same font selected as fixed-pitch
             textBox.Font = Properties.Settings.Default.commitFont;
@@ -38,21 +32,11 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Handle log window location updates
+        /// Form is closing.
         /// </summary>
-        private void FormLogSizeLocationChanged(object sender, EventArgs e)
+        private void FormLogFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
-                Properties.Settings.Default.FormLogLocation = Location;
-        }
-
-        /// <summary>
-        /// Handle log window size updates
-        /// </summary>
-        private void FormLogResizeEnd(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-                Properties.Settings.Default.FormLogSize = Size;
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>

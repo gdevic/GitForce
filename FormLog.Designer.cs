@@ -95,11 +95,11 @@
             this.ClientSize = new System.Drawing.Size(492, 414);
             this.Controls.Add(this.textBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 300);
             this.Name = "FormLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Log";
-            this.LocationChanged += new System.EventHandler(this.FormLogSizeLocationChanged);
-            this.ResizeEnd += new System.EventHandler(this.FormLogResizeEnd);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogFormClosing);
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

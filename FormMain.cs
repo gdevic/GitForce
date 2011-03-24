@@ -40,13 +40,7 @@ namespace GitForce
         public FormMain()
         {
             InitializeComponent();
-
-            // Restore the application's initial position and size
-            if (WindowState == FormWindowState.Normal)
-            {
-                Location = Properties.Settings.Default.FormMainLocation;
-                Size = Properties.Settings.Default.FormMainSize;
-            }
+            ClassWinGeometry.Restore(this);
 
             // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
             if (ClassUtils.IsMono())
@@ -113,11 +107,10 @@ namespace GitForce
         /// </summary>
         private void FormMainFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Properties.Settings.Default.FormMainLocation = Location;
-                Properties.Settings.Default.FormMainSize = Size;
-            }
+            ClassWinGeometry.Save(this);
+
+            // Close the log windown manually in order to save its geometry
+            App.Log.Close();
 
             // Save windows geometry database
             ClassWinGeometry.SaveGeometryDatabase();

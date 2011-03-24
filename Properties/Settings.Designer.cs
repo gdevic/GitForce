@@ -25,30 +25,6 @@ namespace GitForce.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300, 300")]
-        public global::System.Drawing.Point FormMainLocation {
-            get {
-                return ((global::System.Drawing.Point)(this["FormMainLocation"]));
-            }
-            set {
-                this["FormMainLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800, 540")]
-        public global::System.Drawing.Size FormMainSize {
-            get {
-                return ((global::System.Drawing.Size)(this["FormMainSize"]));
-            }
-            set {
-                this["FormMainSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string GitPath {
             get {
@@ -56,30 +32,6 @@ namespace GitForce.Properties {
             }
             set {
                 this["GitPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20, 20")]
-        public global::System.Drawing.Point FormLogLocation {
-            get {
-                return ((global::System.Drawing.Point)(this["FormLogLocation"]));
-            }
-            set {
-                this["FormLogLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300, 300")]
-        public global::System.Drawing.Size FormLogSize {
-            get {
-                return ((global::System.Drawing.Size)(this["FormLogSize"]));
-            }
-            set {
-                this["FormLogSize"] = value;
             }
         }
         
