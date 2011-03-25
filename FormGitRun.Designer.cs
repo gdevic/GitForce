@@ -87,9 +87,10 @@
             this.Name = "FormGitRun";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Git";
             this.Shown += new System.EventHandler(this.FormGitRunShown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormGitRunFormClosing);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

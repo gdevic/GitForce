@@ -30,6 +30,7 @@ namespace GitForce
         public FormGitRun(string cmd, string args)
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
             _cmd = cmd;
             _args = args;
 
@@ -37,6 +38,14 @@ namespace GitForce
             textStdout.Font = Properties.Settings.Default.commitFont;
             textStdout.Text += cmd + Environment.NewLine;
             textStdout.Text += args + Environment.NewLine;
+        }
+
+        /// <summary>
+        /// Form is closing.
+        /// </summary>
+        private void FormGitRunFormClosing(object sender, FormClosingEventArgs e)
+        {
+            ClassWinGeometry.Save(this);
         }
 
         /// <summary>
