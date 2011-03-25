@@ -113,6 +113,9 @@ namespace GitForce
         /// </summary>
         private void FormMainFormClosing(object sender, FormClosingEventArgs e)
         {
+            // Remove the print status handler
+            App.PrintStatusMessage -= PrintStatus;
+
             // Store geometry of _this_ window
             ClassWinGeometry.Save(this);
 
