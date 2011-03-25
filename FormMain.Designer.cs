@@ -104,6 +104,7 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
+            this.gettingStartedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -407,6 +408,7 @@
             // 
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.visitGitHubHomeMenuItem,
+            this.gettingStartedToolStripMenuItem,
             this.usersManualMenuItem,
             this.toolStripSeparator6,
             this.aboutToolStripMenuItem});
@@ -782,6 +784,13 @@
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
             // 
+            // gettingStartedToolStripMenuItem
+            // 
+            this.gettingStartedToolStripMenuItem.Name = "gettingStartedToolStripMenuItem";
+            this.gettingStartedToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.gettingStartedToolStripMenuItem.Text = "Getting Started";
+            this.gettingStartedToolStripMenuItem.Click += new System.EventHandler(this.GettingStartedToolStripMenuClick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -890,6 +899,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainTools;
         private System.Windows.Forms.OpenFileDialog openTools;
         private System.Windows.Forms.SaveFileDialog saveTools;
+        private System.Windows.Forms.ToolStripMenuItem gettingStartedToolStripMenuItem;
     }
 }
 

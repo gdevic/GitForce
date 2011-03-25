@@ -52,6 +52,7 @@
             this.textName = new System.Windows.Forms.TextBox();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.btHelp = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -315,11 +316,23 @@
             this.folderBrowser.Description = "Select the folder you want GitForce to use as a working directory for this tool:";
             this.folderBrowser.Tag = "";
             // 
+            // btHelp
+            // 
+            this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btHelp.Location = new System.Drawing.Point(219, 266);
+            this.btHelp.Name = "btHelp";
+            this.btHelp.Size = new System.Drawing.Size(75, 23);
+            this.btHelp.TabIndex = 3;
+            this.btHelp.Text = "Help";
+            this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.BtHelpClick);
+            // 
             // FormEditTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(468, 301);
+            this.Controls.Add(this.btHelp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancel);
@@ -365,5 +378,6 @@
         private System.Windows.Forms.CheckBox checkAddToContextMenu;
         private System.Windows.Forms.OpenFileDialog openFile;
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+        private System.Windows.Forms.Button btHelp;
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="ClassGit.cs" />
     <Compile Include="ClassGitDirectory.cs" />
     <Compile Include="ClassGitPasswd.cs" />
+    <Compile Include="ClassHelp.cs" />
     <Compile Include="ClassMerge.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />

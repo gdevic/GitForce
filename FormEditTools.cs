@@ -141,5 +141,13 @@ namespace GitForce
             else
                 checkWriteToStatus.Enabled = false;
         }
+
+        /// <summary>
+        /// Open the context help
+        /// </summary>
+        private void BtHelpClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("Edit Tools");
+        }
     }
 }

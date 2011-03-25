@@ -691,5 +691,13 @@ namespace GitForce
         }
 
         #endregion
+
+        /// <summary>
+        /// Getting started help menu
+        /// </summary>
+        private void GettingStartedToolStripMenuClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("Getting Started");
+        }
     }
 }
