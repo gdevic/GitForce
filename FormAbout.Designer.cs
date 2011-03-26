@@ -32,15 +32,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.textLic = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelCopyright = new System.Windows.Forms.Label();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
+            this.labelBuild = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btOK
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(382, 225);
+            this.btOK.Location = new System.Drawing.Point(373, 248);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 0;
@@ -60,9 +61,10 @@
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
+            this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelVersion.Location = new System.Drawing.Point(12, 37);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(45, 13);
+            this.labelVersion.Size = new System.Drawing.Size(53, 13);
             this.labelVersion.TabIndex = 3;
             this.labelVersion.Text = "Version:";
             // 
@@ -71,28 +73,28 @@
             this.textLic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textLic.Location = new System.Drawing.Point(12, 63);
+            this.textLic.Location = new System.Drawing.Point(12, 85);
             this.textLic.Multiline = true;
             this.textLic.Name = "textLic";
             this.textLic.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textLic.Size = new System.Drawing.Size(445, 155);
+            this.textLic.Size = new System.Drawing.Size(436, 156);
             this.textLic.TabIndex = 4;
             // 
-            // label2
+            // labelCopyright
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.labelCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(12, 230);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(344, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Written and given to Public Domain (GPL) by Goran Devic, (c) 2011";
+            this.labelCopyright.Location = new System.Drawing.Point(12, 253);
+            this.labelCopyright.Name = "labelCopyright";
+            this.labelCopyright.Size = new System.Drawing.Size(335, 13);
+            this.labelCopyright.TabIndex = 5;
+            this.labelCopyright.Text = "Written by Goran Devic, released under GPL";
             // 
             // linkLabel
             // 
             this.linkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(429, 12);
+            this.linkLabel.Location = new System.Drawing.Point(420, 12);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(28, 13);
             this.linkLabel.TabIndex = 6;
@@ -101,12 +103,22 @@
             this.linkLabel.Text = "GPL";
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
             // 
+            // labelBuild
+            // 
+            this.labelBuild.AutoSize = true;
+            this.labelBuild.Location = new System.Drawing.Point(12, 60);
+            this.labelBuild.Name = "labelBuild";
+            this.labelBuild.Size = new System.Drawing.Size(30, 13);
+            this.labelBuild.TabIndex = 7;
+            this.labelBuild.Text = "Build";
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(469, 260);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(460, 283);
+            this.Controls.Add(this.labelBuild);
+            this.Controls.Add(this.labelCopyright);
             this.Controls.Add(this.textLic);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.label1);
@@ -132,7 +144,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.TextBox textLic;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.LinkLabel linkLabel;
+        private System.Windows.Forms.Label labelBuild;
     }
 }

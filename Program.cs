@@ -109,12 +109,8 @@ namespace GitForce
         {
             get
             {
-                // The last number is the number of days since the initial checkin of this
-                // project into Perforce:
-                TimeSpan age = DateTime.Now - new DateTime(2010, 12, 17);
                 Assembly asm = Assembly.GetExecutingAssembly();
-                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
-                return String.Format("{0}.{1}.{2}", fvi.ProductMajorPart, fvi.ProductMinorPart, age.Days);
+                return FileVersionInfo.GetVersionInfo(asm.Location).FileVersion;
             }
         }
 

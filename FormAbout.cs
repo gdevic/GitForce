@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -17,7 +18,11 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
+            // Add the version number and the build date from the assembly info file
             labelVersion.Text = "Version " + App.Version;
+
+            Assembly asm = Assembly.GetExecutingAssembly();
+            labelBuild.Text = FileVersionInfo.GetVersionInfo(asm.Location).ProductName;
 
             textLic.Text = 
                 "THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR " +
