@@ -21,5 +21,5 @@ Going the other way may or may not work.
 Screenshot
 ----------
 
-![http://gdevic.github.com/GitForce/Resources/gitforce-windows.gif]
+![http://gdevic.github.com/GitForce/Resources/gitforce-windows.gif](http://gdevic.github.com/GitForce/Resources/gitforce-windows.gif)
 
