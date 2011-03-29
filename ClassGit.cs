@@ -43,8 +43,10 @@ namespace GitForce
                 }
                 else
                 {
-                    // Check if a version of git is installed at a known location
-                    _gitPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Git\bin\git.exe";
+                    // Check if a version of git is installed at a known location (or guess a location)
+                    string path = Environment.GetEnvironmentVariable("PROGRAMFILES(X86)") ??
+                                  Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                    _gitPath = Path.Combine(path, @"Git\bin\git.exe");
                     if (ClassExecute.Run(_gitPath, "--version").Contains("git version") == false)
                     {
                         // Ask user to show us where the git is installed
