@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace GitForce
@@ -133,6 +134,16 @@ namespace GitForce
             if (ClassCommandLine.Execute(commandLine) == false)
                 return ClassCommandLine.ReturnCode;
 
+            // Check that only one application instance is running
+            bool mAcquired;
+            Mutex mAppMutex = new Mutex(true, "gitforce", out mAcquired);
+            if(!mAcquired)
+            {
+                if (MessageBox.Show("GitForce is already running.\nDo you want to open a new instance?", "GitForce Warning",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.No)
+                    return -1;
+            }
+
             // Make sure the application data folder directory exists
             Directory.CreateDirectory(AppHome);
             
@@ -168,7 +179,8 @@ namespace GitForce
 
                         Properties.Settings.Default.Save();
 
-                        return 0;   // Return no error code
+                        GC.KeepAlive(mAppMutex);
+                        return 0;
                     }
                 }
             }
