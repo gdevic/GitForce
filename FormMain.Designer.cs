@@ -65,8 +65,10 @@
             this.menuMainRepository = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.visitGitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usersManualMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gettingStartedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.forumMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusInfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -104,7 +106,6 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
-            this.gettingStartedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -407,40 +408,56 @@
             // menuMainHelp
             // 
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.visitGitHubHomeMenuItem,
-            this.gettingStartedToolStripMenuItem,
-            this.usersManualMenuItem,
+            this.gettingStartedMenuItem,
+            this.documentationMenuItem,
+            this.forumMenuItem,
+            this.gitHubHomeMenuItem,
             this.toolStripSeparator6,
             this.aboutToolStripMenuItem});
             this.menuMainHelp.Name = "menuMainHelp";
             this.menuMainHelp.Size = new System.Drawing.Size(44, 20);
             this.menuMainHelp.Text = "Help";
             // 
-            // visitGitHubHomeMenuItem
+            // gettingStartedMenuItem
             // 
-            this.visitGitHubHomeMenuItem.Name = "visitGitHubHomeMenuItem";
-            this.visitGitHubHomeMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.visitGitHubHomeMenuItem.Tag = "https://github.com/gdevic/GitForce";
-            this.visitGitHubHomeMenuItem.Text = "Visit GitHub Home";
-            this.visitGitHubHomeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            this.gettingStartedMenuItem.Name = "gettingStartedMenuItem";
+            this.gettingStartedMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.gettingStartedMenuItem.Text = "Getting Started";
+            this.gettingStartedMenuItem.Click += new System.EventHandler(this.GettingStartedToolStripMenuClick);
             // 
-            // usersManualMenuItem
+            // documentationMenuItem
             // 
-            this.usersManualMenuItem.Name = "usersManualMenuItem";
-            this.usersManualMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.usersManualMenuItem.Tag = "http://gdevic.github.com/GitForce";
-            this.usersManualMenuItem.Text = "Users Manual";
-            this.usersManualMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            this.documentationMenuItem.Name = "documentationMenuItem";
+            this.documentationMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.documentationMenuItem.Tag = "http://gdevic.github.com/GitForce";
+            this.documentationMenuItem.Text = "Documentation";
+            this.documentationMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            // 
+            // forumMenuItem
+            // 
+            this.forumMenuItem.Name = "forumMenuItem";
+            this.forumMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.forumMenuItem.Tag = "http://devic.us/GitForce";
+            this.forumMenuItem.Text = "Forum";
+            this.forumMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            // 
+            // gitHubHomeMenuItem
+            // 
+            this.gitHubHomeMenuItem.Name = "gitHubHomeMenuItem";
+            this.gitHubHomeMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.gitHubHomeMenuItem.Tag = "https://github.com/gdevic/GitForce";
+            this.gitHubHomeMenuItem.Text = "GitHub Home";
+            this.gitHubHomeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(154, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -784,13 +801,6 @@
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
             // 
-            // gettingStartedToolStripMenuItem
-            // 
-            this.gettingStartedToolStripMenuItem.Name = "gettingStartedToolStripMenuItem";
-            this.gettingStartedToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.gettingStartedToolStripMenuItem.Text = "Getting Started";
-            this.gettingStartedToolStripMenuItem.Click += new System.EventHandler(this.GettingStartedToolStripMenuClick);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -875,11 +885,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainEditRemoteRepo;
         private System.Windows.Forms.ToolStripMenuItem menuMainPullFromRemote;
         private System.Windows.Forms.ToolStripMenuItem menuMainPushToRemote;
-        private System.Windows.Forms.ToolStripMenuItem usersManualMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripStatusLabel statusInfoLabel;
         private System.Windows.Forms.Timer timerBusy;
-        private System.Windows.Forms.ToolStripMenuItem visitGitHubHomeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gitHubHomeMenuItem;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton btUpdate;
@@ -899,7 +909,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainTools;
         private System.Windows.Forms.OpenFileDialog openTools;
         private System.Windows.Forms.SaveFileDialog saveTools;
-        private System.Windows.Forms.ToolStripMenuItem gettingStartedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gettingStartedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem forumMenuItem;
     }
 }
 
