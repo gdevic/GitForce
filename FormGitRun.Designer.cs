@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btCancel = new System.Windows.Forms.Button();
             this.textStdout = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelProgress = new System.Windows.Forms.Label();
+            this.timerProgress = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -39,7 +42,7 @@
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(301, 161);
+            this.btCancel.Location = new System.Drawing.Point(499, 250);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 0;
@@ -55,16 +58,17 @@
             this.textStdout.Location = new System.Drawing.Point(12, 12);
             this.textStdout.Multiline = true;
             this.textStdout.Name = "textStdout";
-            this.textStdout.Size = new System.Drawing.Size(364, 143);
+            this.textStdout.ReadOnly = true;
+            this.textStdout.Size = new System.Drawing.Size(562, 232);
             this.textStdout.TabIndex = 1;
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 187);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 276);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(388, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(586, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -74,16 +78,36 @@
             this.toolStripStatus.Size = new System.Drawing.Size(150, 17);
             this.toolStripStatus.Text = "Git command in progress...";
             // 
+            // labelProgress
+            // 
+            this.labelProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelProgress.AutoSize = true;
+            this.labelProgress.Location = new System.Drawing.Point(12, 255);
+            this.labelProgress.Name = "labelProgress";
+            this.labelProgress.Size = new System.Drawing.Size(10, 13);
+            this.labelProgress.TabIndex = 3;
+            this.labelProgress.Tag = "";
+            this.labelProgress.Text = ".";
+            // 
+            // timerProgress
+            // 
+            this.timerProgress.Enabled = true;
+            this.timerProgress.Interval = 200;
+            this.timerProgress.Tag = "";
+            this.timerProgress.Tick += new System.EventHandler(this.TimerProgressTick);
+            // 
             // FormGitRun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 209);
+            this.ClientSize = new System.Drawing.Size(586, 298);
+            this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.textStdout);
             this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(282, 155);
             this.Name = "FormGitRun";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -104,5 +128,7 @@
         private System.Windows.Forms.TextBox textStdout;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
+        private System.Windows.Forms.Label labelProgress;
+        private System.Windows.Forms.Timer timerProgress;
     }
 }

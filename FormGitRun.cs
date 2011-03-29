@@ -108,6 +108,7 @@ namespace GitForce
                     _ec = (string)exitCode;
                     textStdout.Text += _lastError + Environment.NewLine;
                     btCancel.Text = "Done";
+                    StopProgress();
                 });
             }
         }
@@ -126,10 +127,11 @@ namespace GitForce
         /// </summary>
         private void BtCancelClick(object sender, EventArgs e)
         {
-            if(btCancel.Text=="Cancel")
+            StopProgress();
+            if (btCancel.Text == "Cancel")
             {
                 ClassExecute.TerminateThreaded();
-                _thRun.Join(1000);
+                _thRun.Join(3000);
 
                 btCancel.Text = "Close";
             }
@@ -143,6 +145,32 @@ namespace GitForce
                 if (btCancel.Text == "Close")
                     DialogResult = DialogResult.Cancel;
             }
+        }
+
+        /// <summary>
+        /// Call this function when the command completed, or is about to complete.
+        /// It signals to the user the end of command by enabling the text box
+        /// and disabling the progress indicator.
+        /// </summary>
+        private void StopProgress()
+        {
+            textStdout.ReadOnly = false;
+            timerProgress.Enabled = false;
+            labelProgress.Text = " ";
+        }
+
+        /// <summary>
+        /// The phase of the progress indicator (0..7)
+        /// </summary>
+        private int _progressPhase;
+
+        /// <summary>
+        /// Use timer to animate progress indicator.
+        /// </summary>
+        private void TimerProgressTick(object sender, EventArgs e)
+        {
+            labelProgress.Text = @"|/-\|/-\"[_progressPhase].ToString();
+            _progressPhase = (_progressPhase + 1)%8;
         }
     }
 }
