@@ -45,6 +45,15 @@ namespace GitForce
         }
 
         /// <summary>
+        /// On form load, set the focus to the text box.
+        /// This is a way to have it start with all text selected.
+        /// </summary>
+        private void FormCommitLoad(object sender, EventArgs e)
+        {
+            textDescription.Focus();
+        }
+
+        /// <summary>
         /// Set a list of files to appear in the files pane
         /// </summary>
         public void SetFiles(ClassCommit bundle)
@@ -100,10 +109,36 @@ namespace GitForce
         /// <summary>
         /// Capture commit description text change event in order to enable "Submit" button
         /// when the text is non-empty.
+        /// The secondary purpose is to check the text wrapping margins.
         /// </summary>
         private void TextDescriptionTextChanged(object sender, EventArgs e)
         {
             btCommit.Enabled = textDescription.Text.Trim().Length > 0;
+
+            string[] lines = textDescription.Text.Trim().Split('\n').ToArray();
+            int w1 = lines[0].Length;
+            int w2 = 0;
+
+            // Check the rest of the lines (find the maximum)
+            if (lines.Length > 1)
+                for (int y = 1; y < lines.Length; y++ )
+                    if (lines[y].Length > w2)
+                        w2 = lines[y].Length;
+
+            labelWidth.Text = String.Format("Text span: First line {0}/{1}, body {2}/{3}",
+                w1, Properties.Settings.Default.commitW1,
+                w2, Properties.Settings.Default.commitW2);
+
+            // Print the cursor location
+            labelCursor.Text = string.Format("({0},{1})",
+                textDescription.SelectionStart - textDescription.GetFirstCharIndexOfCurrentLine(),
+                textDescription.GetLineFromCharIndex(textDescription.SelectionStart));
+
+            // Color the text and the label in red if the span was reached))
+            if (w1 > Properties.Settings.Default.commitW1 || w2 > Properties.Settings.Default.commitW2)
+                textDescription.ForeColor = labelWidth.ForeColor = Color.Red;
+            else
+                textDescription.ForeColor = labelWidth.ForeColor = SystemColors.ControlText;
         }
     }
 }

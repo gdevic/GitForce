@@ -36,8 +36,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btUnselectAll = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.textDescription = new RichTextBoxLinks.RichTextBoxEx();
             this.btCommit = new System.Windows.Forms.Button();
+            this.labelWidth = new System.Windows.Forms.Label();
+            this.labelCursor = new System.Windows.Forms.Label();
+            this.textDescription = new RichTextBoxLinks.RichTextBoxEx();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -48,20 +50,20 @@
             this.checkAmend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.checkAmend.AutoSize = true;
-            this.checkAmend.Location = new System.Drawing.Point(12, 476);
+            this.checkAmend.Location = new System.Drawing.Point(12, 465);
             this.checkAmend.Name = "checkAmend";
             this.checkAmend.Size = new System.Drawing.Size(290, 17);
-            this.checkAmend.TabIndex = 8;
+            this.checkAmend.TabIndex = 1;
             this.checkAmend.Text = "Amend the last change instead of committing a new one";
             this.checkAmend.UseVisualStyleBackColor = true;
             // 
             // btSelectAll
             // 
-            this.btSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btSelectAll.Location = new System.Drawing.Point(78, 437);
+            this.btSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSelectAll.Location = new System.Drawing.Point(506, 426);
             this.btSelectAll.Name = "btSelectAll";
             this.btSelectAll.Size = new System.Drawing.Size(75, 23);
-            this.btSelectAll.TabIndex = 9;
+            this.btSelectAll.TabIndex = 2;
             this.btSelectAll.Text = "Select All";
             this.btSelectAll.UseVisualStyleBackColor = true;
             this.btSelectAll.Click += new System.EventHandler(this.BtSelectAllClick);
@@ -79,7 +81,7 @@
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(576, 472);
+            this.btCancel.Location = new System.Drawing.Point(587, 461);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 5;
@@ -96,8 +98,8 @@
             this.listFiles.IntegralHeight = false;
             this.listFiles.Location = new System.Drawing.Point(66, 0);
             this.listFiles.Name = "listFiles";
-            this.listFiles.Size = new System.Drawing.Size(573, 204);
-            this.listFiles.TabIndex = 1;
+            this.listFiles.Size = new System.Drawing.Size(584, 168);
+            this.listFiles.TabIndex = 0;
             // 
             // label1
             // 
@@ -105,16 +107,16 @@
             this.label1.Location = new System.Drawing.Point(3, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
-            this.label1.TabIndex = 0;
+            this.label1.TabIndex = 1;
             this.label1.Text = "Description:";
             // 
             // btUnselectAll
             // 
             this.btUnselectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btUnselectAll.Location = new System.Drawing.Point(576, 437);
+            this.btUnselectAll.Location = new System.Drawing.Point(587, 426);
             this.btUnselectAll.Name = "btUnselectAll";
             this.btUnselectAll.Size = new System.Drawing.Size(75, 23);
-            this.btUnselectAll.TabIndex = 10;
+            this.btUnselectAll.TabIndex = 3;
             this.btUnselectAll.Text = "Unselect All";
             this.btUnselectAll.UseVisualStyleBackColor = true;
             this.btUnselectAll.Click += new System.EventHandler(this.BtUnselectAllClick);
@@ -137,39 +139,62 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listFiles);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
-            this.splitContainer1.Size = new System.Drawing.Size(639, 419);
-            this.splitContainer1.SplitterDistance = 211;
-            this.splitContainer1.TabIndex = 7;
-            // 
-            // textDescription
-            // 
-            this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textDescription.Location = new System.Drawing.Point(66, 3);
-            this.textDescription.Name = "textDescription";
-            this.textDescription.Size = new System.Drawing.Size(573, 205);
-            this.textDescription.TabIndex = 1;
-            this.textDescription.Text = "";
-            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
+            this.splitContainer1.Size = new System.Drawing.Size(650, 408);
+            this.splitContainer1.SplitterDistance = 236;
+            this.splitContainer1.TabIndex = 0;
             // 
             // btCommit
             // 
             this.btCommit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCommit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btCommit.Enabled = false;
-            this.btCommit.Location = new System.Drawing.Point(495, 472);
+            this.btCommit.Location = new System.Drawing.Point(506, 461);
             this.btCommit.Name = "btCommit";
             this.btCommit.Size = new System.Drawing.Size(75, 23);
-            this.btCommit.TabIndex = 6;
+            this.btCommit.TabIndex = 4;
             this.btCommit.Text = "Commit";
             this.btCommit.UseVisualStyleBackColor = true;
+            // 
+            // labelWidth
+            // 
+            this.labelWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelWidth.AutoSize = true;
+            this.labelWidth.Location = new System.Drawing.Point(75, 431);
+            this.labelWidth.Name = "labelWidth";
+            this.labelWidth.Size = new System.Drawing.Size(44, 13);
+            this.labelWidth.TabIndex = 11;
+            this.labelWidth.Text = "No text.";
+            // 
+            // labelCursor
+            // 
+            this.labelCursor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelCursor.AutoSize = true;
+            this.labelCursor.Location = new System.Drawing.Point(9, 431);
+            this.labelCursor.Name = "labelCursor";
+            this.labelCursor.Size = new System.Drawing.Size(37, 13);
+            this.labelCursor.TabIndex = 12;
+            this.labelCursor.Text = "Cursor";
+            // 
+            // textDescription
+            // 
+            this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDescription.Location = new System.Drawing.Point(66, 0);
+            this.textDescription.Name = "textDescription";
+            this.textDescription.Size = new System.Drawing.Size(584, 234);
+            this.textDescription.TabIndex = 0;
+            this.textDescription.Text = "";
+            this.textDescription.SelectionChanged += new System.EventHandler(this.TextDescriptionTextChanged);
+            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
             // 
             // FormCommit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 507);
+            this.ClientSize = new System.Drawing.Size(674, 496);
+            this.Controls.Add(this.labelCursor);
+            this.Controls.Add(this.labelWidth);
             this.Controls.Add(this.checkAmend);
             this.Controls.Add(this.btSelectAll);
             this.Controls.Add(this.btCancel);
@@ -178,12 +203,13 @@
             this.Controls.Add(this.btCommit);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(398, 246);
+            this.MinimumSize = new System.Drawing.Size(487, 273);
             this.Name = "FormCommit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "GitForce Commit Specification";
+            this.Load += new System.EventHandler(this.FormCommitLoad);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCommitFormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -207,5 +233,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btCommit;
         private RichTextBoxLinks.RichTextBoxEx textDescription;
+        private System.Windows.Forms.Label labelWidth;
+        private System.Windows.Forms.Label labelCursor;
     }
 }
