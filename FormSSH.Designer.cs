@@ -53,6 +53,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btOK = new System.Windows.Forms.Button();
+            this.btHelp = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -252,7 +253,7 @@
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(506, 318);
-            this.tabControl.TabIndex = 11;
+            this.tabControl.TabIndex = 0;
             // 
             // tabLocalKeys
             // 
@@ -320,7 +321,7 @@
             this.btPuttygen.Location = new System.Drawing.Point(12, 391);
             this.btPuttygen.Name = "btPuttygen";
             this.btPuttygen.Size = new System.Drawing.Size(75, 23);
-            this.btPuttygen.TabIndex = 9;
+            this.btPuttygen.TabIndex = 1;
             this.btPuttygen.Text = "PuTTYgen";
             this.btPuttygen.UseVisualStyleBackColor = true;
             this.btPuttygen.Click += new System.EventHandler(this.BtPuttygenClick);
@@ -348,15 +349,27 @@
             this.btOK.Location = new System.Drawing.Point(443, 391);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 10;
+            this.btOK.TabIndex = 3;
             this.btOK.Text = "Done";
             this.btOK.UseVisualStyleBackColor = true;
+            // 
+            // btHelp
+            // 
+            this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btHelp.Location = new System.Drawing.Point(362, 391);
+            this.btHelp.Name = "btHelp";
+            this.btHelp.Size = new System.Drawing.Size(75, 23);
+            this.btHelp.TabIndex = 2;
+            this.btHelp.Text = "Help";
+            this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.BtHelpClick);
             // 
             // FormSSH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(530, 424);
+            this.Controls.Add(this.btHelp);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.btPuttygen);
             this.Controls.Add(this.label1);
@@ -411,5 +424,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button btOK;
+        private System.Windows.Forms.Button btHelp;
     }
 }

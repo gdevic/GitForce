@@ -246,5 +246,13 @@ namespace GitForce
         }
 
         #endregion
+
+        /// <summary>
+        /// Open the context help
+        /// </summary>
+        private void BtHelpClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("SSH Windows");
+        }
     }
 }

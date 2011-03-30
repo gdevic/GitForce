@@ -17,6 +17,7 @@ namespace GitForce
         private static readonly Dictionary<string, string> Webhelp = new Dictionary<string, string> {
             { "Getting Started", "http://gdevic.github.com/GitForce/GettingStarted.html" },
             { "Edit Tools", "http://gdevic.github.com/GitForce/EditTools.html" },
+            { "SSH Windows", "http://gdevic.github.com/GitForce/ssh-windows.html" },
         };
 
         /// <summary>
