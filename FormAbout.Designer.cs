@@ -101,7 +101,7 @@
             this.linkLabel.TabStop = true;
             this.linkLabel.Tag = "http://www.gnu.org/licenses/gpl.html";
             this.linkLabel.Text = "GPL";
-            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelLinkClicked);
             // 
             // labelBuild
             // 

@@ -128,7 +128,6 @@ namespace GitForce
 
         private static string stdout;
         private static string stderr;
-        private static string ec;
 
         /// <summary>
         /// Executes a command
@@ -192,7 +191,6 @@ namespace GitForce
         /// </summary>
         private static void PComplete(object completionMsg)
         {
-            ec = (string)completionMsg;
         }
     }
 }

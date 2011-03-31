@@ -11,7 +11,7 @@ namespace GitForce
     /// <summary>
     /// Process command line arguments
     /// </summary>
-    class ClassCommandLine
+    static class ClassCommandLine
     {
         public static int ReturnCode = 0;
 

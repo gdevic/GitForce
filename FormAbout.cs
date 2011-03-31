@@ -45,7 +45,7 @@ namespace GitForce
         /// <summary>
         /// User clicked on a link label, open a web site
         /// </summary>
-        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start((sender as LinkLabel).Tag.ToString());
         }
