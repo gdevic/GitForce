@@ -83,7 +83,10 @@ namespace GitForce
             else
             {
                 textStdout.Text += e.Data + Environment.NewLine;
-                textStdout.Refresh();
+
+                // Keep the newly added text visible
+                textStdout.SelectionStart = textStdout.TextLength;                    
+                textStdout.ScrollToCaret();                    
             }
         }
 
