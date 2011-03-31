@@ -430,14 +430,16 @@ namespace GitForce.Main.Left.Panels
                 contextMenu.Items.AddRange(GetContextMenu(contextMenu));
 
                 // Add custom tools, if any
-                if (App.CustomTools.Tools.Count > 0)
+                // Build the menu of custom tools, but only those that should be in the context menu
+                ContextMenuStrip tools = new ContextMenuStrip();
+                foreach (var tool in App.CustomTools.Tools.Where(tool => tool.IsAddToContextMenu()))
+                    tools.Items.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
+
+                // Append the custom tools to the context menu
+                if(tools.Items.Count>0)
                 {
                     contextMenu.Items.Add(new ToolStripSeparator());
-                    foreach (var tool in App.CustomTools.Tools)
-                    {
-                        if (tool.IsAddToContextMenu())
-                            contextMenu.Items.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
-                    }
+                    contextMenu.Items.AddRange(tools.Items);
                 }
             }
         }
