@@ -68,7 +68,7 @@ namespace GitForce
                 menuMainManageKeys.Enabled = true;
             }
 
-            // We prevent Execute form closing by getting a FormClosing event within which we set "e.Cancel" to True
+            // We prevent Log window form closing by getting a FormClosing event within which we set "e.Cancel" to True
             App.Log.FormClosing += LogWindowToolStripMenuItemClick;
             menuViewLogWindow.Checked = Properties.Settings.Default.ShowLogWindow;
 			
@@ -123,6 +123,7 @@ namespace GitForce
             App.CustomTools.Save(DefaultCustomToolsFile);
 
             // Close the log windown manually in order to save its geometry
+            App.Log.FormClosing -= LogWindowToolStripMenuItemClick;
             App.Log.Close();
 
             // Save windows geometry database
@@ -470,7 +471,7 @@ namespace GitForce
         {
             bool @checked = menuViewLogWindow.Checked;
             Properties.Settings.Default.ShowLogWindow = menuViewLogWindow.Checked = !@checked;
-            App.Log.Show(!@checked);
+            App.Log.ShowWindow(!@checked);
 
             // We prevent Execute form closing by servicing a FormExecute.FormClosing event with this event,
             // so disable closure by setting Cancel to true only if the caller used that type of arguments

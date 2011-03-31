@@ -149,6 +149,8 @@ namespace GitForce
             
             // Initialize logging and git execute support
             Log = new FormLog();
+            Log.ShowWindow(Properties.Settings.Default.ShowLogWindow);
+
             Git = new ClassGit();
 
             // Before we can start, we need to have a functional git executable);

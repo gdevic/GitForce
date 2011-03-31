@@ -20,6 +20,10 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
+            // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
+            if (ClassUtils.IsMono())
+                statusStrip.SizingGrip = false;
+
             // Reuse the same font selected as fixed-pitch
             textBox.Font = Properties.Settings.Default.commitFont;
 
@@ -28,7 +32,6 @@ namespace GitForce
             Print("Debug build.");
             Properties.Settings.Default.ShowLogWindow = true;
 #endif
-            Show(Properties.Settings.Default.ShowLogWindow);
         }
 
         /// <summary>
@@ -42,11 +45,12 @@ namespace GitForce
         /// <summary>
         /// Form helper function that shows or hides a form
         /// </summary>
-        public void Show(bool toShow)
+        public void ShowWindow(bool toShow)
         {
-            if (toShow)
+            if( Visible==false && toShow==true)
                 Show();
-            else
+
+            if(Visible==true && toShow==false)
                 Hide();
         }
 
