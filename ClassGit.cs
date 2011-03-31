@@ -62,7 +62,9 @@ namespace GitForce
             }
             if (retValue)
             {
-                App.Log.Print("[Git:Init] Using git at " + _gitPath);
+                // Run the version again to get the version code (for simplicity did not save it earlier)
+                string ver = string.Format("Using {0} at {1}", ClassExecute.Run(_gitPath, "--version"),_gitPath);
+                App.Log.Print(ver);
                 Properties.Settings.Default.GitPath = _gitPath;                
             }
             return retValue;
