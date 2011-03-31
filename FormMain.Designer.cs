@@ -106,6 +106,7 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
+            this.menuMainFetchFromRemote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -316,6 +317,7 @@
             this.toolStripSeparator5,
             this.menuMainSwitchRemoteRepo,
             this.menuMainEditRemoteRepo,
+            this.menuMainFetchFromRemote,
             this.menuMainPullFromRemote,
             this.menuMainPushToRemote});
             this.menuMainSettings.Name = "menuMainSettings";
@@ -801,6 +803,13 @@
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
             // 
+            // menuMainFetchFromRemote
+            // 
+            this.menuMainFetchFromRemote.Name = "menuMainFetchFromRemote";
+            this.menuMainFetchFromRemote.Size = new System.Drawing.Size(192, 22);
+            this.menuMainFetchFromRemote.Text = "Fetch from Remote";
+            this.menuMainFetchFromRemote.Click += new System.EventHandler(this.MenuRepoFetch);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -911,6 +920,7 @@
         private System.Windows.Forms.SaveFileDialog saveTools;
         private System.Windows.Forms.ToolStripMenuItem gettingStartedMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forumMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuMainFetchFromRemote;
     }
 }
 

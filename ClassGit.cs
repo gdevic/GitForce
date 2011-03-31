@@ -77,8 +77,9 @@ namespace GitForce
 
             // Pick up git commands that take long time to execute and run them
             // using a threaded execution
-            if (gitcmd.StartsWith("clone --progress") || 
-                gitcmd.StartsWith("pull ") || 
+            if (gitcmd.StartsWith("clone --progress") ||
+                gitcmd.StartsWith("fetch") ||
+                gitcmd.StartsWith("pull ") ||
                 gitcmd.StartsWith("push "))
             {
                 FormGitRun formGitRun = new FormGitRun(Properties.Settings.Default.GitPath, gitcmd);

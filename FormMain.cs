@@ -441,6 +441,16 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Fetch from a remote repository
+        /// </summary>
+        private void MenuRepoFetch(object sender, EventArgs e)
+        {
+            string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
+            PrintStatus("Fetch from a remote repo: " + args);
+            App.Repos.Current.Run("fetch " + args);
+        }
+
+        /// <summary>
         /// Pull from a remote repository
         /// </summary>
         private void MenuRepoPull(object sender, EventArgs e)
