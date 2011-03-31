@@ -36,12 +36,15 @@ namespace GitForce
             else
             {
                 // Windows: Use the CMD BAT script
-                _pathPasswordBatchHelper = Path.Combine(App.AppHome, "passwd.bat");
+                // Note: Using "App.AppHome" directory to host the batch helper file
+                //       fails on XP where that directory has spaces in the name ("Documents and Settings")
+                //       which git cannot handle in this context. Default Temp path seem to be OK.
+                _pathPasswordBatchHelper = Path.Combine(Path.GetTempPath(), "passwd.bat");
                 File.WriteAllText(_pathPasswordBatchHelper, "@echo %PASSWORD%\n");
             }
             ClassExecute.AddEnvar("GIT_ASKPASS", _pathPasswordBatchHelper);
 
-            App.Log.Print("Created " + _pathPasswordBatchHelper);
+            App.Log.Print("Created HTTP password helper file: " + _pathPasswordBatchHelper);
         }
     }
 }
