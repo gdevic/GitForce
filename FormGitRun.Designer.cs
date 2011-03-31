@@ -31,11 +31,11 @@
             this.components = new System.ComponentModel.Container();
             this.btCancel = new System.Windows.Forms.Button();
             this.textStdout = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelProgress = new System.Windows.Forms.Label();
             this.timerProgress = new System.Windows.Forms.Timer(this.components);
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCancel
@@ -63,15 +63,15 @@
             this.textStdout.Size = new System.Drawing.Size(562, 232);
             this.textStdout.TabIndex = 1;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 276);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(586, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 276);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(586, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // toolStripStatus
             // 
@@ -103,7 +103,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(586, 298);
             this.Controls.Add(this.labelProgress);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.textStdout);
             this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
@@ -116,8 +116,8 @@
             this.Text = "Git";
             this.Shown += new System.EventHandler(this.FormGitRunShown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormGitRunFormClosing);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,7 +127,7 @@
 
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.TextBox textStdout;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         private System.Windows.Forms.Label labelProgress;
         private System.Windows.Forms.Timer timerProgress;

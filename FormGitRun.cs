@@ -31,6 +31,11 @@ namespace GitForce
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
+
+            // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
+            if (ClassUtils.IsMono())
+                statusStrip.SizingGrip = false;
+
             _cmd = cmd;
             _args = args;
 
