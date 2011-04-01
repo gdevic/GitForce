@@ -1,8 +1,10 @@
 # Release script for MS Windows
 #
-# Runs MSBuild to compile GitForce release version
-# and increment the version number and set the build date
-# in the AssemblyInfo.cs file
+# * Runs MSBuild to compile GitForce release version
+# * Increments the version number and sets the build date
+#   in AssemblyInfo.cs file
+# * Gets the log of changes since last release and formats
+#   changes.txt to be used as a release commit text
 #
 import sys, time, datetime, os, subprocess, re
 
@@ -47,6 +49,17 @@ changelist_file = "change.txt"
 IncrementVersion(version_file, changelist_file)
 print 'Building:'
 subprocess.Popen(["MSBuild.exe", "/t:Rebuild", "/p:Configuration=Release"]).wait()
+
+# Get the summary of changes and append to the subject
+proc = subprocess.Popen(["git.cmd", "log", "--format=%B"], stdout=subprocess.PIPE)
+stdout = proc.communicate()[0]
+stdout = stdout[0:stdout.find("###")]
+
+h = open(changelist_file, "a")
+h.write("-------------------------------------------\n")
+h.write("SUMMARY OF CHANGES:\n\n")
+h.write(stdout)
+h.close()
 
 print
 print 'Submit ' + version_file 
