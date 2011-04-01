@@ -19,8 +19,7 @@ namespace GitForce
         public ClassRepo Repo;
 
         /// <summary>
-        /// Lookup dictionary to get the status code string (length of 2) from a full file path.
-        /// This dictionary contains keys that are absolute full file paths.
+        /// Lookup dictionary to get the status code string (length of 2) from a file path relative to the root.
         /// </summary>
         private readonly Dictionary<string, string> _lookup = new Dictionary<string, string>();
 
@@ -175,8 +174,7 @@ namespace GitForce
             {
                 string xy = s.Substring(0, 2);
                 string name = s.Substring(3);
-                string fullPath = Path.Combine(Repo.Root, name);
-                _lookup[fullPath] = xy;
+                _lookup[name] = xy;
                 return name;
             });
         }
@@ -191,8 +189,7 @@ namespace GitForce
             _list = _list.ConvertAll(delegate(string s)
             {
                 string name = s.Split('\t').Last();
-                string fullPath = Path.Combine(Repo.Root, name);
-                _lookup[fullPath] = "  ";
+                _lookup[name] = "  ";
                 return name;
             });
         }
@@ -253,6 +250,10 @@ namespace GitForce
             if (tn != null)
             {
                 string name = tn.Tag.ToString();
+
+                // For debug
+                // status = String.Format("FP:'{0}'  TG:'{1}'", tn.FullPath, name);
+
                 if (IsMarked(name))
                 {
                     char xcode = GetXcode(name);

@@ -77,7 +77,7 @@ namespace GitForce
         public static ImageList GetImageList()
         {
             ImageList il = new ImageList();
-            il.ImageSize = new System.Drawing.Size(32, 16);
+            il.ImageSize = new Size(32, 16);
             il.ColorDepth = ColorDepth.Depth32Bit;
             foreach (var kvp in Res)
                 il.Images.Add(kvp.Value);
@@ -96,7 +96,7 @@ namespace GitForce
             TreeNodeCollection nodes = rootNode.Nodes;
             foreach (TreeNode tn in nodes)
             {
-                string name = tn.Tag.ToString();
+                string name = isIndex? tn.Text : tn.Tag.ToString();
                 if (status.IsMarked(name))
                 {
                     char icon = isIndex ? status.GetXcode(name) : status.GetYcode(name);
@@ -114,17 +114,15 @@ namespace GitForce
         /// Recursive function to traverse the virtual directory of
         /// a flat git response files and build a visual tree component.
         /// 
-        /// Root tree node needs to have its Tag set to the full directory
-        /// path of the root location upon which the git list is based. This
-        /// string will be a default prefix to all nodes' Tags.
+        /// Each node will have its Tag based on the root Tag path.
         /// </summary>
         /// <param name="tnRoot">Root node to base the tree on</param>
         /// <param name="list">List of files in git format</param>
         /// <param name="sortBy">File sorting order</param>
         public static void BuildTreeRecurse(TreeNode tnRoot, List<string> list, GitDirectoryInfo.SortBy sortBy)
         {
-            string fullPath = tnRoot.Tag.ToString();
-            GitDirectoryInfo dir = new GitDirectoryInfo(fullPath, list);
+            string rootPath = tnRoot.Tag.ToString();
+            GitDirectoryInfo dir = new GitDirectoryInfo(rootPath, list);
             GitDirectoryInfo[] dirs = dir.GetDirectories();
 
             foreach (GitDirectoryInfo d in dirs)
@@ -146,24 +144,21 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Builds a flat list of tree nodes based on the given list of files
+        /// Builds a flat list of tree nodes based on a given list of files
         /// </summary>
         /// <param name="tnRoot">Root node to build the list on</param>
-        /// <param name="root">Root path to the repo these files refer to</param>
         /// <param name="list">List of relative path file names</param>
-        public static void BuildFileList(TreeNode tnRoot, string root, List<string> list)
+        public static void BuildFileList(TreeNode tnRoot, List<string> list)
         {
             // Build a list view
             foreach (string s in list)
-            {
-                TreeNode tn = new TreeNode(s);
-                tn.Tag = Path.Combine(root, s);
-                tnRoot.Nodes.Add(tn);
-            }
+                tnRoot.Nodes.Add(new TreeNode(s) {Tag = s});
         }
 
         /// <summary>
-        /// Build a tree view of commit nodes using hints from repo commit groups
+        /// Build a tree view of commit nodes using hints from repo commit groups.
+        /// Commit nodes have Tags containing absolute paths to files,
+        /// while the relative paths (with respect to repo root) are simply in the Text.
         /// </summary>
         public static TreeNode BuildCommitsView(ClassRepo repo, List<string> list)
         {
@@ -180,10 +175,11 @@ namespace GitForce
 
                 foreach (var f in c.Files)
                 {
-                    TreeNode fNode = new TreeNode(f);
-                    fNode.Tag = Path.Combine(repo.Root, f);
-                    commitNode.Nodes.Add(fNode);
+                    TreeNode tn = new TreeNode(f);
+                    tn.Tag = Path.Combine(repo.Root, f);
+                    commitNode.Nodes.Add(tn);
                 }
+
                 root.Nodes.Add(commitNode);
             }
             root.ExpandAll();

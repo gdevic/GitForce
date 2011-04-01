@@ -12,7 +12,7 @@ namespace GitForce
     public class ClassCommits
     {
         /// <summary>
-        /// List of commits
+        /// A bundle is a list of commits.
         /// </summary>
         public readonly List<ClassCommit> Bundle = new List<ClassCommit>();
 
@@ -57,7 +57,6 @@ namespace GitForce
         /// <summary>
         /// Rebuild the list of files by using only the files from the given list
         /// </summary>
-        /// <param name="files"></param>
         public void Rebuild(List<string> files)
         {
             files = Bundle.Aggregate(files, (current, c) => c.Renew(current));

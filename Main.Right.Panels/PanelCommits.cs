@@ -76,7 +76,7 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsItemDrag(object sender, ItemDragEventArgs e)
         {
             string[] files = treeCommits.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
-            DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Move);
+            DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Copy);
         }
 
         /// <summary>
@@ -92,6 +92,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Adds a list of files to the default commit (index)
         /// This static function may also be used by callers wishing to update index.
+        /// files is a list of files with relative paths.
         /// </summary>
         public static void DoDropFiles(ClassStatus status, List<string> files)
         {
@@ -101,9 +102,9 @@ namespace GitForce.Main.Right.Panels
             foreach (string s in files.Where(status.IsMarked))
             {
                 if (opclass.ContainsKey(status.GetYcode(s)))
-                    opclass[status.GetYcode(s)].Add("\"" + s + "\"");
+                    opclass[status.GetYcode(s)].Add(s);
                 else
-                    opclass[status.GetYcode(s)] = new List<string> { "\"" + s + "\"" };
+                    opclass[status.GetYcode(s)] = new List<string> { s };
             }
 
             // Perform required operations on the files
@@ -115,7 +116,6 @@ namespace GitForce.Main.Right.Panels
                 status.Repo.GitDelete(opclass['D']);
             if (opclass.ContainsKey('R'))
                 status.Repo.GitRename(opclass['R']);
-            App.Refresh();
         }
 
         /// <summary>
@@ -125,13 +125,18 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] dropped_files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             // Since files that are dropeed might have originated from anywhere, 
             // each file name needs to be compared against a set of git-permissible files for the current repo
             Status = new ClassStatus(App.Repos.Current);
             Status.SetListByStatusCommand("status --porcelain -uall -z");
             Status.Seal();
+
+            // Files can come from anywhere. Prune those that are not from this repo.
+            List<string> files = (from file in dropped_files.ToList()
+                                  where file.StartsWith(Status.Repo.Root)
+                                  select file.Substring(Status.Repo.Root.Length + 1)).ToList();
 
             DoDropFiles(Status, files.ToList());
 
@@ -152,14 +157,10 @@ namespace GitForce.Main.Right.Panels
                 // If we have a valid class bundle where the files should be moved to, move them
                 if(bundle!=null)
                 {
-                    List<string> list = new List<string>();
-                    foreach (string s in files.Where(s => Status.IsMarked(s)))
-                        list.Add(s.Substring(App.Repos.Current.Root.Length + 1));
-
+                    List<string> list = files.Where(s => Status.IsMarked(s)).ToList();
                     App.Repos.Current.Commits.MoveOrAdd(bundle, list);
                 }
             }
-
             App.Refresh();
         }
 
@@ -169,8 +170,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void TreeCommitsMouseMove(object sender, MouseEventArgs e)
         {
-            if (Status != null)
-                Status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
+            Status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace GitForce.Main.Right.Panels
             if (App.Repos.Current == null)
                 mDiff.Enabled = mNew.Enabled = mRevert.Enabled = false;
 
-            if (!(tag is ClassCommit && !(tag as ClassCommit).IsDefault))
+            if (!(tag is ClassCommit))
                 mEdit.Enabled = false;
 
             if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
@@ -310,13 +310,9 @@ namespace GitForce.Main.Right.Panels
                     // Add renamed/copied file names
                     final.AddRange(Status.GetRenamesRel(final));
 
-                    // Form the final command with the description file, optional amend and
-                    // the final list of files which are then quoted
-                    string cmd = "commit -F " + tempFile +
-                        (commitForm.GetCheckAmend() ? " --amend -- " : " -- ") +
-                        String.Join(" ", final.Select(s => "\"" + s + "\"").ToArray());
-
-                    Status.Repo.RunCmd(cmd);
+                    // Form the final command with the description file and optional amend
+                    string cmd = "-F " + tempFile + (commitForm.GetCheckAmend() ? " --amend -- " : " -- ");
+                    Status.Repo.GitCommit(cmd, final);
 
                     File.Delete(tempFile);
 
@@ -324,9 +320,9 @@ namespace GitForce.Main.Right.Panels
                     // will reset all files which were _not_ submitted as part of this change to be
                     // moved to the default changelist.
                     if (!c.IsDefault)
-                    {
                         App.Repos.Current.Commits.Bundle.Remove(c);
-                    }
+                    else
+                        c.Description = "Default";
                 }
                 App.Refresh();
             }
@@ -376,8 +372,8 @@ namespace GitForce.Main.Right.Panels
                 // into a pseudo-bundle to submit
                 c = new ClassCommit("ad-hoc");
                 List<string> files = (from n in treeCommits.SelectedNodes
-                                      where Status.IsMarked(n.Tag.ToString())
-                                      select n.Tag.ToString()).ToList();
+                                      where Status.IsMarked(n.Text)
+                                      select n.Text).ToList();
                 c.AddFiles(files);
             }
 

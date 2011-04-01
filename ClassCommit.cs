@@ -12,8 +12,21 @@ namespace GitForce
     [Serializable]
     public class ClassCommit
     {
+        /// <summary>
+        /// List of git files stored under this commit.
+        /// Files have a path relative to the repo root.
+        /// </summary>
         public List<string> Files = new List<string>();
+
+        /// <summary>
+        /// User description text of a commit
+        /// </summary>
         public string Description;
+
+        /// <summary>
+        /// Is this commit a default one (not a user added)
+        /// Default commit cannot be deleted.
+        /// </summary>
         public bool IsDefault;
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace GitForce
@@ -131,11 +132,21 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Converts a list of (relative) files into a quoted list,
+        /// further flattened into a string suitable to send to a git command.
+        /// </summary>
+        private string QuoteAndFlattenPaths(List<string> files)
+        {
+            List<string> quoted = files.Select(file => "\"" + file + "\"").ToList();
+            return string.Join(" ", quoted.ToArray());
+        }
+
+        /// <summary>
         /// Add untracked files to Git repository
         /// </summary>
         public void GitAdd(List<string> files)
         {
-            string list = string.Join(" ", files.ToArray());
+            string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Adding " + list);
             RunCmd("add -- " + list);
         }
@@ -145,7 +156,7 @@ namespace GitForce
         /// </summary>
         public void GitUpdate(List<string> files)
         {
-            string list = string.Join(" ", files.ToArray());
+            string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Updating " + list);
             RunCmd("add -- " + list);
         }
@@ -155,7 +166,7 @@ namespace GitForce
         /// </summary>
         public void GitDelete(List<string> files)
         {
-            string list = string.Join(" ", files.ToArray());
+            string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Removing " + list);
             RunCmd("rm -- " + list);            
         }
@@ -165,7 +176,7 @@ namespace GitForce
         /// </summary>
         public void GitRename(List<string> files)
         {
-            string list = string.Join(" ", files.ToArray());
+            string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Renaming " + list);
             RunCmd("add -- " + list);
         }
@@ -175,9 +186,16 @@ namespace GitForce
         /// </summary>
         public void GitRevert(List<string> files)
         {
-            string list = string.Join(" ", files.ToArray());
+            string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Reverting " + list);
             RunCmd("checkout -- " + list);
+        }
+
+        public void GitCommit(string cmd, List<string> files)
+        {
+            string list = QuoteAndFlattenPaths(files);
+            App.PrintStatusMessage("Submit " + list);
+            RunCmd("commit " + cmd + list);
         }
 
         /// <summary>
