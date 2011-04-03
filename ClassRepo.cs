@@ -191,11 +191,28 @@ namespace GitForce
             RunCmd("checkout -- " + list);
         }
 
-        public void GitCommit(string cmd, List<string> files)
+        /// <summary>
+        /// Commit a list of files
+        /// </summary>
+        public void GitCommit(string cmd, bool isAmend, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Submit " + list);
-            RunCmd("commit " + cmd + list);
+
+            // See below Run() for the description of the problem with long commands.
+            // The Run() function breaks any command into chunks of 2000 characters or less
+            // and issues them separately. This can be done on every command except 'commit'
+            // since that would introduce multiple commits, which is probably not what the user
+            // wants. Hence, we break commit at this level into an initial commit of a single
+            // file (the first file on the list), and append for each successive chunk.
+            if(isAmend==false && list.Length>=2000)
+            {
+                RunCmd("commit " + cmd + " -- " + "\"" + files[0] + "\"");
+                isAmend = true;
+                files.RemoveAt(0);
+                list = QuoteAndFlattenPaths(files);
+            }
+            RunCmd(string.Format("commit {0} {1} -- {2}", cmd, isAmend ? "--amend" : "", list));
         }
 
         /// <summary>
@@ -240,7 +257,7 @@ namespace GitForce
                 // We may hit that limit when doing operations on a large number of files.
                 //
                 // However, when sending a long list of files, git was hanging unless
-                // the total length was much less than that, so I set it to about 2000
+                // the total length was much less than that, so I set it to about 2000 chars
                 // which seemed to work fine.
 
                 if (args.Length < 2000)

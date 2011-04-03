@@ -310,9 +310,8 @@ namespace GitForce.Main.Right.Panels
                     // Add renamed/copied file names
                     final.AddRange(Status.GetRenamesRel(final));
 
-                    // Form the final command with the description file and optional amend
-                    string cmd = "-F " + tempFile + (commitForm.GetCheckAmend() ? " --amend -- " : " -- ");
-                    Status.Repo.GitCommit(cmd, final);
+                    // Form the final command with the description file and an optional amend
+                    Status.Repo.GitCommit("-F " + tempFile, commitForm.GetCheckAmend(), final);
 
                     File.Delete(tempFile);
 
