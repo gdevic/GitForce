@@ -48,9 +48,9 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(378, 49);
             this.label4.TabIndex = 17;
-            this.label4.Text = "Type the new file name and optionally new path if you are moving a file. When mul" +
-                "tiple files are selected, target filespec must end in wildcard \'/...\' moving the" +
-                " files only.";
+            this.label4.Text = "Enter a new file name and optionally new path if you are moving a single file. Wh" +
+                "en multiple files are selected, target filespec must end in wildcard \'/...\' movi" +
+                "ng a set of files only.";
             // 
             // comboChangelist
             // 

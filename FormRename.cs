@@ -43,9 +43,8 @@ namespace GitForce
 
             // Load the original list of files into the text box to show what will be renamed
             // Only load files, not directories
-            foreach (string file in files)
-                if (!file.EndsWith(Convert.ToString(Path.DirectorySeparatorChar)))
-                    _inFiles.Add(repo.Win2GitPath(file));
+            foreach (string file in files.Where(file => !file.EndsWith(Convert.ToString(Path.DirectorySeparatorChar))))
+                _inFiles.Add(file);
 
             if (_inFiles.Count == 0)
                 return false;
