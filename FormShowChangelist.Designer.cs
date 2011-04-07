@@ -96,9 +96,8 @@
             this.Name = "FormShowChangelist";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Describe Git Changelist";
-            this.Activated += new System.EventHandler(this.FormShowChangelistActivated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormShowChangelistFormClosing);
             this.ResumeLayout(false);
 

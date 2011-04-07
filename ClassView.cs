@@ -96,30 +96,42 @@ namespace GitForce
             TreeNodeCollection nodes = rootNode.Nodes;
             foreach (TreeNode tn in nodes)
             {
-                string name = isIndex? tn.Text : tn.Tag.ToString();
-                if (status.IsMarked(name))
-                {
-                    char icon = isIndex ? status.GetXcode(name) : status.GetYcode(name);
-                    tn.ImageIndex = (int)Staticons[icon];
-                }
+                if (tn.Tag is ClassCommit)
+                    tn.ImageIndex = (int) Img.Changelist;
                 else
                 {
-                    tn.ImageIndex = isIndex ? (int)Img.Changelist : (int)Img.FolderClosed;
+                    string name = isIndex ? tn.Text : tn.Tag.ToString();
+                    if (status.IsMarked(name) || tn.Nodes.Count == 0)
+                    {
+                        char icon = isIndex ? status.Xcode(name) : status.Ycode(name);
+                        tn.ImageIndex = (int)Staticons[icon];
+                    }
+                    else
+                        tn.ImageIndex = (int)Img.FolderClosed;
                 }
                 ViewAssignIcon(status, tn, isIndex);
             }
         }
 
         /// <summary>
-        /// Recursive function to traverse the virtual directory of
-        /// a flat git response files and build a visual tree component.
-        /// 
-        /// Each node will have its Tag based on the root Tag path.
+        /// Build a tree view given the list of files
         /// </summary>
         /// <param name="tnRoot">Root node to base the tree on</param>
         /// <param name="list">List of files in git format</param>
         /// <param name="sortBy">File sorting order</param>
-        public static void BuildTreeRecurse(TreeNode tnRoot, List<string> list, GitDirectoryInfo.SortBy sortBy)
+        public static void BuildTree(TreeNode tnRoot, List<string> list, GitDirectoryInfo.SortBy sortBy)
+        {
+            BuildTreeRecurse(tnRoot, list, sortBy);
+        }
+
+        /// <summary>
+        /// Recursive function to traverse the virtual directory of
+        /// a flat git response files and build a visual tree component.
+        /// </summary>
+        /// <param name="tnRoot">Root node to base the tree on</param>
+        /// <param name="list">List of files in git format</param>
+        /// <param name="sortBy">File sorting order</param>
+        private static void BuildTreeRecurse(TreeNode tnRoot, List<string> list, GitDirectoryInfo.SortBy sortBy)
         {
             string rootPath = tnRoot.Tag.ToString();
             GitDirectoryInfo dir = new GitDirectoryInfo(rootPath, list);
@@ -152,7 +164,11 @@ namespace GitForce
         {
             // Build a list view
             foreach (string s in list)
-                tnRoot.Nodes.Add(new TreeNode(s) {Tag = s});
+            {
+                TreeNode tn = new TreeNode(s);
+                tn.Tag = s;
+                tnRoot.Nodes.Add(tn);
+            }
         }
 
         /// <summary>
@@ -176,7 +192,7 @@ namespace GitForce
                 foreach (var f in c.Files)
                 {
                     TreeNode tn = new TreeNode(f);
-                    tn.Tag = Path.Combine(repo.Root, f);
+                    tn.Tag = f;
                     commitNode.Nodes.Add(tn);
                 }
 

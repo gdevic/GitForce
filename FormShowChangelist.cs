@@ -17,15 +17,13 @@ namespace GitForce
     /// </summary>
     public partial class FormShowChangelist : Form
     {
-        private Point _location;
-        private Size _size;
-
         /// <summary>
         /// Constructor, set the same font as for commit text box.
         /// </summary>
         public FormShowChangelist()
         {
             InitializeComponent();
+            ClassWinGeometry.Restore(this);
 
             textChangelist.Font = Properties.Settings.Default.commitFont;
         }
@@ -81,26 +79,11 @@ namespace GitForce
         }
 
         /// <summary>
-        /// On form closing, save the dialog location and size since this
-        /// form can be reopened
+        /// On form closing, save the dialog location and size
         /// </summary>
         private void FormShowChangelistFormClosing(object sender, FormClosingEventArgs e)
         {
-            _location = Location;
-            _size = Size;
-        }
-
-        /// <summary>
-        /// Restore the dialog location and size if this is an iterative invocation
-        /// and the size has actually been stored before
-        /// </summary>
-        private void FormShowChangelistActivated(object sender, EventArgs e)
-        {
-            if (_size.Width != 0)
-            {
-                Location = _location;
-                Size = _size;
-            }
+            ClassWinGeometry.Save(this); 
         }
     }
 }

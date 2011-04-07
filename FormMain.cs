@@ -18,6 +18,12 @@ namespace GitForce
     {
         #region Initialization
 
+        // This simply registers repo's status refresh function at the head of the refresh chain
+        private static readonly ClassStatus Status = new ClassStatus();
+
+        // Left panels
+        private static readonly PanelView PanelView = new PanelView();
+
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
         private static readonly PanelCommits PanelCommits = new PanelCommits();
@@ -30,9 +36,6 @@ namespace GitForce
             { "Revisions", PanelRevlist },
             { "Branches", PanelBranches },
         };
-
-        // Left panels
-        private static readonly PanelView PanelView = new PanelView();
 
         // Path to the default custom tools file
         private static readonly string DefaultCustomToolsFile = Path.Combine(App.AppHome, "CustomTools.xml");

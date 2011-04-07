@@ -106,23 +106,18 @@ namespace GitForce
                     Process.Start(@"/usr/bin/nautilus", "--browser " + where);
                 }
                 else
-                    Process.Start("explorer.exe", "/e, /select," + selFile);
+                {
+                    string path = selFile == string.Empty
+                                      ? "/e,\"" + where + "\""
+                                      : "/e, /select,\"" + selFile + "\"";
+                    App.Log.Print(path);
+                    Process.Start("explorer.exe", path);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
-        }
-
-        /// <summary>
-        /// Returns a string to the CMD/SHELL command interpreter
-        /// </summary>
-        public static string GetShell()
-        {
-            if(IsMono())
-                return Environment.GetEnvironmentVariable("SHELL");
-            else
-                return Environment.GetEnvironmentVariable("ComSpec");
         }
 
         /// <summary>

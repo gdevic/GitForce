@@ -39,16 +39,14 @@ namespace GitForce.Main.Right.Panels
 
             if (App.Repos.Current != null)
             {
-                Status = new ClassStatus(App.Repos.Current);
+                Status = App.Repos.Current.Status;
 
                 // List files that are updated in the index (code X is not ' ' or '?')
-
-                Status.SetListByStatusCommand("status --porcelain -uno -z");
-                Status.Filter(s => s[0] == ' ' || s[0] == '?');
-                Status.Seal();
+                List<string> files = Status.GetFiles();
+                files = files.Where(s => (Status.Xcode(s) != ' ' && Status.Xcode(s) != '?')).ToList();
 
                 // Build a list view of these files
-                TreeNode node = ClassView.BuildCommitsView(Status.Repo, Status.GetFileList());
+                TreeNode node = ClassView.BuildCommitsView(Status.Repo, files);
 
                 // Add the resulting list to the tree view control
                 treeCommits.Nodes.Add(node);
@@ -69,6 +67,17 @@ namespace GitForce.Main.Right.Panels
         /// Shortcut function to the panel refresh
         /// </summary>
         private void MenuRefreshClick(object sender, EventArgs e) { CommitsRefresh(); }
+
+        /// <summary>
+        /// Returns a set of selected git files
+        /// </summary>
+        private List<string> GetSelectedFiles()
+        {
+            List<string> files = (from n in treeCommits.SelectedNodes
+                                  where Status.IsMarked(n.Tag.ToString())
+                                  select n.Tag.ToString()).ToList();
+            return files;
+        }
 
         /// <summary>
         /// User selected one or more items and started to drag them
@@ -101,10 +110,10 @@ namespace GitForce.Main.Right.Panels
             Dictionary<char, List<string>> opclass = new Dictionary<char, List<string>>();
             foreach (string s in files.Where(status.IsMarked))
             {
-                if (opclass.ContainsKey(status.GetYcode(s)))
-                    opclass[status.GetYcode(s)].Add(s);
+                if (opclass.ContainsKey(status.Ycode(s)))
+                    opclass[status.Ycode(s)].Add(s);
                 else
-                    opclass[status.GetYcode(s)] = new List<string> { s };
+                    opclass[status.Ycode(s)] = new List<string> { s };
             }
 
             // Perform required operations on the files
@@ -125,16 +134,10 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] dropped_files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            // Since files that are dropeed might have originated from anywhere, 
-            // each file name needs to be compared against a set of git-permissible files for the current repo
-            Status = new ClassStatus(App.Repos.Current);
-            Status.SetListByStatusCommand("status --porcelain -uall -z");
-            Status.Seal();
+            string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             // Files can come from anywhere. Prune those that are not from this repo.
-            List<string> files = (from file in dropped_files.ToList()
+            List<string> files = (from file in droppedFiles.ToList()
                                   where file.StartsWith(Status.Repo.Root)
                                   select file.Substring(Status.Repo.Root.Length + 1)).ToList();
 
@@ -170,7 +173,8 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void TreeCommitsMouseMove(object sender, MouseEventArgs e)
         {
-            Status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
+            if (Status != null)
+                Status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
         }
 
         /// <summary>
@@ -230,7 +234,7 @@ namespace GitForce.Main.Right.Panels
             if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
                 mDel.Enabled = false;
 
-            if (!((tag is string) && Status.IsMarked(tag as string) && Status.GetXcode(tag as string) == 'U'))
+            if (!((tag is string) && Status.IsMarked(tag as string) && Status.Xcode(tag as string) == 'U'))
                 mResolve.Enabled = false;
 
             return menu;
@@ -307,9 +311,6 @@ namespace GitForce.Main.Right.Panels
                     string tempFile = Path.GetTempFileName();
                     File.WriteAllText(tempFile, commitForm.GetDescription());
 
-                    // Add renamed/copied file names
-                    final.AddRange(Status.GetRenamesRel(final));
-
                     // Form the final command with the description file and an optional amend
                     Status.Repo.GitCommit("-F " + tempFile, commitForm.GetCheckAmend(), final);
 
@@ -340,16 +341,14 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// Diff the selected file against the repo
+        /// Diff selected files against the repo
         /// </summary>
         private void MenuDiffClick(object sender, EventArgs e)
         {
             if ((sender as ToolStripMenuItem).Tag is string)
             {
-                string file = (sender as ToolStripMenuItem).Tag as string;
-                file = file.Substring(Status.Repo.Root.Length + 1);
-                string cmd = "difftool " + ClassDiff.GetDiffCmd() + "--cached -- \"" + file + "\"";
-                Status.Repo.RunCmd(cmd);
+                List<string> files = GetSelectedFiles();
+                Status.Repo.GitDiff("--cached", files);
             }
         }
 
@@ -358,61 +357,49 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void MenuRevertClick(object sender, EventArgs e)
         {
+            List<string> files;
+
             // If the right-click selected a changelist bundle, revert it
-            // Use the class commit as a helper class to hold a set of files
-            ClassCommit c;
+            // If the right-click selected files, gather all files selected
             if ((sender as ToolStripMenuItem).Tag is ClassCommit)
-            {
-                c = (sender as ToolStripMenuItem).Tag as ClassCommit;
-            }
+                files = ((sender as ToolStripMenuItem).Tag as ClassCommit).Files;
             else
-            {
-                // If the right-click selected files, gather all files selected
-                // into a pseudo-bundle to submit
-                c = new ClassCommit("ad-hoc");
-                List<string> files = (from n in treeCommits.SelectedNodes
-                                      where Status.IsMarked(n.Text)
-                                      select n.Text).ToList();
-                c.AddFiles(files);
-            }
+                files = GetSelectedFiles();
 
             // Get the files checked for commit
-            if (c.Files.Count > 0)
+            if (files.Count <= 0) return;
+
+            if (MessageBox.Show(@"Revert will unstage all the selected files and will lose the changes.Proceed with Revert?",
+                    "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
+
+            // Renamed files are handled first
+            // Simply rename them back to their original names
+            List<string> used = new List<string>();
+            foreach (var s in files)
             {
-                if (MessageBox.Show(@"Revert will unstage all the selected files and will lose the changes.
-Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                string alt = Status.GetAltFile(s);
+                if (alt == string.Empty) continue;
+                Status.Repo.GitMove(s, alt);
+                used.Add(s);
+            }
+            files = files.Except(used).ToList();
+
+            // With whatever is left...
+            if(files.Count>0)
+            {
+                // There are 2 ways to unstage a file:
+                // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
+                // Can't figure out how to find out which one to use at this moment, so use both.
+                Status.Repo.GitReset("HEAD", files);
+
+                // If the error is not being able to resolve HEAD, retry with other version of the command
+                if (ClassUtils.LastError.Contains("HEAD"))
                 {
-                    // Add renamed/copied file names using their absolute path
-                    List<string> renames = Status.GetRenamesAbs(c.Files);
-                    c.Files.AddRange(renames);
-
-                    // There are 2 ways to unstage a file:
-                    // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
-                    // Can't figure out how to find out which one to use at this moment, so use both.
-                    string cmd = "reset HEAD -- " + String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToArray());
-                    Status.Repo.RunCmd(cmd);
-
-                    // If the error is not being able to resolve HEAD, retry with other version of the command
-                    if(ClassUtils.LastError.Contains("HEAD"))
-                    {
-                        App.PrintStatusMessage("Retrying using the `rm` option...");
-                        cmd = "rm --cached -- " + String.Join(" ", c.Files.Select(s => "\"" + s + "\"").ToArray());
-                        Status.Repo.RunCmd(cmd);                        
-                    }
-
-                    // The last step is to fix up renamed files back to their original names
-                    foreach (var s in renames)
-                    {
-                        try
-                        {
-                            File.Move(Status.GetRenamesOldNameAbs(s), s);
-                        }
-                        catch (Exception ex) { App.PrintStatusMessage("File revert: `" + s + "`: " + ex.Message); }
-                    }
-
-                    App.Refresh();
+                    App.PrintStatusMessage("Retrying using the `rm` option...");
+                    Status.Repo.GitDelete("--cached", files);
                 }
             }
+            App.Refresh();
         }
 
         /// <summary>
@@ -421,7 +408,7 @@ Proceed with Revert?", "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Informa
         private void MenuMergeTool(object sender, EventArgs e)
         {
             string file = (sender as ToolStripMenuItem).Tag.ToString();
-            string cmd = "mergetool " + ClassMerge.GetMergeCmd() + Status.Repo.Win2GitPath(file);
+            string cmd = "mergetool " + ClassMerge.GetMergeCmd() + " \"" + file + "\"";
             Status.Repo.RunCmd(cmd);
             App.Refresh();
         }

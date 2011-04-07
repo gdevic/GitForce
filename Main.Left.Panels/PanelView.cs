@@ -21,36 +21,6 @@ namespace GitForce.Main.Left.Panels
         private ClassStatus Status;
 
         /// <summary>
-        /// Structure holding the tree selection items information
-        /// </summary>
-        private class Selection
-        {
-            public readonly string SelAbsPath;
-            public readonly string[] SelFiles;
-            public readonly Dictionary<char, List<string>> Opclass = new Dictionary<char, List<string>>();
-
-            public Selection(TreeViewEx treeView, ClassStatus status)
-            {
-                SelFiles = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
-
-                // Absolute path is either the repo root (if no nodes were selected)
-                // or the full path to the very first selected node
-                SelAbsPath = (SelFiles.Count() > 0)
-                                 ? Path.Combine(App.Repos.Current.Root, SelFiles[0])
-                                 : App.Repos.Current.Root;
-
-                // Move files into different buckets based on what function needs to be done on them
-                foreach (string s in SelFiles.Where(status.IsMarked))
-                {
-                    if (Opclass.ContainsKey(status.GetYcode(s)))
-                        Opclass[status.GetYcode(s)].Add(s);
-                    else
-                        Opclass[status.GetYcode(s)] = new List<string> { s };
-                }
-            }
-        };
-
-        /// <summary>
         /// PanelView constructor
         /// </summary>
         public PanelView()
@@ -58,7 +28,6 @@ namespace GitForce.Main.Left.Panels
             InitializeComponent();
 
             treeView.ImageList = ClassView.GetImageList();
-            treeView.PathSeparator = Path.DirectorySeparatorChar.ToString();
 
             App.Refresh += ViewRefresh;
 
@@ -99,13 +68,6 @@ namespace GitForce.Main.Left.Panels
         {
             int mode = Properties.Settings.Default.viewMode;
 
-            // Define root initial icons for 5 viewing modes
-            int[] icons = { (int)ClassView.Img.FolderOpened, 
-                            (int)ClassView.Img.FolderOpened, 
-                            (int)ClassView.Img.DatabaseOpened,
-                            (int)ClassView.Img.FolderOpened,
-                            (int)ClassView.Img.FolderOpened };
-
             // Set the view mode text (picked up from the indexed menu combo box)
             viewLabel.Text = dropViewMode.DropDownItems[mode].Text;
 
@@ -116,65 +78,67 @@ namespace GitForce.Main.Left.Panels
 
             if (App.Repos.Current != null)
             {
-                Status = new ClassStatus(App.Repos.Current);
+                Status = App.Repos.Current.Status;
 
                 btListView.Checked = !Status.Repo.IsTreeView;
                 menuSortFilesByExtension.Checked = Status.Repo.SortBy == GitDirectoryInfo.SortBy.Extension;
 
+                List<string> files = new List<string>();
+
                 switch (mode)
                 {
                     case 0:     // Git status of all files: status + untracked
-                        Status.SetListByStatusCommand("status --porcelain -uall -z");
-                        Status.Seal();
+                        files = Status.GetFiles();
                         break;
                     case 1:     // Git status of files: status - untracked
-                        Status.SetListByStatusCommand("status --porcelain -uno -z");
-                        Status.Filter(s => s.StartsWith("??"));
-                        Status.Seal();
+                        files = Status.GetFiles();
+                        // Remove all untracked files
+                        files = files.Where(s => Status.Xcode(s) != '?').ToList();
                         break;
                     case 2:     // Git view of repo: ls-tree
-                        Status.SetListByLsTreeCommand("ls-tree --abbrev -r -z HEAD");
-                        Status.ConvertSeal();
+                        string[] response = App.Repos.Current.Run("ls-tree --abbrev -r -z HEAD")
+                            .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
+                            .Split(("\0")
+                            .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        files.AddRange(response.Select(s => s.Split('\t').Last()));
                         break;
                     case 3:     // Local file view: use local directory list
-                        Status.SetListByStatusCommand("status --porcelain -uall -z");
-                        Status.Seal();
-                        Status.SetListByList(GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root));
-                        Status.Seal();
+                        files = GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root);
+                        // Remove the repo root from the file paths
+                        int rootlen = App.Repos.Current.Root.Length;
+                        files = files.Select(file => file.Substring(rootlen + 1)).ToList();
                         break;
                     case 4:     // Local files not in repo: untracked only
-                        Status.SetListByStatusCommand("status --porcelain -uall -z");
-                        Status.Filter(s => !s.StartsWith("??"));
-                        Status.Seal();
+                        files = Status.GetFiles();
+                        // Leave only untracked files
+                        files = files.Where(s => Status.Xcode(s) == '?').ToList();
                         break;
                 }
 
-                // Sort the files in the Status list by the repo's sorting rule
-                Status.Sort();
-
                 // Build the tree view (or a list view)
-                TreeNode node = new TreeNode(App.Repos.Current.Root) {Tag = String.Empty};
+                TreeNode node = new TreeNode(App.Repos.Current.Root) { Tag = String.Empty };
 
                 if (Status.Repo.IsTreeView)
-                    ClassView.BuildTreeRecurse(node, Status.GetFileList(), Status.Repo.SortBy);
+                    ClassView.BuildTree(node, files, Status.Repo.SortBy);
                 else
-                    ClassView.BuildFileList(node, Status.GetFileList());
+                    ClassView.BuildFileList(node, files);
 
                 // Add the resulting tree to the tree view control
                 treeView.Nodes.Add(node);
 
-                // Set the first node (root) image according to the view mode
-                node.ImageIndex = icons[mode];
-
                 // Assign the icons to the nodes of tree view
                 ClassView.ViewAssignIcon(Status, node, false);
+
+                // Set the first node (root) image according to the view mode
+                node.ImageIndex = mode == 2
+                                      ? (int) ClassView.Img.DatabaseOpened
+                                      : (int) ClassView.Img.FolderOpened;
 
                 // Always keep the root node expanded by default
                 node.Expand();
 
                 // Finally, expand the rest of the tree to its previous expand state
                 ViewExpand(node);
-
             }
             treeView.EndUpdate();
         }
@@ -232,6 +196,49 @@ namespace GitForce.Main.Left.Panels
         }
 
         /// <summary>
+        /// Returns the directory path of a selected file or directory
+        /// </summary>
+        private string GetSelectedDir()
+        {
+            TreeNode selNode = treeView.SelectedNode ?? treeView.Nodes[0];
+            string sel = Path.Combine(App.Repos.Current.Root, selNode.Tag.ToString());
+            return Directory.Exists(sel) ? sel : Path.GetDirectoryName(sel);
+        }
+
+        /// <summary>
+        /// Returns the full path of a single selected file, or empty if no file was selected
+        /// </summary>
+        private string GetSelectedFile()
+        {
+            foreach (var tn in treeView.SelectedNodes.Where(tn => File.Exists(tn.FullPath)))
+                return tn.FullPath;
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Structure holding a tree selection items information
+        /// </summary>
+        private class Selection
+        {
+            public readonly string[] SelFiles;
+            public readonly Dictionary<char, List<string>> Opclass = new Dictionary<char, List<string>>();
+
+            public Selection(TreeViewEx treeView, ClassStatus status)
+            {
+                SelFiles = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
+
+                // Move files into different buckets based on what function needs to be done on them
+                foreach (var s in SelFiles)
+                {
+                    if (Opclass.ContainsKey(status.Ycode(s)))
+                        Opclass[status.Ycode(s)].Add(s);
+                    else
+                        Opclass[status.Ycode(s)] = new List<string> { s };
+                }
+            }
+        };
+
+        /// <summary>
         /// Handle double-clicking on a tree view
         /// Depending on the saved options, we either do nothing ("0"), open a file
         /// using a default Explorer file association ("1"), or open a file using a
@@ -239,8 +246,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void TreeViewDoubleClick(object sender, EventArgs e)
         {
-            TreeNode sel = treeView.SelectedNode;
-            if (sel != null && !sel.Tag.ToString().EndsWith(Convert.ToString(Path.DirectorySeparatorChar)))
+            string file = GetSelectedFile();
+            if (file!=string.Empty)
             {
                 // Perform the required action on double-click
                 string option = Properties.Settings.Default.DoubleClick;
@@ -249,9 +256,9 @@ namespace GitForce.Main.Left.Panels
                 try
                 {
                     if (option == "1")
-                        Process.Start(sel.FullPath);
+                        Process.Start(file);
                     if (option == "2")
-                        Process.Start(program, sel.FullPath);
+                        Process.Start(program, file);
                 }
                 catch (Exception ex)
                 {
@@ -282,7 +289,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void TreeViewMouseMove(object sender, MouseEventArgs e)
         {
-            Status.ShowTreeInfo(treeView.GetNodeAt(e.X, e.Y));
+            if (Status != null)
+                Status.ShowTreeInfo(treeView.GetNodeAt(e.X, e.Y));
         }
 
         /// <summary>
@@ -376,24 +384,18 @@ namespace GitForce.Main.Left.Panels
             if (Status == null || treeView.SelectedNodes.Count == 0)
                 return;
 
-            List<TreeNode> selected = treeView.SelectedNodes;
+            // The selection of files contains classes of operations (keys)
+            Selection sel = new Selection(treeView, Status);
+            List<char> keys = sel.Opclass.Keys.ToList();
+            foreach (var key in keys)
+                allowedOps.AddRange(ops[key]);
 
-            // Collect all possible operations for the selected group of nodes
-            allowedOps.Clear();
-            foreach (var treeNode in selected)
-            {
-                if (Status.IsMarked(treeNode.Tag.ToString()))
-                {
-                    char Y = Status.GetYcode(treeNode.Tag.ToString());
-                    allowedOps.AddRange(ops[Y]);
-                }
-            }
             // Remove duplicate entries
             allowedOps = allowedOps.Distinct().ToList();
 
-            // If there is more than one file selected, remove Edit and Diff entries
-            if (selected.Count > 1)
-                allowedOps.RemoveAll(x => x == FileOps.Edit || x == FileOps.Diff);
+            // If there is more than one file selected, remove Edit entries
+            if (sel.SelFiles.Length > 1)
+                allowedOps.RemoveAll(x => x == FileOps.Edit);
 
             // Enable only chosen status buttons
             foreach (var button in StatusButtons)
@@ -516,21 +518,17 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewExploreClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
-            string dir = Path.GetDirectoryName(sel.SelAbsPath);
-            if (dir != null)
-                ClassUtils.ExplorerHere(dir, sel.SelAbsPath);
+            string dir = GetSelectedDir();
+            ClassUtils.ExplorerHere(dir, GetSelectedFile());
         }
 
         /// <summary>
-        /// Open a command prompt in the directory containing a selected file
+        /// Open command prompt in the directory containing a selected file
         /// </summary>
         private void MenuViewCommandClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
-            string dir = Path.GetDirectoryName(sel.SelAbsPath);
-            if (dir != null)
-                ClassUtils.CommandPromptHere(dir);
+            string dir = GetSelectedDir();
+            ClassUtils.CommandPromptHere(dir);
         }
 
         #region Handlers for file actions related to Git
@@ -642,11 +640,11 @@ namespace GitForce.Main.Left.Panels
 
             foreach (string s in sel.SelFiles)
             {
-                string fullPath = Path.Combine(Status.Repo.Root, s);
+                string fullPath = Path.Combine(App.Repos.Current.Root, s);
                 if (!ClassUtils.DeleteFile(fullPath))
                     App.PrintStatusMessage("Error: " + ClassUtils.LastError);
             }
-            ViewRefresh();
+            App.Refresh();
         }
 
         /// <summary>
@@ -656,25 +654,27 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewEditClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(sel.SelAbsPath));
-            try
+            string file = GetSelectedFile();
+            if(file!=string.Empty)
             {
-                App.PrintStatusMessage("Editing " + sel.SelAbsPath);
-                if (sender is ToolStripMenuItem)
+                App.PrintStatusMessage("Editing " + file);
+                try
                 {
-                    object opt = (sender as ToolStripMenuItem).Tag;
-                    if (opt != null)
+                    if (sender is ToolStripMenuItem)
                     {
-                        Process.Start(opt.ToString(), sel.SelAbsPath);
-                        return;
+                        object opt = (sender as ToolStripMenuItem).Tag;
+                        if (opt != null)
+                        {
+                            Process.Start(opt.ToString(),file);
+                            return;
+                        }
                     }
+                    Process.Start(file);
                 }
-                Process.Start(sel.SelAbsPath);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -685,13 +685,7 @@ namespace GitForce.Main.Left.Panels
         {
             Selection sel = new Selection(treeView, Status);
             string opt = (sender as ToolStripMenuItem).Tag.ToString();
-
-            // Only one file should be selected for diff
-            if(sel.SelFiles.Count()==1)
-            {
-                App.Repos.Current.RunCmd("difftool " + ClassDiff.GetDiffCmd() + opt + 
-                    " -- " + "\"" + sel.SelFiles[0] + "\"");
-            }
+            Status.Repo.GitDiff(opt, sel.SelFiles.ToList());
         }
 
         #endregion

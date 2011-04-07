@@ -64,7 +64,14 @@ namespace GitForce
         private HashSet<string> _viewExpansionSet = new HashSet<string>();
 
         /// <summary>
-        /// Constructor that sets the root of a new repository
+        /// Stats of all files known to git in this repo. This status is refreshed
+        /// on every App global refresh, so it does not need to be preserved across sessions.
+        /// </summary>
+        [NonSerialized] 
+        public ClassStatus Status;
+
+        /// <summary>
+        /// Class constructor
         /// </summary>
         public ClassRepo(string newRoot)
         {
@@ -121,17 +128,6 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Transforms a Windows absolute path to the repository relative path with
-        /// slashes changes. This path format is suitable to send to git commands.
-        /// </summary>
-        public string Win2GitPath(string path)
-        {
-            string s = path.Substring(Root.Length + 1)
-                           .Replace('\\', '/');
-            return s;
-        }
-
-        /// <summary>
         /// Converts a list of (relative) files into a quoted list,
         /// further flattened into a string suitable to send to a git command.
         /// </summary>
@@ -164,11 +160,12 @@ namespace GitForce
         /// <summary>
         /// Delete a list of files
         /// </summary>
-        public void GitDelete(List<string> files)
+        public void GitDelete(List<string> files) { GitDelete("", files); }
+        public void GitDelete(string tag, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Removing " + list);
-            RunCmd("rm -- " + list);            
+            RunCmd("rm " + tag + " -- " + list);
         }
 
         /// <summary>
@@ -182,6 +179,15 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Moves a file to a different name or different location
+        /// </summary>
+        public void GitMove(string srcFile, string dstFile)
+        {
+            App.PrintStatusMessage(string.Format("Moving {0} to {1}", srcFile, dstFile));
+            RunCmd("mv \"" + srcFile + "\" \"" + dstFile + "\"");
+        }
+
+        /// <summary>
         /// Revert a list of files
         /// </summary>
         public void GitRevert(List<string> files)
@@ -189,6 +195,23 @@ namespace GitForce
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Reverting " + list);
             RunCmd("checkout -- " + list);
+        }
+
+        /// <summary>
+        /// Reset a list of files to a specific head
+        /// </summary>
+        public void GitReset(string head, List<string> files)
+        {
+            string list = QuoteAndFlattenPaths(files);
+            App.PrintStatusMessage(string.Format("Resetting to {0}: {1}", head, list));
+            RunCmd("reset " + head + " -- " + list);
+        }
+
+        public void GitDiff(string tag, List<string> files)
+        {
+            string list = QuoteAndFlattenPaths(files);
+            App.PrintStatusMessage("Diffing " + list);
+            RunCmd("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + list);
         }
 
         /// <summary>
