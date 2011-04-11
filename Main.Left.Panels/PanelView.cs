@@ -594,7 +594,7 @@ namespace GitForce.Main.Left.Panels
                     Status.Repo.GitRevert(sel.Opclass['D']);
                 if (sel.Opclass.ContainsKey('R'))
                     Status.Repo.GitRevert(sel.Opclass['R']);
-                ViewRefresh();
+                App.Refresh();
             }
         }
 
