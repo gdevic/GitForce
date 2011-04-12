@@ -56,7 +56,7 @@ stdout = proc.communicate()[0]
 stdout = stdout[0:stdout.find("###")]
 
 h = open(changelist_file, "a")
-h.write("-------------------------------------------\n")
+h.write("\n-------------------------------------------\n")
 h.write("SUMMARY OF CHANGES:\n\n")
 h.write(stdout)
 h.close()
