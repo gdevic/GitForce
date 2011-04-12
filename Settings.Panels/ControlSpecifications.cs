@@ -31,7 +31,7 @@ namespace GitForce.Settings.Panels
             LoadGlobalFonts();
 
             // Add them to the fonts listbox
-            foreach (FontFamily fontFamily in GlobalVars.Fonts)
+            foreach (FontFamily fontFamily in ClassGlobals.Fonts)
             {
                 Font font = new Font(fontFamily, 10, FontStyle.Regular);
                 listFonts.Items.Add(font.Name);
@@ -82,7 +82,7 @@ namespace GitForce.Settings.Panels
         {
             if (listFonts.SelectedIndex >= 0 && listSizes.SelectedIndex >= 0)
             {
-                FontFamily fontFamily = GlobalVars.Fonts[listFonts.SelectedIndex];
+                FontFamily fontFamily = ClassGlobals.Fonts[listFonts.SelectedIndex];
                 int fontSize = int.Parse(listSizes.SelectedItem.ToString());
                 _font = new Font(fontFamily, fontSize, FontStyle.Regular);
                 SetExampleText();
@@ -96,7 +96,7 @@ namespace GitForce.Settings.Panels
         /// </summary>
         private void LoadGlobalFonts()
         {
-            if (GlobalVars.Fonts.Count == 0)
+            if (ClassGlobals.Fonts.Count == 0)
             {
                 InstalledFontCollection fontCollection = new InstalledFontCollection();
                 FontFamily[] family = fontCollection.Families;
@@ -110,22 +110,11 @@ namespace GitForce.Settings.Panels
                         SizeF w1 = gr.MeasureString("iiii||||....", font);
                         SizeF w2 = gr.MeasureString("XXXX____ZZZZ", font);
                         if (w1 == w2)
-                            GlobalVars.Fonts.Add(fontFamily);
+                            ClassGlobals.Fonts.Add(fontFamily);
                     }
                 }
                 gr.Dispose();
             }
         }
-    }
-
-    /// <summary>
-    /// Class containing global variables
-    /// </summary>
-    static partial class GlobalVars
-    {
-        /// <summary>
-        /// Application cached list of available fixed-width fonts
-        /// </summary>
-        public static readonly List<FontFamily> Fonts = new List<FontFamily>();
     }
 }

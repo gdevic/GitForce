@@ -134,6 +134,9 @@ namespace GitForce
 
             // Save current workspace
             ClassWorkspace.Save(null);
+
+            // Remove all outstanding temp files
+            ClassGlobals.RemoveTempFiles();
         }
 
         /// <summary>

@@ -249,21 +249,7 @@ namespace GitForce.Main.Left.Panels
             string file = GetSelectedFile();
             if (file!=string.Empty)
             {
-                // Perform the required action on double-click
-                string option = Properties.Settings.Default.DoubleClick;
-                string program = Properties.Settings.Default.DoubleClickProgram;
-
-                try
-                {
-                    if (option == "1")
-                        Process.Start(file);
-                    if (option == "2")
-                        Process.Start(program, file);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                ClassUtils.FileDoubleClick(file);
                 ViewRefresh();
             }
         }
@@ -459,6 +445,7 @@ namespace GitForce.Main.Left.Panels
             foreach (string s in progs)
                 mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuViewEditClick) {Tag = s});
 
+            ToolStripMenuItem mRevHist = new ToolStripMenuItem("Revision History...", null, MenuViewRevHistClick);
             ToolStripMenuItem mRename = new ToolStripMenuItem("Move/Rename...", null, MenuViewRenameClick);
             ToolStripMenuItem mDelete = new ToolStripMenuItem("Open for Delete", null, MenuViewOpenForDeleteClick);
             ToolStripMenuItem mRemove = new ToolStripMenuItem("Remove from File System", null, MenuViewRemoveFromFsClick);
@@ -471,6 +458,7 @@ namespace GitForce.Main.Left.Panels
                 mRevert,
                 mDiff,
                 mEdit,
+                mRevHist,
                 new ToolStripSeparator(),
                 mRename,
                 mDelete,
@@ -541,6 +529,7 @@ namespace GitForce.Main.Left.Panels
         /// Remove from FS
         /// Edit
         /// Diff
+        /// Revision history
 
         /// <summary>
         /// Add untracked files to Git
@@ -658,23 +647,7 @@ namespace GitForce.Main.Left.Panels
             if(file!=string.Empty)
             {
                 App.PrintStatusMessage("Editing " + file);
-                try
-                {
-                    if (sender is ToolStripMenuItem)
-                    {
-                        object opt = (sender as ToolStripMenuItem).Tag;
-                        if (opt != null)
-                        {
-                            Process.Start(opt.ToString(),file);
-                            return;
-                        }
-                    }
-                    Process.Start(file);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                ClassUtils.FileOpenFromMenu(sender, file);
             }
         }
 
@@ -688,6 +661,20 @@ namespace GitForce.Main.Left.Panels
             Status.Repo.GitDiff(opt, sel.SelFiles.ToList());
         }
 
+        /// <summary>
+        /// Show the revision history dialog for a selected file.
+        /// This dialog is _not_ modal, so user can view multiple files.
+        /// </summary>
+        private void MenuViewRevHistClick(object sender, EventArgs e)
+        {
+            Selection sel = new Selection(treeView, Status);
+            if(sel.SelFiles.Count()==1)
+            {
+                FormRevisionHistory formRevisionHistory = new FormRevisionHistory(sel.SelFiles[0]);
+                formRevisionHistory.Show();
+            }
+        }
+        
         #endregion
     }
 }

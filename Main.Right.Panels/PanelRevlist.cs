@@ -80,11 +80,16 @@ namespace GitForce.Main.Right.Panels
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
-                UpdateList(App.Repos.Current.Run(cmd.ToString()));
+                string response = App.Repos.Current.Run(cmd.ToString());
+                UpdateList(listRev, response);
             }
         }
 
-        private void UpdateList(string input)
+        /// <summary>
+        /// Helper function that fills in the list of revisions.
+        /// This is used from the code above and from the FormRevisionHistory.
+        /// </summary>
+        public static void UpdateList(ListView listRev, string input)
         {
             App.StatusBusy(true);
             string[] response = input.Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);

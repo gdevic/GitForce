@@ -208,5 +208,57 @@ namespace GitForce
             }
             return true;
         }
+
+        /// <summary>
+        /// Handle double-clicking on a file.
+        /// Depending on the saved options, we either do nothing ("0"), open a file
+        /// using a default Explorer file association ("1"), or open a file using a
+        /// specified application ("2")
+        /// </summary>
+        public static void FileDoubleClick(string file)
+        {
+            // Perform the required action on double-click
+            string option = Properties.Settings.Default.DoubleClick;
+            string program = Properties.Settings.Default.DoubleClickProgram;
+
+            try
+            {
+                if (option == "1")
+                    Process.Start(file);
+                if (option == "2")
+                    Process.Start(program, file);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
+        }
+
+        /// <summary>
+        /// Edit selected file using either the default editor (native OS file association,
+        /// if the tag is null, or the editor program specified in the tag field.
+        /// This is a handler for the context menu, edit tool bar button and also
+        /// revision history view menus.
+        /// </summary>
+        public static void FileOpenFromMenu(object sender, string file)
+        {
+            try
+            {
+                if (sender is ToolStripMenuItem)
+                {
+                    object opt = (sender as ToolStripMenuItem).Tag;
+                    if (opt != null)
+                    {
+                        Process.Start(opt.ToString(), file);
+                        return;
+                    }
+                }
+                Process.Start(file);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
