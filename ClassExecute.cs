@@ -150,9 +150,12 @@ namespace GitForce
             parameters.FComplete = PComplete;
 
             Thread thRun = new Thread(RunNativeProcess);
-            thRun.Start(parameters);
+            thRun.Start(parameters);           
             thRun.Join();
-
+            // There are known problems with async output not being flushed as the
+            // thread exits. Releasing a time-slice using DoEvents seems to fix
+            // the problem in this particular setting.
+            Application.DoEvents();
             App.StatusBusy(false);
 
             return stdout;
