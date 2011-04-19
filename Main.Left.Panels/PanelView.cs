@@ -35,6 +35,9 @@ namespace GitForce.Main.Left.Panels
             // Initialize the current view
             // Current view mode is persistent and stored in in Properties.Settings.Default.viewMode (int)
             SetView(Properties.Settings.Default.viewMode);
+            // Since we use the FullPath property for its intended use (to return a path of a file)
+            // set the correct path separator character for the platform ('\' or '/' for Windows and Linux)
+            treeView.PathSeparator = Path.DirectorySeparatorChar.ToString();
         }
 
         /// <summary>
@@ -645,7 +648,7 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewEditClick(object sender, EventArgs e)
         {
             string file = GetSelectedFile();
-            if(file!=string.Empty)
+            if (file != string.Empty)
             {
                 App.PrintStatusMessage("Editing " + file);
                 ClassUtils.FileOpenFromMenu(sender, file);
