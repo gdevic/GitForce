@@ -164,7 +164,7 @@ namespace GitForce.Main.Right.Panels
                     App.Repos.Current.Commits.MoveOrAdd(bundle, list);
                 }
             }
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace GitForce.Main.Right.Panels
                 List<string> removedFiles = c.Renew(commitForm.GetFiles());
                 Status.Repo.Commits.Bundle[0].AddFiles(removedFiles);
                 CommitsRefresh();
-                App.Refresh();
+                App.DoRefresh();
             }
         }
 
@@ -324,7 +324,7 @@ namespace GitForce.Main.Right.Panels
                     else
                         c.Description = "Default";
                 }
-                App.Refresh();
+                App.DoRefresh();
             }
         }
 
@@ -399,7 +399,7 @@ namespace GitForce.Main.Right.Panels
                     Status.Repo.GitDelete("--cached", files);
                 }
             }
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace GitForce.Main.Right.Panels
             string file = (sender as ToolStripMenuItem).Tag.ToString();
             string cmd = "mergetool " + ClassMerge.GetMergeCmd() + " \"" + file + "\"";
             Status.Repo.RunCmd(cmd);
-            App.Refresh();
+            App.DoRefresh();
         }
     }
 }

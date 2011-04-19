@@ -108,7 +108,7 @@ namespace GitForce
                 Properties.Settings.Default.viewRightPanel);
 
             // Initiate the first global refresh
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace GitForce
         /// </summary>
         private void MenuRefreshAll(object sender, EventArgs e)
         {
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace GitForce
         {
             FormRemoteEdit remoteEdit = new FormRemoteEdit(App.Repos.Current);
             if (remoteEdit.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace GitForce
         {
             FormStash formStash = new FormStash();
             if (formStash.ShowDialog() == DialogResult.OK)
-                App.Refresh();                
+                App.DoRefresh();                
         }
 
         /// <summary>
@@ -629,7 +629,7 @@ namespace GitForce
         {
             FormUnstash formUnstash = new FormUnstash();
             if (formUnstash.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         #region Custom Tools menu handlers

@@ -19,8 +19,22 @@ namespace GitForce
         /// Multicast delegate for application-wide data refresh
         /// </summary>
         public delegate void RefreshDelegate();
-        public static RefreshDelegate Refresh = VoidRefresh;
-        private static void VoidRefresh() { }
+        public static RefreshDelegate Refresh;
+        private static bool inRefresh = false;
+        /// <summary>
+        /// Protect Refresh chain with a simple exit mutex, so that the F5 key (update)
+        /// does not start a re-entrant refresh chain. Although the main GUI app is
+        /// single-threaded, some panels refresh functions are calling GitRun() which
+        /// in turn spawns external async process during which time we can end up with
+        /// multiple threads trying to refresh.
+        /// </summary>
+        public static void DoRefresh()
+        {
+            if (inRefresh) return;
+            inRefresh = true;
+            Refresh();
+            inRefresh = false;
+        }
 
         /// <summary>
         /// Delegate to main form to print a status message in the status pane.

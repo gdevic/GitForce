@@ -143,7 +143,7 @@ namespace GitForce
 
                         proc.WaitForExit();
                         
-                        App.Refresh();
+                        App.DoRefresh();
                     }
                 }
             }

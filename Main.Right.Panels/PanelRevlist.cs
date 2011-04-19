@@ -238,7 +238,7 @@ namespace GitForce.Main.Right.Panels
                 {
                     string cmd = String.Format("reset {0} {1}", formReset.cmd, sha);
                     App.Repos.Current.RunCmd(cmd);
-                    App.Refresh();                    
+                    App.DoRefresh();                    
                 }
             }
         }
@@ -253,7 +253,7 @@ namespace GitForce.Main.Right.Panels
             {
                 string cmd = "cherry-pick --no-commit " + sha;
                 App.Repos.Current.RunCmd(cmd);
-                App.Refresh();
+                App.DoRefresh();
             }
         }
 

@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using GitForce.Main.Right.Panels;
@@ -539,7 +540,7 @@ namespace GitForce.Main.Left.Panels
             Selection sel = new Selection(treeView, Status);
             if(sel.Opclass.ContainsKey('?'))
                 Status.Repo.GitAdd(sel.Opclass['?']);
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -554,7 +555,7 @@ namespace GitForce.Main.Left.Panels
                 Status.Repo.GitDelete(sel.Opclass['D']);
             if (sel.Opclass.ContainsKey('R'))
                 Status.Repo.GitRename(sel.Opclass['R']);
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -565,7 +566,7 @@ namespace GitForce.Main.Left.Panels
         {
             Selection sel = new Selection(treeView, Status);
             PanelCommits.DoDropFiles(Status, sel.SelFiles.ToList());
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -583,7 +584,7 @@ namespace GitForce.Main.Left.Panels
                     Status.Repo.GitRevert(sel.Opclass['D']);
                 if (sel.Opclass.ContainsKey('R'))
                     Status.Repo.GitRevert(sel.Opclass['R']);
-                App.Refresh();
+                App.DoRefresh();
             }
         }
 
@@ -600,7 +601,7 @@ namespace GitForce.Main.Left.Panels
                     List<string> cmds = formRename.GetGitCmds();
                     foreach (string cmd in cmds)
                         App.Repos.Current.Run(cmd);
-                    App.Refresh();
+                    App.DoRefresh();
                 }
         }
 
@@ -616,7 +617,7 @@ namespace GitForce.Main.Left.Panels
                 Status.Repo.GitDelete(sel.Opclass['M']);
             if (sel.Opclass.ContainsKey('R'))
                 Status.Repo.GitDelete(sel.Opclass['R']);
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -633,7 +634,7 @@ namespace GitForce.Main.Left.Panels
                 if (!ClassUtils.DeleteFile(fullPath))
                     App.PrintStatusMessage("Error: " + ClassUtils.LastError);
             }
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>

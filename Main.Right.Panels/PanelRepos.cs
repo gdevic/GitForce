@@ -72,7 +72,7 @@ namespace GitForce.Main.Right.Panels
         private void ListReposDoubleClick(object sender, EventArgs e)
         {
             App.Repos.SetCurrent(GetSelectedRepo());
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace GitForce.Main.Right.Panels
 
                         // Finally, switch to the new repo and do a global refresh
                         App.Repos.SetCurrent(repo);
-                        App.Refresh();
+                        App.DoRefresh();
                     }
                     catch (ClassException ex)
                     {
@@ -225,7 +225,7 @@ namespace GitForce.Main.Right.Panels
                 {
                     FormNewRepoScanAdd formAdd = new FormNewRepoScanAdd(dirs);
                     formAdd.ShowDialog();
-                    App.Refresh();
+                    App.DoRefresh();
                 }
             }
         }
@@ -238,7 +238,7 @@ namespace GitForce.Main.Right.Panels
             ClassRepo repo = GetSelectedRepo();
             FormRepoEdit repoEdit = new FormRepoEdit(repo);
             if (repoEdit.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace GitForce.Main.Right.Panels
             App.StatusBusy(true);
             App.Repos.Refresh();
             App.StatusBusy(false);
-            App.Refresh();
+            App.DoRefresh();
         }
     }
 }

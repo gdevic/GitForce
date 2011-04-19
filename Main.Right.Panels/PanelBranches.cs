@@ -136,7 +136,7 @@ namespace GitForce.Main.Right.Panels
         private void TreeBranchesDoubleClick(object sender, EventArgs e)
         {
             App.Repos.Current.Branches.SwitchTo(GetSelectedBranch());
-            App.Refresh();
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace GitForce.Main.Right.Panels
         {
             FormSwitchToBranch switchBranch = new FormSwitchToBranch();
             if (switchBranch.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace GitForce.Main.Right.Panels
         {
             FormNewBranch newBranch = new FormNewBranch();
             if (newBranch.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace GitForce.Main.Right.Panels
         {
             FormDeleteBranch delBranch = new FormDeleteBranch();
             if (delBranch.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace GitForce.Main.Right.Panels
         {
             FormMergeBranch mergeBranch = new FormMergeBranch();
             if (mergeBranch.ShowDialog() == DialogResult.OK)
-                App.Refresh();
+                App.DoRefresh();
         }
 
         #endregion
