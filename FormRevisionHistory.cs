@@ -124,8 +124,8 @@ namespace GitForce
         /// </summary>
         private void DiffVsClientFileMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = string.Format("difftool {1}..HEAD -- {0}", file, lruSha[0] );
-            App.Repos.Current.Run(cmd);
+            string cmd = string.Format("difftool --gui --no-prompt {1}..HEAD -- {0}", file, lruSha[0]);
+            RunDiff(cmd);
         }
 
         /// <summary>
@@ -133,8 +133,38 @@ namespace GitForce
         /// </summary>
         private void DiffRevisionsMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = string.Format("difftool {1}..{2} -- {0}", file, lruSha[0], lruSha[1]);
-            App.Repos.Current.Run(cmd);
+            string cmd = string.Format("difftool --gui --no-prompt {1}..{2} -- {0}", file, lruSha[0], lruSha[1]);
+            RunDiff(cmd);
+        }
+
+        /// <summary>
+        /// Runs a diff tool in the context of the current repo for a selected file.
+        /// This is a separate function that runs a git command since we want to start a
+        /// diff process and not block.
+        /// </summary>
+        private void RunDiff(string cmd)
+        {
+            // Prepare the process to be run
+            Process proc = new Process {
+                StartInfo = {
+                    FileName = Properties.Settings.Default.GitPath,
+                    Arguments = cmd,
+                    WorkingDirectory = App.Repos.Current.Root,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception ex)
+            {
+                App.PrintStatusMessage(ex.Message);
+                MessageBox.Show(ex.Message, "Error executing diff", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            proc.Close();
         }
 
         /// <summary>
