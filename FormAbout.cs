@@ -47,7 +47,23 @@ namespace GitForce
         /// </summary>
         private void LinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start((sender as LinkLabel).Tag.ToString());
+            try
+            {
+                Process.Start((sender as LinkLabel).Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "GitForce", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
+
+        /// <summary>
+        /// User clicked on the "Copy Email" button
+        /// Copy the email address to clipboard.
+        /// </summary>
+        private void btCopyEmail_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText("GitForce.Project@gmail.com");
         }
     }
 }

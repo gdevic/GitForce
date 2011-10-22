@@ -35,13 +35,18 @@
             this.labelCopyright = new System.Windows.Forms.Label();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
             this.labelBuild = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.linkEmail = new System.Windows.Forms.LinkLabel();
+            this.btCopyEmail = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btOK
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(373, 248);
+            this.btOK.Location = new System.Drawing.Point(351, 262);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 0;
@@ -73,20 +78,18 @@
             this.textLic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textLic.Location = new System.Drawing.Point(12, 85);
+            this.textLic.Location = new System.Drawing.Point(12, 161);
             this.textLic.Multiline = true;
             this.textLic.Name = "textLic";
             this.textLic.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textLic.Size = new System.Drawing.Size(436, 156);
+            this.textLic.Size = new System.Drawing.Size(414, 95);
             this.textLic.TabIndex = 4;
             // 
             // labelCopyright
             // 
-            this.labelCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelCopyright.Location = new System.Drawing.Point(12, 253);
+            this.labelCopyright.Location = new System.Drawing.Point(6, 21);
             this.labelCopyright.Name = "labelCopyright";
-            this.labelCopyright.Size = new System.Drawing.Size(335, 13);
+            this.labelCopyright.Size = new System.Drawing.Size(309, 13);
             this.labelCopyright.TabIndex = 5;
             this.labelCopyright.Text = "Written by Goran Devic, released under GPL";
             // 
@@ -94,7 +97,7 @@
             // 
             this.linkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(420, 12);
+            this.linkLabel.Location = new System.Drawing.Point(398, 12);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(28, 13);
             this.linkLabel.TabIndex = 6;
@@ -105,20 +108,68 @@
             // 
             // labelBuild
             // 
+            this.labelBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelBuild.AutoSize = true;
-            this.labelBuild.Location = new System.Drawing.Point(12, 60);
+            this.labelBuild.Location = new System.Drawing.Point(229, 37);
             this.labelBuild.Name = "labelBuild";
             this.labelBuild.Size = new System.Drawing.Size(30, 13);
             this.labelBuild.TabIndex = 7;
             this.labelBuild.Text = "Build";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btCopyEmail);
+            this.groupBox1.Controls.Add(this.linkEmail);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.labelCopyright);
+            this.groupBox1.Location = new System.Drawing.Point(12, 63);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(414, 92);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Contact information";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(353, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "For comments and suggestions, including bug reports, please email me at:";
+            // 
+            // linkEmail
+            // 
+            this.linkEmail.AutoSize = true;
+            this.linkEmail.Location = new System.Drawing.Point(7, 62);
+            this.linkEmail.Name = "linkEmail";
+            this.linkEmail.Size = new System.Drawing.Size(141, 13);
+            this.linkEmail.TabIndex = 7;
+            this.linkEmail.TabStop = true;
+            this.linkEmail.Tag = "mailto:GitForce.Project@gmail.com";
+            this.linkEmail.Text = "GitForce.Project@gmail.com";
+            this.linkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelLinkClicked);
+            // 
+            // btCopyEmail
+            // 
+            this.btCopyEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btCopyEmail.Location = new System.Drawing.Point(339, 63);
+            this.btCopyEmail.Name = "btCopyEmail";
+            this.btCopyEmail.Size = new System.Drawing.Size(69, 23);
+            this.btCopyEmail.TabIndex = 8;
+            this.btCopyEmail.Text = "Copy Email";
+            this.btCopyEmail.UseVisualStyleBackColor = true;
+            this.btCopyEmail.Click += new System.EventHandler(this.btCopyEmail_Click);
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(460, 283);
+            this.ClientSize = new System.Drawing.Size(438, 297);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelBuild);
-            this.Controls.Add(this.labelCopyright);
             this.Controls.Add(this.textLic);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.label1);
@@ -133,6 +184,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "About GitForce";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAboutFormClosing);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,5 +200,9 @@
         private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.LinkLabel linkLabel;
         private System.Windows.Forms.Label labelBuild;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel linkEmail;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btCopyEmail;
     }
 }
