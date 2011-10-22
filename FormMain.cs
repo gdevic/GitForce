@@ -705,9 +705,8 @@ namespace GitForce
         /// </summary>
         private void CustomToolClicked(object sender, EventArgs e)
         {
-            ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
-            App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args));
-            App.PrintStatusMessage(tool.Run());
+            // Call the panel view's custom tool handling function
+            PanelView.CustomToolClicked(sender, e);
         }
 
         #endregion

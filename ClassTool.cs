@@ -54,12 +54,12 @@ namespace GitForce
         /// Returns a string with a tool output to be printed out.
         /// This string can be empty, in which case nothing should be printed.
         /// </summary>
-        public string Run()
+        public string Run(List<string> files)
         {
             App.Log.Print(this.ToString());
 
             string stdout = string.Empty;
-            string args = DeMacroise(Args);
+            string args = DeMacroise(Args, files);
 
             // Add custom arguments if the checkbox to Prompt for Arguments was checked
             if (IsPromptForArgs())
@@ -81,7 +81,7 @@ namespace GitForce
             Process proc = new Process();
             proc.StartInfo.FileName = Cmd;
             proc.StartInfo.Arguments = args;
-            proc.StartInfo.WorkingDirectory = DeMacroise(Dir);
+            proc.StartInfo.WorkingDirectory = DeMacroise(Dir, new List<string>());
             proc.StartInfo.UseShellExecute = false;
 
             try
@@ -177,10 +177,38 @@ namespace GitForce
         /// <summary>
         /// Applies a set of macro resolutions to the input string
         /// </summary>
-        private string DeMacroise(string s)
+        private string DeMacroise(string s, List<string> files)
         {
+            // Without the current repo, we cannot have reasonable macro expansions
             if (App.Repos.Current != null)
+            {
                 s = s.Replace("%r", App.Repos.Current.Root);
+                s = s.Replace("%u", App.Repos.Current.UserName);
+                s = s.Replace("%e", App.Repos.Current.UserEmail);
+                s = s.Replace("%b", App.Repos.Current.Branches.Current);
+
+                // Separate given list into list of files and list of directories
+                List<string> F = new List<string>();
+                List<string> D = new List<string>();
+
+                foreach (string f in files)
+                {
+                    if (Directory.Exists(f))
+                        // For directories, remove trailing slash
+                        D.Add(f.TrimEnd(new char[] {'\\', '/'}));
+                    else
+                        F.Add(f);
+                }
+
+                // Single file and single directory
+                string sf = F.Count > 0 ? F[0] : "";
+                string sd = D.Count > 0 ? D[0] : "";
+
+                s = s.Replace("%f", sf);
+                s = s.Replace("%d", sd);
+                s = s.Replace("%F", string.Join(" ", F.ToArray()));
+                s = s.Replace("%D", string.Join(" ", D.ToArray()));
+            }
 
             return s;
         }

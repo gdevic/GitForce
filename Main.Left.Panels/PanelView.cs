@@ -498,11 +498,20 @@ namespace GitForce.Main.Left.Panels
         /// A specific custom tool is clicked (selected).
         /// Tag contains the tool class.
         /// </summary>
-        private void CustomToolClicked(object sender, EventArgs e)
+        public void CustomToolClicked(object sender, EventArgs e)
         {
+            Selection sel = new Selection(treeView, Status);
+
+            // Create a list of selected files to send to the Run method
+            // Each file needs to have an absolute path, so prepend the repo root
+            // These are files and directories, bundled together
+            List<string> files = new List<string>();
+            foreach(string s in sel.SelFiles)
+                files.Add(Path.Combine(App.Repos.Current.Root, s));
+
             ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
             App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args));
-            App.PrintStatusMessage(tool.Run());            
+            App.PrintStatusMessage(tool.Run(files));
         }
 
         /// <summary>
