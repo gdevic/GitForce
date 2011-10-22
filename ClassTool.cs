@@ -180,35 +180,32 @@ namespace GitForce
         private string DeMacroise(string s, List<string> files)
         {
             // Without the current repo, we cannot have reasonable macro expansions
-            if (App.Repos.Current != null)
+            s = s.Replace("%r", App.Repos.Current==null ? "" : App.Repos.Current.Root);
+            s = s.Replace("%u", App.Repos.Current==null ? "" : App.Repos.Current.UserName);
+            s = s.Replace("%e", App.Repos.Current==null ? "" : App.Repos.Current.UserEmail);
+            s = s.Replace("%b", App.Repos.Current==null ? "" : App.Repos.Current.Branches.Current);
+
+            // Separate given list into list of files and list of directories
+            List<string> F = new List<string>();
+            List<string> D = new List<string>();
+
+            foreach (string f in files)
             {
-                s = s.Replace("%r", App.Repos.Current.Root);
-                s = s.Replace("%u", App.Repos.Current.UserName);
-                s = s.Replace("%e", App.Repos.Current.UserEmail);
-                s = s.Replace("%b", App.Repos.Current.Branches.Current);
-
-                // Separate given list into list of files and list of directories
-                List<string> F = new List<string>();
-                List<string> D = new List<string>();
-
-                foreach (string f in files)
-                {
-                    if (Directory.Exists(f))
-                        // For directories, remove trailing slash
-                        D.Add(f.TrimEnd(new char[] {'\\', '/'}));
-                    else
-                        F.Add(f);
-                }
-
-                // Single file and single directory
-                string sf = F.Count > 0 ? F[0] : "";
-                string sd = D.Count > 0 ? D[0] : "";
-
-                s = s.Replace("%f", sf);
-                s = s.Replace("%d", sd);
-                s = s.Replace("%F", string.Join(" ", F.ToArray()));
-                s = s.Replace("%D", string.Join(" ", D.ToArray()));
+                if (Directory.Exists(f))
+                    // For directories, remove trailing slash
+                    D.Add(f.TrimEnd(new char[] {'\\', '/'}));
+                else
+                    F.Add(f);
             }
+
+            // Single file and single directory
+            string sf = F.Count > 0 ? F[0] : "";
+            string sd = D.Count > 0 ? D[0] : "";
+
+            s = s.Replace("%f", sf);
+            s = s.Replace("%d", sd);
+            s = s.Replace("%F", string.Join(" ", F.ToArray()));
+            s = s.Replace("%D", string.Join(" ", D.ToArray()));
 
             return s;
         }
