@@ -86,7 +86,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Command Prompt Here error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
         }
 
@@ -116,8 +116,36 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Explorer Here error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
+        }
+
+        /// <summary>
+        /// Executes a shell command
+        /// </summary>
+        public static string ExecuteShellCommand(string cmd, string args)
+        {
+            string ret = string.Empty;
+            try
+            {
+                App.PrintStatusMessage("Shell execute: " + cmd + " " + args);
+
+                // WAR: Shell execute is platform-specific
+                if (IsMono())
+                {
+                    ret = ClassExecute.Run(cmd, args);
+                }
+                else
+                {
+                    args = "/c " + cmd + " " + args;
+                    ret = ClassExecute.Run("cmd.exe", args);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Shell Execute error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return ret;
         }
 
         /// <summary>

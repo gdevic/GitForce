@@ -64,6 +64,9 @@ namespace GitForce
                 control.Dock = DockStyle.Fill;
             }
 
+            // Show or hide command line
+            menuViewCommandLine.Checked = cmdBox.Visible = Properties.Settings.Default.ShowCommandLine;
+
             // Enable SSH only if the PuTTY support class has been instantiated
             if (App.Putty != null)
             {
@@ -278,19 +281,23 @@ namespace GitForce
         /// <summary>
         /// Print into the status pane (and the aux log window).
         /// It is ok to send null or empty string.
+        /// Strings that contain Newline will be broken into separate lines.
         /// </summary>
         private void PrintStatus(string message)
         {
             if(string.IsNullOrEmpty(message))
                 return;
 
-            // Prepend the current time, if that option is requested, in either 12 or 24-hr format
-            if (Properties.Settings.Default.logTime)
-                message = DateTime.Now.ToString
-                    (Properties.Settings.Default.logTime24 ? "HH:mm:ss" : "hh:mm:ss") + " "
-                    + message;
-
-            listStatus.Items.Add(message);
+            // Add each line of the message individually
+            foreach (string line in message.Split(Environment.NewLine.ToCharArray()))
+            {
+                // Prepend the current time, if that option is requested, in either 12 or 24-hr format
+                string stamp = Properties.Settings.Default.logTime
+                                   ? DateTime.Now.ToString
+                                         (Properties.Settings.Default.logTime24 ? "HH:mm:ss" : "hh:mm:ss") + " "
+                                   : "";
+                listStatus.Items.Add(stamp + line);
+            }
             listStatus.TopIndex = listStatus.Items.Count - 1;
 
             App.Log.Print(message);
@@ -493,6 +500,19 @@ namespace GitForce
             // so disable closure by setting Cancel to true only if the caller used that type of arguments
             if (e is FormClosingEventArgs)
                 (e as FormClosingEventArgs).Cancel = true;
+        }
+
+        /// <summary>
+        /// Toggle the Command Line edit box between Show and Hide states.
+        /// </summary>
+        private void MenuViewCommandLineClick(object sender, EventArgs e)
+        {
+            bool @checked = menuViewCommandLine.Checked;
+            Properties.Settings.Default.ShowCommandLine = menuViewCommandLine.Checked = !@checked;
+            cmdBox.Visible = !@checked;
+
+            // This is purely cosmetic: pushes the list pane text up to cleanly reveal the tail
+            listStatus.TopIndex = listStatus.Items.Count - 1;
         }
 
         /// <summary>
@@ -717,6 +737,39 @@ namespace GitForce
         private void GettingStartedToolStripMenuClick(object sender, EventArgs e)
         {
             ClassHelp.Handler("Getting Started");
+        }
+
+        /// <summary>
+        /// Callback on the command line text ready.
+        /// We execute a custom (immediate) command which can be either a direct git
+        /// command or a shell (command prompt?) command.
+        /// </summary>
+        private void CmdBoxTextReady(object sender, string cmd)
+        {
+            string run;
+            // Print out the command itself
+            App.PrintStatusMessage(cmd);
+            // If the command text started with a command 'git', remove it
+            string[] tokens = cmd.Split(' ');
+            string args = String.Join(" ", tokens, 1, tokens.Count() - 1);
+            // We are guaranteed to have at least one token (by the TextBoxEx control)
+            if (tokens[0].ToLower() == "git")
+            {
+                // Command is a git command: execute it
+                run = ClassGit.Run(args);
+            }
+            else
+            {
+                // Command is an arbitrary (command line type) command
+                // Use the command shell to execute it
+                run = ClassUtils.ExecuteShellCommand(cmd, args);
+            }
+            App.PrintStatusMessage(run);
+        }
+
+        private void cmdBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }

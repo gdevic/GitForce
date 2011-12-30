@@ -51,6 +51,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewLogWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuViewCommandLine = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainManageKeys = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +59,7 @@
             this.menuMainSwitchRemoteRepo = new System.Windows.Forms.ToolStripMenuItem();
             this.xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainEditRemoteRepo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainFetchFromRemote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainPullFromRemote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainPushToRemote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainChangelist = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +83,7 @@
             this.menuStatusSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStatusClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdBox = new GitForce.TextBoxEx();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btUpdate = new System.Windows.Forms.ToolStripButton();
@@ -106,7 +109,6 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
-            this.menuMainFetchFromRemote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -197,7 +199,8 @@
             this.menuView4,
             this.toolStripSeparator4,
             this.menuMainRefresh,
-            this.menuViewLogWindow});
+            this.menuViewLogWindow,
+            this.menuViewCommandLine});
             this.menuMainView.Name = "menuMainView";
             this.menuMainView.Size = new System.Drawing.Size(44, 20);
             this.menuMainView.Text = "View";
@@ -309,6 +312,14 @@
             this.menuViewLogWindow.Text = "Log Window";
             this.menuViewLogWindow.Click += new System.EventHandler(this.LogWindowToolStripMenuItemClick);
             // 
+            // menuViewCommandLine
+            // 
+            this.menuViewCommandLine.Name = "menuViewCommandLine";
+            this.menuViewCommandLine.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.menuViewCommandLine.Size = new System.Drawing.Size(230, 22);
+            this.menuViewCommandLine.Text = "Command Line";
+            this.menuViewCommandLine.Click += new System.EventHandler(this.MenuViewCommandLineClick);
+            // 
             // menuMainSettings
             // 
             this.menuMainSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -364,6 +375,13 @@
             this.menuMainEditRemoteRepo.Size = new System.Drawing.Size(192, 22);
             this.menuMainEditRemoteRepo.Text = "Edit Remote Repos...";
             this.menuMainEditRemoteRepo.Click += new System.EventHandler(this.MenuEditRemoteRepos);
+            // 
+            // menuMainFetchFromRemote
+            // 
+            this.menuMainFetchFromRemote.Name = "menuMainFetchFromRemote";
+            this.menuMainFetchFromRemote.Size = new System.Drawing.Size(192, 22);
+            this.menuMainFetchFromRemote.Text = "Fetch from Remote";
+            this.menuMainFetchFromRemote.Click += new System.EventHandler(this.MenuRepoFetch);
             // 
             // menuMainPullFromRemote
             // 
@@ -493,6 +511,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listStatus);
+            this.splitContainer1.Panel2.Controls.Add(this.cmdBox);
             this.splitContainer1.Size = new System.Drawing.Size(784, 431);
             this.splitContainer1.SplitterDistance = 239;
             this.splitContainer1.TabIndex = 2;
@@ -518,7 +537,7 @@
             this.listStatus.Location = new System.Drawing.Point(0, 0);
             this.listStatus.Name = "listStatus";
             this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listStatus.Size = new System.Drawing.Size(784, 188);
+            this.listStatus.Size = new System.Drawing.Size(784, 165);
             this.listStatus.TabIndex = 0;
             // 
             // menuStatus
@@ -556,6 +575,18 @@
             this.menuStatusClear.Size = new System.Drawing.Size(122, 22);
             this.menuStatusClear.Text = "Clear";
             this.menuStatusClear.Click += new System.EventHandler(this.MenuSelectClearClick);
+            // 
+            // cmdBox
+            // 
+            this.cmdBox.AcceptsReturn = true;
+            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
+            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBox.Location = new System.Drawing.Point(0, 165);
+            this.cmdBox.Name = "cmdBox";
+            this.cmdBox.Size = new System.Drawing.Size(784, 23);
+            this.cmdBox.TabIndex = 1;
+            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
             // 
             // toolStrip
             // 
@@ -803,13 +834,6 @@
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
             // 
-            // menuMainFetchFromRemote
-            // 
-            this.menuMainFetchFromRemote.Name = "menuMainFetchFromRemote";
-            this.menuMainFetchFromRemote.Size = new System.Drawing.Size(192, 22);
-            this.menuMainFetchFromRemote.Text = "Fetch from Remote";
-            this.menuMainFetchFromRemote.Click += new System.EventHandler(this.MenuRepoFetch);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -832,6 +856,7 @@
             this.statusStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
             this.menuStatus.ResumeLayout(false);
@@ -921,6 +946,8 @@
         private System.Windows.Forms.ToolStripMenuItem gettingStartedMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forumMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuMainFetchFromRemote;
+        private System.Windows.Forms.ToolStripMenuItem menuViewCommandLine;
+        protected TextBoxEx cmdBox;
     }
 }
 

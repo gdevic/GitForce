@@ -392,6 +392,9 @@
     <Compile Include="Settings.Panels\ControlViewEdit.Designer.cs">
       <DependentUpon>ControlViewEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
