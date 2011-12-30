@@ -766,10 +766,5 @@ namespace GitForce
             }
             App.PrintStatusMessage(run);
         }
-
-        private void cmdBox_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
     }
 }
