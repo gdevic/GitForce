@@ -18,6 +18,11 @@ namespace GitForce
     public partial class FormCommit : Form
     {
         /// <summary>
+        /// Contains the description of a previous commit, used by the amend option.
+        /// </summary>
+        private readonly string amendText;
+
+        /// <summary>
         /// Create a commit form or new/update form
         /// </summary>
         public FormCommit(bool forCommit, string description)
@@ -27,11 +32,18 @@ namespace GitForce
 
             textDescription.Font = Properties.Settings.Default.commitFont;
 
+            // If we are updating the change, the function is slightly different:
+            // The default text is different and the checkbox copies a previous
+            // description for the amend operation.
             if (forCommit == false)
             {
-                checkAmend.Visible = false;
                 btCommit.Text = "Update";
+                checkAmend.Text = "Copy description of a previous change for the amend operation";
             }
+
+            // Fetch the description of a previous commit for the amend option
+            amendText = App.Repos.Current.Run("log --pretty=format:%s%n%b -1");
+
             textDescription.Text = description;
             textDescription.SelectAll();
         }
@@ -86,6 +98,23 @@ namespace GitForce
         public bool GetCheckAmend()
         {
             return checkAmend.Checked;
+        }
+
+        /// <summary>
+        /// Checkbox 'amend' has been checked/unchecked
+        /// </summary>
+        private void CheckAmendCheckedChanged(object sender, EventArgs e)
+        {
+            if (checkAmend.Checked)
+            {
+                // If the text in the description box has not been changed,
+                // swap it with the text of a previous commit (for amend)
+                if (GetDescription() == "Default" || GetDescription() == "Update")
+                    textDescription.Text = amendText;
+
+                // In any case copy the text to the OS clipboard
+                Clipboard.SetText(amendText);
+            }
         }
 
         /// <summary>

@@ -56,6 +56,7 @@
             this.checkAmend.TabIndex = 1;
             this.checkAmend.Text = "Amend the last change instead of committing a new one";
             this.checkAmend.UseVisualStyleBackColor = true;
+            this.checkAmend.CheckedChanged += new System.EventHandler(this.CheckAmendCheckedChanged);
             // 
             // btSelectAll
             // 
@@ -203,7 +204,7 @@
             this.Controls.Add(this.btCommit);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(487, 273);
+            this.MinimumSize = new System.Drawing.Size(519, 273);
             this.Name = "FormCommit";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
