@@ -37,7 +37,9 @@ namespace GitForce
                     _gitPath = ClassExecute.Run("which", "git").Trim();
                     if (!ClassExecute.Run(_gitPath, "--version").Contains("git version"))
                     {
-                        MessageBox.Show("Could not locate 'git'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                            "Could not locate 'git'!\n\nPlease install git by running 'sudo apt-get install git'\nMake sure it is on your path, then rerun this application.",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         retValue = false;
                     }
                 }
