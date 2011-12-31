@@ -22,7 +22,7 @@ namespace GitForce
         private readonly string _args;
         private Thread _thRun;
         private string _lastError;
-        private string _ec;
+        private int _ec;
 
         /// <summary>
         /// Class constructor that also presets command to be run
@@ -100,24 +100,24 @@ namespace GitForce
                 BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
             else
             {
-                _lastError = e.Data;
-                toolStripStatus.Text = e.Data;
+                _lastError += e.Data + Environment.NewLine;
+                toolStripStatus.Text = "Error: " + e.Data;
             }
         }
 
         /// <summary>
         /// Callback that handles process completion event
         /// </summary>
-        private void PComplete(object exitCode)
+        private void PComplete(int exitCode)
         {
             if(InvokeRequired)
+                BeginInvoke((MethodInvoker)(() => PComplete(exitCode)));
+            else
             {
-                BeginInvoke((MethodInvoker) delegate {
-                    _ec = (string)exitCode;
-                    textStdout.Text += _lastError + Environment.NewLine;
-                    btCancel.Text = "Done";
-                    StopProgress();
-                });
+                _ec = exitCode;
+                textStdout.Text += _lastError + Environment.NewLine;
+                btCancel.Text = "Done";
+                StopProgress();
             }
         }
 
@@ -145,7 +145,7 @@ namespace GitForce
             }
             else
             {
-                if (_ec != "0")
+                if (_ec != 0)
                     ClassUtils.LastError = _lastError;
 
                 if (btCancel.Text == "Done")

@@ -21,7 +21,7 @@ namespace GitForce
         /// <summary>
         /// Delegate for the completion function
         /// </summary>
-        public delegate void PCompleteDelegate(object exitCode);
+        public delegate void PCompleteDelegate(int exitCode);
 
         /// <summary>
         /// Structure holding a set of parameters for the threaded execution
@@ -117,11 +117,12 @@ namespace GitForce
                 proc.BeginErrorReadLine();
 
                 proc.WaitForExit();
-                p.FComplete(proc.ExitCode.ToString());
+                p.FComplete(proc.ExitCode);
             }
             catch (Exception ex)
             {
-                p.FComplete(ex.Message);
+                stderr += ex.Message;
+                p.FComplete(-1);
             }
             proc.Close();
         }
@@ -201,9 +202,12 @@ namespace GitForce
 
         /// <summary>
         /// Callback that handles process completion event
+        /// Right now we don't do anything with it.
         /// </summary>
-        private static void PComplete(object completionMsg)
+        private static void PComplete(int exitCode)
         {
+            if (exitCode != 0)
+                App.Log.Debug("ClassExecute::PComplete: " + exitCode);
         }
     }
 }

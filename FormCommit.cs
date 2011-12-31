@@ -43,6 +43,9 @@ namespace GitForce
 
             // Fetch the description of a previous commit for the amend option
             amendText = App.Repos.Current.Run("log --pretty=format:%s%n%b -1");
+            // BUG: We are losing newlines with App.Repos.Current.Run. At least insert one after the subject line.
+            if (amendText.IndexOf('\n')>0)
+                amendText = amendText.Insert(amendText.IndexOf('\n'), Environment.NewLine);
 
             textDescription.Text = description;
             textDescription.SelectAll();

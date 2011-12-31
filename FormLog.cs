@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,9 @@ namespace GitForce
             // Reuse the same font selected as fixed-pitch
             textBox.Font = Properties.Settings.Default.commitFont;
 
-            // Debug builds start with log window open
+            // Debug build starts with the log window open!
+            Debug("Debug build.");
 #if DEBUG
-            Print("Debug build.");
             Properties.Settings.Default.ShowLogWindow = true;
 #endif
         }
@@ -57,15 +58,31 @@ namespace GitForce
         /// <summary>
         /// Adds a text string to the end of the text box.
         /// For performance reasons, only up to 120 characters of text are added in one call.
+        /// This is a thread-safe call.
         /// </summary>
         public void Print(string text)
         {
-            int len = Math.Min(text.Length, 120);
-            textBox.Text += text.Substring(0, len).Trim() + Environment.NewLine;
+            if(textBox.InvokeRequired)
+                textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
+            else
+            {
+                int len = Math.Min(text.Length, 120);
+                textBox.Text += text.Substring(0, len).Trim() + Environment.NewLine;
 
-            // Scroll to the bottom and move carret position
-            textBox.SelectionStart = textBox.TextLength;
-            textBox.ScrollToCaret();
+                // Scroll to the bottom and move carret position
+                textBox.SelectionStart = textBox.TextLength;
+                textBox.ScrollToCaret();                
+            }
+        }
+
+        /// <summary>
+        /// Prints a message only in debug build
+        /// This is a thread-safe call.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public void Debug(string text)
+        {
+            Print(text);
         }
 
         #region Context menu handlers: Copy, Select All and Clear
