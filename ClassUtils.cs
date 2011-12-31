@@ -74,15 +74,25 @@ namespace GitForce
             try
             {
                 App.PrintStatusMessage("Command prompt at " + where);
+                Process proc = new Process();
+                proc.StartInfo.UseShellExecute = false;
+
+                // Add all environment variables listed
+                foreach (var envar in ClassExecute.GetEnvars())
+                    proc.StartInfo.EnvironmentVariables.Add(envar.Key, envar.Value);
 
                 // WAR: Opening a command window/terminal is platform-specific
                 if (IsMono())
                 {
-                    // TODO: Start a terminal on Unix in a more flexible way
-                    Process.Start(@"/usr/bin/gnome-terminal", "--working-directory=" + where);
+                    // TODO: This may not work on a non-Ubuntu system?
+                    proc.StartInfo.FileName = @"/usr/bin/gnome-terminal";
+                    proc.StartInfo.Arguments = "--working-directory=" + where;
                 }
                 else
-                    Process.Start("cmd.exe");
+                {
+                    proc.StartInfo.FileName = "cmd.exe";
+                }
+                proc.Start();
             }
             catch (Exception ex)
             {

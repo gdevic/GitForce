@@ -52,6 +52,16 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Returns set of environment variables that are registered to
+        /// run within the application. They mostly determine the operation
+        /// of git SSH functionality and password.
+        /// </summary>
+        public static Dictionary<string, string> GetEnvars()
+        {
+            return Env;
+        }
+
+        /// <summary>
         /// Stops any executing thread job, if any.
         /// </summary>
         public static void KillJob()
