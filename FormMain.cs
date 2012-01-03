@@ -743,28 +743,33 @@ namespace GitForce
         /// Callback on the command line text ready.
         /// We execute a custom (immediate) command which can be either a direct git
         /// command or a shell (command prompt?) command.
+        /// Several commands may be separated by "&&" token. This accomodates Gerrit
+        /// code review process and its shortcuts that can be easily pasted.
         /// </summary>
         private void CmdBoxTextReady(object sender, string cmd)
         {
             string run;
-            // Print out the command itself
-            App.PrintStatusMessage(cmd);
-            // If the command text started with a command 'git', remove it
-            string[] tokens = cmd.Split(' ');
-            string args = String.Join(" ", tokens, 1, tokens.Count() - 1);
-            // We are guaranteed to have at least one token (by the TextBoxEx control)
-            if (tokens[0].ToLower() == "git")
+            foreach (string command in cmd.Split(new string[] {" && "}, StringSplitOptions.RemoveEmptyEntries))
             {
-                // Command is a git command: execute it
-                run = ClassGit.Run(args);
+                // Print out the command itself
+                App.PrintStatusMessage(command);
+                // If the command text started with a command 'git', remove it
+                string[] tokens = command.Split(' ');
+                string args = String.Join(" ", tokens, 1, tokens.Count() - 1);
+                // We are guaranteed to have at least one token (by the TextBoxEx control)
+                if (tokens[0].ToLower() == "git")
+                {
+                    // Command is a git command: execute it
+                    run = ClassGit.Run(args);
+                }
+                else
+                {
+                    // Command is an arbitrary (command line type) command
+                    // Use the command shell to execute it
+                    run = ClassUtils.ExecuteShellCommand(command, args);
+                }
+                App.PrintStatusMessage(run);
             }
-            else
-            {
-                // Command is an arbitrary (command line type) command
-                // Use the command shell to execute it
-                run = ClassUtils.ExecuteShellCommand(cmd, args);
-            }
-            App.PrintStatusMessage(run);
         }
     }
 }
