@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Public tool structure containing what the user edited
         /// </summary>
-        public readonly ClassTool Tool;
+        public ClassTool Tool;
 
         public FormEditTools(ClassTool tool)
         {

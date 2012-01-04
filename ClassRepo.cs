@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Root local directory of the repository
         /// </summary>
-        public readonly string Root;
+        public string Root;
 
         /// <summary>
         /// User.name configuration setting for this repo

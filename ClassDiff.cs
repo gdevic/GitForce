@@ -16,7 +16,7 @@ namespace GitForce
         // Common diff utilities:
         //
         // We jam together Windows and Linux utilities
-        private static readonly string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        private static string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
         private static readonly List<AppHelper> Candidates = new List<AppHelper> {
                 //   Config    Short name        Path                                                      Arguments
                 // Windows OS:

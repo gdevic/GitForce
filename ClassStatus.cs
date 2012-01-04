@@ -16,7 +16,7 @@ namespace GitForce
         /// <summary>
         /// Reference to class repo that this Status class wraps
         /// </summary>
-        public readonly ClassRepo Repo;
+        public ClassRepo Repo;
 
         /// <summary>
         /// Lookup dictionary to get the status code string (length of 2) from a file path relative to the root.

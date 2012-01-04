@@ -21,7 +21,7 @@ namespace GitForce
         public string Args;
         public string Dir;
         public string Desc;
-        public readonly bool[] Checks = new bool[7];
+        public bool[] Checks = new bool[7];
 
         /// <summary>
         /// Implements the clonable interface.

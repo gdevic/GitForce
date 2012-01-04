@@ -20,12 +20,12 @@ namespace GitForce
         /// <summary>
         /// The file name whose log this form shows
         /// </summary>
-        private readonly string _file;
+        private string _file;
 
         /// <summary>
         /// 2 last recently selected SHA submits
         /// </summary>
-        private readonly string[] _lruSha = new string[2];
+        private string[] _lruSha = new string[2];
 
         /// <summary>
         /// Form constructor. Takes the git file name whose history is to be shown.
