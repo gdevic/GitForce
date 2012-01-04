@@ -25,10 +25,6 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void BranchesRefresh()
         {
-            // MONO BUG: Treeview faults when expanding past the need to scroll in this particular case
-            //            Workaround is to turn off scrollable while expaning and then turn them back on
-            // NOTE: This can not be reproduced any more after some code changes. Leaving this note in for reminder.
-
             // Use predefined [0] for local and [1] for remote branches
             treeBranches.Nodes[0].Nodes.Clear();
             treeBranches.Nodes[1].Nodes.Clear();
@@ -56,6 +52,8 @@ namespace GitForce.Main.Right.Panels
                     treeBranches.Nodes[1].Nodes.Add(tn);
                 }
             }
+            // By default, expand branches
+            treeBranches.ExpandAll();
         }
 
         /// <summary>
