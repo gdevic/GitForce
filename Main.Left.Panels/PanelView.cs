@@ -405,18 +405,11 @@ namespace GitForce.Main.Left.Panels
                 contextMenu.Items.Clear();
                 contextMenu.Items.AddRange(GetContextMenu(contextMenu));
 
-                // Add custom tools, if any
-                // Build the menu of custom tools, but only those that should be in the context menu
-                ContextMenuStrip tools = new ContextMenuStrip();
+                // Add custom tools
+                // TODO: Visually, we add a separator line even if no custom tools are present. This might need fixing.
+                contextMenu.Items.Add(new ToolStripSeparator());
                 foreach (var tool in App.CustomTools.Tools.Where(tool => tool.IsAddToContextMenu()))
-                    tools.Items.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
-
-                // Append the custom tools to the context menu
-                if(tools.Items.Count>0)
-                {
-                    contextMenu.Items.Add(new ToolStripSeparator());
-                    contextMenu.Items.AddRange(tools.Items);
-                }
+                    contextMenu.Items.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
             }
         }
 
