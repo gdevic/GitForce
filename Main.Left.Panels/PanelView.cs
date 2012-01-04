@@ -254,7 +254,7 @@ namespace GitForce.Main.Left.Panels
             if (file!=string.Empty)
             {
                 ClassUtils.FileDoubleClick(file);
-                ViewRefresh();
+                WatchAndRefresh(file);
             }
         }
 
@@ -661,7 +661,35 @@ namespace GitForce.Main.Left.Panels
             {
                 App.PrintStatusMessage("Editing " + file);
                 ClassUtils.FileOpenFromMenu(sender, file);
+                WatchAndRefresh(file);
             }
+        }
+
+        /// <summary>
+        /// Sets up a file watcher in order to refresh the view when a file is
+        /// being modified by an external editor.
+        /// </summary>
+        private void WatchAndRefresh(string file)
+        {
+            // Watch the changes to that file, so we can refresh the view
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = Path.GetDirectoryName(file);
+            watcher.Filter = Path.GetFileName(file);
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
+            watcher.Changed += new FileSystemEventHandler(OnFileChanged);
+            watcher.EnableRaisingEvents = true;
+        }
+
+        /// <summary>
+        /// Called by the callback thread when a file that has been watched was changed.
+        /// We are watching files that user edits in an external editor.
+        /// </summary>
+        private void OnFileChanged(object source, FileSystemEventArgs e)
+        {
+            if(InvokeRequired)
+                BeginInvoke((MethodInvoker)(() => OnFileChanged(source, e)));
+            else
+                App.DoRefresh();
         }
 
         /// <summary>
