@@ -20,7 +20,7 @@ namespace GitForce
         /// </summary>
         public delegate void RefreshDelegate();
         public static RefreshDelegate Refresh;
-        private static bool inRefresh = false;
+        private static bool inRefresh;
         /// <summary>
         /// Protect Refresh chain with a simple exit mutex, so that the F5 key (update)
         /// does not start a re-entrant refresh chain. Although the main GUI app is

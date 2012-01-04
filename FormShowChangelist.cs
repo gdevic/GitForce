@@ -59,7 +59,8 @@ namespace GitForce
         /// </summary>
         private void TextChangelistLinkClicked(object sender, LinkClickedEventArgs e)
         {
-            string sha = sender as string;
+            // TODO: Not used at the moment
+            // string sha = sender as string;
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace GitForce
             TreeNode node = GetNodeAt(e.Location);
             if( node!=null )
             {
-                this.BeginUpdate();
+                BeginUpdate();
                 if (ModifierKeys == Keys.None)
                 {
                     if (!_selectedNodes.Contains(node))
@@ -82,10 +82,10 @@ namespace GitForce
                         }
                     }
                 }
-                this.EndUpdate();
+                EndUpdate();
             }
             base.OnMouseDown(e);
-            this.OnAfterSelect(null);
+            OnAfterSelect(null);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -93,15 +93,15 @@ namespace GitForce
             TreeNode node = GetNodeAt(e.Location);
             if(node!=null)
             {
-                this.BeginUpdate();
+                BeginUpdate();
                 if (ModifierKeys == Keys.None && e.Button==MouseButtons.Left)
                 {
                     SelectNone();
                     SetSelected(node, true);
                     SelectedNode = node;
-                    this.OnAfterSelect(null);
+                    OnAfterSelect(null);
                 }
-                this.EndUpdate();
+                EndUpdate();
             }
             base.OnMouseUp(e);
         }
@@ -122,7 +122,7 @@ namespace GitForce
                 {
                     SelectNone();
                     SetSelected(node, true);
-                    this.OnAfterSelect(null);
+                    OnAfterSelect(null);
                 }
             }
             base.OnItemDrag(e);
@@ -164,11 +164,11 @@ namespace GitForce
         /// </summary>
         public void SelectAll()
         {
-            this.BeginUpdate();
-            foreach (TreeNode node in this.Nodes)
+            BeginUpdate();
+            foreach (TreeNode node in Nodes)
                 SetSelectedDeep(node, true);
-            this.EndUpdate();
-            this.OnAfterSelect(null);
+            EndUpdate();
+            OnAfterSelect(null);
         }
 
         /// <summary>
@@ -176,11 +176,11 @@ namespace GitForce
         /// </summary>
         private void SelectNone()
         {
-            this.BeginUpdate();
-            foreach (TreeNode node in this.Nodes)
+            BeginUpdate();
+            foreach (TreeNode node in Nodes)
                 SetSelectedDeep(node, false);
-            this.EndUpdate();
-            this.OnAfterSelect(null);
+            EndUpdate();
+            OnAfterSelect(null);
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace GitForce
         public void NodesClear()
         {
             _selectedNodes.Clear();
-            this.Nodes.Clear();
-            this.OnAfterSelect(null);
+            Nodes.Clear();
+            OnAfterSelect(null);
         }
 
         /// <summary>
@@ -199,14 +199,14 @@ namespace GitForce
         private void SetSelectedNodes(List<TreeNode> nodes)
         {
             SelectNone();
-            this.BeginUpdate();
+            BeginUpdate();
             foreach (TreeNode n in nodes)
             {
                 SetSelected(n, true);
                 n.EnsureVisible();
             }
-            this.EndUpdate();
-            this.OnAfterSelect(null);
+            EndUpdate();
+            OnAfterSelect(null);
         }
     }
 }

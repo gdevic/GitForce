@@ -48,10 +48,10 @@ namespace GitForce
         /// </summary>
         public void ShowWindow(bool toShow)
         {
-            if( Visible==false && toShow==true)
+            if( Visible==false && toShow)
                 Show();
 
-            if(Visible==true && toShow==false)
+            if(Visible && toShow==false)
                 Hide();
         }
 

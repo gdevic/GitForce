@@ -12,12 +12,12 @@ namespace GitForce
         /// <summary>
         /// Short name of a file
         /// </summary>
-        public string Name;
+        public readonly string Name;
 
         /// <summary>
         /// Full path name to a file
         /// </summary>
-        public string FullName;
+        public readonly string FullName;
 
         /// <summary>
         /// Class constructor
@@ -39,17 +39,17 @@ namespace GitForce
         /// <summary>
         /// Short name of a directory
         /// </summary>
-        public string Name;
+        public readonly string Name;
 
         /// <summary>
         /// Full path to the directory
         /// </summary>
-        public string FullName;
+        public readonly string FullName;
 
         /// <summary>
         /// List of files and directories at this level
         /// </summary>
-        public List<string> List;
+        public readonly List<string> List;
 
         /// <summary>
         /// Class constructor

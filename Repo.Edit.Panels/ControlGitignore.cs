@@ -25,7 +25,7 @@ namespace GitForce.Repo.Edit.Panels
         /// <summary>
         /// Initialize pertinent settings
         /// </summary>
-        public void Init(ClassRepo repo, string[] options)
+        public void Init(ClassRepo repo)
         {
             _excludesFile = repo.Root + Path.DirectorySeparatorChar +
                             ".git" + Path.DirectorySeparatorChar +

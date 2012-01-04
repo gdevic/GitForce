@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Private copy of the custom toolset
         /// </summary>
-        public ClassCustomTools CustomTools;
+        public readonly ClassCustomTools CustomTools;
 
         public FormCustomizeTools(ClassCustomTools customTools)
         {

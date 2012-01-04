@@ -42,7 +42,7 @@ namespace GitForce.Settings.Panels
             }
 
             // Add the font sizes and select the current active font size
-            List<int> sizes = new List<int>() { 8, 9, 10, 11, 12, 14, 16, 18, 20 };
+            List<int> sizes = new List<int> { 8, 9, 10, 11, 12, 14, 16, 18, 20 };
             foreach (int size in sizes)
             {
                 listSizes.Items.Add(size);

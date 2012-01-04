@@ -16,7 +16,7 @@ namespace GitForce
     /// </summary>
     interface IRepoSettings
     {
-        void Init(ClassRepo repo, string[] config);
+        void Init(ClassRepo repo);
         void ApplyChanges(ClassRepo repo);
     }
 
@@ -50,13 +50,14 @@ namespace GitForce
             // Get all local configuration strings and assign various panel controls.
             // This is placed first, before initializing the user panels, so that the
             // strings are accessible to individual panels should they need to use them.
-            string[] config = _repo.Run("config --local --list -z").Split('\0');
+            // TODO: This is not needed for now
+            //string[] config = _repo.Run("config --local --list -z").Split('\0');
 
             // Add all user panels to the base repo edit panel; call their init
             foreach (KeyValuePair<string, UserControl> key in _panels)
             {
                 panel.Controls.Add(key.Value);
-                (key.Value as IRepoSettings).Init(_repo, config);
+                (key.Value as IRepoSettings).Init(_repo);
                 key.Value.Dock = DockStyle.Fill;
             }
 

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShowChangelist));
-            this.textChangelist = new RichTextBoxLinks.RichTextBoxEx();
+            this.textChangelist = new RichTextBoxEx();
             this.btPrev = new System.Windows.Forms.Button();
             this.btNext = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
@@ -105,7 +105,7 @@
 
         #endregion
 
-        private RichTextBoxLinks.RichTextBoxEx textChangelist;
+        private RichTextBoxEx textChangelist;
         private System.Windows.Forms.Button btPrev;
         private System.Windows.Forms.Button btNext;
         private System.Windows.Forms.Button btClose;

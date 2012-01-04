@@ -39,7 +39,7 @@
             this.btCommit = new System.Windows.Forms.Button();
             this.labelWidth = new System.Windows.Forms.Label();
             this.labelCursor = new System.Windows.Forms.Label();
-            this.textDescription = new RichTextBoxLinks.RichTextBoxEx();
+            this.textDescription = new RichTextBoxEx();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -233,7 +233,7 @@
         private System.Windows.Forms.Button btUnselectAll;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btCommit;
-        private RichTextBoxLinks.RichTextBoxEx textDescription;
+        private RichTextBoxEx textDescription;
         private System.Windows.Forms.Label labelWidth;
         private System.Windows.Forms.Label labelCursor;
     }

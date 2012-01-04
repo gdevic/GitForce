@@ -31,6 +31,15 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Access a virtual member
+        /// </summary>
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
+        }
+
+        /// <summary>
         /// Form is closing.
         /// </summary>
         private void FormCustomToolArgsFormClosing(object sender, FormClosingEventArgs e)

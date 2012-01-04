@@ -20,12 +20,12 @@ namespace GitForce
         /// <summary>
         /// The file name whose log this form shows
         /// </summary>
-        private string file;
+        private readonly string _file;
 
         /// <summary>
         /// 2 last recently selected SHA submits
         /// </summary>
-        private string[] lruSha = new string[2];
+        private readonly string[] _lruSha = new string[2];
 
         /// <summary>
         /// Form constructor. Takes the git file name whose history is to be shown.
@@ -39,8 +39,17 @@ namespace GitForce
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
 
-            this.file = file;
+            _file = file;
             Text = @"Revision History for //" + file;
+        }
+
+        /// <summary>
+        /// Access a virtual member
+        /// </summary>
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
         /// <summary>
@@ -70,7 +79,7 @@ namespace GitForce
                 cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
             // Get the log of a single file only
-            cmd.Append(" -- " + file);
+            cmd.Append(" -- " + _file);
 
             string response = App.Repos.Current.Run(cmd.ToString());
             PanelRevlist.UpdateList(listRev, response);
@@ -93,18 +102,18 @@ namespace GitForce
 
             // Set up for 2 SHA checkins: the one in the [0] spot being the most recently selected
             if (listRev.SelectedIndices.Count == 1)
-                lruSha[0] = lruSha[1] = listRev.SelectedItems[0].Text;
+                _lruSha[0] = _lruSha[1] = listRev.SelectedItems[0].Text;
             if (listRev.SelectedIndices.Count > 1)
             {
-                if (listRev.SelectedItems[0].Text == lruSha[0])
-                    lruSha[1] = listRev.SelectedItems[1].Text;
+                if (listRev.SelectedItems[0].Text == _lruSha[0])
+                    _lruSha[1] = listRev.SelectedItems[1].Text;
                 else
-                    lruSha[1] = listRev.SelectedItems[0].Text;
+                    _lruSha[1] = listRev.SelectedItems[0].Text;
             }
 
             if(listRev.SelectedIndices.Count==1)
             {
-                string sha = lruSha[1];
+                string sha = _lruSha[1];
                 string cmd = string.Format("show -s {0}", sha);
                 string response = App.Repos.Current.Run(cmd);
                 textDescription.Text = response;
@@ -124,7 +133,7 @@ namespace GitForce
         /// </summary>
         private void DiffVsClientFileMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = string.Format("difftool --gui --no-prompt {1}..HEAD -- {0}", file, lruSha[0]);
+            string cmd = string.Format("difftool --gui --no-prompt {1}..HEAD -- {0}", _file, _lruSha[0]);
             RunDiff(cmd);
         }
 
@@ -133,7 +142,7 @@ namespace GitForce
         /// </summary>
         private void DiffRevisionsMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = string.Format("difftool --gui --no-prompt {1}..{2} -- {0}", file, lruSha[0], lruSha[1]);
+            string cmd = string.Format("difftool --gui --no-prompt {1}..{2} -- {0}", _file, _lruSha[0], _lruSha[1]);
             RunDiff(cmd);
         }
 
@@ -175,7 +184,7 @@ namespace GitForce
             if( MessageBox.Show("This will sync file to a previous version. Continue?", "Revision Sync",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
-                string cmd = string.Format("checkout {1} -- {0}", file, lruSha[0]);
+                string cmd = string.Format("checkout {1} -- {0}", _file, _lruSha[0]);
                 App.Repos.Current.Run(cmd);                
             }
         }
@@ -203,7 +212,7 @@ namespace GitForce
         private void MenuViewEditClick(object sender, EventArgs e)
         {
             // Create a temp file on the selected git file version
-            string temp = GetTempFile(file, listRev.SelectedItems[0].Text);
+            string temp = GetTempFile(_file, listRev.SelectedItems[0].Text);
             ClassUtils.FileOpenFromMenu(sender, temp);
         }
 
@@ -218,7 +227,7 @@ namespace GitForce
             if (listRev.SelectedIndices.Count == 1)
             {
                 // Create a temp file and open the file
-                string temp = GetTempFile(file, listRev.SelectedItems[0].Text);
+                string temp = GetTempFile(_file, listRev.SelectedItems[0].Text);
                 ClassUtils.FileDoubleClick(temp);
             }
         }

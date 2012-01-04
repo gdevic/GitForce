@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Root local directory of the repository
         /// </summary>
-        public string Root;
+        public readonly string Root;
 
         /// <summary>
         /// User.name configuration setting for this repo
@@ -32,17 +32,17 @@ namespace GitForce
         /// <summary>
         /// Set of remotes associated with this repository
         /// </summary>
-        public ClassRemotes Remotes = new ClassRemotes();
+        public readonly ClassRemotes Remotes = new ClassRemotes();
 
         /// <summary>
         /// Set of active commits currently existing for this repo
         /// </summary>
-        public ClassCommits Commits = new ClassCommits();
+        public readonly ClassCommits Commits = new ClassCommits();
 
         /// <summary>
         /// Set of branches for the current repo
         /// </summary>
-        public ClassBranches Branches = new ClassBranches();
+        public readonly ClassBranches Branches = new ClassBranches();
 
         /// <summary>
         /// Current format can be tree view or list view

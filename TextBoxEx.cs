@@ -17,7 +17,7 @@ namespace GitForce
     /// 
     /// The text box will clear itself after the TextReady() has been sent.
     /// </summary>
-    public partial class TextBoxEx : TextBox
+    public class TextBoxEx : TextBox
     {
         public delegate void TextReadyEventHandler(object sender, string text);
 
@@ -30,9 +30,7 @@ namespace GitForce
         // Each string is unique
         private readonly List<string> history = new List<string>();
         // Index into history when browsing it (Up / Down)
-        private int iH = 0;
-
-        public TextBoxEx() {}
+        private int iH;
 
         // Handler called on every key press into the subclassed TextBox
         // Using this handler we capture cursor up and down keys

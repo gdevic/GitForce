@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Public tool structure containing what the user edited
         /// </summary>
-        public ClassTool Tool;
+        public readonly ClassTool Tool;
 
         public FormEditTools(ClassTool tool)
         {
@@ -136,7 +136,7 @@ namespace GitForce
             // If we are running a command line tool, we can redirect the stdout only
             // if the tool is run directly (thus closing upon exit), otherwise we need
             // to leave the CMD/SHELL open and cannot redirect the output
-            if (checkCloseUponExit.Checked == true)
+            if (checkCloseUponExit.Checked)
                 checkWriteToStatus.Enabled = true;
             else
                 checkWriteToStatus.Enabled = false;

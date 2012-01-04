@@ -18,8 +18,7 @@ namespace GitForce
         /// </summary>
         public static List<string> GetLRU()
         {
-            List<string> lru = new List<string>();
-            lru = Properties.Settings.Default.WorkspaceLRU.
+            List<string> lru = Properties.Settings.Default.WorkspaceLRU.
                 Split(("\t").ToCharArray(),
                 StringSplitOptions.RemoveEmptyEntries).ToList();
             return lru;

@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace RichTextBoxLinks
+namespace GitForce
 {
     /// <summary>
     /// Courtesy of: http://www.codeproject.com/KB/edit/RichTextBoxLinks.aspx
@@ -115,11 +114,11 @@ namespace RichTextBoxLinks
 		{
 			// Otherwise, non-standard links get lost when user starts typing
 			// next to a non-standard link
-			this.DetectUrls = false;
+			DetectUrls = false;
 		}
 
 		[DefaultValue(false)]
-		public new bool DetectUrls
+		private new bool DetectUrls
 		{
 			get { return base.DetectUrls; }
 			set { base.DetectUrls = value; }
@@ -131,7 +130,7 @@ namespace RichTextBoxLinks
 		/// <param name="text">Text to be inserted</param>
 		public void InsertLink(string text)
 		{
-			InsertLink(text, this.SelectionStart);
+			InsertLink(text, SelectionStart);
 		}
 
 		/// <summary>
@@ -139,16 +138,16 @@ namespace RichTextBoxLinks
 		/// </summary>
 		/// <param name="text">Text to be inserted</param>
 		/// <param name="position">Insert position</param>
-		public void InsertLink(string text, int position)
+		private void InsertLink(string text, int position)
 		{
-			if (position < 0 || position > this.Text.Length)
+			if (position < 0 || position > Text.Length)
 				throw new ArgumentOutOfRangeException("position");
 
-			this.SelectionStart = position;
-			this.SelectedText = text;
-			this.Select(position, text.Length);
-			this.SetSelectionLink(true);
-			this.Select(position + text.Length, 0);
+			SelectionStart = position;
+			SelectedText = text;
+			Select(position, text.Length);
+			SetSelectionLink(true);
+			Select(position + text.Length, 0);
 		}
 		
 		/// <summary>
@@ -162,7 +161,7 @@ namespace RichTextBoxLinks
 		/// <param name="hyperlink">Invisible hyperlink string to be inserted</param>
 		public void InsertLink(string text, string hyperlink)
 		{
-			InsertLink(text, hyperlink, this.SelectionStart);
+			InsertLink(text, hyperlink, SelectionStart);
 		}
 
 		/// <summary>
@@ -174,23 +173,23 @@ namespace RichTextBoxLinks
 		/// <param name="text">Text to be inserted</param>
 		/// <param name="hyperlink">Invisible hyperlink string to be inserted</param>
 		/// <param name="position">Insert position</param>
-		public void InsertLink(string text, string hyperlink, int position)
+		private void InsertLink(string text, string hyperlink, int position)
 		{
-			if (position < 0 || position > this.Text.Length)
+			if (position < 0 || position > Text.Length)
 				throw new ArgumentOutOfRangeException("position");
 
-			this.SelectionStart = position;
-			this.SelectedRtf = @"{\rtf1\ansi "+text+@"\v #"+hyperlink+@"\v0}";
-			this.Select(position, text.Length + hyperlink.Length + 1);
-			this.SetSelectionLink(true);
-			this.Select(position + text.Length + hyperlink.Length + 1, 0);
+			SelectionStart = position;
+			SelectedRtf = @"{\rtf1\ansi "+text+@"\v #"+hyperlink+@"\v0}";
+			Select(position, text.Length + hyperlink.Length + 1);
+			SetSelectionLink(true);
+			Select(position + text.Length + hyperlink.Length + 1, 0);
 		}
 
 		/// <summary>
 		/// Set the current selection's link style
 		/// </summary>
 		/// <param name="link">true: set link style, false: clear link style</param>
-		public void SetSelectionLink(bool link)
+		private void SetSelectionLink(bool link)
 		{
 			SetSelectionStyle(CFM_LINK, link ? CFE_LINK : 0);
 		}
@@ -215,7 +214,7 @@ namespace RichTextBoxLinks
 			IntPtr lpar = Marshal.AllocCoTaskMem( Marshal.SizeOf( cf ) ); 
 			Marshal.StructureToPtr(cf, lpar, false);
 
-			IntPtr res = SendMessage(Handle, EM_SETCHARFORMAT, wpar, lpar);
+			SendMessage(Handle, EM_SETCHARFORMAT, wpar, lpar);
 
 			Marshal.FreeCoTaskMem(lpar);
 		}
@@ -230,7 +229,7 @@ namespace RichTextBoxLinks
 			IntPtr lpar = 	Marshal.AllocCoTaskMem( Marshal.SizeOf( cf ) ); 
 			Marshal.StructureToPtr(cf, lpar, false);
 
-			IntPtr res = SendMessage(Handle, EM_GETCHARFORMAT, wpar, lpar);
+			SendMessage(Handle, EM_GETCHARFORMAT, wpar, lpar);
 
 			cf = (CHARFORMAT2_STRUCT)Marshal.PtrToStructure(lpar, typeof(CHARFORMAT2_STRUCT));
 
@@ -238,10 +237,7 @@ namespace RichTextBoxLinks
 			// dwMask holds the information which properties are consistent throughout the selection:
 			if ((cf.dwMask & mask) == mask) 
 			{
-				if ((cf.dwEffects & effect) == effect)
-					state = 1;
-				else
-					state = 0;
+				state = (cf.dwEffects & effect) == effect ? 1 : 0;
 			}
 			else
 			{

@@ -69,7 +69,7 @@ namespace GitForce
         /// </summary>
         public int CompareTo(AppHelper other)
         {
-            return other.Name.CompareTo(this.Name);
+            return other.Name.CompareTo(Name);
         }
 
         /// <summary>

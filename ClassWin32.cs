@@ -9,7 +9,7 @@ namespace GitForce
     /// <summary>
     /// Class containing NativeMethods interoperbility helper functions
     /// </summary>
-    class NativeMethods
+    static class NativeMethods
     {
         public const int SB_BOTTOM = 0x0007;
         public const int WM_PAINT = 0x000F;

@@ -20,8 +20,7 @@ namespace GitForce.Repo.Edit.Panels
         /// Initialize pertinent settings
         /// </summary>
         /// <param name="repo"></param>
-        /// <param name="options">All git global settings</param>
-        public void Init(ClassRepo repo, string[] options)
+        public void Init(ClassRepo repo)
         {
             textBoxUserName.Text = ClassConfig.GetLocal(repo, "user.name");
             textBoxUserEmail.Text = ClassConfig.GetLocal(repo, "user.email");

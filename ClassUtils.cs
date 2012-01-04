@@ -163,10 +163,7 @@ namespace GitForce
         /// </summary>
         public static string GetShellExecFlags()
         {
-            if (IsMono())
-                return "-c";
-            else
-                return "/K";
+            return IsMono() ? "-c" : "/K";
         }
 
         /// <summary>

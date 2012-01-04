@@ -332,7 +332,7 @@ namespace GitForce.Main.Left.Panels
             StatusButtons = buttons;
 
             // Add handlers to the buttons, these are default handlers for various operations
-            Dictionary<FileOps, EventHandler> events = new Dictionary<FileOps, EventHandler>()
+            Dictionary<FileOps, EventHandler> events = new Dictionary<FileOps, EventHandler>
             {
                 { FileOps.Add,       MenuViewAddFilesClick },
                 { FileOps.Update,    MenuViewUpdateChangelistClick },
@@ -676,7 +676,7 @@ namespace GitForce.Main.Left.Panels
             watcher.Path = Path.GetDirectoryName(file);
             watcher.Filter = Path.GetFileName(file);
             watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
-            watcher.Changed += new FileSystemEventHandler(OnFileChanged);
+            watcher.Changed += OnFileChanged;
             watcher.EnableRaisingEvents = true;
         }
 

@@ -194,7 +194,7 @@ namespace GitForce
 
         #region Remote keys management
 
-        public ClassUrl.Url _remoteUrl;
+        private ClassUrl.Url _remoteUrl;
 
         /// <summary>
         /// Load a list of remote hosts from the registry into the list box

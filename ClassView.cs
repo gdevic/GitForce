@@ -39,7 +39,7 @@ namespace GitForce
         /// <summary>
         /// Describes a mapping from image number into the resource icon
         /// </summary>
-        private static readonly Dictionary<Img, System.Drawing.Icon> Res = new Dictionary<Img, System.Drawing.Icon> {
+        private static readonly Dictionary<Img, Icon> Res = new Dictionary<Img, Icon> {
             { Img.FileUnmodified,   Resources.TreeIconU },
             { Img.FileModified,     Resources.TreeIconM },
             { Img.FileAdded,        Resources.TreeIconA },

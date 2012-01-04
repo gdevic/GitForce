@@ -21,7 +21,7 @@ namespace GitForce
         public string Args;
         public string Dir;
         public string Desc;
-        public bool[] Checks = new bool[7];
+        public readonly bool[] Checks = new bool[7];
 
         /// <summary>
         /// Implements the clonable interface.
@@ -56,7 +56,7 @@ namespace GitForce
         /// </summary>
         public string Run(List<string> files)
         {
-            App.Log.Print(this.ToString());
+            App.Log.Print(ToString());
 
             string stdout = string.Empty;
             string args = DeMacroise(Args, files);
@@ -193,7 +193,7 @@ namespace GitForce
             {
                 if (Directory.Exists(f))
                     // For directories, remove trailing slash
-                    D.Add(f.TrimEnd(new char[] {'\\', '/'}));
+                    D.Add(f.TrimEnd(new[] {'\\', '/'}));
                 else
                     F.Add(f);
             }

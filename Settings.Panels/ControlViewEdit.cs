@@ -25,7 +25,7 @@ namespace GitForce.Settings.Panels
         {
             if (String.IsNullOrEmpty(Properties.Settings.Default.EditViewPrograms))
             {
-                List<string> candidates = new List<string>()
+                List<string> candidates = new List<string>
                 {
                     // Windows OS common editors:
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"notepad.exe"),

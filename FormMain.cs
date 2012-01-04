@@ -85,7 +85,7 @@ namespace GitForce
 
             // Register toolbar file buttons with the View panel
             PanelView.RegisterToolstripFileButtons(new Dictionary
-                <PanelView.FileOps, ToolStripButton>()
+                <PanelView.FileOps, ToolStripButton>
                 {
                     { PanelView.FileOps.Add, btAdd },
                     { PanelView.FileOps.Update, btUpdate },
@@ -748,8 +748,7 @@ namespace GitForce
         /// </summary>
         private void CmdBoxTextReady(object sender, string cmd)
         {
-            string run;
-            foreach (string command in cmd.Split(new string[] {" && "}, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string command in cmd.Split(new[] {" && "}, StringSplitOptions.RemoveEmptyEntries))
             {
                 // Print out the command itself
                 App.PrintStatusMessage(command);
@@ -757,6 +756,7 @@ namespace GitForce
                 string[] tokens = command.Split(' ');
                 string args = String.Join(" ", tokens, 1, tokens.Count() - 1);
                 // We are guaranteed to have at least one token (by the TextBoxEx control)
+                string run;
                 if (tokens[0].ToLower() == "git")
                 {
                     // Command is a git command: execute it
