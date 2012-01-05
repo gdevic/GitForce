@@ -44,9 +44,9 @@ namespace GitForce
         /// </summary>
         public AppHelper(string appCombined)
         {
-            Name = "";
+            Name = string.Empty;
             Path = appCombined;
-            Args = "";
+            Args = string.Empty;
             string[] parts = appCombined.Split('\t');
             if(parts.Length==3)
             {

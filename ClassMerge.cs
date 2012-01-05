@@ -78,18 +78,22 @@ namespace GitForce
         /// </summary>
         public static void Configure(AppHelper app)
         {
-            string path = app.Path.Replace('\\', '/');
-            string usr = app.Args.
-                Replace("%1", "$BASE").
-                Replace("%2", "$LOCAL").
-                Replace("%3", "$REMOTE").
-                Replace("%4", "$MERGED");
-            string arg = "'" + path + "' " + usr;
-            ClassConfig.SetGlobal("mergetool." + app.Name + ".path", path);
-            ClassConfig.SetGlobal("mergetool." + app.Name + ".cmd", arg);
+            // Configure application only if it is valid
+            if (app.Name != string.Empty)
+            {
+                string path = app.Path.Replace('\\', '/');
+                string usr = app.Args.
+                    Replace("%1", "$BASE").
+                    Replace("%2", "$LOCAL").
+                    Replace("%3", "$REMOTE").
+                    Replace("%4", "$MERGED");
+                string arg = "'" + path + "' " + usr;
+                ClassConfig.SetGlobal("mergetool." + app.Name + ".path", path);
+                ClassConfig.SetGlobal("mergetool." + app.Name + ".cmd", arg);
 
-            // TODO: This might be an option: Set our default tool to be the Git merge tool?
-            // ClassConfig.SetGlobal("merge.tool", app.Name);
+                // TODO: This might be an option: Set our default tool to be the Git merge tool?
+                // ClassConfig.SetGlobal("merge.tool", app.Name);
+            }
         }
 
         /// <summary>
