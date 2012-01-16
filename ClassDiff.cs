@@ -22,7 +22,7 @@ namespace GitForce
                 // Windows OS:
                 new AppHelper( "p4merge",        Path.Combine(ProgramFiles,@"Perforce\P4Merge.exe"),       "%1 %2" ),
                 new AppHelper( "WinMerge",       Path.Combine(ProgramFiles,@"WinMerge\WinMergeU.exe"),     "/e /x /u %1 %2" ),
-                new AppHelper( "BC3",            Path.Combine(ProgramFiles,@"Beyond Compare 3\BComp.com"), "%1 %1" ),
+                new AppHelper( "BC3",            Path.Combine(ProgramFiles,@"Beyond Compare 3\BComp.com"), "%1 %2" ),
                 new AppHelper( "KDiff3",         Path.Combine(ProgramFiles,@"KDiff3\kdiff3.exe"),          "%1 %2" ),
 
                 // Linux OS:
@@ -72,16 +72,20 @@ namespace GitForce
         /// </summary>
         public static void Configure(AppHelper app)
         {
-            string path = app.Path.Replace('\\', '/');
-            string usr = app.Args.
-                Replace("%1", "$LOCAL").
-                Replace("%2", "$REMOTE");
-            string arg = "'" + path + "' " + usr;
-            ClassConfig.SetGlobal("difftool." + app.Name + ".path", path);
-            ClassConfig.SetGlobal("difftool." + app.Name + ".cmd", arg);
+            // Configure application only if it is valid
+            if (app.Name!=string.Empty)
+            {
+                string path = app.Path.Replace('\\', '/');
+                string usr = app.Args.
+                    Replace("%1", "$LOCAL").
+                    Replace("%2", "$REMOTE");
+                string arg = "'" + path + "' " + usr;
+                ClassConfig.SetGlobal("difftool." + app.Name + ".path", path);
+                ClassConfig.SetGlobal("difftool." + app.Name + ".cmd", arg);
 
-            // TODO: This might be an option: Set our default tool to be the Git gui tool?
-            // ClassConfig.SetGlobal("diff.guitool", app.Name);
+                // TODO: This might be an option: Set our default tool to be the Git gui tool?
+                // ClassConfig.SetGlobal("diff.guitool", app.Name);
+            }
         }
 
         /// <summary>
@@ -90,9 +94,9 @@ namespace GitForce
         /// </summary>
         public static string GetDiffCmd()
         {
-            // Get the application default diff utility
+            // Get the application default visual diff utility
             AppHelper app = new AppHelper(Properties.Settings.Default.DiffAppHelper);
-            string cmd = string.Format(" --tool={0} --gui --no-prompt ", app.Name);
+            string cmd = string.Format(" --tool={0} --no-prompt ", app.Name);
 
             return cmd;
         }
