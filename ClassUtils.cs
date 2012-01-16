@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -11,6 +12,30 @@ namespace GitForce
     public static class ClassUtils
     {
         private static string _lastError = string.Empty;
+
+        /// <summary>
+        /// Set of environment variables used by the execution environment
+        /// </summary>
+        private static readonly Dictionary<string, string> Env = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Adds an environment variable for the Run method
+        /// </summary>
+        public static void AddEnvar(string name, string value)
+        {
+            if (Env.ContainsKey(name))
+                Env[name] = value;
+            else
+                Env.Add(name, value);
+        }
+
+        /// <summary>
+        /// Returns a set of environment variables registered for this execution environment
+        /// </summary>
+        public static Dictionary<string, string> GetEnvars()
+        {
+            return Env;
+        }
 
         /// <summary>
         /// Generic last error string
@@ -78,7 +103,7 @@ namespace GitForce
                 proc.StartInfo.UseShellExecute = false;
 
                 // Add all environment variables listed
-                foreach (var envar in ClassExecute.GetEnvars())
+                foreach (var envar in Env)
                     proc.StartInfo.EnvironmentVariables.Add(envar.Key, envar.Value);
 
                 // WAR: Opening a command window/terminal is platform-specific
@@ -136,6 +161,7 @@ namespace GitForce
         public static string ExecuteShellCommand(string cmd, string args)
         {
             string ret = string.Empty;
+            // TODO: Do we need try/catch here?
             try
             {
                 App.PrintStatusMessage("Shell execute: " + cmd + " " + args);
@@ -143,12 +169,12 @@ namespace GitForce
                 // WAR: Shell execute is platform-specific
                 if (IsMono())
                 {
-                    ret = ClassExecute.Run(cmd, args);
+                    ret = Exec.Run(cmd, args).ToString();
                 }
                 else
                 {
                     args = "/c " + cmd + " " + args;
-                    ret = ClassExecute.Run("cmd.exe", args);
+                    ret = Exec.Run("cmd.exe", args).ToString();
                 }
             }
             catch (Exception ex)

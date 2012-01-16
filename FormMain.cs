@@ -620,7 +620,7 @@ namespace GitForce
         /// </summary>
         private void BtCancelOperationClick(object sender, EventArgs e)
         {
-            ClassExecute.KillJob();
+            // ClassExecute.KillJob();  TODO: Does this control get the thread to run on when a command is executing?
         }
 
         /// <summary>

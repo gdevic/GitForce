@@ -27,8 +27,8 @@ namespace GitForce
             _pathPlink = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
             _pathPuttyGen = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
 
-            ClassExecute.AddEnvar("PLINK_PROTOCOL", "ssh");
-            ClassExecute.AddEnvar("GIT_SSH", _pathPlink);
+            ClassUtils.AddEnvar("PLINK_PROTOCOL", "ssh");
+            ClassUtils.AddEnvar("GIT_SSH", _pathPlink);
 
             // Run the daemon process, update keys
             RunPageantUpdateKeys();
@@ -154,7 +154,7 @@ namespace GitForce
                           " -l " + (string.IsNullOrEmpty(url.User) ? "anonymous" : url.User) +
                           " " + url.Host;
 
-            ClassExecute.Run(_pathPlink, args);
+            Exec.Run(_pathPlink, args);
         }
     }
 }

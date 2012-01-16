@@ -186,7 +186,7 @@ namespace GitForce.Main.Right.Panels
                                 init = "clone --progress -v --origin " + r.Name + " " + r.UrlFetch + " " + root + (isBare ? " --bare --shared " : " ") + extra;
 
                                 // Add HTTPS password for the next execute of a clone operation
-                                ClassExecute.AddEnvar("PASSWORD", r.Password);
+                                ClassUtils.AddEnvar("PASSWORD", r.Password);
                                 break;
                         }
 

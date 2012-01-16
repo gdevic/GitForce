@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace GitForce
@@ -18,14 +11,14 @@ namespace GitForce
     /// </summary>
     public partial class FormGitRun : Form
     {
-        private readonly string _cmd;
-        private readonly string _args;
-        private Thread _thRun;
+        private Exec job;
+        private ExecResult _result;
+
         private string _lastError;
         private int _ec;
 
         /// <summary>
-        /// Class constructor that also presets command to be run
+        /// Class constructor that also pre-sets the command and argument to be run
         /// </summary>
         public FormGitRun(string cmd, string args)
         {
@@ -36,8 +29,7 @@ namespace GitForce
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
 
-            _cmd = cmd;
-            _args = args;
+            job = new Exec(cmd, args);
 
             // Reuse the same font selected as fixed-pitch
             textStdout.Font = Properties.Settings.Default.commitFont;
@@ -58,75 +50,49 @@ namespace GitForce
         /// </summary>
         private void FormGitRunShown(object sender, EventArgs e)
         {
-            // Create and start an execution thread with various
-            // callbacks for stdout, stderr and command completion
-            ClassExecute.ThreadedParameters parameters;
-            _thRun = new Thread(ClassExecute.RunNativeProcess);
+            // Start the job using our own output handlers
+            job.AsyncRun(PStdout, PStderr, PComplete);
+        }
 
-            parameters.Cmd = _cmd;
-            parameters.Args = _args;
-            parameters.F0 = POutputDataReceived;
-            parameters.F1 = PErrorDataReceived;
-            parameters.FComplete = PComplete;
-
-            _thRun.Start(parameters);
+        /// <summary>
+        /// Returns the result structure from running a job
+        /// </summary>
+        public ExecResult GetResult()
+        {
+            return _result;
         }
 
         /// <summary>
         /// Callback that handles process printing to stdout
         /// </summary>
-        private void POutputDataReceived(object sender, DataReceivedEventArgs e)
+        private void PStdout(String message)
         {
-            if (String.IsNullOrEmpty(e.Data)) return;
-            if(InvokeRequired)
-                BeginInvoke((MethodInvoker) (() => POutputDataReceived(sender, e)));
-            else
-            {
-                textStdout.Text += e.Data + Environment.NewLine;
+            textStdout.Text += message + Environment.NewLine;
 
-                // Keep the newly added text visible
-                textStdout.SelectionStart = textStdout.TextLength;                    
-                textStdout.ScrollToCaret();                    
-            }
+            // Keep the newly added text visible
+            textStdout.SelectionStart = textStdout.TextLength;                    
+            textStdout.ScrollToCaret();                    
         }
 
         /// <summary>
         /// Callback that handles process printing to stderr
         /// </summary>
-        private void PErrorDataReceived(object sender, DataReceivedEventArgs e)
+        private void PStderr(String message)
         {
-            if (String.IsNullOrEmpty(e.Data)) return;
-            if (InvokeRequired)
-                BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
-            else
-            {
-                _lastError += e.Data + Environment.NewLine;
-                toolStripStatus.Text = "Error: " + e.Data;
-            }
+            _lastError += message + Environment.NewLine;
+            textStdout.AppendText(message + Environment.NewLine, Color.Red);
         }
 
         /// <summary>
         /// Callback that handles process completion event
         /// </summary>
-        private void PComplete(int exitCode)
+        private void PComplete(ExecResult result)
         {
-            if(InvokeRequired)
-                BeginInvoke((MethodInvoker)(() => PComplete(exitCode)));
-            else
-            {
-                _ec = exitCode;
-                textStdout.Text += _lastError + Environment.NewLine;
-                btCancel.Text = "Done";
-                StopProgress();
-            }
-        }
-
-        /// <summary>
-        /// Returns a string containing the result of Git command as printed to stdout stream
-        /// </summary>
-        public string GetStdout()
-        {
-            return textStdout.Text;
+            _result = result;
+            _ec = result.retcode;
+            toolStripStatus.Text = "Git command completed: " + (result.Success() ? "OK" : "Failed");
+            btCancel.Text = "Done";
+            StopProgress();
         }
 
         /// <summary>
@@ -138,9 +104,8 @@ namespace GitForce
             StopProgress();
             if (btCancel.Text == "Cancel")
             {
-                ClassExecute.TerminateThreaded();
-                _thRun.Join(3000);
-
+                toolStripStatus.Text = "Git command interrupted.";
+                job.Terminate();
                 btCancel.Text = "Close";
             }
             else
@@ -179,6 +144,20 @@ namespace GitForce
         {
             labelProgress.Text = @"|/-\|/-\"[_progressPhase].ToString();
             _progressPhase = (_progressPhase + 1)%8;
+        }
+
+    }
+
+    public static class RichTextBoxExtensions
+    {
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
         }
     }
 }

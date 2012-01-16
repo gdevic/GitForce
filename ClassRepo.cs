@@ -274,7 +274,7 @@ namespace GitForce
 
                 // Set the HTTPS password
                 string password = Remotes.GetPassword("");
-                ClassExecute.AddEnvar("PASSWORD", password);
+                ClassUtils.AddEnvar("PASSWORD", password);
 
                 // The Windows limit to the command line argument length is about 8K
                 // We may hit that limit when doing operations on a large number of files.

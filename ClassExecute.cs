@@ -9,186 +9,184 @@ using System.Windows.Forms;
 namespace GitForce
 {
     /// <summary>
-    /// Contains functions to execute a native OS command
+    /// * Simple case: execute one command: Run()
+    ///     returns when the command completes
+    ///     return structure including the stdout
+    ///     safety built-in: self-terminate if there is no response within some time
+    /// * More complex case: AsyncRun()
+    ///     command takes more time: asynchronous execution with a completion callback
+    ///     callbacks for stdout and stderr
+    ///     can terminate execution from another thread: Terminate()
     /// </summary>
-    public static class ClassExecute
+    public class ExecResult
     {
-        /// <summary>
-        /// Set of environment variables used by the Run() method
-        /// </summary>
-        private static readonly Dictionary<string, string> Env = new Dictionary<string, string>();
+        public string stdout = string.Empty;
+        public string stderr = string.Empty;
+        public int retcode = -1;
+
+        public override string ToString()
+        {
+            return stdout;
+        }
+
+        public bool Success()
+        {
+            return retcode == 0;
+        }
+    }
+
+    /// <summary>
+    /// Contains functions to execute external console applications.
+    /// Standard streams (stdout/stderr) are captured and returned.
+    /// 
+    /// Command shell is not invoked as that would prevent capturing
+    /// the streams. Internally, the invocation is asynchronous.
+    /// </summary>
+    public class Exec
+    {
+        private readonly ExecResult Result = new ExecResult();
 
         /// <summary>
         /// Delegate for the completion function
         /// </summary>
-        public delegate void PCompleteDelegate(int exitCode);
+        public delegate void PStdoutDelegate(String s);
+        public delegate void PStderrDelegate(String s);
+        public delegate void PCompleteDelegate(ExecResult result);
 
-        /// <summary>
-        /// Structure holding a set of parameters for the threaded execution
-        /// </summary>
-        public struct ThreadedParameters
+        private Process Proc;
+        private Thread Thread;
+        private PStdoutDelegate FStdout;
+        private PStderrDelegate FStderr;
+        private PCompleteDelegate FComplete;
+
+        public Exec(string cmd, string args)
         {
-            public string Cmd;
-            public string Args;
-            public DataReceivedEventHandler F0;
-            public DataReceivedEventHandler F1;
-            public PCompleteDelegate FComplete;
-        }
+            Proc = new Process {
+                StartInfo =
+                {
+                    FileName = cmd,
+                    Arguments = args,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                }};
 
-        /// <summary>
-        /// Process handle
-        /// </summary>
-        private static Process proc;
-
-        /// <summary>
-        /// Adds an environment variable for the Run method
-        /// </summary>
-        public static void AddEnvar(string name, string value)
-        {
-            if (Env.ContainsKey(name))
-                Env[name] = value;
-            else
-                Env.Add(name, value);
-        }
-
-        /// <summary>
-        /// Returns set of environment variables that are registered to
-        /// run within the application. They mostly determine the operation
-        /// of git SSH functionality and password.
-        /// </summary>
-        public static Dictionary<string, string> GetEnvars()
-        {
-            return Env;
-        }
-
-        /// <summary>
-        /// Stops any executing thread job, if any.
-        /// </summary>
-        public static void KillJob()
-        {
-            // TODO: Need to implement this
-        }
-
-        /// <summary>
-        /// Executes a native command using asynchronous standard streams
-        /// </summary>
-        public static void RunNativeProcess(object argument)
-        {
-            ThreadedParameters p = (ThreadedParameters) argument;
-
-            ProcessStartInfo startInfo = new ProcessStartInfo {
-                FileName = p.Cmd,
-                Arguments = p.Args,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
+            Proc.OutputDataReceived += POutputDataReceived;
+            Proc.ErrorDataReceived += PErrorDataReceived;
+            Proc.Exited += ProcExited;
+            Proc.EnableRaisingEvents = true;
 
             // TODO: This is a hack for mergetool: We need to show the window to ask the user if the merge succeeded.
             // The problem is with .NET (and MONO!) buffering of streams prevents us to catching the question on time.
-            if (p.Args.StartsWith("mergetool "))
+            if (args.StartsWith("mergetool "))
             {
-                startInfo.CreateNoWindow = false;
-                startInfo.RedirectStandardOutput = false;
-                startInfo.RedirectStandardError = false;
+                Proc.StartInfo.CreateNoWindow = false;
+                Proc.StartInfo.RedirectStandardOutput = false;
+                Proc.StartInfo.RedirectStandardError = false;
             }
 
-            proc = new Process();
-            proc.StartInfo = startInfo;
-            proc.OutputDataReceived += p.F0;
-            proc.ErrorDataReceived += p.F1;
-
-            // Add all environment variables listed
-            foreach (var variable in Env)
+            // Add all environment variables registered for our process environment
+            foreach (var variable in ClassUtils.GetEnvars())
             {
-                // A variable with that name might already be there, so update it
-                if (proc.StartInfo.EnvironmentVariables.ContainsKey(variable.Key))
-                    proc.StartInfo.EnvironmentVariables[variable.Key] = variable.Value;
+                // If a variable with that name already exists, update it
+                if (Proc.StartInfo.EnvironmentVariables.ContainsKey(variable.Key))
+                    Proc.StartInfo.EnvironmentVariables[variable.Key] = variable.Value;
                 else
-                    proc.StartInfo.EnvironmentVariables.Add(variable.Key, variable.Value);
+                    Proc.StartInfo.EnvironmentVariables.Add(variable.Key, variable.Value);
             }
-
-            try
-            {
-                proc.Start();
-
-                proc.BeginOutputReadLine();
-                proc.BeginErrorReadLine();
-
-                proc.WaitForExit();
-                p.FComplete(proc.ExitCode);
-            }
-            catch (Exception ex)
-            {
-                stderr += ex.Message;
-                p.FComplete(-1);
-            }
-            proc.Close();
         }
 
-        /// <summary>
-        /// Terminate this class threaded command
-        /// </summary>
-        public static void TerminateThreaded()
+        public static ExecResult Run(string cmd, string args)
         {
-            proc.Kill();
-            proc.WaitForExit(1000);
-            proc.Close();
-        }
-
-        private static string stdout;
-        private static string stderr;
-
-        /// <summary>
-        /// Executes a command
-        /// </summary>
-        public static string Run(string cmd, string args)
-        {
+            App.Log.Print(String.Format("Exec: {0} {1}", cmd, args));
             App.StatusBusy(true);
-            App.Log.Print(String.Format("$ {0} {1}", cmd, args));
-
-            ClassUtils.ClearLastError();
-            stdout = stderr = string.Empty;
-
-            // Create and start an execution thread with various
-            // callbacks for stdout, stderr and command completion
-            ThreadedParameters parameters;
-            parameters.Cmd = cmd;
-            parameters.Args = args;
-            parameters.F0 = POutputDataReceived;
-            parameters.F1 = PErrorDataReceived;
-            parameters.FComplete = PComplete;
-
-            Thread thRun = new Thread(RunNativeProcess);
-            thRun.Start(parameters);           
-            thRun.Join();
+            Exec job = new Exec(cmd, args);
+            job.Thread = new Thread(job.ThreadedRun);
+            job.Thread.Start(3000);     // Wait 3 sec for polled jobs
+            job.Thread.Join();
             // There are known problems with async output not being flushed as the
             // thread exits. Releasing a time-slice using DoEvents seems to fix
             // the problem in this particular setting.
             Application.DoEvents();
             App.StatusBusy(false);
 
-            return stdout;
+            return job.Result;
+        }
+
+        public void AsyncRun(PStdoutDelegate pstdout, PStderrDelegate pstderr, PCompleteDelegate pcomplete)
+        {
+            FStdout = pstdout;
+            FStderr = pstderr;
+            FComplete = pcomplete;
+
+            Thread = new Thread(ThreadedRun);
+            Thread.Start(0);
+        }
+
+        /// <summary>
+        /// Terminate this job
+        /// </summary>
+        public void Terminate()
+        {
+            try
+            {
+                Proc.Kill();
+                Proc.WaitForExit(1000);
+            }
+            catch (Exception)
+            {
+                App.Log.Debug("Exec.Terminate() exception");
+            }
+        }
+
+        /// <summary>
+        /// Executes a job process and blocks until it completes.
+        /// </summary>
+        private void ThreadedRun(object wait)
+        {
+            try
+            {
+                Proc.Start();
+                Proc.BeginOutputReadLine();
+                Proc.BeginErrorReadLine();
+
+                if (Proc.WaitForExit((int)wait))
+                    Proc.WaitForExit();
+                Result.retcode = Proc.ExitCode;
+                Proc.Close();
+            }
+            catch (Exception ex)
+            {
+                Result.stderr += ex.Message;
+            }
         }
 
         /// <summary>
         /// Callback that handles process printing to stdout.
-        /// Collect all strings into one stdout variable.
+        /// Collect all strings into one stdout variable and call a custom handler.
         /// </summary>
-        private static void POutputDataReceived(object sender, DataReceivedEventArgs e)
+        private void POutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data)) return;
-            if (stdout != string.Empty)
-                stdout += '\n';
-            stdout += e.Data;
+            if (App.Log.InvokeRequired)
+                App.Log.BeginInvoke((MethodInvoker)(() => POutputDataReceived(sender, e)));
+            else
+            {
+                if (Result.stdout != string.Empty)
+                    Result.stdout += '\n';
+                Result.stdout += e.Data;
+
+                if (FStdout != null)
+                    FStdout(e.Data);
+            }
         }
 
         /// <summary>
         /// Callback that handles process printing to stderr
-        /// Print to the application status pane.
+        /// Print to the application status pane and call a custom handler.
         /// </summary>
-        private static void PErrorDataReceived(object sender, DataReceivedEventArgs e)
+        private void PErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data)) return;
             if (App.Log.InvokeRequired)
@@ -196,18 +194,24 @@ namespace GitForce
             else
             {
                 App.PrintStatusMessage(e.Data);
-                stderr += e.Data;
+                Result.stderr += e.Data;
+
+                if (FStderr != null)
+                    FStderr(e.Data);
             }
         }
 
         /// <summary>
-        /// Callback that handles process completion event
-        /// Right now we don't do anything with it.
+        /// Event called when the executing process exits.
         /// </summary>
-        private static void PComplete(int exitCode)
+        private void ProcExited(object sender, EventArgs e)
         {
-            if (exitCode != 0)
-                App.Log.Debug("ClassExecute::PComplete: " + exitCode);
+            if (App.Log.InvokeRequired)
+                App.Log.BeginInvoke((MethodInvoker) (delegate
+                {
+                    if (FComplete != null)
+                        FComplete(Result);
+                }));
         }
     }
 }

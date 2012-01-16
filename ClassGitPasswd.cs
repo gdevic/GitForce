@@ -31,7 +31,7 @@ namespace GitForce
                 File.WriteAllText(_pathPasswordBatchHelper, "echo $PASSWORD\n");
 
                 // Set the execute bit
-                ClassExecute.Run("chmod", "+x " + _pathPasswordBatchHelper);
+                Exec.Run("chmod", "+x " + _pathPasswordBatchHelper);
             }
             else
             {
@@ -42,7 +42,7 @@ namespace GitForce
                 _pathPasswordBatchHelper = Path.Combine(Path.GetTempPath(), "passwd.bat");
                 File.WriteAllText(_pathPasswordBatchHelper, "@echo %PASSWORD%\n");
             }
-            ClassExecute.AddEnvar("GIT_ASKPASS", _pathPasswordBatchHelper);
+            ClassUtils.AddEnvar("GIT_ASKPASS", _pathPasswordBatchHelper);
 
             App.Log.Print("Created HTTP password helper file: " + _pathPasswordBatchHelper);
         }
