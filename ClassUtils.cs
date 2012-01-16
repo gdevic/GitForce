@@ -210,53 +210,53 @@ namespace GitForce
         /// </summary>
         public static bool DeleteFolder(DirectoryInfo dirInfo, bool fPreserveGit, bool fPreserveRootFolder)
         {
-            ClearLastError();
+            bool f = true;
             try
             {
-                DeleteRecursiveFolder(dirInfo, fPreserveGit, fPreserveRootFolder);
+                foreach (var subDir in dirInfo.GetDirectories())
+                {
+                    if (fPreserveGit == false || !subDir.Name.EndsWith(".git"))
+                        f &= DeleteFolder(subDir, false, false);
+                }
+
+                foreach (var file in dirInfo.GetFiles())
+                    f &= DeleteFile(file.FullName);
+
+                if (fPreserveRootFolder == false)
+                    f &= DeleteFolder(dirInfo);
             }
             catch (Exception ex)
             {
-                _lastError = ex.Message;
+                App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
             }
-            return !IsLastError();
+            return f;
         }
 
         /// <summary>
-        /// Delete a directory and all files and subdirectories under it.
-        /// TODO: This particular case could probably be optimized: do we really need 2 booleans coming in
+        /// Deletes a folder from the local file system.
+        /// Returns true if delete succeeded, false otherwise.
         /// </summary>
-        private static void DeleteRecursiveFolder(DirectoryInfo dirInfo, bool fPreserveGit, bool fPreserveRootFolder)
+        private static bool DeleteFolder(DirectoryInfo dirInfo)
         {
-            foreach (var subDir in dirInfo.GetDirectories())
+            try
             {
-                if (fPreserveGit == false || !subDir.Name.EndsWith(".git"))
-                    DeleteRecursiveFolder(subDir, false, false);
+                dirInfo.Attributes = FileAttributes.Normal;
+                dirInfo.Delete();
             }
-
-            foreach (var file in dirInfo.GetFiles())
-                DeleteFile(file.FullName);
-
-            if (fPreserveRootFolder == false)
+            catch (Exception ex)
             {
-                try
-                {
-                    dirInfo.Delete();
-                }
-                catch(Exception ex)
-                {
-                    _lastError = ex.Message;
-                }
+                App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                return false;
             }
+            return true;
         }
 
         /// <summary>
         /// Deletes a file from the local file system.
-        /// Returns true if delete succeeded, false otherwise, with the _lastError set.
+        /// Returns true if delete succeeded, false otherwise.
         /// </summary>
         public static bool DeleteFile(string name)
         {
-            ClearLastError();
             try
             {
                 FileInfo file = new FileInfo(name) {Attributes = FileAttributes.Normal};
@@ -264,7 +264,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                _lastError = ex.Message;
+                App.Log.Print("Error deleting file " + name + ": " + ex.Message);
                 return false;
             }
             return true;

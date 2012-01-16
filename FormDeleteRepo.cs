@@ -43,39 +43,33 @@ namespace GitForce
         /// </summary>
         private void BtDeleteClick(object sender, EventArgs e)
         {
-            try
+            bool ret = true;
+            // Depending on the selection, do the deletion:
+            // 0: dont delete anythng
+            // 1: delete only working files
+            // 2: delete only .git tree
+            // 3: delete complete repo folder
+
+            if (_radioSelection == 1)
             {
-                // Depending on the selection, do the deletion:
-                // 0: dont delete anythng
-                // 1: delete only working files
-                // 2: delete only .git tree
-                // 3: delete complete repo folder
-
-                if (_radioSelection == 1)
-                {
-                    DirectoryInfo dirInfo = new DirectoryInfo(_dir);
-                    ClassUtils.DeleteFolder(dirInfo, true, true);     // Preserve .git, preserve root folder
-                }
-
-                if (_radioSelection == 2)
-                {
-                    DirectoryInfo dirInfo = new DirectoryInfo(_dir + Path.DirectorySeparatorChar + ".git");
-                    ClassUtils.DeleteFolder(dirInfo, false, false);    // Remove .git, remove root folder (.git)
-                }
-
-                if(_radioSelection == 3)
-                {
-                    DirectoryInfo dirInfo = new DirectoryInfo(_dir);
-                    ClassUtils.DeleteFolder(dirInfo, false, false);   // Remove .git, remove root folder
-                }
-
-                if (ClassUtils.IsLastError())
-                    throw new ClassException("Some files could not be removed!" + Environment.NewLine + ClassUtils.LastError);
+                DirectoryInfo dirInfo = new DirectoryInfo(_dir);
+                ret = ClassUtils.DeleteFolder(dirInfo, true, true);     // Preserve .git, preserve root folder
             }
-            catch (Exception ex)
+
+            if (_radioSelection == 2)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DirectoryInfo dirInfo = new DirectoryInfo(_dir + Path.DirectorySeparatorChar + ".git");
+                ret = ClassUtils.DeleteFolder(dirInfo, false, false);    // Remove .git, remove root folder (.git)
             }
+
+            if(_radioSelection == 3)
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(_dir);
+                ret = ClassUtils.DeleteFolder(dirInfo, false, false);   // Remove .git, remove root folder
+            }
+
+            if (ret == false)
+                MessageBox.Show("Some files could not be removed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         /// <summary>

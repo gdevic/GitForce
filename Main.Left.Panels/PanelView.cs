@@ -636,8 +636,8 @@ namespace GitForce.Main.Left.Panels
             foreach (string s in sel.SelFiles)
             {
                 string fullPath = Path.Combine(App.Repos.Current.Root, s);
-                if (!ClassUtils.DeleteFile(fullPath))
-                    App.PrintStatusMessage("Error: " + ClassUtils.LastError);
+                if (ClassUtils.DeleteFile(fullPath) == false)
+                    App.PrintStatusMessage("Error removing " + fullPath);
             }
             App.DoRefresh();
         }

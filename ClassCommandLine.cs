@@ -82,9 +82,8 @@ namespace GitForce
                 foreach (var dir in toWhack)
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(dir);
-                    ClassUtils.DeleteFolder(dirInfo, false, false);
-                    if(ClassUtils.IsLastError())
-                        Console.Write(ClassUtils.LastError);
+                    if (ClassUtils.DeleteFolder(dirInfo, false, false) == false)
+                        Console.Write("Unable to delete some files!");
                 }
                 Console.WriteLine("Configuration has been reset.");
                 return false;
