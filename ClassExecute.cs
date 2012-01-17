@@ -58,6 +58,7 @@ namespace GitForce
         private PStdoutDelegate FStdout;
         private PStderrDelegate FStderr;
         private PCompleteDelegate FComplete;
+        private Semaphore Exited = new Semaphore(0, 2);
 
         public Exec(string cmd, string args)
         {
@@ -74,8 +75,6 @@ namespace GitForce
 
             Proc.OutputDataReceived += POutputDataReceived;
             Proc.ErrorDataReceived += PErrorDataReceived;
-            Proc.Exited += ProcExited;
-            Proc.EnableRaisingEvents = true;
 
             // TODO: This is a hack for mergetool: We need to show the window to ask the user if the merge succeeded.
             // The problem is with .NET (and MONO!) buffering of streams prevents us to catching the question on time.
@@ -84,6 +83,7 @@ namespace GitForce
                 Proc.StartInfo.CreateNoWindow = false;
                 Proc.StartInfo.RedirectStandardOutput = false;
                 Proc.StartInfo.RedirectStandardError = false;
+                Exited = new Semaphore(0, 0);
             }
 
             // Add all environment variables registered for our process environment
@@ -153,7 +153,14 @@ namespace GitForce
 
                 if (Proc.WaitForExit((int)wait))
                     Proc.WaitForExit();
+
+                // Wait for stdout and stderr signals to complete
+                Exited.WaitOne();
                 Result.retcode = Proc.ExitCode;
+
+                if (FComplete != null)
+                    FComplete(Result);
+
                 Proc.Close();
             }
             catch (Exception ex)
@@ -168,17 +175,21 @@ namespace GitForce
         /// </summary>
         private void POutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data)) return;
-            if (App.Log.InvokeRequired)
-                App.Log.BeginInvoke((MethodInvoker)(() => POutputDataReceived(sender, e)));
+            if (String.IsNullOrEmpty(e.Data))   // If the stream ended,
+                Exited.Release();               // release its semaphore
             else
             {
-                if (Result.stdout != string.Empty)
-                    Result.stdout += '\n';
-                Result.stdout += e.Data;
+                if (App.Log.InvokeRequired)     // Call itself recursively on the main thread
+                    App.Log.BeginInvoke((MethodInvoker)(() => POutputDataReceived(sender, e)));
+                else
+                {
+                    if (Result.stdout != string.Empty)
+                        Result.stdout += '\n';
+                    Result.stdout += e.Data;
 
-                if (FStdout != null)
-                    FStdout(e.Data);
+                    if (FStdout != null)
+                        FStdout(e.Data);
+                }
             }
         }
 
@@ -188,30 +199,21 @@ namespace GitForce
         /// </summary>
         private void PErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data)) return;
-            if (App.Log.InvokeRequired)
-                App.Log.BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
+            if (String.IsNullOrEmpty(e.Data))   // If the stream ended
+                Exited.Release();               // release its semaphore
             else
             {
-                App.PrintStatusMessage(e.Data);
-                Result.stderr += e.Data;
-
-                if (FStderr != null)
-                    FStderr(e.Data);
-            }
-        }
-
-        /// <summary>
-        /// Event called when the executing process exits.
-        /// </summary>
-        private void ProcExited(object sender, EventArgs e)
-        {
-            if (App.Log.InvokeRequired)
-                App.Log.BeginInvoke((MethodInvoker) (delegate
+                if (App.Log.InvokeRequired)     // Call itself recursively on the main thread
+                    App.Log.BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
+                else
                 {
-                    if (FComplete != null)
-                        FComplete(Result);
-                }));
+                    App.PrintStatusMessage(e.Data);
+                    Result.stderr += e.Data;
+
+                    if (FStderr != null)
+                        FStderr(e.Data);
+                }
+            }
         }
     }
 }
