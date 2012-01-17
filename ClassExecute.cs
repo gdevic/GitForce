@@ -157,15 +157,17 @@ namespace GitForce
                 // Wait for stdout and stderr signals to complete
                 Exited.WaitOne();
                 Result.retcode = Proc.ExitCode;
-
-                if (FComplete != null)
-                    FComplete(Result);
-
                 Proc.Close();
             }
             catch (Exception ex)
             {
                 Result.stderr += ex.Message;
+            }
+            finally
+            {
+                // Call the completion function in the context of a GUI thread
+                if (FComplete != null)
+                    App.Log.BeginInvoke((MethodInvoker) (() => FComplete(Result)));
             }
         }
 
