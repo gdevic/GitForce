@@ -34,9 +34,6 @@ namespace GitForce
 
             // Debug build starts with the log window open!
             Debug("Debug build.");
-#if DEBUG
-            Properties.Settings.Default.ShowLogWindow = true;
-#endif
         }
 
         /// <summary>
