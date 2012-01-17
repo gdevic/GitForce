@@ -103,7 +103,7 @@ namespace GitForce
             App.StatusBusy(true);
             Exec job = new Exec(cmd, args);
             job.Thread = new Thread(job.ThreadedRun);
-            job.Thread.Start(3000);     // Wait 3 sec for polled jobs
+            job.Thread.Start(10000);
             job.Thread.Join();
             // There are known problems with async output not being flushed as the
             // thread exits. Releasing a time-slice using DoEvents seems to fix
