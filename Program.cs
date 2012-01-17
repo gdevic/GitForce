@@ -118,6 +118,12 @@ namespace GitForce
             "GitForce");
 
         /// <summary>
+        /// If set to a file name, all log text will be mirrored to that file
+        /// Command line argument '--log' sets it to application data folder, file 'gitforce.log'
+        /// </summary>
+        public static string AppLog;
+
+        /// <summary>
         /// Program version number
         /// </summary>
         public static string Version

@@ -34,7 +34,8 @@ namespace GitForce
                                   "GitForce optional arguments:" + Environment.NewLine +
                                   "  --version             Show the application version number." + Environment.NewLine +
                                   "  --reset-windows       Reset stored locations of windows and dialogs." + Environment.NewLine +
-                                  "  --reset-config        Reset program configuration (repos etc.)." + Environment.NewLine);
+                                  "  --reset-config        Reset program configuration (repos etc.)." + Environment.NewLine +
+                                  "  --log                 Logs debug output to file." + Environment.NewLine);
                 ReturnCode = 0;
                 return false;
             }
@@ -87,6 +88,14 @@ namespace GitForce
                 }
                 Console.WriteLine("Configuration has been reset.");
                 return false;
+            }
+
+            // --log   Create a log file and append all debug log messages to it
+            if (commandLine["log"] == "true")
+            {
+                App.AppLog = Path.Combine(App.AppHome, "gitforce.log");
+                File.WriteAllText(App.AppLog, "Log created on " + DateTime.Now.ToShortDateString() + Environment.NewLine);
+                Console.WriteLine("Logging: " + App.AppLog);
             }
             return true;
         }

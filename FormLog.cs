@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -27,6 +28,9 @@ namespace GitForce
 
             // Reuse the same font selected as fixed-pitch
             textBox.Font = Properties.Settings.Default.commitFont;
+
+            if (App.AppLog != null)
+                Print("Logging: " + App.AppLog);
 
             // Debug build starts with the log window open!
             Debug("Debug build.");
@@ -62,16 +66,22 @@ namespace GitForce
         /// </summary>
         public void Print(string text)
         {
-            if(textBox.InvokeRequired)
+            if (textBox.InvokeRequired)
                 textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
             else
             {
+                // Mirror the text to the file log, if enabled
+                if (App.AppLog != null)
+                    using (StreamWriter sw = File.AppendText(App.AppLog))
+                        sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + "|" + text);
+
+                // Print the text into the textbox
                 int len = Math.Min(text.Length, 120);
                 textBox.Text += text.Substring(0, len).Trim() + Environment.NewLine;
 
                 // Scroll to the bottom and move carret position
                 textBox.SelectionStart = textBox.TextLength;
-                textBox.ScrollToCaret();                
+                textBox.ScrollToCaret();
             }
         }
 
