@@ -84,9 +84,10 @@ namespace GitForce
         /// </summary>
         public bool Init()
         {
-            UserName = ClassConfig.GetLocal(this, "user.name");
-            if (ClassUtils.IsLastError())
+            // We assume that a valid git repo will always have core.bare entry
+            if (ClassConfig.GetLocal(this, "core.bare") == string.Empty)
                 return false;
+            UserName = ClassConfig.GetLocal(this, "user.name");
             UserEmail = ClassConfig.GetLocal(this, "user.email");
             return true;
         }
