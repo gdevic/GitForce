@@ -58,7 +58,7 @@ namespace GitForce
         private PStdoutDelegate FStdout;
         private PStderrDelegate FStderr;
         private PCompleteDelegate FComplete;
-        private Semaphore Exited = new Semaphore(0, 2);
+        private Semaphore Exited = new Semaphore(0, 1);
 
         public Exec(string cmd, string args)
         {
@@ -177,8 +177,8 @@ namespace GitForce
         /// </summary>
         private void POutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data))   // If the stream ended,
-                Exited.Release();               // release its semaphore
+            if (String.IsNullOrEmpty(e.Data))   // If the stream ended, ignore stdout
+                return;
             else
             {
                 if (App.Log.InvokeRequired)     // Call itself recursively on the main thread
