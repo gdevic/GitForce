@@ -34,7 +34,7 @@ namespace GitForce
             string val = string.IsNullOrEmpty(value) ? "" : " \"" + value + "\"";
             string cmd = setkey + key + val;
 
-            repo.Run("config " + cmd);
+            repo.Run("config --local " + cmd);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace GitForce
         /// </summary>
         public static string GetLocal(ClassRepo repo, string key)
         {
-            return repo.Run("config --get " + key).Replace("\n", "");
+            return repo.Run("config --local --get " + key).Replace("\n", "");
         }
     }
 }
