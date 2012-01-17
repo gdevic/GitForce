@@ -20,7 +20,8 @@ namespace GitForce
             string val = string.IsNullOrEmpty(value) ? "" : " \"" + value + "\"";
             string cmd = setkey + key + val;
 
-            ClassGit.Run("config --global " + cmd);
+            if (ClassGit.Run("config --global " + cmd).Success() == false)
+                App.Log.Print("Error setting a global git config parameter");
         }
 
         /// <summary>
@@ -41,7 +42,12 @@ namespace GitForce
         /// </summary>
         public static string GetGlobal(string key)
         {
-            return ClassGit.Run("config --global --get " + key).Replace("\n", "");
+            ExecResult result = ClassGit.Run("config --global --get " + key);
+            if (result.Success() == true)
+                return result.stdout.Replace("\n", "");
+
+            App.Log.Print("Error getting a global git config parameter");
+            return String.Empty;
         }
 
         /// <summary>

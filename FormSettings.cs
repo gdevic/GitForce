@@ -27,7 +27,7 @@ namespace GitForce
         /// This is placed first, before initializing the user panels, so that the
         /// strings are accessible to individual panels should they need to use them.
         /// </summary>
-        private string[] Config = ClassGit.Run("config --global --list -z").Split('\0');
+        private string[] Config = ClassGit.Run("config --global --list -z").ToString().Split('\0');
 
         /// <summary>
         /// Create a lookup from panel names (which are set in each corresponding node

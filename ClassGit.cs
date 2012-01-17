@@ -75,7 +75,7 @@ namespace GitForce
         /// <summary>
         /// A generic function that executes a Git command
         /// </summary>
-        public static string Run(string gitcmd)
+        public static ExecResult Run(string gitcmd)
         {
             // Pick up git commands that take long time to execute and run them
             // using a threaded execution
@@ -86,10 +86,10 @@ namespace GitForce
             {
                 FormGitRun formGitRun = new FormGitRun(Properties.Settings.Default.GitPath, gitcmd);
                 formGitRun.ShowDialog();
-                return formGitRun.GetResult().ToString();
+                return formGitRun.GetResult();
             }
 
-            return Exec.Run(Properties.Settings.Default.GitPath, gitcmd).ToString();
+            return Exec.Run(Properties.Settings.Default.GitPath, gitcmd);
         }
     }
 }

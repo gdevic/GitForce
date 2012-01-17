@@ -760,7 +760,7 @@ namespace GitForce
                 if (tokens[0].ToLower() == "git")
                 {
                     // Command is a git command: execute it
-                    run = ClassGit.Run(args);
+                    run = ClassGit.Run(args).ToString();
                 }
                 else
                 {

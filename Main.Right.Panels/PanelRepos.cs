@@ -191,9 +191,8 @@ namespace GitForce.Main.Right.Panels
                         }
 
                         Directory.SetCurrentDirectory(root);
-                        ClassGit.Run(init);
-                        if(ClassUtils.IsLastError())
-                            throw new ClassException(ClassUtils.LastError);
+                        if(ClassGit.Run(init).Success()==false)
+                            throw new ClassException("Error running git init.");
                         ClassRepo repo = App.Repos.Add(root);
 
                         // Switch the view mode to Local File View and Local Pending Changelists

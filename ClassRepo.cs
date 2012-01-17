@@ -284,7 +284,7 @@ namespace GitForce
                 // which seemed to work fine.
 
                 if (args.Length < 2000)
-                    return ClassGit.Run(args);
+                    return ClassGit.Run(args).ToString();
 
                 // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
                 // Basically we have to rebuild the command into multiple instances with

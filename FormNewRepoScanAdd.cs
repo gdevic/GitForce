@@ -42,11 +42,13 @@ namespace GitForce
                     Application.DoEvents();
 
                     Directory.SetCurrentDirectory(d);
-                    ClassGit.Run("init");
+                    if (ClassGit.Run("init").Success() == false)
+                        throw new ClassException("init failed.");
                     App.Repos.Add(d);
                 }
                 catch (Exception ex)
                 {
+                    App.Log.Print("FormNewRepoScanAddShown: Unable to add repo: " + ex.Message);
                     App.PrintStatusMessage(ex.Message);
                 }
             }

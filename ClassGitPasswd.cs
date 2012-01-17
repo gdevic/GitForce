@@ -31,7 +31,8 @@ namespace GitForce
                 File.WriteAllText(_pathPasswordBatchHelper, "echo $PASSWORD\n");
 
                 // Set the execute bit
-                Exec.Run("chmod", "+x " + _pathPasswordBatchHelper);
+                if (Exec.Run("chmod", "+x " + _pathPasswordBatchHelper).Success() == false)
+                    App.Log.Print("ClassGitPasswd: Unable to chmod +x on " + _pathPasswordBatchHelper);
             }
             else
             {

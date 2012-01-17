@@ -55,7 +55,8 @@ namespace GitForce.Settings.Panels
             if (textBoxAliases.Tag != null)
             {
                 // Remove all aliases and then rebuild them
-                ClassGit.Run("config --remove-section alias");
+                if (ClassGit.Run("config --remove-section alias").Success() == false)
+                    App.Log.Print("ClassAliases: Error removing section aliases");
 
                 foreach (string[] def in
                     textBoxAliases.Lines.Select(s => s.Trim().Split('=')).Where(def => def.Length == 2))
