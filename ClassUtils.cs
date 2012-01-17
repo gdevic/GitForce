@@ -160,28 +160,18 @@ namespace GitForce
         /// </summary>
         public static string ExecuteShellCommand(string cmd, string args)
         {
-            string ret = string.Empty;
-            // TODO: Do we need try/catch here?
-            try
-            {
-                App.PrintStatusMessage("Shell execute: " + cmd + " " + args);
+            App.PrintStatusMessage("Shell execute: " + cmd + " " + args);
 
-                // WAR: Shell execute is platform-specific
-                if (IsMono())
-                {
-                    ret = Exec.Run(cmd, args).ToString();
-                }
-                else
-                {
-                    args = "/c " + cmd + " " + args;
-                    ret = Exec.Run("cmd.exe", args).ToString();
-                }
-            }
-            catch (Exception ex)
+            // WAR: Shell execute is platform-specific
+            if (IsMono())
             {
-                MessageBox.Show(ex.Message, "Shell Execute error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return Exec.Run(cmd, args).ToString();
             }
-            return ret;
+            else
+            {
+                args = "/c " + cmd + " " + args;
+                return Exec.Run("cmd.exe", args).ToString();
+            }
         }
 
         /// <summary>
