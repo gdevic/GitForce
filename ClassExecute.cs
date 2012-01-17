@@ -167,7 +167,7 @@ namespace GitForce
             {
                 // Call the completion function in the context of a GUI thread
                 if (FComplete != null)
-                    App.Log.BeginInvoke((MethodInvoker) (() => FComplete(Result)));
+                    App.MainForm.BeginInvoke((MethodInvoker) (() => FComplete(Result)));
             }
         }
 
@@ -179,20 +179,13 @@ namespace GitForce
         {
             if (String.IsNullOrEmpty(e.Data))   // If the stream ended, ignore stdout
                 return;
-            else
-            {
-                if (App.Log.InvokeRequired)     // Call itself recursively on the main thread
-                    App.Log.BeginInvoke((MethodInvoker)(() => POutputDataReceived(sender, e)));
-                else
-                {
-                    if (Result.stdout != string.Empty)
-                        Result.stdout += '\n';
-                    Result.stdout += e.Data;
 
-                    if (FStdout != null)
-                        FStdout(e.Data);
-                }
-            }
+            if (Result.stdout != string.Empty)
+                Result.stdout += '\n';
+            Result.stdout += e.Data;
+
+            if (FStdout != null)
+                App.MainForm.BeginInvoke((MethodInvoker)(() => FStdout(e.Data)));
         }
 
         /// <summary>
@@ -203,19 +196,12 @@ namespace GitForce
         {
             if (String.IsNullOrEmpty(e.Data))   // If the stream ended
                 Exited.Release();               // release its semaphore
-            else
-            {
-                if (App.Log.InvokeRequired)     // Call itself recursively on the main thread
-                    App.Log.BeginInvoke((MethodInvoker)(() => PErrorDataReceived(sender, e)));
-                else
-                {
-                    App.PrintStatusMessage(e.Data);
-                    Result.stderr += e.Data;
 
-                    if (FStderr != null)
-                        FStderr(e.Data);
-                }
-            }
+            App.PrintStatusMessage(e.Data);
+            Result.stderr += e.Data;
+
+            if (FStderr != null)
+                App.MainForm.BeginInvoke((MethodInvoker)(() => FStderr(e.Data)));
         }
     }
 }

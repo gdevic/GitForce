@@ -282,25 +282,30 @@ namespace GitForce
         /// Print into the status pane (and the aux log window).
         /// It is ok to send null or empty string.
         /// Strings that contain Newline will be broken into separate lines.
+        /// This function is thread-safe.
         /// </summary>
         private void PrintStatus(string message)
         {
             if(string.IsNullOrEmpty(message))
                 return;
-
-            // Add each line of the message individually
-            foreach (string line in message.Split(Environment.NewLine.ToCharArray()))
+            if (InvokeRequired)
+                BeginInvoke((MethodInvoker)(() => PrintStatus(message)));
+            else
             {
-                // Prepend the current time, if that option is requested, in either 12 or 24-hr format
-                string stamp = Properties.Settings.Default.logTime
-                                   ? DateTime.Now.ToString
-                                         (Properties.Settings.Default.logTime24 ? "HH:mm:ss" : "hh:mm:ss") + " "
-                                   : "";
-                listStatus.Items.Add(stamp + line);
-            }
-            listStatus.TopIndex = listStatus.Items.Count - 1;
+                // Add each line of the message individually
+                foreach (string line in message.Split(Environment.NewLine.ToCharArray()))
+                {
+                    // Prepend the current time, if that option is requested, in either 12 or 24-hr format
+                    string stamp = Properties.Settings.Default.logTime
+                                       ? DateTime.Now.ToString
+                                             (Properties.Settings.Default.logTime24 ? "HH:mm:ss" : "hh:mm:ss") + " "
+                                       : "";
+                    listStatus.Items.Add(stamp + line);
+                }
+                listStatus.TopIndex = listStatus.Items.Count - 1;
 
-            App.Log.Print(message);
+                App.Log.Print(message);
+            }
         }
 
         /// <summary>

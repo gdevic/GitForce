@@ -66,8 +66,8 @@ namespace GitForce
         /// </summary>
         public void Print(string text)
         {
-            if (textBox.InvokeRequired)
-                textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
+            if (InvokeRequired)
+                BeginInvoke((MethodInvoker)(() => Print(text)));
             else
             {
                 // Mirror the text to the file log, if enabled

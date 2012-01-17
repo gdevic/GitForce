@@ -166,12 +166,7 @@ namespace GitForce
         private void ProcOutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data)) return;
-            if (App.Log.InvokeRequired)
-                App.Log.BeginInvoke((MethodInvoker)(() => ProcOutputDataReceived(sender, e)));
-            else
-            {
-                App.PrintStatusMessage(e.Data + Environment.NewLine);
-            }
+            App.PrintStatusMessage(e.Data + Environment.NewLine);
         }
 
         /// <summary>
