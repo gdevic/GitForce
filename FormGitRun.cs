@@ -14,9 +14,6 @@ namespace GitForce
         private Exec job;
         private ExecResult _result;
 
-        private string _lastError;
-        private int _ec;
-
         /// <summary>
         /// Class constructor that also pre-sets the command and argument to be run
         /// </summary>
@@ -79,7 +76,6 @@ namespace GitForce
         /// </summary>
         private void PStderr(String message)
         {
-            _lastError += message + Environment.NewLine;
             textStdout.AppendText(message + Environment.NewLine, Color.Red);
         }
 
@@ -89,7 +85,6 @@ namespace GitForce
         private void PComplete(ExecResult result)
         {
             _result = result;
-            _ec = result.retcode;
             toolStripStatus.Text = "Git command completed: " + (result.Success() ? "OK" : "Failed");
             btCancel.Text = "Done";
             StopProgress();
@@ -110,9 +105,6 @@ namespace GitForce
             }
             else
             {
-                if (_ec != 0)
-                    ClassUtils.LastError = _lastError;
-
                 if (btCancel.Text == "Done")
                     DialogResult = DialogResult.OK;
                 if (btCancel.Text == "Close")
