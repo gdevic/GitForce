@@ -388,7 +388,8 @@ namespace GitForce
             Text = title.ToString();
 
             // Build the menu with the list of remote repos
-            menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainEditRemoteRepo.Enabled = menuMainSwitchRemoteRepo.Enabled = false;
+            menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainFetchFromRemote.Enabled = 
+                menuMainEditRemoteRepo.Enabled = menuMainSwitchRemoteRepo.Enabled = false;
             btPull.Enabled = btPush.Enabled = false;
 
             menuMainSwitchRemoteRepo.DropDownItems.Clear();
@@ -411,7 +412,7 @@ namespace GitForce
                             menuMainPushToRemote.Enabled = btPush.Enabled = true;
 
                         if (!string.IsNullOrEmpty(App.Repos.Current.Remotes.Get(s).UrlFetch))
-                            menuMainPullFromRemote.Enabled = btPull.Enabled = true;
+                            menuMainPullFromRemote.Enabled = menuMainFetchFromRemote.Enabled = btPull.Enabled = true;
                     }
                 }
                 menuMainSwitchRemoteRepo.Enabled = true;
