@@ -125,7 +125,7 @@
             this.linkLabel5.Size = new System.Drawing.Size(30, 13);
             this.linkLabel5.TabIndex = 20;
             this.linkLabel5.TabStop = true;
-            this.linkLabel5.Tag = "http://meld.sourceforge.net/index.html";
+            this.linkLabel5.Tag = "http://meldmerge.org";
             this.linkLabel5.Text = "Meld";
             this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
@@ -228,6 +228,7 @@
             this.linkLabel9.TabStop = true;
             this.linkLabel9.Tag = "http://sourceforge.net/projects/tkdiff/";
             this.linkLabel9.Text = "TKDiff";
+            this.linkLabel9.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // FormMergeMissing
             // 
