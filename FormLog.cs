@@ -32,7 +32,7 @@ namespace GitForce
             if (App.AppLog != null)
                 Print("Logging: " + App.AppLog);
 
-            // Debug build starts with the log window open!
+            // Prints only in Debug build...
             Debug("Debug build.");
         }
 
@@ -63,8 +63,8 @@ namespace GitForce
         /// </summary>
         public void Print(string text)
         {
-            if (InvokeRequired)
-                BeginInvoke((MethodInvoker)(() => Print(text)));
+            if (textBox.InvokeRequired)
+                textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
             else
             {
                 // Mirror the text to the file log, if enabled

@@ -288,8 +288,8 @@ namespace GitForce
         {
             if(string.IsNullOrEmpty(message))
                 return;
-            if (InvokeRequired)
-                BeginInvoke((MethodInvoker)(() => PrintStatus(message)));
+            if (listStatus.InvokeRequired)
+                listStatus.BeginInvoke((MethodInvoker)(() => PrintStatus(message)));
             else
             {
                 // Add each line of the message individually
@@ -297,8 +297,8 @@ namespace GitForce
                 {
                     // Prepend the current time, if that option is requested, in either 12 or 24-hr format
                     string stamp = Properties.Settings.Default.logTime
-                                       ? DateTime.Now.ToString
-                                             (Properties.Settings.Default.logTime24 ? "HH:mm:ss" : "hh:mm:ss") + " "
+                                       ? DateTime.Now.ToString(Properties.Settings.Default.logTime24 
+                                       ? "HH:mm:ss" : "hh:mm:ss") + " "
                                        : "";
                     listStatus.Items.Add(stamp + line);
                 }

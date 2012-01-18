@@ -679,8 +679,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void OnFileChanged(object source, FileSystemEventArgs e)
         {
-            if(InvokeRequired)
-                BeginInvoke((MethodInvoker)(() => OnFileChanged(source, e)));
+            if(App.MainForm.InvokeRequired)
+                App.MainForm.BeginInvoke((MethodInvoker)(() => OnFileChanged(source, e)));
             else
                 App.DoRefresh();
         }
