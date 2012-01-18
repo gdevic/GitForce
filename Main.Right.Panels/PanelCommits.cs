@@ -306,7 +306,8 @@ namespace GitForce.Main.Right.Panels
             {
                 // Get the files checked for commit
                 List<string> final = commitForm.GetFiles();
-                if (final.Count > 0)
+                // Unless we are amending, there should be at least one file selected
+                if (final.Count > 0 || commitForm.GetCheckAmend())
                 {
                     // Create a temp file to store our commit message
                     string tempFile = Path.GetTempFileName();
