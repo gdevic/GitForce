@@ -18,13 +18,11 @@ namespace GitForce
         }
 
         /// <summary>
-        /// User clicked on a link to a merge utility.
-        /// Open it in the web browser.
+        /// User clicked on a link to a merge utility, open it up in a web browser.
         /// </summary>
         private void LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string link = (sender as LinkLabel).Tag.ToString();
-            Process.Start(link);
+            ClassUtils.OpenWebLink((sender as LinkLabel).Tag.ToString());
         }
     }
 }

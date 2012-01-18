@@ -26,6 +26,9 @@ namespace GitForce
             "That means you have to have git already installed. You can download git for Windows from the link below.";
         }
 
+        /// <summary>
+        /// Lets the user browse to a directory containing git.
+        /// </summary>
         private void BtBrowseClick(object sender, EventArgs e)
         {
             OpenFileDialog fileDlg = new OpenFileDialog();
@@ -41,7 +44,7 @@ namespace GitForce
         /// </summary>
         private void GitLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(linkLabel.Text);
+            ClassUtils.OpenWebLink(linkLabel.Text);
         }
 
         /// <summary>

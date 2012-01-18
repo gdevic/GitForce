@@ -196,12 +196,14 @@ namespace GitForce
         {
             if (String.IsNullOrEmpty(e.Data))   // If the stream ended
                 Exited.Release();               // release its semaphore
+            else
+            {
+                App.PrintStatusMessage(e.Data);
+                Result.stderr += e.Data;
 
-            App.PrintStatusMessage(e.Data);
-            Result.stderr += e.Data;
-
-            if (FStderr != null)
-                App.MainForm.BeginInvoke((MethodInvoker)(() => FStderr(e.Data)));
+                if (FStderr != null)
+                    App.MainForm.BeginInvoke((MethodInvoker)(() => FStderr(e.Data)));
+            }
         }
     }
 }

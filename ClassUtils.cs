@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
@@ -310,6 +311,42 @@ namespace GitForce
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Open an HTML link in an external web browser application.
+        /// </summary>
+        public static void OpenWebLink(string html)
+        {
+            try
+            {
+                Process.Start(html);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "GitForce", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
+
+        /// <summary>
+        /// Returns a copy of the input string, but with all non-ASCII characters stripped down.
+        /// This function also removes ANSI escape codes from the string.
+        /// </summary>
+        public static string ToPlainAscii(string s)
+        {
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (!Char.IsControl(s[i]))
+                    str.Append(s[i]);
+                else
+                {   // Strip ANSI escape codes from the string
+                    // http://ascii-table.com/ansi-escape-sequences.php
+                    if (s[i] == 27 && i<s.Length-1 && s[i+1]=='[')
+                        while(i<s.Length && !Char.IsLetter(s[i])) i++;
+                }
+            }
+            return str.ToString();
         }
     }
 }

@@ -47,14 +47,7 @@ namespace GitForce
         /// </summary>
         private void LinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
-            {
-                Process.Start((sender as LinkLabel).Tag.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "GitForce", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
+            ClassUtils.OpenWebLink((sender as LinkLabel).Tag.ToString());
         }
 
         /// <summary>

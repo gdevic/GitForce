@@ -64,7 +64,7 @@ namespace GitForce
         /// </summary>
         private void PStdout(String message)
         {
-            textStdout.Text += message + Environment.NewLine;
+            textStdout.Text += ClassUtils.ToPlainAscii(message) + Environment.NewLine;
 
             // Keep the newly added text visible
             textStdout.SelectionStart = textStdout.TextLength;                    
@@ -76,7 +76,7 @@ namespace GitForce
         /// </summary>
         private void PStderr(String message)
         {
-            textStdout.AppendText(message + Environment.NewLine, Color.Red);
+            textStdout.AppendText(ClassUtils.ToPlainAscii(message) + Environment.NewLine, Color.Red);
         }
 
         /// <summary>
@@ -138,6 +138,13 @@ namespace GitForce
             _progressPhase = (_progressPhase + 1)%8;
         }
 
+        /// <summary>
+        /// Called when the user clicks on an HTML link inside the output text.
+        /// </summary>
+        private void textLinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            ClassUtils.OpenWebLink(e.LinkText);
+        }
     }
 
     public static class RichTextBoxExtensions

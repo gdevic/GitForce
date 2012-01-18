@@ -62,6 +62,7 @@
             this.textStdout.Size = new System.Drawing.Size(562, 232);
             this.textStdout.TabIndex = 1;
             this.textStdout.Text = "";
+            this.textStdout.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textLinkClicked);
             // 
             // statusStrip
             // 
