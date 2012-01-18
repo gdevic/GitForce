@@ -275,7 +275,6 @@ namespace GitForce.Main.Right.Panels
                 List<string> removedFiles = c.Renew(commitForm.GetFiles());
                 Status.Repo.Commits.Bundle[0].AddFiles(removedFiles);
                 CommitsRefresh();
-                App.DoRefresh();
             }
         }
 
