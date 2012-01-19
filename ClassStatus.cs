@@ -32,7 +32,7 @@ namespace GitForce
         /// <summary>
         /// Class constructor
         /// </summary>
-        private ClassStatus(ClassRepo repo)
+        public ClassStatus(ClassRepo repo)
         {
             Repo = repo;
         }

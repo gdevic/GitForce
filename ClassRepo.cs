@@ -67,7 +67,7 @@ namespace GitForce
         /// Stats of all files known to git in this repo. This status is refreshed
         /// on every App global refresh, so it does not need to be preserved across sessions.
         /// </summary>
-        [NonSerialized] 
+        [NonSerialized]
         public ClassStatus Status;
 
         /// <summary>
@@ -89,6 +89,7 @@ namespace GitForce
                 return false;
             UserName = ClassConfig.GetLocal(this, "user.name");
             UserEmail = ClassConfig.GetLocal(this, "user.email");
+            Status = new ClassStatus(this);
             return true;
         }
 
