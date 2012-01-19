@@ -772,7 +772,7 @@ namespace GitForce
                 {
                     // Command is an arbitrary (command line type) command
                     // Use the command shell to execute it
-                    run = ClassUtils.ExecuteShellCommand(command, args);
+                    run = ClassUtils.ExecuteShellCommand(tokens[0], args);
                 }
                 App.PrintStatusMessage(run);
             }
