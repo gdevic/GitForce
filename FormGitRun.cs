@@ -64,7 +64,7 @@ namespace GitForce
         /// </summary>
         private void PStdout(String message)
         {
-            textStdout.Text += ClassUtils.ToPlainAscii(message) + Environment.NewLine;
+            textStdout.AppendText(ClassUtils.ToPlainAscii(message) + Environment.NewLine);
 
             // Keep the newly added text visible
             textStdout.SelectionStart = textStdout.TextLength;                    
@@ -77,6 +77,10 @@ namespace GitForce
         private void PStderr(String message)
         {
             textStdout.AppendText(ClassUtils.ToPlainAscii(message) + Environment.NewLine, Color.Red);
+
+            // Keep the newly added text visible
+            textStdout.SelectionStart = textStdout.TextLength;
+            textStdout.ScrollToCaret();
         }
 
         /// <summary>
