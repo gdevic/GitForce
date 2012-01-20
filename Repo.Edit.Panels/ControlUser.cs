@@ -37,13 +37,17 @@ namespace GitForce.Repo.Edit.Panels
         {
             if (textBoxUserName.Tag != null)
             {
+                // Change the repo config and our internal variable so we dont need to reload
                 ClassConfig.SetLocal(repo, "user.name", textBoxUserName.Text);
+                repo.UserName = textBoxUserName.Text;
                 textBoxUserName.Tag = null;
             }
 
             if (textBoxUserEmail.Tag != null)
             {
+                // Change the repo config and our internal variable so we dont need to reload
                 ClassConfig.SetLocal(repo, "user.email", textBoxUserEmail.Text);
+                repo.UserEmail = textBoxUserEmail.Text;
                 textBoxUserEmail.Tag = null;
             }
         }
