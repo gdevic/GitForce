@@ -12,7 +12,7 @@ namespace GitForce
     public partial class FormGitRun : Form
     {
         private Exec job;
-        private ExecResult _result;
+        private ExecResult _result = new ExecResult();
 
         /// <summary>
         /// Class constructor that also pre-sets the command and argument to be run
@@ -99,9 +99,11 @@ namespace GitForce
             StopProgress();
             if (btCancel.Text == "Cancel")
             {
+                textStdout.AppendText(Environment.NewLine + "Error: Git command interrupted!" + Environment.NewLine, Color.Purple);
                 toolStripStatus.Text = "Git command interrupted.";
                 job.Terminate();
                 btCancel.Text = "Close";
+                DialogResult = DialogResult.None;
             }
             else
             {
