@@ -146,7 +146,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void ListRevMouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && listRev.Items.Count > 0)
             {
                 // Build the context menu to be shown
                 contextMenu.Items.Clear();

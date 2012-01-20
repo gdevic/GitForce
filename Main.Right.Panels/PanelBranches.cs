@@ -72,7 +72,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void TreeBranchesMouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && App.Repos.Current != null)
             {
                 // Build the context menu to be shown
                 treeBranches.SelectedNode = treeBranches.GetNodeAt(e.X, e.Y);
@@ -86,14 +86,6 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner)
         {
-            // If the repo is not valid, simply return a separator item
-            if(App.Repos.Current==null)
-                return new ToolStripItemCollection(owner, new ToolStripItem[] {new ToolStripSeparator()});
-
-            ClassBranches branches = App.Repos.Current.Branches;
-
-            string sel = GetSelectedBranch();
-
             // Menus are set in this order:
             //  [0]  New...        -> always open a dialog
             //  [1]  Delete...     -> always open a dialog
@@ -102,25 +94,31 @@ namespace GitForce.Main.Right.Panels
 
             ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, MenuNewBranchClick);
             ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteBranchClick);
+            ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, MenuSwitchClick);
+            ToolStripMenuItem mMergeWith = new ToolStripMenuItem("Merge with...", null, MenuMergeClick);
 
-            ToolStripMenuItem mSwitchTo;
-            if (sel != branches.Current && branches.Local.IndexOf(sel) >= 0)
-                mSwitchTo = new ToolStripMenuItem("Switch to " + sel, null, TreeBranchesDoubleClick);
-            else
-                mSwitchTo = new ToolStripMenuItem("Switch to...", null, MenuSwitchClick);
+            if (App.Repos.Current != null)
+            {
+                ClassBranches branches = App.Repos.Current.Branches;
+                string sel = GetSelectedBranch();
 
-            ToolStripMenuItem mMergeWith;
-            if (sel != branches.Current && (branches.Local.IndexOf(sel) >= 0 || branches.Remote.IndexOf(sel) >= 0))
-                mMergeWith = new ToolStripMenuItem("Merge with " + sel, null, MenuMergeClick);
+                if (sel != null)
+                {
+                    if (sel != branches.Current && branches.Local.IndexOf(sel) >= 0)
+                        mSwitchTo = new ToolStripMenuItem("Switch to " + sel, null, TreeBranchesDoubleClick);
+
+                    if (sel != branches.Current &&
+                        (branches.Local.IndexOf(sel) >= 0 || branches.Remote.IndexOf(sel) >= 0))
+                        mMergeWith = new ToolStripMenuItem("Merge with " + sel, null, MenuMergeClick);
+                }
+                else
+                    mDelete.Enabled = mSwitchTo.Enabled = mMergeWith.Enabled = false;
+            }
             else
-                mMergeWith = new ToolStripMenuItem("Merge with...", null, MenuMergeClick);
+                mNew.Enabled = mDelete.Enabled = mSwitchTo.Enabled = mMergeWith.Enabled = false;
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mNew, mDelete, mSwitchTo, mMergeWith
-            });
-
-            if (sel == null)
-                mDelete.Enabled = mSwitchTo.Enabled = mMergeWith.Enabled = false;
+                mNew, mDelete, mSwitchTo, mMergeWith });
 
             return menu;
         }

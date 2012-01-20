@@ -418,10 +418,6 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner)
         {
-            // If there is no current repo, nothing to build
-            if (App.Repos.Current == null)
-                return new ToolStripItemCollection(owner, new ToolStripItem[] {} );
-
             ToolStripMenuItem mUpdate = new ToolStripMenuItem("Update Changelist", null, MenuViewUpdateChangelistClick);
             ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, MenuViewRevertClick);
 
@@ -480,10 +476,17 @@ namespace GitForce.Main.Left.Panels
             foreach (var toolStripMenuItem in menus)
                 toolStripMenuItem.Value.Enabled = false;
 
-            // Then enable all items which are allowed according to our latest selection
-            foreach (var allowedOp in allowedOps.Where(menus.ContainsKey))
-                menus[allowedOp].Enabled = true;
-
+            // If there is no current repo, disable every remaining menu in this collection
+            if (App.Repos.Current == null)
+            {
+                mRevHist.Enabled = mExplore.Enabled = mCommand.Enabled = false;
+            }
+            else
+            {
+                // Enable all items which are allowed according to our latest selection
+                foreach (var allowedOp in allowedOps.Where(menus.ContainsKey))
+                    menus[allowedOp].Enabled = true;
+            }
             return menu;
         }
 

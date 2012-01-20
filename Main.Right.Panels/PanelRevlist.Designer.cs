@@ -38,6 +38,7 @@
             this.btClearFilter = new System.Windows.Forms.ToolStripButton();
             this.btSetFilter = new System.Windows.Forms.ToolStripButton();
             this.btRefresh = new System.Windows.Forms.ToolStripButton();
+            this.labelLogBranch = new System.Windows.Forms.ToolStripLabel();
             this.listRev = new System.Windows.Forms.ListView();
             this.colHash = new System.Windows.Forms.ColumnHeader();
             this.colDate = new System.Windows.Forms.ColumnHeader();
@@ -45,7 +46,6 @@
             this.colSubject = new System.Windows.Forms.ColumnHeader();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelLogBranch = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -130,6 +130,11 @@
             this.btRefresh.Text = "Refresh";
             this.btRefresh.Click += new System.EventHandler(this.MenuRefreshClick);
             // 
+            // labelLogBranch
+            // 
+            this.labelLogBranch.Name = "labelLogBranch";
+            this.labelLogBranch.Size = new System.Drawing.Size(0, 22);
+            // 
             // listRev
             // 
             this.listRev.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -177,19 +182,14 @@
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(133, 26);
+            this.contextMenu.Size = new System.Drawing.Size(153, 48);
             // 
             // menuItem
             // 
             this.menuItem.Name = "menuItem";
-            this.menuItem.Size = new System.Drawing.Size(132, 22);
-            this.menuItem.Text = "Menu Item";
+            this.menuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuItem.Text = "No Repository";
             this.menuItem.Click += new System.EventHandler(this.MenuResetClick);
-            // 
-            // labelLogBranch
-            // 
-            this.labelLogBranch.Name = "labelLogBranch";
-            this.labelLogBranch.Size = new System.Drawing.Size(0, 22);
             // 
             // PanelRevlist
             // 
