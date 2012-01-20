@@ -38,7 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btBrowse = new System.Windows.Forms.Button();
             this.folderDlg = new System.Windows.Forms.FolderBrowserDialog();
-            this.remoteDisplay = new RemoteDisplay();
+            this.remoteDisplay = new GitForce.RemoteDisplay();
             this.SuspendLayout();
             // 
             // btCancel

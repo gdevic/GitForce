@@ -18,11 +18,7 @@ namespace GitForce
         public string Destination = "";
         public string Extra = "";
         public bool IsBare;
-
-        /// <summary>
-        /// This variable can be set by the caller to...
-        /// </summary>
-        public bool EnforceDirEmpty;
+        private bool CloneOperation;
 
         public FormNewRepoStep2()
         {
@@ -36,6 +32,14 @@ namespace GitForce
         private void FormNewRepoStep2FormClosing(object sender, FormClosingEventArgs e)
         {
             ClassWinGeometry.Save(this);
+        }
+
+        /// <summary>
+        /// Show or hide project name edit box if we are doing a clone operation
+        /// </summary>
+        public void SetForCloneOperation(bool isClone)
+        {
+            textBoxProjectName.Enabled = CloneOperation = labelCloneOperation.Enabled = isClone;
         }
 
         /// <summary>
@@ -56,15 +60,22 @@ namespace GitForce
             {
                 btOK.Enabled = Path.IsPathRooted(textBoxRepoPath.Text) && Directory.Exists(textBoxRepoPath.Text);
 
-                // Additional check for directory being empty
-                if (EnforceDirEmpty)
+                // Additional check for clone operation:
+                //  If a project name is not present, the root needs to exist and be an empty directory
+                //     (the check for 'exist' is already made in the step above)
+                if (CloneOperation && textBoxProjectName.Text.Trim().Length == 0)
+                {
                     btOK.Enabled &= (Directory.GetFiles(textBoxRepoPath.Text).Length == 0) &&
                                     (Directory.GetDirectories(textBoxRepoPath.Text).Length == 0);
+                }
             }
             catch (Exception ex)
-            { MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            {
+                App.Log.Print(ex.Message);
+                btOK.Enabled = false;
+            }
 
-            Destination = textBoxRepoPath.Text;
+            Destination = Path.Combine(textBoxRepoPath.Text, textBoxProjectName.Text.Trim());
         }
 
         /// <summary>

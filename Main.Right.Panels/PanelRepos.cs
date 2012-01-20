@@ -152,9 +152,12 @@ namespace GitForce.Main.Right.Panels
             BackToStep1:
             if (newRepoStep1.ShowDialog() == DialogResult.OK)
             {
-                // Enforce target directory being empty for clone operations
-                newRepoStep2.EnforceDirEmpty = newRepoStep1.Type != "empty";
-                BackToStep2:
+                // For clone operation, apply extra directory rules:
+                //  The final directory has to exist and be empty, but the user can also
+                //  specify additional 'project name' and that directory will be created
+                newRepoStep2.SetForCloneOperation(newRepoStep1.Type != "empty");
+
+            BackToStep2:
                 DialogResult result = newRepoStep2.ShowDialog();
 
                 // Clicking on the <<Prev button will return "Retry" result, so we loop back to the first form...
@@ -190,9 +193,10 @@ namespace GitForce.Main.Right.Panels
                                 break;
                         }
 
-                        Directory.SetCurrentDirectory(root);
+                        // Get out of the way (so the git can remove directory if the clone operation fails)
+                        Directory.SetCurrentDirectory(App.AppHome);
                         if(ClassGit.Run(init).Success()==false)
-                            throw new ClassException("Error running git init.");
+                            goto BackToStep2;
                         ClassRepo repo = App.Repos.Add(root);
 
                         // Switch the view mode to Local File View and Local Pending Changelists
@@ -201,12 +205,15 @@ namespace GitForce.Main.Right.Panels
                         // Finally, switch to the new repo and do a global refresh
                         App.Repos.SetCurrent(repo);
                         App.DoRefresh();
+
+                        return;
                     }
                     catch (ClassException ex)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        goto BackToStep2;
+                        if (MessageBox.Show(ex.Message, "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)== DialogResult.Cancel)
+                            return;
                     }
+                    goto BackToStep2;
                 }
             }
         }
