@@ -268,6 +268,7 @@ namespace GitForce.Main.Right.Panels
             {
                 // Single selected repo offers more deletion choices...
                 ClassRepo repo = GetSelectedRepo();
+                // The actual file deletion is implemented in FormDeleteRepo form class:
                 FormDeleteRepo deleteRepo = new FormDeleteRepo(repo.Root);
                 if (deleteRepo.ShowDialog() == DialogResult.OK)
                 {

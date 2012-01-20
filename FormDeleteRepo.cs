@@ -43,6 +43,9 @@ namespace GitForce
         /// </summary>
         private void BtDeleteClick(object sender, EventArgs e)
         {
+            // Move CWD away as it prevents Windows OS to cleanly delete directory
+            Directory.SetCurrentDirectory(App.AppHome);
+
             bool ret = true;
             // Depending on the selection, do the deletion:
             // 0: dont delete anythng
@@ -69,7 +72,7 @@ namespace GitForce
             }
 
             if (ret == false)
-                MessageBox.Show("Some files could not be removed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Some files could not be removed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>
