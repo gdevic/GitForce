@@ -133,7 +133,7 @@ namespace GitForce
         /// </summary>
         private void DiffVsClientFileMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = string.Format("difftool --gui --no-prompt {1}..HEAD -- {0}", _file, _lruSha[0]);
+            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + _lruSha[0] + "..HEAD -- " + _file;
             RunDiff(cmd);
         }
 
@@ -142,38 +142,36 @@ namespace GitForce
         /// </summary>
         private void DiffRevisionsMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = string.Format("difftool --gui --no-prompt {1}..{2} -- {0}", _file, _lruSha[0], _lruSha[1]);
+            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + _lruSha[0] + ".." + _lruSha[1] + " -- " + _file;
             RunDiff(cmd);
         }
 
         /// <summary>
         /// Runs a diff tool in the context of the current repo for a selected file.
         /// This is a separate function that runs a git command since we want to start a
-        /// diff process and not block.
+        /// diff process and do not block.
         /// </summary>
         private void RunDiff(string cmd)
         {
-            // Prepare the process to be run
-            Process proc = new Process {
-                StartInfo = {
-                    FileName = Properties.Settings.Default.GitPath,
-                    Arguments = cmd,
-                    WorkingDirectory = App.Repos.Current.Root,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
-            };
-
             try
             {
+                Process proc = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = Properties.Settings.Default.GitPath,
+                        Arguments = cmd,
+                        WorkingDirectory = App.Repos.Current.Root,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    }
+                };
                 proc.Start();
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage(ex.Message);
                 MessageBox.Show(ex.Message, "Error executing diff", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            proc.Close();
         }
 
         /// <summary>
@@ -185,7 +183,8 @@ namespace GitForce
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
                 string cmd = string.Format("checkout {1} -- {0}", _file, _lruSha[0]);
-                App.Repos.Current.Run(cmd);                
+                App.Repos.Current.Run(cmd);
+                App.PrintStatusMessage("File checked out at a previous revision " + _lruSha[0] + ": " + _file);
             }
         }
 
