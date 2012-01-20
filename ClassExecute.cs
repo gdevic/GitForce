@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -71,6 +72,7 @@ namespace GitForce
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
+                    WorkingDirectory = Directory.GetCurrentDirectory()
                 }};
 
             Proc.OutputDataReceived += POutputDataReceived;
@@ -132,7 +134,8 @@ namespace GitForce
             try
             {
                 Proc.Kill();
-                Proc.WaitForExit(1000);
+                if (Proc.WaitForExit(10000))
+                    Proc.WaitForExit();
             }
             catch (Exception)
             {
