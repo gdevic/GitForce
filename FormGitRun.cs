@@ -94,6 +94,7 @@ namespace GitForce
         {
             _result = result;
             toolStripStatus.Text = "Git command completed: " + (result.Success() ? "OK" : "Failed");
+            textStdout.AppendText("Git command completed successfully.", Color.Green);
             btCancel.Text = "Done";
             StopProgress();
         }
