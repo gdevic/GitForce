@@ -51,7 +51,8 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.Log.Print(ex.Message);
+                if (App.Log != null)
+                    App.Log.Print(ex.Message);
             }
             return path;
         }
@@ -191,7 +192,8 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                if (App.Log != null)
+                    App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
             }
             return f;
         }
@@ -209,7 +211,8 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                if (App.Log != null)
+                    App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
                 return false;
             }
             return true;
@@ -228,7 +231,8 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.Log.Print("Error deleting file " + name + ": " + ex.Message);
+                if (App.Log != null)
+                    App.Log.Print("Error deleting file " + name + ": " + ex.Message);
                 return false;
             }
             return true;

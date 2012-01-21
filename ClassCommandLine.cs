@@ -13,7 +13,7 @@ namespace GitForce
     /// </summary>
     static class ClassCommandLine
     {
-        public static int ReturnCode;
+        public static int ReturnCode = -1;
 
         /// <summary>
         /// The main execution function for command line arguments.
@@ -45,7 +45,6 @@ namespace GitForce
             if (commandLine["version"] == "true")
             {
                 Console.WriteLine("GitForce version " + ClassVersion.GetVersion());
-
                 ReturnCode = 0;
                 return false;
             }
@@ -55,7 +54,7 @@ namespace GitForce
             if (commandLine["reset-windows"] == "true")
             {
                 Properties.Settings.Default.WindowsGeometries = new StringCollection();
-
+                Console.WriteLine("Windows' geometries have been reset.");
                 ReturnCode = 0;
                 return false;
             }
@@ -88,6 +87,7 @@ namespace GitForce
                         Console.Write("Unable to delete some files!");
                 }
                 Console.WriteLine("Configuration has been reset.");
+                ReturnCode = 0;
                 return false;
             }
 
