@@ -69,7 +69,6 @@
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.gettingStartedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.forumMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,11 +103,13 @@
             this.btCancelOperation = new System.Windows.Forms.ToolStripButton();
             this.btOptions = new System.Windows.Forms.ToolStripButton();
             this.btSsh = new System.Windows.Forms.ToolStripButton();
+            this.btNewVersion = new System.Windows.Forms.ToolStripButton();
             this.timerBusy = new System.Windows.Forms.Timer(this.components);
             this.loadWk = new System.Windows.Forms.OpenFileDialog();
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
+            this.checkForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -430,7 +431,7 @@
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gettingStartedMenuItem,
             this.documentationMenuItem,
-            this.forumMenuItem,
+            this.checkForUpdatesMenuItem,
             this.gitHubHomeMenuItem,
             this.toolStripSeparator6,
             this.aboutToolStripMenuItem});
@@ -441,30 +442,22 @@
             // gettingStartedMenuItem
             // 
             this.gettingStartedMenuItem.Name = "gettingStartedMenuItem";
-            this.gettingStartedMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.gettingStartedMenuItem.Size = new System.Drawing.Size(171, 22);
             this.gettingStartedMenuItem.Text = "Getting Started";
             this.gettingStartedMenuItem.Click += new System.EventHandler(this.GettingStartedToolStripMenuClick);
             // 
             // documentationMenuItem
             // 
             this.documentationMenuItem.Name = "documentationMenuItem";
-            this.documentationMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.documentationMenuItem.Size = new System.Drawing.Size(171, 22);
             this.documentationMenuItem.Tag = "http://gdevic.github.com/GitForce";
             this.documentationMenuItem.Text = "Documentation";
             this.documentationMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
-            // forumMenuItem
-            // 
-            this.forumMenuItem.Name = "forumMenuItem";
-            this.forumMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.forumMenuItem.Tag = "http://devic.us/GitForce";
-            this.forumMenuItem.Text = "Forum";
-            this.forumMenuItem.Click += new System.EventHandler(this.WebsiteClick);
-            // 
             // gitHubHomeMenuItem
             // 
             this.gitHubHomeMenuItem.Name = "gitHubHomeMenuItem";
-            this.gitHubHomeMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.gitHubHomeMenuItem.Size = new System.Drawing.Size(171, 22);
             this.gitHubHomeMenuItem.Tag = "https://github.com/gdevic/GitForce";
             this.gitHubHomeMenuItem.Text = "GitHub Home";
             this.gitHubHomeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
@@ -472,12 +465,12 @@
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(168, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -609,7 +602,8 @@
             this.toolStripSeparator2,
             this.btCancelOperation,
             this.btOptions,
-            this.btSsh});
+            this.btSsh,
+            this.btNewVersion});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -805,6 +799,19 @@
             this.btSsh.Text = "Manage SSH Keys";
             this.btSsh.Click += new System.EventHandler(this.MenuMainManageKeysClick);
             // 
+            // btNewVersion
+            // 
+            this.btNewVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btNewVersion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btNewVersion.Image = ((System.Drawing.Image)(resources.GetObject("btNewVersion.Image")));
+            this.btNewVersion.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btNewVersion.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btNewVersion.Name = "btNewVersion";
+            this.btNewVersion.Size = new System.Drawing.Size(44, 24);
+            this.btNewVersion.Text = "A new version of GitForce is available!";
+            this.btNewVersion.Visible = false;
+            this.btNewVersion.Click += new System.EventHandler(this.NewVersionButtonClick);
+            // 
             // timerBusy
             // 
             this.timerBusy.Interval = 200;
@@ -833,6 +840,14 @@
             this.saveTools.DefaultExt = "*.xml";
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
+            // 
+            // checkForUpdatesMenuItem
+            // 
+            this.checkForUpdatesMenuItem.Name = "checkForUpdatesMenuItem";
+            this.checkForUpdatesMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.checkForUpdatesMenuItem.Tag = "https://github.com/gdevic/GitForce/downloads";
+            this.checkForUpdatesMenuItem.Text = "Check for Updates";
+            this.checkForUpdatesMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // FormMain
             // 
@@ -944,10 +959,11 @@
         private System.Windows.Forms.OpenFileDialog openTools;
         private System.Windows.Forms.SaveFileDialog saveTools;
         private System.Windows.Forms.ToolStripMenuItem gettingStartedMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem forumMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuMainFetchFromRemote;
         private System.Windows.Forms.ToolStripMenuItem menuViewCommandLine;
         protected TextBoxEx cmdBox;
+        private System.Windows.Forms.ToolStripButton btNewVersion;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesMenuItem;
     }
 }
 

@@ -97,6 +97,11 @@ namespace GitForce
         public static ClassCustomTools CustomTools;
 
         /// <summary>
+        /// Static class containing code to check for a new version
+        /// </summary>
+        public static ClassVersion Version;
+
+        /// <summary>
         /// Static main form class
         /// </summary>
         public static FormMain MainForm;
@@ -122,18 +127,6 @@ namespace GitForce
         /// Command line argument '--log' sets it to application data folder, file 'gitforce.log'
         /// </summary>
         public static string AppLog;
-
-        /// <summary>
-        /// Program version number
-        /// </summary>
-        public static string Version
-        {
-            get
-            {
-                Assembly asm = Assembly.GetExecutingAssembly();
-                return FileVersionInfo.GetVersionInfo(asm.Location).FileVersion;
-            }
-        }
 
         #endregion
 
@@ -170,6 +163,9 @@ namespace GitForce
             // Initialize logging and git execute support
             Log = new FormLog();
             Log.ShowWindow(Properties.Settings.Default.ShowLogWindow);
+
+            // Initialize program version support
+            Version = new ClassVersion();
 
             Git = new ClassGit();
 

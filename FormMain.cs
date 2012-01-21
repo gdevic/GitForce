@@ -372,6 +372,9 @@ namespace GitForce
             // Change the window title and display the default remote name
             StringBuilder title = new StringBuilder("GitForce ");
 
+            // Enable new version button if there is a new version available
+            btNewVersion.Visible = App.Version.NewVersionAvailable;
+
             menuMainStash.Enabled = menuMainUnstash.Enabled = false;
 
             // Do specific enables based on the availability of the current repo
@@ -743,6 +746,14 @@ namespace GitForce
         private void GettingStartedToolStripMenuClick(object sender, EventArgs e)
         {
             ClassHelp.Handler("Getting Started");
+        }
+
+        /// <summary>
+        /// User clicked on a 'new version available' button
+        /// </summary>
+        private void NewVersionButtonClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("Download");
         }
 
         /// <summary>

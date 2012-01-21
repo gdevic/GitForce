@@ -18,6 +18,7 @@ namespace GitForce
             { "Getting Started", "http://gdevic.github.com/GitForce/GettingStarted.html" },
             { "Edit Tools", "http://gdevic.github.com/GitForce/EditTools.html" },
             { "SSH Windows", "http://gdevic.github.com/GitForce/ssh-windows.html" },
+            { "Download", "https://github.com/gdevic/GitForce/downloads" },
         };
 
         /// <summary>
