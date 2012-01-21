@@ -64,9 +64,6 @@ namespace GitForce
             {
                 AddLRU(name);
                 Properties.Settings.Default.WorkspaceFile = name;
-                App.Repos.Refresh();
-                App.DoRefresh();
-
                 return true;
             }
             return false;

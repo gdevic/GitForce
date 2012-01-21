@@ -111,6 +111,7 @@ namespace GitForce
                 Properties.Settings.Default.viewRightPanel);
 
             // Initiate the first global refresh
+            App.Repos.Refresh();
             App.DoRefresh();
         }
 
@@ -204,7 +205,8 @@ namespace GitForce
             {
                 // Save existing workspace before trying to load a new one
                 if (ClassWorkspace.Save(null))
-                    ClassWorkspace.Load(loadWk.FileName);
+                    if (ClassWorkspace.Load(loadWk.FileName))
+                        App.Repos.Refresh();
             }
         }
 
@@ -217,7 +219,8 @@ namespace GitForce
 
             // Save existing workspace before trying to load a new one
             if (ClassWorkspace.Save(null))
-                ClassWorkspace.Load(name);
+                if (ClassWorkspace.Load(name))
+                    App.Repos.Refresh();
         }
 
         /// <summary>
