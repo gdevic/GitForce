@@ -64,6 +64,7 @@
     <Compile Include="ClassGlobals.cs" />
     <Compile Include="ClassHelp.cs" />
     <Compile Include="ClassMerge.cs" />
+    <Compile Include="ClassVersion.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />
     <Compile Include="ClassRepo.cs" />
@@ -719,6 +720,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="git.ico" />
+    <None Include="Resources\App\new-version.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

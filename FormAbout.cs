@@ -20,9 +20,10 @@ namespace GitForce
 
             // Add the version number and the build date from the assembly info file
             labelVersion.Text = "Version " + App.Version;
+            labelBuild.Text = App.Version.GetBuild();
 
-            Assembly asm = Assembly.GetExecutingAssembly();
-            labelBuild.Text = FileVersionInfo.GetVersionInfo(asm.Location).ProductName;
+            // If there is a new version available, show the label and a button
+            labelNewVersionAvailable.Visible = btDownload.Visible = App.Version.NewVersionAvailable;
 
             textLic.Text = 
                 "THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR " +
@@ -57,6 +58,14 @@ namespace GitForce
         private void btCopyEmail_Click(object sender, EventArgs e)
         {
             Clipboard.SetText("GitForce.Project@gmail.com");
+        }
+
+        /// <summary>
+        /// User clicked a button to download a new version
+        /// </summary>
+        private void DownloadClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("Download");
         }
     }
 }
