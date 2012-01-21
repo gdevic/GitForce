@@ -490,6 +490,9 @@ namespace GitForce.Main.Left.Panels
                 // Enable all items which are allowed according to our latest selection
                 foreach (var allowedOp in allowedOps.Where(menus.ContainsKey))
                     menus[allowedOp].Enabled = true;
+
+                // A bit of a hack, but revision history on a file is enabled when the edit on a file is enabled
+                mRevHist.Enabled = mEdit.Enabled;
             }
             return menu;
         }
