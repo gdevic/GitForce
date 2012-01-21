@@ -84,7 +84,7 @@ namespace GitForce
             textStdout.ScrollToCaret();
 
             // Append the error message to a log window
-            App.Log.Print("Error: " + message);
+            App.PrintLogMessage("Error: " + message);
         }
 
         /// <summary>

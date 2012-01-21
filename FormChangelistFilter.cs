@@ -58,7 +58,7 @@ namespace GitForce
             if (string.IsNullOrEmpty(gitFilter))
                 DialogResult = DialogResult.Cancel;
             else
-                App.Log.Print("Condition: " + gitFilter);
+                App.PrintLogMessage("Condition: " + gitFilter);
         }
     }
 }

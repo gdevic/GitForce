@@ -56,7 +56,7 @@ namespace GitForce
         /// </summary>
         public string Run(List<string> files)
         {
-            App.Log.Print(ToString());
+            App.PrintLogMessage(ToString());
 
             string stdout = string.Empty;
             string args = DeMacroise(Args, files);
@@ -123,7 +123,7 @@ namespace GitForce
 
                         proc.StartInfo.Arguments = string.Format("{0} {1} {2}",
                             ClassUtils.GetShellExecFlags(), proc.StartInfo.FileName, proc.StartInfo.Arguments);
-                        App.Log.Print(proc.StartInfo.Arguments);
+                        App.PrintLogMessage(proc.StartInfo.Arguments);
 
                         proc.Start();
                     }
@@ -219,7 +219,7 @@ namespace GitForce
         /// <summary>
         /// Load a set of tools from a given file into the current tool-set.
         /// Returns a new class structure containing all the tools if the tools loaded correctly.
-        /// If load failed, return null and print the error message to a main pane.
+        /// If load failed, return empty class and print the error message to a main pane.
         /// </summary>
         public static ClassCustomTools Load(string name)
         {
@@ -235,7 +235,6 @@ namespace GitForce
             catch (Exception ex)
             {
                 App.PrintStatusMessage("Error loading custom tools: " + ex.Message);
-                return null;
             }
             return ct;
         }

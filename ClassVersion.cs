@@ -111,16 +111,16 @@ namespace GitForce
 
                     // By now we have log window availabe, so print out what's going on
                     if (NewVersionAvailable)
-                        App.Log.Print("Version check OK - new version available!");
+                        App.PrintLogMessage("Version check OK - new version available!");
                     else
-                        App.Log.Print("Version check OK - this version is up-to-date.");
+                        App.PrintLogMessage("Version check OK - this version is up-to-date.");
                 }
                 else
-                    App.Log.Print("Version check: Unable to match pattern!");
+                    App.PrintLogMessage("Version check: Unable to match pattern!");
             }
             catch (Exception ex)
             {
-                App.Log.Print("Version check: " + ex.Message);
+                App.PrintLogMessage("Version check: " + ex.Message);
             }
         }
     }

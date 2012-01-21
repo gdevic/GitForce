@@ -48,7 +48,7 @@ namespace GitForce
                 }
                 catch (Exception ex)
                 {
-                    App.Log.Print("FormNewRepoScanAddShown: Unable to add repo: " + ex.Message);
+                    App.PrintLogMessage("FormNewRepoScanAddShown: Unable to add repo: " + ex.Message);
                     App.PrintStatusMessage(ex.Message);
                 }
             }

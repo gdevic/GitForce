@@ -31,6 +31,9 @@ namespace GitForce
         static extern bool AttachConsole(int dwProcessId);
         private const int ATTACH_PARENT_PROCESS = -1;
 
+        [DllImport("kernel32.dll")]
+        public static extern bool FreeConsole();
+
         /// <summary>
         /// Attaches a console so we can use Console class to print.
         /// This is needed only on Windows implementation where WinForms app detaches from its console.

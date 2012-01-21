@@ -65,6 +65,8 @@ namespace GitForce
                         Default = Repos.Find(r => r.Root == defaultRepo);
                         SetCurrent(Default);
 
+                        App.Repos.Refresh();
+
                         ret = true;
                     }
                     catch (Exception ex)
@@ -75,7 +77,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.Log.Print(ex.Message);
+                App.PrintLogMessage(ex.Message);
             }
             return ret;
         }
@@ -107,7 +109,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.Log.Print(ex.Message);
+                App.PrintLogMessage(ex.Message);
             }
             return ret;
         }

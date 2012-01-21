@@ -52,6 +52,13 @@ namespace GitForce
         public static SetBusyStatusHandler StatusBusy = VoidBusy;
         private static void VoidBusy(bool f) { }
 
+        /// <summary>
+        /// Delegate to Log form to print a message in the log window.
+        /// We do it via delegate since it might be called before or after log form is valid.
+        /// </summary>
+        public delegate void PrintLogMessageHandler(string message);
+        public static PrintLogMessageHandler PrintLogMessage = VoidMessage;
+
         #endregion
 
         #region Static forms and classes
@@ -139,6 +146,9 @@ namespace GitForce
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Make sure the application data folder directory exists
+            Directory.CreateDirectory(AppHome);
+
             // Get and process command line arguments
             Arguments commandLine = new Arguments(args);
 
@@ -157,9 +167,6 @@ namespace GitForce
                     return -1;
             }
 
-            // Make sure the application data folder directory exists
-            Directory.CreateDirectory(AppHome);
-            
             // Initialize logging and git execute support
             Log = new FormLog();
             Log.ShowWindow(Properties.Settings.Default.ShowLogWindow);

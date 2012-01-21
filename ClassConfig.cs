@@ -21,7 +21,7 @@ namespace GitForce
             string cmd = setkey + key + val;
 
             if (ClassGit.Run("config --global " + cmd).Success() == false)
-                App.Log.Print("Error setting global git config parameter!");
+                App.PrintLogMessage("Error setting global git config parameter!");
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace GitForce
             string cmd = setkey + key + val;
 
             if (repo.Run("config --local " + cmd).Success() == false)
-                App.Log.Print("Error setting local git config parameter!");
+                App.PrintLogMessage("Error setting local git config parameter!");
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace GitForce
             if (result.Success())
                 return result.stdout;
 
-            App.Log.Print("Error getting global git config parameter!");
+            App.PrintLogMessage("Error getting global git config parameter!");
             return String.Empty;
         }
 
@@ -60,7 +60,7 @@ namespace GitForce
             if (result.Success())
                 return result.stdout;
 
-            App.Log.Print("Error getting local git config parameter!");
+            App.PrintLogMessage("Error getting local git config parameter!");
             return string.Empty;
         }
     }

@@ -22,6 +22,9 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
+            // Add our main print function callback delegate
+            App.PrintLogMessage += Print;
+
             // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
@@ -42,6 +45,9 @@ namespace GitForce
         private void FormLogFormClosing(object sender, FormClosingEventArgs e)
         {
             ClassWinGeometry.Save(this);
+
+            // Remove our print function delegate
+            App.PrintLogMessage -= Print;
         }
 
         /// <summary>
@@ -61,7 +67,7 @@ namespace GitForce
         /// For performance reasons, only up to 120 characters of text are added in one call.
         /// This is a thread-safe call.
         /// </summary>
-        public void Print(string text)
+        private void Print(string text)
         {
             if (textBox.InvokeRequired)
                 textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
@@ -94,7 +100,7 @@ namespace GitForce
         /// This is a thread-safe call.
         /// </summary>
         [Conditional("DEBUG")]
-        public void Debug(string text)
+        private void Debug(string text)
         {
             Print(text);
         }

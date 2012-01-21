@@ -29,13 +29,13 @@ namespace GitForce
 
             // Check that we have a functional version of git at an already set path
             _gitPath = Properties.Settings.Default.GitPath;
-            if (Exec.Run(_gitPath, "--version").ToString().Contains("git version") == false)
+            if (Exec.Run(_gitPath, "--version").stdout.Contains("git version") == false)
             {
                 // If we are running on Linux, get the git path by 'which' command
                 if (ClassUtils.IsMono())
                 {
-                    _gitPath = Exec.Run("which", "git").ToString().Trim();
-                    if (!Exec.Run(_gitPath, "--version").ToString().Contains("git version"))
+                    _gitPath = Exec.Run("which", "git").stdout.Trim();
+                    if (Exec.Run(_gitPath, "--version").stdout.Contains("git version") == false)
                     {
                         MessageBox.Show(
                             "Could not locate 'git'!\n\nPlease install git by running 'sudo apt-get install git'\nMake sure it is on your path, then rerun this application.",
@@ -49,14 +49,14 @@ namespace GitForce
                     string path = Environment.GetEnvironmentVariable("PROGRAMFILES(X86)") ??
                                   Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
                     _gitPath = Path.Combine(path, @"Git\bin\git.exe");
-                    if (Exec.Run(_gitPath, "--version").ToString().Contains("git version") == false)
+                    if (Exec.Run(_gitPath, "--version").stdout.Contains("git version") == false)
                     {
                         // Ask user to show us where the git is installed
                         FormPathToGit formPath = new FormPathToGit();
                         while (retValue = (formPath.ShowDialog() == DialogResult.OK))
                         {
                             _gitPath = formPath.Path;
-                            if (Exec.Run(_gitPath, "--version").ToString().Contains("git version"))
+                            if (Exec.Run(_gitPath, "--version").stdout.Contains("git version"))
                                 break;
                         }
                     }
@@ -65,8 +65,8 @@ namespace GitForce
             if (retValue)
             {
                 // Run the version again to get the version code (for simplicity did not save it earlier)
-                string ver = string.Format("Using {0} at {1}", Exec.Run(_gitPath, "--version"),_gitPath);
-                App.Log.Print(ver);
+                string version = string.Format("Using {0} at {1}", Exec.Run(_gitPath, "--version"),_gitPath);
+                App.PrintLogMessage(version);
                 Properties.Settings.Default.GitPath = _gitPath;                
             }
             return retValue;

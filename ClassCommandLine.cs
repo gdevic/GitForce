@@ -14,6 +14,7 @@ namespace GitForce
     static class ClassCommandLine
     {
         public static int ReturnCode = -1;
+        private static bool runGitForce = true;
 
         /// <summary>
         /// The main execution function for command line arguments.
@@ -38,7 +39,7 @@ namespace GitForce
                                   "  --reset-config        Reset program configuration (repos etc.)." + Environment.NewLine +
                                   "  --log                 Logs debug output to file." + Environment.NewLine);
                 ReturnCode = 0;
-                return false;
+                runGitForce = false;
             }
 
             // --version Show the application version number and quit
@@ -46,7 +47,7 @@ namespace GitForce
             {
                 Console.WriteLine("GitForce version " + ClassVersion.GetVersion());
                 ReturnCode = 0;
-                return false;
+                runGitForce = false;
             }
 
             // --reset-windows  Reset the stored locations and sizes of all internal dialogs and forms
@@ -56,7 +57,7 @@ namespace GitForce
                 Properties.Settings.Default.WindowsGeometries = new StringCollection();
                 Console.WriteLine("Windows' geometries have been reset.");
                 ReturnCode = 0;
-                return false;
+                runGitForce = false;
             }
 
             // --reset-config   Reset stored configuration items (repos, settings)
@@ -88,7 +89,7 @@ namespace GitForce
                 }
                 Console.WriteLine("Configuration has been reset.");
                 ReturnCode = 0;
-                return false;
+                runGitForce = false;
             }
 
             // --log   Create a log file and append all debug log messages to it
@@ -98,7 +99,12 @@ namespace GitForce
                 File.WriteAllText(App.AppLog, "Log created on " + DateTime.Now.ToShortDateString() + Environment.NewLine);
                 Console.WriteLine("Logging: " + App.AppLog);
             }
-            return true;
+
+            // WAR: On Windows, detach the console when we are done. Mono does not need that to use Console class.
+            if (!ClassUtils.IsMono())
+                NativeMethods.FreeConsole();
+
+            return runGitForce;
         }
     }
 }

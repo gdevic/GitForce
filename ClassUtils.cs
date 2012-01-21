@@ -51,8 +51,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                if (App.Log != null)
-                    App.Log.Print(ex.Message);
+                App.PrintLogMessage(ex.Message);
             }
             return path;
         }
@@ -120,7 +119,7 @@ namespace GitForce
                     string path = selFile == string.Empty
                                       ? "/e,\"" + where + "\""
                                       : "/e, /select,\"" + selFile + "\"";
-                    App.Log.Print(path);
+                    App.PrintLogMessage(path);
                     Process.Start("explorer.exe", path);
                 }
             }
@@ -192,8 +191,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                if (App.Log != null)
-                    App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                App.PrintLogMessage("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
             }
             return f;
         }
@@ -211,8 +209,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                if (App.Log != null)
-                    App.Log.Print("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                App.PrintLogMessage("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
                 return false;
             }
             return true;
@@ -231,8 +228,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                if (App.Log != null)
-                    App.Log.Print("Error deleting file " + name + ": " + ex.Message);
+                App.PrintLogMessage("Error deleting file " + name + ": " + ex.Message);
                 return false;
             }
             return true;

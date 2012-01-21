@@ -149,7 +149,7 @@ namespace GitForce
                 }
                 catch (Exception ex)
                 {
-                    App.Log.Print(ex.Message);
+                    App.PrintLogMessage(ex.Message);
                 }
             }
             return result;

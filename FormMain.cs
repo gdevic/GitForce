@@ -96,7 +96,7 @@ namespace GitForce
                     { PanelView.FileOps.Edit, btEdit }
                 });
 
-            PrintStatus("GitForce version " + App.Version);
+            PrintStatus("GitForce version " + ClassVersion.GetVersion());
 
             // Load default set of repositories
             ClassWorkspace.Load(null);
@@ -111,7 +111,6 @@ namespace GitForce
                 Properties.Settings.Default.viewRightPanel);
 
             // Initiate the first global refresh
-            App.Repos.Refresh();
             App.DoRefresh();
         }
 
@@ -162,7 +161,7 @@ namespace GitForce
             menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown));
 
             // Add the workspace menu items
-            ToolStripMenuItem mWkNew = new ToolStripMenuItem("New Workspace", null, WorkspaceNewMenuItem);
+            ToolStripMenuItem mWkClear = new ToolStripMenuItem("Clear Workspace", null, WorkspaceClearMenuItem);
             ToolStripMenuItem mWkLoad = new ToolStripMenuItem("Load Workspace...", null, WorkspaceLoadMenuItem);
             ToolStripMenuItem mWkSave = new ToolStripMenuItem("Save Workspace As...", null, WorkspaceSaveMenuItem);
             ToolStripMenuItem mWkLru = new ToolStripMenuItem("Recent Workspaces", null, WorkspaceLoadLruMenuItem);
@@ -177,7 +176,7 @@ namespace GitForce
 
             menuMainFile.DropDownItems.AddRange(new ToolStripItem[] {
                     new ToolStripSeparator(), 
-                    mWkNew, mWkLoad, mWkSave, mWkLru,
+                    mWkClear, mWkLoad, mWkSave, mWkLru,
                     new ToolStripSeparator(),
                     mExit });
         }
@@ -185,11 +184,11 @@ namespace GitForce
         /// <summary>
         /// Clear current workspace
         /// </summary>
-        private void WorkspaceNewMenuItem(object sender, EventArgs e)
+        private void WorkspaceClearMenuItem(object sender, EventArgs e)
         {
             // Save existing workspace before zapping it
             if(MessageBox.Show("Current workspace will be cleared from all git repositories. Continue?", 
-                "New Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)==DialogResult.Yes)
+                "Clear Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)==DialogResult.Yes)
             {
                 if (ClassWorkspace.Save(null))
                     ClassWorkspace.Clear();
@@ -206,7 +205,7 @@ namespace GitForce
                 // Save existing workspace before trying to load a new one
                 if (ClassWorkspace.Save(null))
                     if (ClassWorkspace.Load(loadWk.FileName))
-                        App.Repos.Refresh();
+                        App.DoRefresh();
             }
         }
 
@@ -220,7 +219,7 @@ namespace GitForce
             // Save existing workspace before trying to load a new one
             if (ClassWorkspace.Save(null))
                 if (ClassWorkspace.Load(name))
-                    App.Repos.Refresh();
+                    App.DoRefresh();
         }
 
         /// <summary>
@@ -308,7 +307,7 @@ namespace GitForce
                 }
                 listStatus.TopIndex = listStatus.Items.Count - 1;
 
-                App.Log.Print(message);
+                App.PrintLogMessage(message);
             }
         }
 

@@ -39,7 +39,7 @@ namespace GitForce.Settings.Panels
                 }
                 catch (Exception ex)
                 {
-                    App.Log.Print(ex.Message);
+                    App.PrintLogMessage(ex.Message);
                 }
             }
 
@@ -56,7 +56,7 @@ namespace GitForce.Settings.Panels
             {
                 // Remove all aliases and then rebuild them
                 if (ClassGit.Run("config --remove-section alias").Success() == false)
-                    App.Log.Print("ClassAliases: Error removing section aliases");
+                    App.PrintLogMessage("ClassAliases: Error removing section aliases");
 
                 foreach (string[] def in
                     textBoxAliases.Lines.Select(s => s.Trim().Split('=')).Where(def => def.Length == 2))
