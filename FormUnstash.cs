@@ -44,7 +44,7 @@ namespace GitForce
             ExecResult result = App.Repos.Current.Run("stash list");
             if(result.Success())
             {
-                string[] response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                string[] response = result.stdout.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 foreach (var stash in response)
                     listStashes.Items.Add(stash);
             }

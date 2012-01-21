@@ -293,19 +293,15 @@ namespace GitForce
             else
             {
                 // Add each line of the message individually
-                foreach (string line in message.Split(Environment.NewLine.ToCharArray()))
+                foreach (string line in message.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
                 {
-                    // Don't print empty lines
-                    if (line.Trim().Length > 0)
-                    {
-                        // Prepend the current time, if that option is requested, in either 12 or 24-hr format
-                        string stamp = Properties.Settings.Default.logTime
-                                       ? DateTime.Now.ToString(Properties.Settings.Default.logTime24
-                                       ? "HH:mm:ss"
-                                       : "hh:mm:ss") + " "
-                                       : "";
-                        listStatus.Items.Add(stamp + line);
-                    }
+                    // Prepend the current time, if that option is requested, in either 12 or 24-hr format
+                    string stamp = Properties.Settings.Default.logTime
+                                   ? DateTime.Now.ToString(Properties.Settings.Default.logTime24
+                                   ? "HH:mm:ss"
+                                   : "hh:mm:ss") + " "
+                                   : "";
+                    listStatus.Items.Add(stamp + line);
                 }
                 listStatus.TopIndex = listStatus.Items.Count - 1;
 

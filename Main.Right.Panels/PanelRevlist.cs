@@ -93,7 +93,7 @@ namespace GitForce.Main.Right.Panels
         public static void UpdateList(ListView listRev, string input)
         {
             App.StatusBusy(true);
-            string[] response = input.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[] response = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             listRev.BeginUpdate();
             listRev.Items.Clear();

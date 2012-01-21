@@ -36,8 +36,8 @@ namespace GitForce
             string cmd = "show -t " + sha;
             string[] response = new[]{string.Empty};
             ExecResult result = App.Repos.Current.Run(cmd);
-            if(result.Success())
-                response = result.stdout.Split((Environment.NewLine).ToCharArray());
+            if (result.Success())
+                response = result.stdout.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             // Note: Clear() should remote all text, but for some reason it does not
             textChangelist.Clear();

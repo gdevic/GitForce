@@ -67,18 +67,25 @@ namespace GitForce
                 textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
             else
             {
-                // Mirror the text to the file log, if enabled
-                if (App.AppLog != null)
-                    using (StreamWriter sw = File.AppendText(App.AppLog))
-                        sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + "|" + text);
+                try
+                {
+                    // Mirror the text to the file log, if enabled
+                    if (App.AppLog != null)
+                        using (StreamWriter sw = File.AppendText(App.AppLog))
+                            sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + "|" + text);
 
-                // Print the text into the textbox
-                int len = Math.Min(text.Length, 120);
-                textBox.Text += text.Substring(0, len).Trim() + Environment.NewLine;
+                    // Print the text into the textbox
+                    int len = Math.Min(text.Length, 120);
+                    textBox.Text += text.Substring(0, len).Trim() + Environment.NewLine;
 
-                // Scroll to the bottom and move carret position
-                textBox.SelectionStart = textBox.TextLength;
-                textBox.ScrollToCaret();
+                    // Scroll to the bottom and move carret position
+                    textBox.SelectionStart = textBox.TextLength;
+                    textBox.ScrollToCaret();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
