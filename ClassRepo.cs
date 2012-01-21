@@ -268,44 +268,51 @@ namespace GitForce
         /// </summary>
         public ExecResult Run(string args)
         {
-            ExecResult output;
-            Directory.SetCurrentDirectory(Root);
-
-            // Set the HTTPS password
-            string password = Remotes.GetPassword("");
-            ClassUtils.AddEnvar("PASSWORD", password);
-
-            // The Windows limit to the command line argument length is about 8K
-            // We may hit that limit when doing operations on a large number of files.
-            //
-            // However, when sending a long list of files, git was hanging unless
-            // the total length was much less than that, so I set it to about 2000 chars
-            // which seemed to work fine.
-
-            if (args.Length < 2000)
-                return ClassGit.Run(args);
-
-            // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
-            // Basically we have to rebuild the command into multiple instances with
-            // same command but with file lists not larger than about 2K
-            int i = args.IndexOf(" -- ") + 3;
-            string cmd = args.Substring(0, i + 1);
-            args = args.Substring(i);
-
-            // Add files individually up to the length limit
-            string[] files = args.Split(' ');
-            i = 0;
-            do
+            ExecResult output = new ExecResult();
+            try
             {
-                StringBuilder batch = new StringBuilder(2100);
-                while (batch.Length < 2000 && i < files.Length)
-                    batch.Append(files[i++] + " ");
+                Directory.SetCurrentDirectory(Root);
 
-                output = ClassGit.Run(cmd + batch);
-                if (output.Success() == false)
-                    break;
+                // Set the HTTPS password
+                string password = Remotes.GetPassword("");
+                ClassUtils.AddEnvar("PASSWORD", password);
 
-            } while (i < files.Length);
+                // The Windows limit to the command line argument length is about 8K
+                // We may hit that limit when doing operations on a large number of files.
+                //
+                // However, when sending a long list of files, git was hanging unless
+                // the total length was much less than that, so I set it to about 2000 chars
+                // which seemed to work fine.
+
+                if (args.Length < 2000)
+                    return ClassGit.Run(args);
+
+                // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
+                // Basically we have to rebuild the command into multiple instances with
+                // same command but with file lists not larger than about 2K
+                int i = args.IndexOf(" -- ") + 3;
+                string cmd = args.Substring(0, i + 1);
+                args = args.Substring(i);
+
+                // Add files individually up to the length limit
+                string[] files = args.Split(' ');
+                i = 0;
+                do
+                {
+                    StringBuilder batch = new StringBuilder(2100);
+                    while (batch.Length < 2000 && i < files.Length)
+                        batch.Append(files[i++] + " ");
+
+                    output = ClassGit.Run(cmd + batch);
+                    if (output.Success() == false)
+                        break;
+
+                } while (i < files.Length);
+            }
+            catch (Exception ex)
+            {
+                App.Log.Print(ex.Message);
+            }
 
             return output;
         }
