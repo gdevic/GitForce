@@ -200,13 +200,14 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Reset a list of files to a specific head
+        /// Reset a list of files to a specific head.
+        /// Returns true if a git command succeeded, fail otherwise.
         /// </summary>
-        public void GitReset(string head, List<string> files)
+        public bool GitReset(string head, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage(string.Format("Resetting to {0}: {1}", head, list));
-            RunCmd("reset " + head + " -- " + list);
+            return RunCmd("reset " + head + " -- " + list).Success();
         }
 
         public void GitDiff(string tag, List<string> files)
@@ -244,74 +245,67 @@ namespace GitForce
         /// Repo class function that runs a git command in the context of a repository.
         /// Use this function with all user-initiated commands in order to have them printed into the status window.
         /// </summary>
-        public string RunCmd(string args)
+        public ExecResult RunCmd(string args)
         {
             // Print the actual command line to the status window only if user selected that setting
             if(Properties.Settings.Default.logCommands)
                 App.PrintStatusMessage("git " + args);
 
             // Run the command and print the response to the status window in any case
-            string ret = Run(args);
-            if (!string.IsNullOrEmpty(ret))
-                App.PrintStatusMessage(ret);
+            ExecResult result = Run(args);
+            if (result.stdout.Length > 0)
+                App.PrintStatusMessage(result.stdout);
 
             // If the command caused an error, print it also
-            if (ClassUtils.IsLastError())
-                App.PrintStatusMessage(ClassUtils.LastError);
+            if (result.Success()==false)
+                App.PrintStatusMessage(result.stderr);
 
-            return ret;
+            return result;
         }
 
         /// <summary>
         /// Repo class function that runs a git command in the context of a repository.
         /// </summary>
-        public string Run(string args)
+        public ExecResult Run(string args)
         {
-            string output = "";
-            ClassUtils.ClearLastError();
+            ExecResult output;
+            Directory.SetCurrentDirectory(Root);
 
-            try
+            // Set the HTTPS password
+            string password = Remotes.GetPassword("");
+            ClassUtils.AddEnvar("PASSWORD", password);
+
+            // The Windows limit to the command line argument length is about 8K
+            // We may hit that limit when doing operations on a large number of files.
+            //
+            // However, when sending a long list of files, git was hanging unless
+            // the total length was much less than that, so I set it to about 2000 chars
+            // which seemed to work fine.
+
+            if (args.Length < 2000)
+                return ClassGit.Run(args);
+
+            // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
+            // Basically we have to rebuild the command into multiple instances with
+            // same command but with file lists not larger than about 2K
+            int i = args.IndexOf(" -- ") + 3;
+            string cmd = args.Substring(0, i + 1);
+            args = args.Substring(i);
+
+            // Add files individually up to the length limit
+            string[] files = args.Split(' ');
+            i = 0;
+            do
             {
-                Directory.SetCurrentDirectory(Root);
+                StringBuilder batch = new StringBuilder(2100);
+                while (batch.Length < 2000 && i < files.Length)
+                    batch.Append(files[i++] + " ");
 
-                // Set the HTTPS password
-                string password = Remotes.GetPassword("");
-                ClassUtils.AddEnvar("PASSWORD", password);
+                output = ClassGit.Run(cmd + batch);
+                if (output.Success() == false)
+                    break;
 
-                // The Windows limit to the command line argument length is about 8K
-                // We may hit that limit when doing operations on a large number of files.
-                //
-                // However, when sending a long list of files, git was hanging unless
-                // the total length was much less than that, so I set it to about 2000 chars
-                // which seemed to work fine.
-
-                if (args.Length < 2000)
-                    return ClassGit.Run(args).ToString();
-
-                // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
-                // Basically we have to rebuild the command into multiple instances with
-                // same command but with file lists not larger than about 2K
-                int i = args.IndexOf(" -- ") + 3;
-                string cmd = args.Substring(0, i + 1);
-                args = args.Substring(i);
-
-                // Add files individually up to the length limit
-                string[] files = args.Split(' ');
-                i = 0;
-                do
-                {
-                    StringBuilder batch = new StringBuilder(2100);
-                    while (batch.Length < 2000 && i < files.Length)
-                        batch.Append(files[i++] + " ");
-
-                    output += ClassGit.Run(cmd + batch);
-
-                } while (i < files.Length);
-            }
-            catch (Exception ex)
-            {
-                ClassUtils.LastError = ex.Message;
-            }
+            } while (i < files.Length);
 
             return output;
         }

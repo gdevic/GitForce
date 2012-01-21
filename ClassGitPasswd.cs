@@ -28,7 +28,7 @@ namespace GitForce
             {
                 // Mono: Use the Shell script
                 _pathPasswordBatchHelper = Path.Combine(App.AppHome, "passwd.sh");
-                File.WriteAllText(_pathPasswordBatchHelper, "echo $PASSWORD\n");
+                File.WriteAllText(_pathPasswordBatchHelper, "echo $PASSWORD" + Environment.NewLine);
 
                 // Set the execute bit
                 if (Exec.Run("chmod", "+x " + _pathPasswordBatchHelper).Success() == false)
@@ -41,7 +41,7 @@ namespace GitForce
                 //       fails on XP where that directory has spaces in the name ("Documents and Settings")
                 //       which git cannot handle in this context. Default Temp path seem to be OK.
                 _pathPasswordBatchHelper = Path.Combine(Path.GetTempPath(), "passwd.bat");
-                File.WriteAllText(_pathPasswordBatchHelper, "@echo %PASSWORD%\n");
+                File.WriteAllText(_pathPasswordBatchHelper, "@echo %PASSWORD%" + Environment.NewLine);
             }
             ClassUtils.AddEnvar("GIT_ASKPASS", _pathPasswordBatchHelper);
 

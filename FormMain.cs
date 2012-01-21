@@ -295,12 +295,17 @@ namespace GitForce
                 // Add each line of the message individually
                 foreach (string line in message.Split(Environment.NewLine.ToCharArray()))
                 {
-                    // Prepend the current time, if that option is requested, in either 12 or 24-hr format
-                    string stamp = Properties.Settings.Default.logTime
-                                       ? DateTime.Now.ToString(Properties.Settings.Default.logTime24 
-                                       ? "HH:mm:ss" : "hh:mm:ss") + " "
+                    // Don't print empty lines
+                    if (line.Trim().Length > 0)
+                    {
+                        // Prepend the current time, if that option is requested, in either 12 or 24-hr format
+                        string stamp = Properties.Settings.Default.logTime
+                                       ? DateTime.Now.ToString(Properties.Settings.Default.logTime24
+                                       ? "HH:mm:ss"
+                                       : "hh:mm:ss") + " "
                                        : "";
-                    listStatus.Items.Add(stamp + line);
+                        listStatus.Items.Add(stamp + line);
+                    }
                 }
                 listStatus.TopIndex = listStatus.Items.Count - 1;
 
@@ -466,7 +471,7 @@ namespace GitForce
         {
             string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
             PrintStatus("Fetch from a remote repo: " + args);
-            App.Repos.Current.Run("fetch " + args);
+            App.Repos.Current.RunCmd("fetch " + args);
         }
 
         /// <summary>
@@ -476,7 +481,7 @@ namespace GitForce
         {
             string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
             PrintStatus("Pull from a remote repo: " + args);
-            App.Repos.Current.Run("pull " + args);
+            App.Repos.Current.RunCmd("pull " + args);
         }
 
         /// <summary>
@@ -489,7 +494,7 @@ namespace GitForce
             if (String.IsNullOrEmpty(args))
                 args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
             PrintStatus("Push to a remote repo: " + args);
-            App.Repos.Current.Run("push " + args);
+            App.Repos.Current.RunCmd("push " + args);
         }
 
         /// <summary>
@@ -626,7 +631,8 @@ namespace GitForce
         /// </summary>
         private void BtCancelOperationClick(object sender, EventArgs e)
         {
-            // ClassExecute.KillJob();  TODO: Does this control get the thread to run on when a command is executing?
+            // TODO: Does this control get the thread to run on when a command is executing?
+            // ClassExecute.KillJob();
         }
 
         /// <summary>
@@ -699,14 +705,11 @@ namespace GitForce
             if(openTools.ShowDialog()==DialogResult.OK)
             {
                 ClassCustomTools newTools = ClassCustomTools.Load(openTools.FileName);
-                if(!ClassUtils.IsLastError())
+                if (newTools != null)
                 {
                     App.CustomTools = newTools;
                     App.PrintStatusMessage("Loaded custom tools from " + openTools.FileName);
                 }
-                else
-                    App.PrintStatusMessage("Error loading custom tools from " + 
-                        openTools.FileName + ": " + ClassUtils.LastError);
             }
         }
 
@@ -715,13 +718,10 @@ namespace GitForce
         /// </summary>
         private void ExportToolMenuItemClick(object sender, EventArgs e)
         {
-            if(saveTools.ShowDialog()==DialogResult.OK)
+            if (saveTools.ShowDialog() == DialogResult.OK)
             {
                 if (App.CustomTools.Save(saveTools.FileName))
                     App.PrintStatusMessage("Saved custom tools to " + saveTools.FileName);
-                else
-                    App.PrintStatusMessage("Error saving custom tools to " + 
-                        saveTools.FileName + ": " + ClassUtils.LastError);
             }
         }
 

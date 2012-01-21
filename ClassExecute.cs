@@ -99,6 +99,10 @@ namespace GitForce
             }
         }
 
+        /// <summary>
+        /// Main command execution function.
+        /// Upon completion, prints all errors to the log window.
+        /// </summary>
         public static ExecResult Run(string cmd, string args)
         {
             App.Log.Print(String.Format("Exec: {0} {1}", cmd, args));
@@ -112,6 +116,8 @@ namespace GitForce
             // the problem in this particular setting.
             Application.DoEvents();
             App.StatusBusy(false);
+            if (job.Result.Success() == false)
+                App.Log.Print("Error: " + job.Result.stderr);
 
             return job.Result;
         }
@@ -184,7 +190,7 @@ namespace GitForce
                 return;
 
             if (Result.stdout != string.Empty)
-                Result.stdout += '\n';
+                Result.stdout += Environment.NewLine;
             Result.stdout += e.Data;
 
             if (FStdout != null)
@@ -193,7 +199,7 @@ namespace GitForce
 
         /// <summary>
         /// Callback that handles process printing to stderr
-        /// Print to the application status pane and call a custom handler.
+        /// Collect all strings into one stderr variable and call a custom handler.
         /// </summary>
         private void PErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
@@ -201,7 +207,8 @@ namespace GitForce
                 Exited.Release();               // release its semaphore
             else
             {
-                App.PrintStatusMessage(e.Data);
+                if (Result.stderr != string.Empty)
+                    Result.stderr += Environment.NewLine;
                 Result.stderr += e.Data;
 
                 if (FStderr != null)

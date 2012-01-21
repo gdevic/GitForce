@@ -159,7 +159,7 @@ namespace GitForce
             Mutex mAppMutex = new Mutex(true, "gitforce", out mAcquired);
             if(!mAcquired)
             {
-                if (MessageBox.Show("GitForce is already running.\nDo you want to open a new instance?", "GitForce Warning",
+                if (MessageBox.Show("GitForce is already running.\nDo you want to open a new instance?", "Warning",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.No)
                     return -1;
             }

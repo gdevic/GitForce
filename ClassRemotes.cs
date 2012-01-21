@@ -65,7 +65,10 @@ namespace GitForce
             // Build the new list while picking up password fields from the existing list
             Dictionary<string, Remote> newlist = new Dictionary<string, Remote>();
 
-            string[] response = repo.Run("remote -v").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[] response = new[] {string.Empty};
+            ExecResult result = repo.Run("remote -v");
+            if(result.Success())
+                response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (string s in response)
             {
                 Remote r = new Remote();

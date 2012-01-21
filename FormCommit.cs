@@ -42,11 +42,16 @@ namespace GitForce
             }
 
             // Fetch the description of a previous commit for the amend option
-            amendText = App.Repos.Current.Run("log --pretty=format:%s%n%b -1");
-            // BUG: We are losing newlines with App.Repos.Current.Run. At least insert one after the subject line.
-            if (amendText.IndexOf('\n')>0)
-                amendText = amendText.Insert(amendText.IndexOf('\n'), Environment.NewLine);
-
+            ExecResult result = App.Repos.Current.Run("log --pretty=format:%s%n%b -1");
+            if(result.Success())
+            {
+                amendText = result.stdout;
+                // BUG: We are losing newlines with App.Repos.Current.Run. At least insert one after the subject line.
+                if (amendText.IndexOf(Environment.NewLine) > 0)
+                    amendText = amendText.Insert(amendText.IndexOf(Environment.NewLine), Environment.NewLine);
+            }
+            else
+                amendText = "Unknown";
             textDescription.Text = description;
             textDescription.SelectAll();
         }
@@ -147,7 +152,7 @@ namespace GitForce
         {
             btCommit.Enabled = textDescription.Text.Trim().Length > 0;
 
-            string[] lines = textDescription.Text.Trim().Split('\n').ToArray();
+            string[] lines = textDescription.Text.Trim().Split((Environment.NewLine).ToCharArray()).ToArray();
             int w1 = lines[0].Length;
             int w2 = 0;
 

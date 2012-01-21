@@ -100,11 +100,15 @@ namespace GitForce.Main.Left.Panels
                         files = files.Where(s => Status.Xcode(s) != '?').ToList();
                         break;
                     case 2:     // Git view of repo: ls-tree
-                        string[] response = App.Repos.Current.Run("ls-tree --abbrev -r -z HEAD")
-                            .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
-                            .Split(("\0")
-                            .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        files.AddRange(response.Select(s => s.Split('\t').Last()));
+                        ExecResult result = App.Repos.Current.Run("ls-tree --abbrev -r -z HEAD");
+                        if(result.Success())
+                        {
+                            string[] response = result.stdout
+                                .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
+                                .Split(("\0")
+                                .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            files.AddRange(response.Select(s => s.Split('\t').Last()));
+                        }
                         break;
                     case 3:     // Local file view: use local directory list
                         files = GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root);
@@ -608,7 +612,7 @@ namespace GitForce.Main.Left.Panels
                 {
                     List<string> cmds = formRename.GetGitCmds();
                     foreach (string cmd in cmds)
-                        App.Repos.Current.Run(cmd);
+                        App.Repos.Current.RunCmd(cmd);
                     App.DoRefresh();
                 }
         }

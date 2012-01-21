@@ -65,12 +65,15 @@ namespace GitForce
         /// </summary>
         private void Status()
         {
-            string[] response = Repo.Run("status --porcelain -uall -z")
-                .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
-                .Split(("\0")
-                .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             XY.Clear();
             AltFile.Clear();
+            ExecResult result = Repo.Run("status --porcelain -uall -z");
+            if (!result.Success()) return;
+            string[] response = result.stdout
+                .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
+                .Split(("\0")
+                           .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
             for (int i = 0; i < response.Length; i++)
             {
                 string s = response[i].Substring(3);

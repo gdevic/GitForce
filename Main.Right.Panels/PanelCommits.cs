@@ -391,10 +391,7 @@ namespace GitForce.Main.Right.Panels
                 // There are 2 ways to unstage a file:
                 // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
                 // Can't figure out how to find out which one to use at this moment, so use both.
-                Status.Repo.GitReset("HEAD", files);
-
-                // If the error is not being able to resolve HEAD, retry with other version of the command
-                if (ClassUtils.LastError.Contains("HEAD"))
+                if (Status.Repo.GitReset("HEAD", files) == false)
                 {
                     App.PrintStatusMessage("Retrying using the `rm` option...");
                     Status.Repo.GitDelete("--cached", files);

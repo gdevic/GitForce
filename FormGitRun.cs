@@ -72,7 +72,8 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Callback that handles process printing to stderr
+        /// Callback that handles process printing to stderr.
+        /// Prints the stderr to a log window.
         /// </summary>
         private void PStderr(String message)
         {
@@ -81,6 +82,9 @@ namespace GitForce
             // Keep the newly added text visible
             textStdout.SelectionStart = textStdout.TextLength;
             textStdout.ScrollToCaret();
+
+            // Append the error message to a log window
+            App.Log.Print("Error: " + message);
         }
 
         /// <summary>

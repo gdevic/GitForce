@@ -218,12 +218,11 @@ namespace GitForce
 
         /// <summary>
         /// Load a set of tools from a given file into the current tool-set.
-        /// Returns a new class structure containing all the tools.
-        /// If error loading, ClassUtils.LastError will be set.
+        /// Returns a new class structure containing all the tools if the tools loaded correctly.
+        /// If load failed, return null and print the error message to a main pane.
         /// </summary>
         public static ClassCustomTools Load(string name)
         {
-            ClassUtils.ClearLastError();
             ClassCustomTools ct = new ClassCustomTools();
             try
             {
@@ -235,7 +234,8 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                ClassUtils.LastError = ex.Message;
+                App.PrintStatusMessage("Error loading custom tools: " + ex.Message);
+                return null;
             }
             return ct;
         }
@@ -243,11 +243,10 @@ namespace GitForce
         /// <summary>
         /// Save current set of tools to a given file.
         /// Returns true if save successful.
-        /// If save failed, the error will be set with ClassUtils.LastError
+        /// If save failed, return false and print the error message to a main pane.
         /// </summary>
         public bool Save(string name)
         {
-            ClassUtils.ClearLastError();
             try
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(ClassCustomTools));
@@ -258,9 +257,10 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                ClassUtils.LastError = ex.Message;
+                App.PrintStatusMessage("Error saving custom tools: " + ex.Message);
+                return false;
             }
-            return !ClassUtils.IsLastError();
+            return true;
         }
 
         /// <summary>

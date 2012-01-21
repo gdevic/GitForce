@@ -34,7 +34,10 @@ namespace GitForce
         public void LoadChangelist(string sha)
         {
             string cmd = "show -t " + sha;
-            string[] response = App.Repos.Current.Run(cmd).Split(("\n").ToCharArray());
+            string[] response = new[]{string.Empty};
+            ExecResult result = App.Repos.Current.Run(cmd);
+            if(result.Success())
+                response = result.stdout.Split((Environment.NewLine).ToCharArray());
 
             // Note: Clear() should remote all text, but for some reason it does not
             textChangelist.Clear();

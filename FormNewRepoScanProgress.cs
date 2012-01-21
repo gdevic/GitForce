@@ -73,7 +73,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _enableScan = false;
             }
             DialogResult = DialogResult.OK;

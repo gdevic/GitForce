@@ -12,8 +12,6 @@ namespace GitForce
     /// </summary>
     public static class ClassUtils
     {
-        private static string _lastError = string.Empty;
-
         /// <summary>
         /// Set of environment variables used by the execution environment
         /// </summary>
@@ -36,31 +34,6 @@ namespace GitForce
         public static Dictionary<string, string> GetEnvars()
         {
             return Env;
-        }
-
-        /// <summary>
-        /// Generic last error string
-        /// </summary>
-        public static string LastError
-        {
-            get { return _lastError; }
-            set { _lastError = value; if (IsLastError()) App.Log.Print(value); }
-        }
-
-        /// <summary>
-        /// Helper function that returns True if there was an error (LastError)
-        /// </summary>
-        public static bool IsLastError()
-        {
-            return _lastError != String.Empty;
-        }
-
-        /// <summary>
-        /// Helper function that clears last error status
-        /// </summary>
-        public static void ClearLastError()
-        {
-            _lastError = String.Empty;
         }
 
         /// <summary>
@@ -282,7 +255,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
         }
 

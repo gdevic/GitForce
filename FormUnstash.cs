@@ -41,10 +41,13 @@ namespace GitForce
         private void PopulateStashList()
         {
             listStashes.Items.Clear();
-            string[] response = App.Repos.Current.Run("stash list").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (var stash in response)
-                listStashes.Items.Add(stash);
-
+            ExecResult result = App.Repos.Current.Run("stash list");
+            if(result.Success())
+            {
+                string[] response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach (var stash in response)
+                    listStashes.Items.Add(stash);
+            }
             // Disable buttons (in the case the stash list was empty)
             // but re-enable them once we have a stash to select (select the top one by default)
             btApply.Enabled = btRemove.Enabled = btShow.Enabled = false;
@@ -76,7 +79,7 @@ namespace GitForce
                                        checkKeepStash.Checked ? "apply" : "pop",
                                        _stash);
 
-            App.Repos.Current.RunCmd(cmd);
+            ExecResult result = App.Repos.Current.RunCmd(cmd);
         }
 
         /// <summary>
@@ -85,7 +88,8 @@ namespace GitForce
         private void BtRemoveClick(object sender, EventArgs e)
         {
             string cmd = "stash drop " + _stash;
-            App.Repos.Current.RunCmd(cmd);
+
+            ExecResult result = App.Repos.Current.RunCmd(cmd);
 
             PopulateStashList();
         }

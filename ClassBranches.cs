@@ -37,18 +37,22 @@ namespace GitForce
 
             if (App.Repos.Current != null)
             {
-                string[] response = App.Repos.Current.RunCmd("branch -a").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                foreach (string s in response)
+                ExecResult result = App.Repos.Current.RunCmd("branch -a");
+                if(result.Success())
                 {
-                    // Recognize current branch - it is marked by an asterisk
-                    if (s[0] == '*')
-                        Current = s.Replace("*", " ").Trim();
+                    string[] response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string s in response)
+                    {
+                        // Recognize current branch - it is marked by an asterisk
+                        if (s[0] == '*')
+                            Current = s.Replace("*", " ").Trim();
 
-                    // Detect if a branch is local or remote and add it to the appropriate list
-                    if (s.Contains(" remotes/"))
-                        Remote.Add(s.Replace(" remotes/", "").Trim());
-                    else
-                        Local.Add(s.Replace("*", " ").Trim());
+                        // Detect if a branch is local or remote and add it to the appropriate list
+                        if (s.Contains(" remotes/"))
+                            Remote.Add(s.Replace(" remotes/", "").Trim());
+                        else
+                            Local.Add(s.Replace("*", " ").Trim());
+                    }
                 }
             }
         }
@@ -61,8 +65,8 @@ namespace GitForce
             // Make sure the given branch name is a valid local branch
             if (!string.IsNullOrEmpty(name) && Local.IndexOf(name) >= 0)
             {
-                App.Repos.Current.RunCmd("checkout " + name);
-                return true;
+                ExecResult result = App.Repos.Current.RunCmd("checkout " + name);
+                return result.Success();
             }
             return false;
         }

@@ -84,11 +84,15 @@ namespace GitForce
                         listBranches.BackColor = SystemColors.Window;
                         break;
                     case "Tag":
-                        string[] tags = App.Repos.Current.Run("tag").Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         listBranches.Items.Clear();
-                        foreach (var tag in tags)
-                            listBranches.Items.Add(tag);
-                        listBranches.Enabled = true;
+                        ExecResult result = App.Repos.Current.Run("tag");
+                        if (result.Success())
+                        {
+                            string[] tags = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var tag in tags)
+                                listBranches.Items.Add(tag);
+                            listBranches.Enabled = true;
+                        }
                         listBranches.BackColor = SystemColors.Window;
                         break;
                     default:
@@ -105,14 +109,20 @@ namespace GitForce
             string name = textBranchName.Text.Trim();
 
             string cmd = String.Format("branch {0} {1}", name, _origin);
-            App.Repos.Current.RunCmd(cmd);
-
-            if(!ClassUtils.IsLastError())
+            ExecResult result = App.Repos.Current.RunCmd(cmd);
+            if (result.Success())
             {
                 // Check out the branch if needed
                 if (checkCheckOut.Checked)
-                    App.Repos.Current.RunCmd("checkout " + name);
+                {
+                    result = App.Repos.Current.RunCmd("checkout " + name);
+                    if (result.Success() == false)
+                        MessageBox.Show(result.stderr, "Error checking out a branch", MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                }
             }
+            else
+                MessageBox.Show(result.stderr, "Error creating a branch", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         /// <summary>

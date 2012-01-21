@@ -80,8 +80,9 @@ namespace GitForce.Main.Right.Panels
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
-                string response = App.Repos.Current.Run(cmd.ToString());
-                UpdateList(listRev, response);
+                ExecResult result = App.Repos.Current.Run(cmd.ToString());
+                if(result.Success())
+                    UpdateList(listRev, result.stdout);
             }
         }
 
@@ -92,7 +93,7 @@ namespace GitForce.Main.Right.Panels
         public static void UpdateList(ListView listRev, string input)
         {
             App.StatusBusy(true);
-            string[] response = input.Split(("\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[] response = input.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             listRev.BeginUpdate();
             listRev.Items.Clear();

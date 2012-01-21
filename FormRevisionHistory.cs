@@ -81,8 +81,9 @@ namespace GitForce
             // Get the log of a single file only
             cmd.Append(" -- " + _file);
 
-            string response = App.Repos.Current.Run(cmd.ToString());
-            PanelRevlist.UpdateList(listRev, response);
+            ExecResult result = App.Repos.Current.Run(cmd.ToString());
+            if(result.Success())
+                PanelRevlist.UpdateList(listRev, result.stdout);
 
             // Activate the first item
             listRev.SelectedIndices.Add(0);
@@ -115,8 +116,8 @@ namespace GitForce
             {
                 string sha = _lruSha[1];
                 string cmd = string.Format("show -s {0}", sha);
-                string response = App.Repos.Current.Run(cmd);
-                textDescription.Text = response;
+                ExecResult result = App.Repos.Current.Run(cmd);
+                textDescription.Text = result.Success() ? result.stdout : result.stderr;
             }
         }
 
@@ -183,8 +184,11 @@ namespace GitForce
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
                 string cmd = string.Format("checkout {1} -- {0}", _file, _lruSha[0]);
-                App.Repos.Current.Run(cmd);
-                App.PrintStatusMessage("File checked out at a previous revision " + _lruSha[0] + ": " + _file);
+                ExecResult result = App.Repos.Current.RunCmd(cmd);
+                if(result.Success())
+                    App.PrintStatusMessage("File checked out at a previous revision " + _lruSha[0] + ": " + _file);
+                else
+                    MessageBox.Show(result.stderr, "Sync error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -212,7 +216,8 @@ namespace GitForce
         {
             // Create a temp file on the selected git file version
             string temp = GetTempFile(_file, listRev.SelectedItems[0].Text);
-            ClassUtils.FileOpenFromMenu(sender, temp);
+            if (!string.IsNullOrEmpty(temp))
+                ClassUtils.FileOpenFromMenu(sender, temp);
         }
 
         /// <summary>
@@ -227,7 +232,8 @@ namespace GitForce
             {
                 // Create a temp file and open the file
                 string temp = GetTempFile(_file, listRev.SelectedItems[0].Text);
-                ClassUtils.FileDoubleClick(temp);
+                if (!string.IsNullOrEmpty(temp))
+                    ClassUtils.FileDoubleClick(temp);
             }
         }
 
@@ -240,8 +246,12 @@ namespace GitForce
             // git show commands needs '/' as file path separator
             string gitpath = file.Replace(Path.DirectorySeparatorChar, '/');
             string cmd = string.Format("show {1}:\"{0}\"", gitpath, sha);
-            string response = App.Repos.Current.Run(cmd);
-            response = response.Replace("\n", Environment.NewLine);
+
+            ExecResult result = App.Repos.Current.Run(cmd);
+            if (result.Success() == false)
+                return string.Empty;
+
+            string response = result.stdout;
 
             // Create a temp file based on our file and write content to it
             file = file.Replace(Path.DirectorySeparatorChar, '_');
@@ -250,7 +260,6 @@ namespace GitForce
 
             // Add the temp file to the global list of temp files to be removed at the app exit time
             ClassGlobals.TempFiles.Add(temp);
-
             return temp;
         }
     }
