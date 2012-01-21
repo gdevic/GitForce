@@ -26,6 +26,7 @@ namespace GitForce
             if(!ClassUtils.IsMono())
             {
                 NativeMethods.AttachConsole();
+                Console.WriteLine(Environment.NewLine);
             }
 
             if (commandLine["help"] == "true")
@@ -43,7 +44,7 @@ namespace GitForce
             // --version Show the application version number and quit
             if (commandLine["version"] == "true")
             {
-                Console.WriteLine("GitForce version " + App.Version);
+                Console.WriteLine("GitForce version " + ClassVersion.GetVersion());
 
                 ReturnCode = 0;
                 return false;

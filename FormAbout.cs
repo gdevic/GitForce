@@ -19,8 +19,8 @@ namespace GitForce
             ClassWinGeometry.Restore(this);
 
             // Add the version number and the build date from the assembly info file
-            labelVersion.Text = "Version " + App.Version;
-            labelBuild.Text = App.Version.GetBuild();
+            labelVersion.Text = "Version " + ClassVersion.GetVersion();
+            labelBuild.Text = ClassVersion.GetBuild();
 
             // If there is a new version available, show the label and a button
             labelNewVersionAvailable.Visible = btDownload.Visible = App.Version.NewVersionAvailable;

@@ -18,9 +18,9 @@ namespace GitForce
     class ClassVersion
     {
         /// <summary>
-        /// Program version number
+        /// Returns the program version number
         /// </summary>
-        public override string ToString()
+        public static string GetVersion()
         {
             Assembly asm = Assembly.GetExecutingAssembly();
             return FileVersionInfo.GetVersionInfo(asm.Location).FileVersion;
@@ -29,7 +29,7 @@ namespace GitForce
         /// <summary>
         /// Return the build date/time string
         /// </summary>
-        public string GetBuild()
+        public static string GetBuild()
         {
             Assembly asm = Assembly.GetExecutingAssembly();
             return FileVersionInfo.GetVersionInfo(asm.Location).ProductName;
@@ -89,24 +89,24 @@ namespace GitForce
                     string major = r.Match(file.ToString()).Result("${major}");
                     string minor = r.Match(file.ToString()).Result("${minor}");
                     string build = r.Match(file.ToString()).Result("${build}");
-                    int web_major = Convert.ToInt32(major);
-                    int web_minor = Convert.ToInt32(minor);
-                    int web_build = Convert.ToInt32(build);
+                    int webMajor = Convert.ToInt32(major);
+                    int webMinor = Convert.ToInt32(minor);
+                    int webBuild = Convert.ToInt32(build);
 
                     // Get the current version numbers
-                    string[] current = this.ToString().Split('.');
-                    int this_major = Convert.ToInt32(current[0]);
-                    int this_minor = Convert.ToInt32(current[1]);
-                    int this_build = Convert.ToInt32(current[2]);
+                    string[] current = GetVersion().Split('.');
+                    int thisMajor = Convert.ToInt32(current[0]);
+                    int thisMinor = Convert.ToInt32(current[1]);
+                    int thisBuild = Convert.ToInt32(current[2]);
 
                     // Compare two versions and set flag if the current one is less
-                    if (this_major < web_major)
+                    if (thisMajor < webMajor)
                         NewVersionAvailable = true;
                     else
-                        if (this_minor < web_minor)
+                        if (thisMinor < webMinor)
                             NewVersionAvailable = true;
                         else
-                            if (this_build < web_build)
+                            if (thisBuild < webBuild)
                                 NewVersionAvailable = true;
 
                     // By now we have log window availabe, so print out what's going on
