@@ -43,9 +43,9 @@
             this.checkForce.AutoSize = true;
             this.checkForce.Location = new System.Drawing.Point(13, 162);
             this.checkForce.Name = "checkForce";
-            this.checkForce.Size = new System.Drawing.Size(171, 17);
+            this.checkForce.Size = new System.Drawing.Size(201, 17);
             this.checkForce.TabIndex = 13;
-            this.checkForce.Text = "Force delete unmerged branch";
+            this.checkForce.Text = "Force delete unmerged branch (\"-D\")";
             this.checkForce.UseVisualStyleBackColor = true;
             // 
             // listBranches

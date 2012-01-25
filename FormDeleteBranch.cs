@@ -54,8 +54,11 @@ namespace GitForce
                 radioButton2.Checked? "-r": "",
                 _branchName );
 
-            // Execute the final branch command
-            App.Repos.Current.RunCmd(cmd);
+            // Execute the final branch command and if fail, show the dialog box asking to retry
+            ExecResult result = App.Repos.Current.RunCmd(cmd);
+            if (result.Success() == false)
+                if (MessageBox.Show(result.stderr, "Error deleting branch", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                    DialogResult = DialogResult.None;
         }
 
         /// <summary>
