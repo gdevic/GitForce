@@ -36,7 +36,7 @@
             // 
             this.btStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btStop.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btStop.Location = new System.Drawing.Point(269, 44);
+            this.btStop.Location = new System.Drawing.Point(283, 39);
             this.btStop.Name = "btStop";
             this.btStop.Size = new System.Drawing.Size(75, 23);
             this.btStop.TabIndex = 0;
@@ -51,19 +51,19 @@
             this.textDir.Enabled = false;
             this.textDir.Location = new System.Drawing.Point(12, 12);
             this.textDir.Name = "textDir";
-            this.textDir.Size = new System.Drawing.Size(332, 20);
+            this.textDir.Size = new System.Drawing.Size(346, 20);
             this.textDir.TabIndex = 1;
             // 
             // FormNewRepoScanProgress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 79);
+            this.ClientSize = new System.Drawing.Size(370, 74);
             this.Controls.Add(this.textDir);
             this.Controls.Add(this.btStop);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(163, 109);
+            this.MinimumSize = new System.Drawing.Size(180, 112);
             this.Name = "FormNewRepoScanProgress";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

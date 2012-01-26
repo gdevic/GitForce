@@ -149,6 +149,7 @@ namespace GitForce
                 throw new ClassException("Unable to initialize git repository!");
 
             Repos.Add(repo);
+            App.PrintStatusMessage("Adding repo " + repo);
 
             // If this is a very first repo, set it as default and current
             if (Repos.Count == 1)

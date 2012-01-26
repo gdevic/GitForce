@@ -30,13 +30,14 @@
         {
             this.btCancel = new System.Windows.Forms.Button();
             this.textRepo = new System.Windows.Forms.TextBox();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // btCancel
             // 
             this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(300, 38);
+            this.btCancel.Location = new System.Drawing.Point(283, 39);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 0;
@@ -51,19 +52,29 @@
             this.textRepo.Enabled = false;
             this.textRepo.Location = new System.Drawing.Point(12, 12);
             this.textRepo.Name = "textRepo";
-            this.textRepo.Size = new System.Drawing.Size(363, 20);
+            this.textRepo.Size = new System.Drawing.Size(346, 20);
             this.textRepo.TabIndex = 1;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(13, 39);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(264, 23);
+            this.progressBar.TabIndex = 2;
             // 
             // FormNewRepoScanAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 73);
+            this.ClientSize = new System.Drawing.Size(370, 74);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textRepo);
             this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(150, 111);
+            this.MinimumSize = new System.Drawing.Size(180, 112);
             this.Name = "FormNewRepoScanAdd";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -79,5 +90,6 @@
 
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.TextBox textRepo;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
