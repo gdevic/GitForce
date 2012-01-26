@@ -67,34 +67,37 @@ namespace GitForce
 
             string[] response = new[] {string.Empty};
             ExecResult result = repo.Run("remote -v");
-            if(result.Success())
-                response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (string s in response)
+            if (result.Success())
             {
-                Remote r = new Remote();
+                response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                // Split the resulting remote repo name/url into separate strings
-                string[] url = s.Split("\t ".ToCharArray());
-                string name = url[0];
-
-                // Find if the name exists in the main list and save off the password from it
-                if (newlist.ContainsKey(name))
-                    r = newlist[name];
-
-                if (_remotes.ContainsKey(name))
+                foreach (string s in response)
                 {
-                    r.Password = _remotes[name].Password;
-                    r.PushCmd = _remotes[name].PushCmd;
+                    Remote r = new Remote();
+
+                    // Split the resulting remote repo name/url into separate strings
+                    string[] url = s.Split("\t ".ToCharArray());
+                    string name = url[0];
+
+                    // Find if the name exists in the main list and save off the password from it
+                    if (newlist.ContainsKey(name))
+                        r = newlist[name];
+
+                    if (_remotes.ContainsKey(name))
+                    {
+                        r.Password = _remotes[name].Password;
+                        r.PushCmd = _remotes[name].PushCmd;
+                    }
+
+                    // Set all other fields that we refresh every time                
+                    r.Name = name;
+
+                    if (url[2] == "(fetch)") r.UrlFetch = url[1];
+                    if (url[2] == "(push)") r.UrlPush = url[1];
+
+                    // Add it to the new list
+                    newlist[name] = r;
                 }
-
-                // Set all other fields that we refresh every time                
-                r.Name = name;
-
-                if (url[2] == "(fetch)") r.UrlFetch = url[1];
-                if (url[2] == "(push)") r.UrlPush = url[1];
-
-                // Add it to the new list
-                newlist[name] = r;
             }
 
             // Set the newly built list to be the master list
