@@ -65,7 +65,8 @@ namespace GitForce
                         Default = Repos.Find(r => r.Root == defaultRepo);
                         SetCurrent(Default);
 
-                        App.Repos.Refresh();
+                        // TODO: Commenting out since it takes long time when loading many repos, and it seems not needed
+                        //App.Repos.Refresh();
 
                         ret = true;
                     }
