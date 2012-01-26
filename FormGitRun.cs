@@ -93,8 +93,16 @@ namespace GitForce
         private void PComplete(ExecResult result)
         {
             _result = result;
-            toolStripStatus.Text = "Git command completed: " + (result.Success() ? "OK" : "Failed");
-            textStdout.AppendText("Git command completed successfully.", Color.Green);
+            if (result.Success())
+            {
+                toolStripStatus.Text = "Git command completed successfully.";
+                textStdout.AppendText("Git command completed successfully.", Color.Green);
+            }
+            else
+            {
+                toolStripStatus.Text = "Git command failed!";
+                textStdout.AppendText("Git command failed!", Color.Red);
+            }
             btCancel.Text = "Done";
             StopProgress();
         }
