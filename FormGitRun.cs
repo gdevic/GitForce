@@ -83,8 +83,8 @@ namespace GitForce
             textStdout.SelectionStart = textStdout.TextLength;
             textStdout.ScrollToCaret();
 
-            // Append the error message to a log window
-            App.PrintLogMessage("Error: " + message);
+            // Append the stderr stream message to a log window
+            App.PrintLogMessage("stderr: " + message);
         }
 
         /// <summary>

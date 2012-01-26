@@ -91,8 +91,11 @@ namespace GitForce
         /// </summary>
         private void ListBranchesSelectedIndexChanged(object sender, EventArgs e)
         {
-            _branchName = listBranches.SelectedItem.ToString();
-            btDelete.Enabled = true;
+            if (listBranches.SelectedItem != null)
+            {
+                _branchName = listBranches.SelectedItem.ToString();
+                btDelete.Enabled = true;
+            }
         }
     }
 }
