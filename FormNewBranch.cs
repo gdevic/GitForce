@@ -88,7 +88,7 @@ namespace GitForce
                         ExecResult result = App.Repos.Current.Run("tag");
                         if (result.Success())
                         {
-                            string[] tags = result.stdout.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                            string[] tags = result.stdout.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                             foreach (var tag in tags)
                                 listBranches.Items.Add(tag);
                             listBranches.Enabled = true;
