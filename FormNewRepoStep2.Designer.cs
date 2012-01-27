@@ -160,6 +160,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btPrev;
             this.ClientSize = new System.Drawing.Size(456, 343);
             this.Controls.Add(this.textBoxProjectName);
             this.Controls.Add(this.labelCloneOperation);

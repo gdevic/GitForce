@@ -189,9 +189,9 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(348, 57);
             this.label5.TabIndex = 12;
-            this.label5.Text = "GitForce will automatically recognize these if they are installed. In Linux, for e" +
-                "xample, you can install one by simply issuing \"sudo apt-get install xxdiff\" comm" +
-                "and.";
+            this.label5.Text = "GitForce will automatically recognize these if they are installed. In Linux, for " +
+                "example, you can install one by simply issuing \"sudo apt-get install xxdiff\" com" +
+                "mand.";
             // 
             // btOK
             // 
@@ -206,8 +206,10 @@
             // 
             // FormDiffMissing
             // 
+            this.AcceptButton = this.btOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btClose;
             this.ClientSize = new System.Drawing.Size(372, 262);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.label5);

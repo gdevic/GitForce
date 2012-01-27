@@ -87,7 +87,7 @@
             this.radioDelete0.Checked = true;
             this.radioDelete0.Location = new System.Drawing.Point(12, 51);
             this.radioDelete0.Name = "radioDelete0";
-            this.radioDelete0.Size = new System.Drawing.Size(291, 17);
+            this.radioDelete0.Size = new System.Drawing.Size(293, 17);
             this.radioDelete0.TabIndex = 1;
             this.radioDelete0.TabStop = true;
             this.radioDelete0.Tag = "0";
@@ -135,6 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(379, 192);
             this.Controls.Add(this.radioDelete1);
             this.Controls.Add(this.textPath);

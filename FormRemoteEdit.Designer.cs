@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userControlRemoteEdit = new RemoteEdit();
+            this.userControlRemoteEdit = new GitForce.RemoteEdit();
             this.btDone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -58,6 +58,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btDone;
             this.ClientSize = new System.Drawing.Size(566, 247);
             this.Controls.Add(this.btDone);
             this.Controls.Add(this.userControlRemoteEdit);

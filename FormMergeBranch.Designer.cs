@@ -46,7 +46,7 @@
             this.btMerge.TabIndex = 10;
             this.btMerge.Text = "Merge";
             this.btMerge.UseVisualStyleBackColor = true;
-            this.btMerge.Click += new System.EventHandler(BtMergeClick);
+            this.btMerge.Click += new System.EventHandler(this.BtMergeClick);
             // 
             // btCancel
             // 
@@ -93,6 +93,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(344, 187);
             this.Controls.Add(this.btMerge);
             this.Controls.Add(this.btCancel);

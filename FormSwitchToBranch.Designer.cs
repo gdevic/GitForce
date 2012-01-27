@@ -82,8 +82,10 @@
             // 
             // FormSwitchToBranch
             // 
+            this.AcceptButton = this.btSwitch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(258, 167);
             this.Controls.Add(this.listBranches);
             this.Controls.Add(this.label1);

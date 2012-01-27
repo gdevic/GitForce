@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShowChangelist));
-            this.textChangelist = new RichTextBoxEx();
+            this.textChangelist = new GitForce.RichTextBoxEx();
             this.btPrev = new System.Windows.Forms.Button();
             this.btNext = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
@@ -41,6 +41,7 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textChangelist.BackColor = System.Drawing.SystemColors.Info;
+            this.textChangelist.DetectUrls = false;
             this.textChangelist.Location = new System.Drawing.Point(12, 12);
             this.textChangelist.Name = "textChangelist";
             this.textChangelist.ReadOnly = true;
@@ -84,8 +85,10 @@
             // 
             // FormShowChangelist
             // 
+            this.AcceptButton = this.btPrev;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btClose;
             this.ClientSize = new System.Drawing.Size(695, 526);
             this.Controls.Add(this.textChangelist);
             this.Controls.Add(this.btPrev);

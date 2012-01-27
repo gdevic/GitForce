@@ -69,6 +69,7 @@
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.gettingStartedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +110,6 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
-            this.checkForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -453,6 +453,14 @@
             this.documentationMenuItem.Tag = "http://gdevic.github.com/GitForce";
             this.documentationMenuItem.Text = "Documentation";
             this.documentationMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            // 
+            // checkForUpdatesMenuItem
+            // 
+            this.checkForUpdatesMenuItem.Name = "checkForUpdatesMenuItem";
+            this.checkForUpdatesMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.checkForUpdatesMenuItem.Tag = "https://github.com/gdevic/GitForce/downloads";
+            this.checkForUpdatesMenuItem.Text = "Check for Updates";
+            this.checkForUpdatesMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // gitHubHomeMenuItem
             // 
@@ -840,14 +848,6 @@
             this.saveTools.DefaultExt = "*.xml";
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
-            // 
-            // checkForUpdatesMenuItem
-            // 
-            this.checkForUpdatesMenuItem.Name = "checkForUpdatesMenuItem";
-            this.checkForUpdatesMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.checkForUpdatesMenuItem.Tag = "https://github.com/gdevic/GitForce/downloads";
-            this.checkForUpdatesMenuItem.Text = "Check for Updates";
-            this.checkForUpdatesMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // FormMain
             // 

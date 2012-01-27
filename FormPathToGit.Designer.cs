@@ -124,8 +124,10 @@
             // 
             // FormPathToGit
             // 
+            this.AcceptButton = this.btOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(383, 168);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.labelInfo);

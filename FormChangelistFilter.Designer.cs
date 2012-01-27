@@ -143,8 +143,10 @@
             // 
             // FormChangelistFilter
             // 
+            this.AcceptButton = this.btOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(362, 151);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btOK);
