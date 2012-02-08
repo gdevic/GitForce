@@ -48,6 +48,44 @@ namespace GitForce
             // Adjust the enables (in this order)
             CheckCloseUponExitCheckedChanged(null, null);
             CheckConsoleAppCheckedChanged(null, null);
+
+            // Set the width of drop-down portions of help combo box so when it expands (down)
+            // it will show horizontally the complete text from all pre-defined lines.
+            // Also set their tags to point to the buddy edit boxes into which to insert selected tokens.
+            SetComboBoxWidth(comboHelpArg);
+            comboHelpArg.Tag = textArgs;
+            SetComboBoxWidth(comboHelpDir);
+            comboHelpDir.Tag = textDir;
+        }
+
+        /// <summary>
+        /// Resizes the combo box size horizontally to show all content strings
+        /// http://rajeshkm.blogspot.com/2006/11/adjust-combobox-drop-down-list-width-c.html
+        /// </summary>
+        private static void SetComboBoxWidth(ComboBox box)
+        {
+            int width = box.Width;
+            Graphics g = box.CreateGraphics();
+            Font font = box.Font;
+
+            // Checks if a scrollbar will be displayed.
+            // If yes, then get its width to adjust the size of the drop down list.
+            int vertScrollBarWidth =
+                (box.Items.Count > box.MaxDropDownItems)
+                ? SystemInformation.VerticalScrollBarWidth : 0;
+
+            // Loop through list items and check size of each items.
+            // Set the width of the drop down list to the width of the largest item.
+            foreach (string s in box.Items)
+            {
+                if (s != null)
+                {
+                    int newWidth = (int)g.MeasureString(s.Trim(), font).Width + vertScrollBarWidth;
+                    if (width < newWidth)
+                        width = newWidth;
+                }
+            }
+            box.DropDownWidth = width;
         }
 
         /// <summary>
@@ -148,6 +186,29 @@ namespace GitForce
         private void BtHelpClick(object sender, EventArgs e)
         {
             ClassHelp.Handler("Edit Tools");
+        }
+
+        /// <summary>
+        /// The user selected an item from the list of help items to insert into
+        /// the edit field.
+        /// </summary>
+        private void ComboHelpSelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Insert (or substitute if there is a selection) first few characters
+                // of a token into the corresponding edit field (kept in Tag of a combo box)
+                ComboBox box = sender as ComboBox;
+                box.Text = string.Empty;
+                TextBox textBox = box.Tag as TextBox;
+                string token = (string)box.SelectedItem;
+                textBox.SelectedText = token.Substring(0, 2);
+                textBox.Focus();
+            }
+            catch (Exception ex)
+            {
+                App.PrintLogMessage("Error: " + ex.Message);
+            }
         }
     }
 }

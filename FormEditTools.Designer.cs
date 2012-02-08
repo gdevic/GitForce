@@ -31,6 +31,8 @@
             this.btCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboHelpDir = new System.Windows.Forms.ComboBox();
+            this.comboHelpArg = new System.Windows.Forms.ComboBox();
             this.textDesc = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBrowse = new System.Windows.Forms.CheckBox();
@@ -85,6 +87,8 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.comboHelpDir);
+            this.groupBox1.Controls.Add(this.comboHelpArg);
             this.groupBox1.Controls.Add(this.textDesc);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.checkBrowse);
@@ -110,6 +114,47 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Menu Item";
+            // 
+            // comboHelpDir
+            // 
+            this.comboHelpDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboHelpDir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboHelpDir.FormattingEnabled = true;
+            this.comboHelpDir.Items.AddRange(new object[] {
+            "%r - Root directory of the current git repository",
+            "%u - User name",
+            "%e - User email",
+            "%b - Active branch of the current git repository",
+            "%f - Single selected file in the left pane",
+            "%F - List of selected files in the left pane",
+            "%d - Single selected directory in the left pane",
+            "%D - List of selected directories in the left pane"});
+            this.comboHelpDir.Location = new System.Drawing.Point(340, 101);
+            this.comboHelpDir.Name = "comboHelpDir";
+            this.comboHelpDir.Size = new System.Drawing.Size(17, 21);
+            this.comboHelpDir.TabIndex = 30;
+            this.comboHelpDir.SelectedIndexChanged += new System.EventHandler(this.ComboHelpSelectedIndexChanged);
+            // 
+            // comboHelpArg
+            // 
+            this.comboHelpArg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboHelpArg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboHelpArg.DropDownWidth = 17;
+            this.comboHelpArg.FormattingEnabled = true;
+            this.comboHelpArg.Items.AddRange(new object[] {
+            "%r - Root directory of the current git repository",
+            "%u - User name",
+            "%e - User email",
+            "%b - Active branch of the current git repository",
+            "%f - Single selected file in the left pane",
+            "%F - List of selected files in the left pane",
+            "%d - Single selected directory in the left pane",
+            "%D - List of selected directories in the left pane"});
+            this.comboHelpArg.Location = new System.Drawing.Point(420, 73);
+            this.comboHelpArg.Name = "comboHelpArg";
+            this.comboHelpArg.Size = new System.Drawing.Size(17, 21);
+            this.comboHelpArg.TabIndex = 29;
+            this.comboHelpArg.SelectedIndexChanged += new System.EventHandler(this.ComboHelpSelectedIndexChanged);
             // 
             // textDesc
             // 
@@ -233,7 +278,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textDir.Location = new System.Drawing.Point(119, 102);
             this.textDir.Name = "textDir";
-            this.textDir.Size = new System.Drawing.Size(238, 20);
+            this.textDir.Size = new System.Drawing.Size(215, 20);
             this.textDir.TabIndex = 4;
             // 
             // btBrowseDir
@@ -253,7 +298,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textArgs.Location = new System.Drawing.Point(119, 74);
             this.textArgs.Name = "textArgs";
-            this.textArgs.Size = new System.Drawing.Size(319, 20);
+            this.textArgs.Size = new System.Drawing.Size(295, 20);
             this.textArgs.TabIndex = 3;
             // 
             // label2
@@ -379,5 +424,7 @@
         private System.Windows.Forms.OpenFileDialog openFile;
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.ComboBox comboHelpArg;
+        private System.Windows.Forms.ComboBox comboHelpDir;
     }
 }
