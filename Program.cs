@@ -130,6 +130,11 @@ namespace GitForce
             "GitForce");
 
         /// <summary>
+        /// Define a path to the user profile
+        /// </summary>
+        public static readonly string UserHome = Environment.GetEnvironmentVariable("USERPROFILE");
+
+        /// <summary>
         /// If set to a file name, all log text will be mirrored to that file
         /// Command line argument '--log' sets it to application data folder, file 'gitforce.log'
         /// </summary>
