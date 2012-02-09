@@ -31,28 +31,30 @@
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("User");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Commits");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Gitignore");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Status");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("GitForce Objects", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Gitconfig");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Status");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("GitForce Objects", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
             treeNode3,
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("View / Edit");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Diff");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Merge");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Double Click");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Files", new System.Windows.Forms.TreeNode[] {
-            treeNode6,
+            treeNode4,
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("View / Edit");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Diff");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Merge");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Double Click");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Files", new System.Windows.Forms.TreeNode[] {
             treeNode7,
             treeNode8,
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Aliases");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Specifications");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("SSL");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Options", new System.Windows.Forms.TreeNode[] {
-            treeNode11,
+            treeNode9,
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Aliases");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Specifications");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("SSL");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Options", new System.Windows.Forms.TreeNode[] {
             treeNode12,
-            treeNode13});
+            treeNode13,
+            treeNode14});
             this.panel = new System.Windows.Forms.Panel();
             this.btOK = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
@@ -122,40 +124,43 @@
             treeNode3.Tag = "Gitignore";
             treeNode3.Text = "Gitignore";
             treeNode4.Name = "Node0";
-            treeNode4.Tag = "Status";
-            treeNode4.Text = "Status";
+            treeNode4.Tag = "Gitconfig";
+            treeNode4.Text = "Gitconfig";
             treeNode5.Name = "Node0";
-            treeNode5.Text = "GitForce Objects";
-            treeNode6.Name = "Node4";
-            treeNode6.Tag = "ViewEdit";
-            treeNode6.Text = "View / Edit";
-            treeNode7.Name = "Node5";
-            treeNode7.Tag = "Diff";
-            treeNode7.Text = "Diff";
-            treeNode8.Name = "Node6";
-            treeNode8.Tag = "Merge";
-            treeNode8.Text = "Merge";
-            treeNode9.Name = "Node0";
-            treeNode9.Tag = "DoubleClick";
-            treeNode9.Text = "Double Click";
-            treeNode10.Name = "Node1";
-            treeNode10.Tag = "Files";
-            treeNode10.Text = "Files";
-            treeNode11.Name = "Node7";
-            treeNode11.Tag = "Aliases";
-            treeNode11.Text = "Aliases";
-            treeNode12.Name = "Node0";
-            treeNode12.Tag = "Specifications";
-            treeNode12.Text = "Specifications";
+            treeNode5.Tag = "Status";
+            treeNode5.Text = "Status";
+            treeNode6.Name = "Node0";
+            treeNode6.Text = "GitForce Objects";
+            treeNode7.Name = "Node4";
+            treeNode7.Tag = "ViewEdit";
+            treeNode7.Text = "View / Edit";
+            treeNode8.Name = "Node5";
+            treeNode8.Tag = "Diff";
+            treeNode8.Text = "Diff";
+            treeNode9.Name = "Node6";
+            treeNode9.Tag = "Merge";
+            treeNode9.Text = "Merge";
+            treeNode10.Name = "Node0";
+            treeNode10.Tag = "DoubleClick";
+            treeNode10.Text = "Double Click";
+            treeNode11.Name = "Node1";
+            treeNode11.Tag = "Files";
+            treeNode11.Text = "Files";
+            treeNode12.Name = "Node7";
+            treeNode12.Tag = "Aliases";
+            treeNode12.Text = "Aliases";
             treeNode13.Name = "Node0";
-            treeNode13.Tag = "Ssl";
-            treeNode13.Text = "SSL";
-            treeNode14.Name = "Node2";
-            treeNode14.Text = "Options";
+            treeNode13.Tag = "Specifications";
+            treeNode13.Text = "Specifications";
+            treeNode14.Name = "Node0";
+            treeNode14.Tag = "Ssl";
+            treeNode14.Text = "SSL";
+            treeNode15.Name = "Node2";
+            treeNode15.Text = "Options";
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode10,
-            treeNode14});
+            treeNode6,
+            treeNode11,
+            treeNode15});
             this.treeSections.Size = new System.Drawing.Size(158, 278);
             this.treeSections.TabIndex = 5;
             this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);

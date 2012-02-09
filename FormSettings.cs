@@ -38,6 +38,7 @@ namespace GitForce
             { "Status", new ControlStatus() },
             { "Commits", new ControlCommits() },
             { "Gitignore", new ControlGitignore() },
+            { "Gitconfig", new ControlGitconfig() },
             { "Files", new ControlFiles() },
             { "ViewEdit", new ControlViewEdit() },
             { "Diff", new ControlDiff() },

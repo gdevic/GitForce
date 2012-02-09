@@ -29,6 +29,7 @@ namespace GitForce
         private readonly Dictionary<string, UserControl> _panels = new Dictionary<string, UserControl> {
             { "User", new ControlUser() },
             { "Gitignore", new ControlGitignore() },
+            { "Gitconfig", new ControlGitconfig() },
         };
 
         /// <summary>

@@ -30,9 +30,11 @@
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("User");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Gitignore");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Repo Objects", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Git config");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Repo Objects", new System.Windows.Forms.TreeNode[] {
             treeNode1,
-            treeNode2});
+            treeNode2,
+            treeNode3});
             this.panel = new System.Windows.Forms.Panel();
             this.treeSections = new System.Windows.Forms.TreeView();
             this.btApply = new System.Windows.Forms.Button();
@@ -63,9 +65,12 @@
             treeNode2.Tag = "Gitignore";
             treeNode2.Text = "Gitignore";
             treeNode3.Name = "Node0";
-            treeNode3.Text = "Repo Objects";
+            treeNode3.Tag = "Gitconfig";
+            treeNode3.Text = "Git config";
+            treeNode4.Name = "Node0";
+            treeNode4.Text = "Repo Objects";
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode4});
             this.treeSections.Size = new System.Drawing.Size(158, 230);
             this.treeSections.TabIndex = 5;
             this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);
