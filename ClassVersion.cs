@@ -74,6 +74,7 @@ namespace GitForce
             try
             {
                 WebRequest request = WebRequest.Create("https://github.com/gdevic/GitForce/blob/master/Properties/AssemblyInfo.cs");
+                request.Timeout = 4000;
                 WebResponse response = request.GetResponse();
                 StreamReader reader = new StreamReader(response.GetResponseStream());
                 StringBuilder file = new StringBuilder();
