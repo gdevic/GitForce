@@ -129,7 +129,7 @@ namespace GitForce.Main.Left.Panels
                 if (Status.Repo.IsTreeView)
                     ClassView.BuildTree(node, files, Status.Repo.SortBy);
                 else
-                    ClassView.BuildFileList(node, files);
+                    ClassView.BuildFileList(node, files, Status.Repo.SortBy);
 
                 // Add the resulting tree to the tree view control
                 treeView.Nodes.Add(node);

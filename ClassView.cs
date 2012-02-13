@@ -160,9 +160,19 @@ namespace GitForce
         /// </summary>
         /// <param name="tnRoot">Root node to build the list on</param>
         /// <param name="list">List of relative path file names</param>
-        public static void BuildFileList(TreeNode tnRoot, List<string> list)
+        public static void BuildFileList(TreeNode tnRoot, List<string> list, GitDirectoryInfo.SortBy sortBy)
         {
-            // Build a list view
+            // Sort the list according to the sorting rule
+            if (sortBy == GitDirectoryInfo.SortBy.Name)
+                list.Sort();
+            else
+            {
+                var vSort = from s in list
+                    orderby Path.GetExtension(s), s ascending
+                    select s;
+                list = vSort.ToList();
+            }
+            // Build a list view);
             foreach (string s in list)
             {
                 TreeNode tn = new TreeNode(s);
