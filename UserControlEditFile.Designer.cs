@@ -50,8 +50,10 @@
             this.textBox.Location = new System.Drawing.Point(3, 22);
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
+            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox.Size = new System.Drawing.Size(350, 173);
             this.textBox.TabIndex = 1;
+            this.textBox.TextChanged += new System.EventHandler(this.TextBoxTextChanged);
             // 
             // UserControlEditFile
             // 

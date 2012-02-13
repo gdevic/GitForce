@@ -17,6 +17,7 @@ namespace GitForce
     interface IRepoSettings
     {
         void Init(ClassRepo repo);
+        void Focus(bool focused);
         void ApplyChanges(ClassRepo repo);
     }
 
@@ -83,8 +84,11 @@ namespace GitForce
             string panelName = e.Node.Tag as string;
             if (panelName != null && _panels.ContainsKey(panelName))
             {
+                if (_current != null)
+                    (_current as IRepoSettings).Focus(false);
                 _current = _panels[panelName];
                 _current.BringToFront();
+                (_current as IRepoSettings).Focus(true);
             }
         }
 

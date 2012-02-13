@@ -29,7 +29,28 @@ namespace GitForce.Settings.Panels
         public void Init(string[] options)
         {
             _configFile = Path.Combine(App.UserHome, ".gitconfig");
-            userControlEditFile.LoadFile(_configFile);
+        }
+
+        /// <summary>
+        /// Control received a focus (true) or lost a focus (false)
+        /// </summary>
+        public void Focus(bool focused)
+        {
+            if (focused)
+                userControlEditFile.LoadFile(_configFile);
+            else
+            {
+                // As the control is losing its focus, if the text was changed, ask the user
+                // to save the changes or not. This behavior is a special case since we need
+                // to make changes to this config file atomic.
+                if (userControlEditFile.Dirty)
+                {
+                    if (MessageBox.Show("Save changes to the configuration file?", "Edit .gitconfig", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        userControlEditFile.SaveFile(_configFile);
+                    else
+                        userControlEditFile.LoadFile(_configFile);
+                }
+            }
         }
 
         /// <summary>
@@ -37,7 +58,8 @@ namespace GitForce.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            userControlEditFile.SaveFile(_configFile);
+            if (userControlEditFile.Dirty)
+                userControlEditFile.SaveFile(_configFile);
         }
     }
 }

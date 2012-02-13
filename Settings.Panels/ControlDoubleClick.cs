@@ -42,6 +42,13 @@ namespace GitForce.Settings.Panels
         }
 
         /// <summary>
+        /// Control received a focus (true) or lost a focus (false)
+        /// </summary>
+        public void Focus(bool focused)
+        {
+        }
+
+        /// <summary>
         /// Apply changed settings
         /// </summary>
         public void ApplyChanges()

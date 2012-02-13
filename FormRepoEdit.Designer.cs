@@ -56,6 +56,7 @@
             // 
             this.treeSections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeSections.HideSelection = false;
             this.treeSections.Location = new System.Drawing.Point(12, 12);
             this.treeSections.Name = "treeSections";
             treeNode1.Name = "Node1";

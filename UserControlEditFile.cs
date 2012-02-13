@@ -12,6 +12,11 @@ namespace GitForce
 {
     public partial class UserControlEditFile : UserControl
     {
+        /// <summary>
+        /// True if the content of a text box is modified.
+        /// </summary>
+        public bool Dirty;
+
         public UserControlEditFile()
         {
             InitializeComponent();
@@ -24,6 +29,7 @@ namespace GitForce
         {
             bool result = true;
             labelFileName.Text = file;
+            textBox.Text = "";
             try
             {
                 using (StreamReader sr = new StreamReader(file))
@@ -39,6 +45,7 @@ namespace GitForce
                 textBox.Text = "(Unable to load file)";
                 result = false;
             }
+            Dirty = false;
             textBox.Enabled = result;
             return result;
         }
@@ -48,12 +55,17 @@ namespace GitForce
         /// </summary>
         public bool SaveFile(string file)
         {
+            // Dont attempt to save non-loaded content
+            if (textBox.Enabled == false)
+                return false;
+
             bool result = true;
             try
             {
                 using (StreamWriter sw = new StreamWriter(file))
                     sw.WriteLine(textBox.Text);
                 labelFileName.Text = file;
+                Dirty = false;
             }
             catch (Exception ex)
             {
@@ -61,6 +73,14 @@ namespace GitForce
                 result = false;
             }
             return result;
+        }
+
+        /// <summary>
+        /// User modified the content of a text box. Mark it as dirty.
+        /// </summary>
+        private void TextBoxTextChanged(object sender, EventArgs e)
+        {
+            Dirty = true;
         }
     }
 }

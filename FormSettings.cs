@@ -17,6 +17,7 @@ namespace GitForce
     interface IUserSettings
     {
         void Init(string[] config);
+        void Focus(bool focused);
         void ApplyChanges();
     }
 
@@ -90,8 +91,11 @@ namespace GitForce
             string panelName = e.Node.Tag as string;
             if (panelName != null && _panels.ContainsKey(panelName))
             {
+                if (_current != null)
+                    (_current as IUserSettings).Focus(false);
                 _current = _panels[panelName];
                 _current.BringToFront();
+                (_current as IUserSettings).Focus(true);
             }
         }
 
