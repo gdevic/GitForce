@@ -52,6 +52,7 @@ namespace GitForce
         public void AddFiles(List<string> newFiles)
         {
             Files = Files.Union(newFiles).ToList();
+            Files.Sort();               // Keep the list sorted
         }
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace GitForce
         public void Prune(List<string> outlaws)
         {
             Files = Files.Except(outlaws).ToList();
+            Files.Sort();               // Keep the list sorted
         }
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace GitForce
         public List<string> Renew(List<string> allFiles)
         {
             Files = Files.Intersect(allFiles).ToList();
+            Files.Sort();               // Keep the list sorted
             return allFiles.Except(Files).ToList();
         }
     }
