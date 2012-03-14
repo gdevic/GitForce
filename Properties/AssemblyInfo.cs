@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("A Visual Git Frontend Tool")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GitForce")]
-[assembly: AssemblyProduct("GitForce built on 2012/02/12, 20:48:36")]
+[assembly: AssemblyProduct("GitForce built on 2012/03/14, 00:35:51")]
 [assembly: AssemblyCopyright("Written by Goran Devic, released under GPL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -26,4 +26,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 
 // Effective application version number
-[assembly: AssemblyFileVersion("1.0.16")]
+[assembly: AssemblyFileVersion("1.0.17")]
