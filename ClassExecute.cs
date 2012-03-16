@@ -204,7 +204,19 @@ namespace GitForce
         private void PErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data))   // If the stream ended
-                Exited.Release();               // release its semaphore
+            {
+                // Sometimes we receive multiple null strings on error stream
+                // (example: when adding a new key with plink)
+                // This catches these cases which would increment semaphore over it's limit
+                try
+                {
+                    Exited.Release();           // release its semaphore
+                }
+                catch (Exception ex)
+                {
+                    App.PrintLogMessage(ex.Message);
+                }
+            }
             else
             {
                 if (Result.stderr != string.Empty)

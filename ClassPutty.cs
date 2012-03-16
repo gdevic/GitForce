@@ -156,7 +156,9 @@ namespace GitForce
                           " -l " + (string.IsNullOrEmpty(url.User) ? "anonymous" : url.User) +
                           " " + url.Host;
 
-            Exec.Run(_pathPlink, args);
+            // plink does everything through its stderr stream
+            ExecResult result = Exec.Run(_pathPlink, args);
+            App.PrintLogMessage(result.stderr);
         }
     }
 }
