@@ -149,6 +149,14 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Returns CMD/SHELL executable name to execute a command line command
+        /// </summary>
+        public static string GetShellExecCmd()
+        {
+            return IsMono() ? "sh" : "cmd.exe";
+        }
+
+        /// <summary>
         /// Returns a string to be used by CMD/SHELL as argument when executing a command line command
         /// </summary>
         public static string GetShellExecFlags()

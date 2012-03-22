@@ -120,9 +120,9 @@ namespace GitForce
                     {
                         // We need to keep the CMD/SHELL window open, so start the process using
                         // the CMD/SHELL as the root process and pass it our command to execute
-
                         proc.StartInfo.Arguments = string.Format("{0} {1} {2}",
                             ClassUtils.GetShellExecFlags(), proc.StartInfo.FileName, proc.StartInfo.Arguments);
+                        proc.StartInfo.FileName = ClassUtils.GetShellExecCmd();
                         App.PrintLogMessage(proc.StartInfo.Arguments);
 
                         proc.Start();
@@ -136,15 +136,15 @@ namespace GitForce
                     // We can start the process and wait for it to finish only if we need to
                     // refresh the app after the process has exited.
                     proc.Start();
+                }
 
-                    if(IsRefresh())
-                    {
-                        App.MainForm.SetTitle("Waiting for " + Cmd + " to finish...");
+                if (IsRefresh())
+                {
+                    App.MainForm.SetTitle("Waiting for " + Cmd + " to finish...");
 
-                        proc.WaitForExit();
-                        
-                        App.DoRefresh();
-                    }
+                    proc.WaitForExit();
+
+                    App.DoRefresh();
                 }
             }
             catch (Exception ex)
