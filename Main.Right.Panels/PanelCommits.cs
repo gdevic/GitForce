@@ -313,7 +313,7 @@ namespace GitForce.Main.Right.Panels
                     File.WriteAllText(tempFile, commitForm.GetDescription());
 
                     // Form the final command with the description file and an optional amend
-                    Status.Repo.GitCommit("-F " + tempFile, commitForm.GetCheckAmend(), final);
+                    Status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final);
 
                     File.Delete(tempFile);
 
