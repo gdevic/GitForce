@@ -47,6 +47,7 @@
             this.tabLocalKeys = new System.Windows.Forms.TabPage();
             this.tabRemoteKeys = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btRemoveHost = new System.Windows.Forms.Button();
             this.btAddHost = new System.Windows.Forms.Button();
             this.listHosts = new System.Windows.Forms.ListBox();
             this.btPuttygen = new System.Windows.Forms.Button();
@@ -69,9 +70,9 @@
             // 
             this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxHost.Location = new System.Drawing.Point(6, 256);
+            this.textBoxHost.Location = new System.Drawing.Point(6, 259);
             this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.Size = new System.Drawing.Size(396, 20);
+            this.textBoxHost.Size = new System.Drawing.Size(399, 20);
             this.textBoxHost.TabIndex = 1;
             this.textBoxHost.TextChanged += new System.EventHandler(this.TextBoxHostTextChanged);
             // 
@@ -113,6 +114,7 @@
             this.listBoxKeys.Size = new System.Drawing.Size(399, 111);
             this.listBoxKeys.TabIndex = 0;
             this.listBoxKeys.SelectedIndexChanged += new System.EventHandler(this.ListBoxKeysSelectedIndexChanged);
+            this.listBoxKeys.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListBoxKeysMouseDown);
             // 
             // byAdd
             // 
@@ -206,6 +208,7 @@
             this.listBoxPf.Size = new System.Drawing.Size(399, 96);
             this.listBoxPf.TabIndex = 1;
             this.listBoxPf.SelectedIndexChanged += new System.EventHandler(this.ListBoxPfSelectedIndexChanged);
+            this.listBoxPf.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListBoxPfMouseDown);
             // 
             // btAddPf
             // 
@@ -282,21 +285,34 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.btRemoveHost);
             this.groupBox3.Controls.Add(this.btAddHost);
             this.groupBox3.Controls.Add(this.textBoxHost);
             this.groupBox3.Controls.Add(this.listHosts);
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(489, 283);
+            this.groupBox3.Size = new System.Drawing.Size(492, 286);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Known hosts";
+            // 
+            // btRemoveHost
+            // 
+            this.btRemoveHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btRemoveHost.Enabled = false;
+            this.btRemoveHost.Location = new System.Drawing.Point(411, 19);
+            this.btRemoveHost.Name = "btRemoveHost";
+            this.btRemoveHost.Size = new System.Drawing.Size(75, 23);
+            this.btRemoveHost.TabIndex = 3;
+            this.btRemoveHost.Text = "Remove";
+            this.btRemoveHost.UseVisualStyleBackColor = true;
+            this.btRemoveHost.Click += new System.EventHandler(this.BtRemoveHostClick);
             // 
             // btAddHost
             // 
             this.btAddHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btAddHost.Enabled = false;
-            this.btAddHost.Location = new System.Drawing.Point(408, 254);
+            this.btAddHost.Location = new System.Drawing.Point(411, 257);
             this.btAddHost.Name = "btAddHost";
             this.btAddHost.Size = new System.Drawing.Size(75, 23);
             this.btAddHost.TabIndex = 2;
@@ -313,9 +329,11 @@
             this.listHosts.IntegralHeight = false;
             this.listHosts.Location = new System.Drawing.Point(6, 19);
             this.listHosts.Name = "listHosts";
-            this.listHosts.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listHosts.Size = new System.Drawing.Size(477, 229);
+            this.listHosts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listHosts.Size = new System.Drawing.Size(399, 232);
             this.listHosts.TabIndex = 0;
+            this.listHosts.SelectedIndexChanged += new System.EventHandler(this.ListHostsSelectedIndexChanged);
+            this.listHosts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListHostsMouseDown);
             // 
             // btPuttygen
             // 
@@ -427,5 +445,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.Button btRemoveHost;
     }
 }

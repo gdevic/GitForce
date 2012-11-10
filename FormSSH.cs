@@ -102,6 +102,16 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Clicking on an empty part of the listbox unselects items
+        /// </summary>
+        private void ListBoxKeysMouseDown(object sender, MouseEventArgs e)
+        {
+            int index = listBoxKeys.IndexFromPoint(e.Location);
+            if(index<0)
+                listBoxKeys.ClearSelected();
+        }
+
+        /// <summary>
         /// Add a new passphrase to the list
         /// </summary>
         private void BtAddPClick(object sender, EventArgs e)
@@ -124,6 +134,16 @@ namespace GitForce
             listBoxPf.Items.Remove(listBoxPf.SelectedItem);
             SavePfs();
             btImport1.Enabled = btImport2.Enabled = true;
+        }
+
+        /// <summary>
+        /// Clicking on an empty part of the listbox unselects items
+        /// </summary>
+        private void ListBoxPfMouseDown(object sender, MouseEventArgs e)
+        {
+            int index = listBoxPf.IndexFromPoint(e.Location);
+            if(index<0)
+                listBoxPf.ClearSelected();
         }
 
         /// <summary>
@@ -195,6 +215,7 @@ namespace GitForce
         #region Remote keys management
 
         private ClassUrl.Url _remoteUrl;
+        private const string PuTTY_Regkey = @"Software\SimonTatham\PuTTY\SshHostKeys";
 
         /// <summary>
         /// Load a list of remote hosts from the registry into the list box
@@ -204,10 +225,11 @@ namespace GitForce
             listHosts.Items.Clear();
             try
             {
-                RegistryKey SshKeys = Registry.CurrentUser;
-                SshKeys = SshKeys.OpenSubKey(@"Software\SimonTatham\PuTTY\SshHostKeys");
-                string[] keys = SshKeys.GetValueNames();
-                SshKeys.Close();
+                string[] keys;
+                using (var reg = Registry.CurrentUser.OpenSubKey(PuTTY_Regkey, false))
+                {
+                    keys = reg.GetValueNames();
+                }
 
                 foreach (string key in keys)
                 {
@@ -220,6 +242,7 @@ namespace GitForce
                     else
                         listHosts.Items.Add(key);
                 }
+                listHosts.Tag = keys;   // Store list of keys in the listBox tag
             }
             catch { }
         }
@@ -243,6 +266,46 @@ namespace GitForce
             RefreshRemoteHosts();
             btAddHost.Enabled = false;
             textBoxHost.Text = "";
+        }
+
+        /// <summary>
+        /// Remove selected host(s) (from registry)
+        /// </summary>
+        private void BtRemoveHostClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string[] keys = listHosts.Tag as string[];
+                foreach (int selectedIndex in listHosts.SelectedIndices)
+                {
+                    // Remove a key identified by a selected index from the Tag
+                    using (var reg = Registry.CurrentUser.OpenSubKey(PuTTY_Regkey, true))
+                    {
+                        if (reg != null)
+                            reg.DeleteValue(keys[selectedIndex]);
+                    }
+                }
+            }
+            catch { }
+            RefreshRemoteHosts();
+        }
+
+        /// <summary>
+        /// Manage "Remove" host button: enable it when one or more hosts are selected
+        /// </summary>
+        private void ListHostsSelectedIndexChanged(object sender, EventArgs e)
+        {
+            btRemoveHost.Enabled = listHosts.SelectedIndices.Count > 0;
+        }
+
+        /// <summary>
+        /// Clicking on an empty part of the listbox unselects items
+        /// </summary>
+        private void ListHostsMouseDown(object sender, MouseEventArgs e)
+        {
+            int index = listHosts.IndexFromPoint(e.Location);
+            if (index < 0)
+                listHosts.SelectedItems.Clear();
         }
 
         #endregion
