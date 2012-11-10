@@ -67,11 +67,11 @@
             // 
             // textBoxHost
             // 
-            this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxHost.Location = new System.Drawing.Point(6, 122);
+            this.textBoxHost.Location = new System.Drawing.Point(6, 256);
             this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.Size = new System.Drawing.Size(338, 20);
+            this.textBoxHost.Size = new System.Drawing.Size(396, 20);
             this.textBoxHost.TabIndex = 1;
             this.textBoxHost.TextChanged += new System.EventHandler(this.TextBoxHostTextChanged);
             // 
@@ -279,23 +279,24 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.btAddHost);
             this.groupBox3.Controls.Add(this.textBoxHost);
             this.groupBox3.Controls.Add(this.listHosts);
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(431, 153);
+            this.groupBox3.Size = new System.Drawing.Size(489, 283);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Known hosts";
             // 
             // btAddHost
             // 
-            this.btAddHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAddHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btAddHost.Enabled = false;
-            this.btAddHost.Location = new System.Drawing.Point(350, 120);
+            this.btAddHost.Location = new System.Drawing.Point(408, 254);
             this.btAddHost.Name = "btAddHost";
             this.btAddHost.Size = new System.Drawing.Size(75, 23);
             this.btAddHost.TabIndex = 2;
@@ -305,14 +306,15 @@
             // 
             // listHosts
             // 
-            this.listHosts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.listHosts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listHosts.FormattingEnabled = true;
             this.listHosts.IntegralHeight = false;
             this.listHosts.Location = new System.Drawing.Point(6, 19);
             this.listHosts.Name = "listHosts";
             this.listHosts.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listHosts.Size = new System.Drawing.Size(419, 96);
+            this.listHosts.Size = new System.Drawing.Size(477, 229);
             this.listHosts.TabIndex = 0;
             // 
             // btPuttygen
