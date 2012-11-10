@@ -177,16 +177,16 @@ namespace GitForce.Main.Right.Panels
                         switch (type)
                         {
                             case "empty":
-                                init = "init " + root + (isBare ? " --bare --shared=all " : " ") + extra;
+                                init = "init \"" + root + "\"" + (isBare ? " --bare --shared=all " : " ") + extra;
                                 break;
 
                             case "local":
-                                init = "clone " + newRepoStep1.Local + " " + root + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone " + newRepoStep1.Local + " \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
                                 break;
 
                             case "remote":
                                 ClassRemotes.Remote r = newRepoStep1.Remote;
-                                init = "clone --progress -v --origin " + r.Name + " " + r.UrlFetch + " " + root + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone --progress -v --origin " + r.Name + " " + r.UrlFetch + " \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
 
                                 // Add HTTPS password for the next execute of a clone operation
                                 ClassUtils.AddEnvar("PASSWORD", r.Password);
