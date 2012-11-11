@@ -203,7 +203,6 @@ namespace GitForce
 			return GetSelectionStyle(CFM_LINK, CFE_LINK);
 		}
 
-
 		private void SetSelectionStyle(UInt32 mask, UInt32 effect)
 		{
 			CHARFORMAT2_STRUCT cf = new CHARFORMAT2_STRUCT();

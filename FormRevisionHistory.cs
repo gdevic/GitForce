@@ -23,6 +23,11 @@ namespace GitForce
         private string _file;
 
         /// <summary>
+        /// The current SHA string to initialize the list
+        /// </summary>
+        public string Sha { private get; set; }
+
+        /// <summary>
         /// 2 last recently selected SHA submits
         /// </summary>
         private string[] _lruSha = new string[2];
@@ -40,6 +45,7 @@ namespace GitForce
                 statusStrip.SizingGrip = false;
 
             _file = file;
+            Sha = String.Empty;
             Text = @"Revision History for //" + file;
         }
 
@@ -85,8 +91,12 @@ namespace GitForce
             if(result.Success())
                 PanelRevlist.UpdateList(listRev, result.stdout);
 
-            // Activate the first item
-            listRev.SelectedIndices.Add(0);
+            // Activate the given SHA item or the first one if none given
+            int index = listRev.Items.IndexOfKey(Sha);
+            if (index < 0)
+                index = 0;
+            listRev.SelectedIndices.Add(index);
+            listRev.Items[index].EnsureVisible();
         }
 
         /// <summary>
@@ -256,7 +266,14 @@ namespace GitForce
             // Create a temp file based on our file and write content to it
             file = file.Replace(Path.DirectorySeparatorChar, '_');
             string temp = Path.Combine(Path.GetTempPath(), sha) + "_" + file;
-            File.WriteAllText(temp, response);
+            try
+            {
+                File.WriteAllText(temp, response);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "System error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             // Add the temp file to the global list of temp files to be removed at the app exit time
             ClassGlobals.TempFiles.Add(temp);

@@ -114,6 +114,7 @@ namespace GitForce.Main.Right.Panels
                     cat[3] = cat[3].Substring(0, c1) + "...";
 
                 ListViewItem li = new ListViewItem(cat);
+                li.Name = cat[0];           // Used to search for a key
                 li.Tag = cat[0];            // Tag contains the SHA1 of the commit
                 listRev.Items.Add(li);
             }
