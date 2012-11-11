@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btCancel = new System.Windows.Forms.Button();
-            this.textStdout = new System.Windows.Forms.RichTextBox();
+            this.textStdout = new GitForce.RichTextBoxEx();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelProgress = new System.Windows.Forms.Label();
@@ -127,7 +127,7 @@
         #endregion
 
         private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.RichTextBox textStdout;
+        private RichTextBoxEx textStdout;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         private System.Windows.Forms.Label labelProgress;

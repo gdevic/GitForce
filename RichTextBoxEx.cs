@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -247,5 +248,14 @@ namespace GitForce
 			Marshal.FreeCoTaskMem(lpar);
 			return state;
 		}
-	}
+
+        public void AppendText(string text, Color color)
+        {
+            SelectionStart = TextLength;
+            SelectionLength = 0;
+            SelectionColor = color;
+            AppendText(text);
+            SelectionColor = ForeColor;
+        }
+    }
 }
