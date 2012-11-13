@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -11,7 +11,7 @@ namespace GitForce
     /// <summary>
     /// Functions to find git and run a git command
     /// </summary>
-    class ClassGit
+    internal class ClassGit
     {
         /// <summary>
         /// Path to git executable, saved in Properties.Settings.Default.gitPath
@@ -65,9 +65,9 @@ namespace GitForce
             if (retValue)
             {
                 // Run the version again to get the version code (for simplicity did not save it earlier)
-                string version = string.Format("Using {0} at {1}", Exec.Run(_gitPath, "--version"),_gitPath);
+                string version = string.Format("Using {0} at {1}", Exec.Run(_gitPath, "--version"), _gitPath);
                 App.PrintLogMessage(version);
-                Properties.Settings.Default.GitPath = _gitPath;                
+                Properties.Settings.Default.GitPath = _gitPath;
             }
             return retValue;
         }
@@ -75,7 +75,7 @@ namespace GitForce
         /// <summary>
         /// A generic function that executes a Git command
         /// </summary>
-        public static ExecResult Run(string gitcmd)
+        public static ExecResult Run(string gitcmd, bool async = false)
         {
             // Pick up git commands that take long time to execute and run them
             // using a threaded execution
@@ -89,7 +89,14 @@ namespace GitForce
                 return formGitRun.GetResult();
             }
 
-            return Exec.Run(Properties.Settings.Default.GitPath, gitcmd);
+            if (!async)
+            {
+                return Exec.Run(Properties.Settings.Default.GitPath, gitcmd);
+            }
+
+            var job = new Exec(Properties.Settings.Default.GitPath, gitcmd);
+            job.AsyncRun(s => App.PrintStatusMessage(s), s => App.PrintStatusMessage(s), null);
+            return new ExecResult();
         }
     }
 }

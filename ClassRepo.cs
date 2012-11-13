@@ -162,7 +162,11 @@ namespace GitForce
         /// <summary>
         /// Delete a list of files
         /// </summary>
-        public void GitDelete(List<string> files) { GitDelete("", files); }
+        public void GitDelete(List<string> files)
+        {
+            GitDelete("", files);
+        }
+
         public void GitDelete(string tag, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
@@ -214,7 +218,7 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Diffing " + list);
-            RunCmd("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + list);
+            RunCmd("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + list, true);
         }
 
         /// <summary>
@@ -231,7 +235,7 @@ namespace GitForce
             // since that would introduce multiple commits, which is probably not what the user
             // wants. Hence, we break commit at this level into an initial commit of a single
             // file (the first file on the list), and append for each successive chunk.
-            if(isAmend==false && list.Length>=2000)
+            if (isAmend == false && list.Length >= 2000)
             {
                 RunCmd("commit " + cmd + " -- " + "\"" + files[0] + "\"");
                 isAmend = true;
@@ -245,19 +249,19 @@ namespace GitForce
         /// Repo class function that runs a git command in the context of a repository.
         /// Use this function with all user-initiated commands in order to have them printed into the status window.
         /// </summary>
-        public ExecResult RunCmd(string args)
+        public ExecResult RunCmd(string args, bool async = false)
         {
             // Print the actual command line to the status window only if user selected that setting
-            if(Properties.Settings.Default.logCommands)
+            if (Properties.Settings.Default.logCommands)
                 App.PrintStatusMessage("git " + args);
 
             // Run the command and print the response to the status window in any case
-            ExecResult result = Run(args);
+            ExecResult result = Run(args, async);
             if (result.stdout.Length > 0)
                 App.PrintStatusMessage(result.stdout);
 
             // If the command caused an error, print it also
-            if (result.Success()==false)
+            if (result.Success() == false)
                 App.PrintStatusMessage(result.stderr);
 
             return result;
@@ -266,7 +270,7 @@ namespace GitForce
         /// <summary>
         /// Repo class function that runs a git command in the context of a repository.
         /// </summary>
-        public ExecResult Run(string args)
+        public ExecResult Run(string args, bool async = false)
         {
             ExecResult output = new ExecResult();
             try
@@ -285,7 +289,7 @@ namespace GitForce
                 // which seemed to work fine.
 
                 if (args.Length < 2000)
-                    return ClassGit.Run(args);
+                    return ClassGit.Run(args, async);
 
                 // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
                 // Basically we have to rebuild the command into multiple instances with
@@ -303,10 +307,9 @@ namespace GitForce
                     while (batch.Length < 2000 && i < files.Length)
                         batch.Append(files[i++] + " ");
 
-                    output = ClassGit.Run(cmd + batch);
+                    output = ClassGit.Run(cmd + batch, async);
                     if (output.Success() == false)
                         break;
-
                 } while (i < files.Length);
             }
             catch (Exception ex)
