@@ -68,7 +68,7 @@ namespace GitForce.Main.Left.Panels
         /// <summary>
         /// Panel view class refresh function
         /// </summary>
-        private void ViewRefresh()
+        public void ViewRefresh()
         {
             int mode = Properties.Settings.Default.viewMode;
 
@@ -156,7 +156,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuRefresh(object sender, EventArgs e)
         {
-            ViewRefresh();
+            // Refresh both this view and the commit pane
+            App.MainForm.SelectiveRefresh(FormMain.SelectveRefreshFlags.View | FormMain.SelectveRefreshFlags.Commits);
         }
 
         /// <summary>

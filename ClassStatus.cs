@@ -50,7 +50,7 @@ namespace GitForce
         /// Global status refresh function.
         /// Refresh status of the current repo.
         /// </summary>
-        private static void Refresh()
+        public static void Refresh()
         {
             ClassRepo repo = App.Repos.Current;
             if(repo!=null)

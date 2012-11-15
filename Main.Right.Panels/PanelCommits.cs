@@ -32,7 +32,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Panel commit refresh function
         /// </summary>
-        private void CommitsRefresh()
+        public void CommitsRefresh()
         {
             treeCommits.BeginUpdate();
             treeCommits.NodesClear();

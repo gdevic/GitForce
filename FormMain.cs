@@ -37,6 +37,20 @@ namespace GitForce
             { "Branches", PanelBranches },
         };
 
+        /// <summary>
+        /// Flags to use when calling SelectiveRefresh function
+        /// </summary>
+        [Flags]
+        public enum SelectveRefreshFlags
+        {
+            View = 1,
+            Repos = 2,
+            Commits = 4,
+            Revisions = 8,
+            Branches = 16,
+            All = 31
+        }
+
         // Path to the default custom tools file
         private static readonly string DefaultCustomToolsFile = Path.Combine(App.AppHome, "CustomTools.xml");
 
@@ -426,6 +440,30 @@ namespace GitForce
 
             if (App.Repos.Current != null)
                 menuMainEditRemoteRepo.Enabled = true;
+        }
+
+        /// <summary>
+        /// Selectively refreshes only specified panels
+        /// </summary>
+        public void SelectiveRefresh(SelectveRefreshFlags flags)
+        {
+            // Always refresh the class status first
+            ClassStatus.Refresh();
+
+            if ((flags & SelectveRefreshFlags.View) == SelectveRefreshFlags.View)
+                PanelView.ViewRefresh();
+
+            if ((flags & SelectveRefreshFlags.Repos) == SelectveRefreshFlags.Repos)
+                PanelRepos.ReposRefresh();
+
+            if ((flags & SelectveRefreshFlags.Commits) == SelectveRefreshFlags.Commits)
+                PanelCommits.CommitsRefresh();
+
+            if ((flags & SelectveRefreshFlags.Revisions) == SelectveRefreshFlags.Revisions)
+                PanelRevlist.RevlistRefresh();
+
+            if ((flags & SelectveRefreshFlags.Branches) == SelectveRefreshFlags.Branches)
+                PanelBranches.BranchesRefresh();
         }
 
         /// <summary>

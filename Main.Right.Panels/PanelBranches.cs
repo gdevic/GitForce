@@ -23,7 +23,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Refresh the tree view of branches
         /// </summary>
-        private void BranchesRefresh()
+        public void BranchesRefresh()
         {
             // Use predefined [0] for local and [1] for remote branches
             treeBranches.Nodes[0].Nodes.Clear();

@@ -127,7 +127,7 @@
             this.btRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btRefresh.Name = "btRefresh";
             this.btRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btRefresh.Text = "Refresh";
+            this.btRefresh.Text = "Refresh Submitted Changelists view";
             this.btRefresh.Click += new System.EventHandler(this.MenuRefreshClick);
             // 
             // labelLogBranch
@@ -182,12 +182,12 @@
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(153, 48);
+            this.contextMenu.Size = new System.Drawing.Size(150, 26);
             // 
             // menuItem
             // 
             this.menuItem.Name = "menuItem";
-            this.menuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuItem.Size = new System.Drawing.Size(149, 22);
             this.menuItem.Text = "No Repository";
             this.menuItem.Click += new System.EventHandler(this.MenuResetClick);
             // 

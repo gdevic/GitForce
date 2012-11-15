@@ -32,7 +32,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Fills in the list of revisions and changes to the repository
         /// </summary>
-        private void RevlistRefresh()
+        public void RevlistRefresh()
         {
             // Clear the current lists in preparation for the refresh
             listRev.Items.Clear();

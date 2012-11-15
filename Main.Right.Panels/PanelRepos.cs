@@ -24,7 +24,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Fill in the list of repositories.
         /// </summary>
-        private void ReposRefresh()
+        public void ReposRefresh()
         {
             listRepos.BeginUpdate();
             listRepos.Items.Clear();

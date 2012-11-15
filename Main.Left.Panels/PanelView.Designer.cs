@@ -148,7 +148,7 @@
             this.btRefresh.ImageTransparentColor = System.Drawing.Color.Black;
             this.btRefresh.Name = "btRefresh";
             this.btRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btRefresh.Text = "Refresh";
+            this.btRefresh.Text = "Refresh Git Status view";
             this.btRefresh.Click += new System.EventHandler(this.MenuRefresh);
             // 
             // btListView
