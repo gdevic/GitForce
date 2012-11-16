@@ -177,9 +177,6 @@ namespace GitForce
             Log = new FormLog();
             Log.ShowWindow(Properties.Settings.Default.ShowLogWindow);
 
-            // Initialize program version support
-            Version = new ClassVersion();
-
             Git = new ClassGit();
 
             // Before we can start, we need to have a functional git executable);
@@ -204,6 +201,8 @@ namespace GitForce
                         GitPasswd = new ClassGitPasswd();
 
                         Repos = new ClassRepos();
+
+                        Version = new ClassVersion();
 
                         MainForm = new FormMain();
                         Application.Run(MainForm);
