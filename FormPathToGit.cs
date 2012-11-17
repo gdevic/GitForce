@@ -70,13 +70,17 @@ namespace GitForce
         /// </summary>
         private void BtInstallClick(object sender, EventArgs e)
         {
-            FormMsysgitInstall msysgit = new FormMsysgitInstall();
+            string installerFile = Path.GetTempFileName(); // Junk name so we can safely call 'Delete'
             try
             {
+                FormDownload msysgit = new FormDownload("Download msysgit",
+                    @"http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git",
+                    @"//(?<file>\S+.exe)", false);
+
                 // If the download succeeded, run the installer file
                 if(msysgit.ShowDialog()==DialogResult.OK)
                 {
-                    string installerFile = msysgit.TargetFile;
+                    installerFile = msysgit.TargetFile;
                     ExecResult ret = Exec.Run(installerFile, String.Empty);
                     if(ret.retcode==0)
                     {
@@ -84,15 +88,17 @@ namespace GitForce
                         if (File.Exists(gitPath))
                             PathToGit = textBoxPath.Text = gitPath;
                     }
-                    // Remove the downloaded file
-                    File.Delete(installerFile);
-
                     DialogResult = DialogResult.OK;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
+            }
+            finally
+            {
+                // Make sure we don't leave temporary files around
+                File.Delete(installerFile);
             }
         }
     }

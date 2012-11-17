@@ -33,7 +33,7 @@ namespace GitForce
                 new AppHelper( "Diffuse",        @"/usr/bin/diffuse",  "%1 %2" ),
         };
 
-        private List<AppHelper> _diff = new List<AppHelper>();
+        private List<AppHelper> diff = new List<AppHelper>();
 
         /// <summary>
         /// Init code to be called on the application startup.
@@ -50,20 +50,20 @@ namespace GitForce
             }
 
             // Search for any of the predefined tools
-            _diff = GetDetected();
+            diff = GetDetected();
 
             // If none of the pre-set diff apps are present, show the missing diff dialog
             // and return with its selection of whether to continue or quit the app
-            if (_diff.Count == 0)
+            if (diff.Count == 0)
             {
                 FormDiffMissing formDiffMissing = new FormDiffMissing();
                 return formDiffMissing.ShowDialog() == DialogResult.OK;
             }
 
             // Otherwise, at least one diff app is present, select it as default
-            Properties.Settings.Default.DiffAppHelper = _diff[0].ToString();
+            Properties.Settings.Default.DiffAppHelper = diff[0].ToString();
 
-            Configure(_diff[0]);
+            Configure(diff[0]);
             return true;
         }
 

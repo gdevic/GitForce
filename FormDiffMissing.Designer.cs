@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelInfo = new System.Windows.Forms.Label();
             this.btClose = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,25 +42,26 @@
             this.linkLabel7 = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.btOK = new System.Windows.Forms.Button();
+            this.btInstall = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // labelInfo
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.labelInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.BackColor = System.Drawing.SystemColors.Info;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(348, 43);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Could not locate a diff utility! This program will have some of its functionality" +
+            this.labelInfo.BackColor = System.Drawing.SystemColors.Info;
+            this.labelInfo.Location = new System.Drawing.Point(12, 9);
+            this.labelInfo.Name = "labelInfo";
+            this.labelInfo.Size = new System.Drawing.Size(349, 43);
+            this.labelInfo.TabIndex = 0;
+            this.labelInfo.Text = "Could not locate a diff utility! This program will have some of its functionality" +
                 " limited until you install a Diff program.";
             // 
             // btClose
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btClose.Location = new System.Drawing.Point(285, 227);
+            this.btClose.Location = new System.Drawing.Point(286, 235);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(75, 23);
             this.btClose.TabIndex = 1;
@@ -73,7 +74,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.Location = new System.Drawing.Point(12, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(348, 23);
+            this.label2.Size = new System.Drawing.Size(349, 23);
             this.label2.TabIndex = 2;
             this.label2.Text = "Currently known diff utilities are:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -187,7 +188,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.Location = new System.Drawing.Point(12, 165);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(348, 57);
+            this.label5.Size = new System.Drawing.Size(349, 65);
             this.label5.TabIndex = 12;
             this.label5.Text = "GitForce will automatically recognize these if they are installed. In Linux, for " +
                 "example, you can install one by simply issuing \"sudo apt-get install xxdiff\" com" +
@@ -197,12 +198,24 @@
             // 
             this.btOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOK.Location = new System.Drawing.Point(204, 227);
+            this.btOK.Location = new System.Drawing.Point(205, 235);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 13;
             this.btOK.Text = "Continue";
             this.btOK.UseVisualStyleBackColor = true;
+            // 
+            // btInstall
+            // 
+            this.btInstall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btInstall.Location = new System.Drawing.Point(12, 235);
+            this.btInstall.Name = "btInstall";
+            this.btInstall.Size = new System.Drawing.Size(108, 23);
+            this.btInstall.TabIndex = 14;
+            this.btInstall.Text = "Install KDiff3";
+            this.btInstall.UseVisualStyleBackColor = true;
+            this.btInstall.Visible = false;
+            this.btInstall.Click += new System.EventHandler(this.BtInstallClick);
             // 
             // FormDiffMissing
             // 
@@ -210,7 +223,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btClose;
-            this.ClientSize = new System.Drawing.Size(372, 262);
+            this.ClientSize = new System.Drawing.Size(373, 270);
+            this.Controls.Add(this.btInstall);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.linkLabel7);
@@ -224,14 +238,14 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btClose);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelInfo);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(314, 226);
+            this.MinimumSize = new System.Drawing.Size(314, 287);
             this.Name = "FormDiffMissing";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Missing Diff utility!";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -240,7 +254,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelInfo;
         private System.Windows.Forms.Button btClose;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -254,5 +268,6 @@
         private System.Windows.Forms.LinkLabel linkLabel7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btOK;
+        private System.Windows.Forms.Button btInstall;
     }
 }
