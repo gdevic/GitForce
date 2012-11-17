@@ -161,6 +161,12 @@
     <Compile Include="FormMergeMissing.Designer.cs">
       <DependentUpon>FormMergeMissing.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMsysgitInstall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMsysgitInstall.Designer.cs">
+      <DependentUpon>FormMsysgitInstall.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormNewBranch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -487,6 +493,9 @@
     <EmbeddedResource Include="FormMergeMissing.resx">
       <DependentUpon>FormMergeMissing.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMsysgitInstall.resx">
+      <DependentUpon>FormMsysgitInstall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBranch.resx">
       <DependentUpon>FormNewBranch.cs</DependentUpon>
