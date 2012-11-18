@@ -244,8 +244,10 @@ namespace GitForce
         /// <summary>
         /// Repo class function that runs a git command in the context of a repository.
         /// Use this function with all user-initiated commands in order to have them printed into the status window.
+        /// NOTE: C# 4.0 is currently not supported on MSVC 2008
         /// </summary>
-        public ExecResult RunCmd(string args, bool async = false)
+        public ExecResult RunCmd(string args) { return RunCmd(args, false); }
+        public ExecResult RunCmd(string args, bool async)
         {
             // Print the actual command line to the status window only if user selected that setting
             if (Properties.Settings.Default.logCommands)
@@ -265,8 +267,10 @@ namespace GitForce
 
         /// <summary>
         /// Repo class function that runs a git command in the context of a repository.
+        /// NOTE: C# 4.0 is currently not supported on MSVC 2008
         /// </summary>
-        public ExecResult Run(string args, bool async = false)
+        public ExecResult Run(string args) { return Run(args, false); }
+        public ExecResult Run(string args, bool async)
         {
             ExecResult output = new ExecResult();
             try

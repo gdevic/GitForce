@@ -74,8 +74,10 @@ namespace GitForce
 
         /// <summary>
         /// A generic function that executes a Git command
+        /// NOTE: C# 4.0 is currently not supported on MSVC 2008
         /// </summary>
-        public static ExecResult Run(string gitcmd, bool async = false)
+        public static ExecResult Run(string gitcmd) { return Run(gitcmd, false); }
+        public static ExecResult Run(string gitcmd, bool async)
         {
             // Pick up git commands that take long time to execute and run them
             // using a threaded execution
