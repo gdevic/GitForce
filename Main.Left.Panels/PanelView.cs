@@ -427,8 +427,8 @@ namespace GitForce.Main.Left.Panels
             ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, MenuViewRevertClick);
 
             // Build the "Diff vs" submenu
-            ToolStripMenuItem mDiffIndex = new ToolStripMenuItem("Index", null, MenuViewDiffClick) { Tag = "" };
-            ToolStripMenuItem mDiffHead = new ToolStripMenuItem("Repository HEAD", null, MenuViewDiffClick) { Tag = "HEAD" };
+            ToolStripMenuItem mDiffIndex = new ToolStripMenuItem("Index", null, MenuViewDiffClick) { ShortcutKeys = Keys.Control | Keys.D, Tag = "" };
+            ToolStripMenuItem mDiffHead = new ToolStripMenuItem("Repository HEAD", null, MenuViewDiffClick) { ShortcutKeys = Keys.Control | Keys.Shift | Keys.D, Tag = "HEAD" };
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs");
             mDiff.DropDownItems.Add(mDiffIndex);
             mDiff.DropDownItems.Add(mDiffHead);
@@ -436,14 +436,18 @@ namespace GitForce.Main.Left.Panels
             // Build the "Edit Using" submenus
             // The default option is to open the file using the OS-associated editor,
             // after which all the user-specified programs are listed
-            ToolStripMenuItem mEditAssoc = new ToolStripMenuItem("Associated Editor", null, MenuViewEditClick);
+            ToolStripMenuItem mEditAssoc = new ToolStripMenuItem("Associated Editor", null, MenuViewEditClick) { ShortcutKeys = Keys.Control | Keys.Enter }; // Enter on it's own is better, but is not supported
             ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Using");
             mEdit.DropDownItems.Add(mEditAssoc);
             string[] progs = Properties.Settings.Default.EditViewPrograms.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (string s in progs)
+            if (progs.Any())
+            {
+                mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(progs[0]), null, MenuViewEditClick) { Tag = progs[0], ShortcutKeys = Keys.Control | Keys.Shift | Keys.Enter });
+                foreach (string s in progs.Skip(1))
                 mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuViewEditClick) {Tag = s});
+            }
 
-            ToolStripMenuItem mRevHist = new ToolStripMenuItem("Revision History...", null, MenuViewRevHistClick);
+            ToolStripMenuItem mRevHist = new ToolStripMenuItem("Revision History...", null, MenuViewRevHistClick) { ShortcutKeys = Keys.Control | Keys.H };
             ToolStripMenuItem mRename = new ToolStripMenuItem("Move/Rename...", null, MenuViewRenameClick);
             ToolStripMenuItem mDelete = new ToolStripMenuItem("Open for Delete", null, MenuViewOpenForDeleteClick);
             ToolStripMenuItem mRemove = new ToolStripMenuItem("Remove from File System", null, MenuViewRemoveFromFsClick);
