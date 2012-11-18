@@ -75,7 +75,7 @@ namespace GitForce
         /// <summary>
         /// A generic function that executes a Git command
         /// </summary>
-        public static ExecResult Run(string gitcmd)
+        public static ExecResult Run(string gitcmd, bool async = false)
         {
             // Pick up git commands that take long time to execute and run them
             // using a threaded execution
@@ -89,7 +89,14 @@ namespace GitForce
                 return formGitRun.GetResult();
             }
 
-            return Exec.Run(Properties.Settings.Default.GitPath, gitcmd);
+            if (!async)
+            {
+                return Exec.Run(Properties.Settings.Default.GitPath, gitcmd);
+            }
+
+            var job = new Exec(Properties.Settings.Default.GitPath, gitcmd);
+            job.AsyncRun(s => App.PrintStatusMessage(s), s => App.PrintStatusMessage(s), null);
+            return new ExecResult();
         }
     }
 }
