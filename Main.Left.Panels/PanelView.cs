@@ -1,15 +1,15 @@
 ﻿using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
 using GitForce.Main.Right.Panels;
 
 namespace GitForce.Main.Left.Panels
@@ -35,6 +35,7 @@ namespace GitForce.Main.Left.Panels
             // Initialize the current view
             // Current view mode is persistent and stored in in Properties.Settings.Default.viewMode (int)
             SetView(Properties.Settings.Default.viewMode);
+
             // Since we use the FullPath property for its intended use (to return a path of a file)
             // set the correct path separator character for the platform ('\' or '/' for Windows and Linux)
             treeView.PathSeparator = Path.DirectorySeparatorChar.ToString();
@@ -94,14 +95,17 @@ namespace GitForce.Main.Left.Panels
                     case 0:     // Git status of all files: status + untracked
                         files = Status.GetFiles();
                         break;
+
                     case 1:     // Git status of files: status - untracked
                         files = Status.GetFiles();
+
                         // Remove all untracked files
                         files = files.Where(s => Status.Xcode(s) != '?').ToList();
                         break;
+
                     case 2:     // Git view of repo: ls-tree
                         ExecResult result = App.Repos.Current.Run("ls-tree --abbrev -r -z HEAD");
-                        if(result.Success())
+                        if (result.Success())
                         {
                             string[] response = result.stdout
                                 .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
@@ -110,14 +114,18 @@ namespace GitForce.Main.Left.Panels
                             files.AddRange(response.Select(s => s.Split('\t').Last()));
                         }
                         break;
+
                     case 3:     // Local file view: use local directory list
                         files = GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root);
+
                         // Remove the repo root from the file paths
                         int rootlen = App.Repos.Current.Root.Length;
                         files = files.Select(file => file.Substring(rootlen + 1)).ToList();
                         break;
+
                     case 4:     // Local files not in repo: untracked only
                         files = Status.GetFiles();
+
                         // Leave only untracked files
                         files = files.Where(s => Status.Xcode(s) == '?').ToList();
                         break;
@@ -139,8 +147,8 @@ namespace GitForce.Main.Left.Panels
 
                 // Set the first node (root) image according to the view mode
                 node.ImageIndex = mode == 2
-                                      ? (int) ClassView.Img.DatabaseOpened
-                                      : (int) ClassView.Img.FolderOpened;
+                                      ? (int)ClassView.Img.DatabaseOpened
+                                      : (int)ClassView.Img.FolderOpened;
 
                 // Always keep the root node expanded by default
                 node.Expand();
@@ -168,7 +176,7 @@ namespace GitForce.Main.Left.Panels
             TreeNodeCollection nodes = rootNode.Nodes;
             foreach (TreeNode tn in nodes)
             {
-                if( App.Repos.Current.IsExpanded(tn.Tag.ToString()))
+                if (App.Repos.Current.IsExpanded(tn.Tag.ToString()))
                 {
                     // This will call TreeViewAfterExpand()
                     tn.Expand();
@@ -193,6 +201,7 @@ namespace GitForce.Main.Left.Panels
         private void TreeViewAfterCollapse(object sender, TreeViewEventArgs e)
         {
             TreeNode tn = e.Node;
+
             // If the user closed the root node, collapse everything
             if (tn == treeView.Nodes[0])
             {
@@ -256,7 +265,7 @@ namespace GitForce.Main.Left.Panels
         private void TreeViewDoubleClick(object sender, EventArgs e)
         {
             string file = GetSelectedFile();
-            if (file!=string.Empty)
+            if (file != string.Empty)
             {
                 ClassUtils.FileDoubleClick(file);
                 WatchAndRefresh(file);
@@ -397,6 +406,8 @@ namespace GitForce.Main.Left.Panels
                 button.Value.Enabled = false;
             foreach (var allowedOp in allowedOps.Where(allowedOp => StatusButtons.ContainsKey(allowedOp)))
                 StatusButtons[allowedOp].Enabled = true;
+
+            App.MainForm.BuildFileMenu();
         }
 
         /// <summary>
@@ -444,7 +455,7 @@ namespace GitForce.Main.Left.Panels
             {
                 mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(progs[0]), null, MenuViewEditClick) { Tag = progs[0], ShortcutKeys = Keys.Control | Keys.Shift | Keys.Enter });
                 foreach (string s in progs.Skip(1))
-                mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuViewEditClick) {Tag = s});
+                    mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuViewEditClick) { Tag = s });
             }
 
             ToolStripMenuItem mRevHist = new ToolStripMenuItem("Revision History...", null, MenuViewRevHistClick) { ShortcutKeys = Keys.Control | Keys.H };
@@ -514,7 +525,7 @@ namespace GitForce.Main.Left.Panels
             // Each file needs to have an absolute path, so prepend the repo root
             // These are files and directories, bundled together
             List<string> files = new List<string>();
-            foreach(string s in sel.SelFiles)
+            foreach (string s in sel.SelFiles)
                 files.Add(Path.Combine(App.Repos.Current.Root, s));
 
             ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
@@ -541,6 +552,7 @@ namespace GitForce.Main.Left.Panels
         }
 
         #region Handlers for file actions related to Git
+
         /// Add to Git
         /// Update Changelist
         /// Update all Changed files
@@ -558,7 +570,7 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewAddFilesClick(object sender, EventArgs e)
         {
             Selection sel = new Selection(treeView, Status);
-            if(sel.Opclass.ContainsKey('?'))
+            if (sel.Opclass.ContainsKey('?'))
                 Status.Repo.GitAdd(sel.Opclass['?']);
             App.DoRefresh();
         }
@@ -694,7 +706,7 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void OnFileChanged(object source, FileSystemEventArgs e)
         {
-            if(App.MainForm.InvokeRequired)
+            if (App.MainForm.InvokeRequired)
                 App.MainForm.BeginInvoke((MethodInvoker)(() => OnFileChanged(source, e)));
             else
                 App.DoRefresh();
@@ -717,13 +729,13 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewRevHistClick(object sender, EventArgs e)
         {
             Selection sel = new Selection(treeView, Status);
-            if(sel.SelFiles.Count()==1)
+            if (sel.SelFiles.Count() == 1)
             {
                 FormRevisionHistory formRevisionHistory = new FormRevisionHistory(sel.SelFiles[0]);
                 formRevisionHistory.Show();
             }
         }
-        
-        #endregion
+
+        #endregion Handlers for file actions related to Git
     }
 }

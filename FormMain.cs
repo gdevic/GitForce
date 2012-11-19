@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -26,6 +26,7 @@ namespace GitForce
 
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
+
         private static readonly PanelCommits PanelCommits = new PanelCommits();
         private static readonly PanelRevlist PanelRevlist = new PanelRevlist();
         private static readonly PanelBranches PanelBranches = new PanelBranches();
@@ -91,7 +92,7 @@ namespace GitForce
             // We prevent Log window form closing by getting a FormClosing event within which we set "e.Cancel" to True
             App.Log.FormClosing += LogWindowToolStripMenuItemClick;
             menuViewLogWindow.Checked = Properties.Settings.Default.ShowLogWindow;
-			
+
             // Add all callback handlers
             App.Refresh += FormMainRefresh;         // Refresh, when any component wants to update the global state
             App.PrintStatusMessage += PrintStatus;  // Print a line of status message
@@ -120,8 +121,8 @@ namespace GitForce
 
             // If there is no current repo, switch the right panel view to Repos
             // Otherwise, restore the last view panel
-            ChangeRightPanel(App.Repos.Current == null ? 
-                "Repos" : 
+            ChangeRightPanel(App.Repos.Current == null ?
+                "Repos" :
                 Properties.Settings.Default.viewRightPanel);
 
             // Initiate the first global refresh
@@ -164,12 +165,17 @@ namespace GitForce
             Close();
         }
 
-        #endregion
+        #endregion Initialization
 
         /// <summary>
         /// Main File menu drop down
         /// </summary>
         private void MenuMainFileDropDownOpening(object sender, EventArgs e)
+        {
+            BuildFileMenu();
+        }
+
+        public void BuildFileMenu()
         {
             menuMainFile.DropDownItems.Clear();
             menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown));
@@ -189,7 +195,7 @@ namespace GitForce
             mWkSave.Enabled = App.Repos.Current != null;
 
             menuMainFile.DropDownItems.AddRange(new ToolStripItem[] {
-                    new ToolStripSeparator(), 
+                    new ToolStripSeparator(),
                     mWkClear, mWkLoad, mWkSave, mWkLru,
                     new ToolStripSeparator(),
                     mExit });
@@ -201,8 +207,8 @@ namespace GitForce
         private void WorkspaceClearMenuItem(object sender, EventArgs e)
         {
             // Save existing workspace before zapping it
-            if(MessageBox.Show("Current workspace will be cleared from all git repositories. Continue?", 
-                "Clear Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)==DialogResult.Yes)
+            if (MessageBox.Show("Current workspace will be cleared from all git repositories. Continue?",
+                "Clear Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 if (ClassWorkspace.Save(null))
                     ClassWorkspace.Clear();
@@ -241,7 +247,7 @@ namespace GitForce
         /// </summary>
         private void WorkspaceSaveMenuItem(object sender, EventArgs e)
         {
-            if(saveWk.ShowDialog()==DialogResult.OK)
+            if (saveWk.ShowDialog() == DialogResult.OK)
                 ClassWorkspace.Save(saveWk.FileName);
         }
 
@@ -302,7 +308,7 @@ namespace GitForce
         /// </summary>
         private void PrintStatus(string message)
         {
-            if(string.IsNullOrEmpty(message))
+            if (string.IsNullOrEmpty(message))
                 return;
             if (listStatus.InvokeRequired)
                 listStatus.BeginInvoke((MethodInvoker)(() => PrintStatus(message)));
@@ -353,7 +359,7 @@ namespace GitForce
         private void SetBusy(bool isBusy)
         {
             // If the signal is to clear the busy flag, arm the timer to do it few ms later
-            if( isBusy==false)
+            if (isBusy == false)
             {
                 timerBusy.Interval = 300;
                 timerBusy.Enabled = true;
@@ -372,7 +378,7 @@ namespace GitForce
         /// </summary>
         private void TimerBusyTick(object sender, EventArgs e)
         {
-            if((bool)timerBusy.Tag==false)
+            if ((bool)timerBusy.Tag == false)
             {
                 Cursor = Cursors.Default;
                 btCancelOperation.Enabled = false;
@@ -408,7 +414,7 @@ namespace GitForce
             Text = title.ToString();
 
             // Build the menu with the list of remote repos
-            menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainFetchFromRemote.Enabled = 
+            menuMainPushToRemote.Enabled = menuMainPullFromRemote.Enabled = menuMainFetchFromRemote.Enabled =
                 menuMainEditRemoteRepo.Enabled = menuMainSwitchRemoteRepo.Enabled = false;
             btPull.Enabled = btPush.Enabled = false;
 
@@ -419,7 +425,7 @@ namespace GitForce
                 foreach (string s in remotes)
                 {
                     // Create a new menu items for each remote repository
-                    ToolStripMenuItem m = new ToolStripMenuItem(s, null, RemoteChanged) {Checked = false};
+                    ToolStripMenuItem m = new ToolStripMenuItem(s, null, RemoteChanged) { Checked = false };
                     menuMainSwitchRemoteRepo.DropDownItems.Add(m);
 
                     // For the current repository, add a checkmark and enable corresponding
@@ -573,7 +579,7 @@ namespace GitForce
             menuMainRepository.DropDownItems.Clear();
             menuMainRepository.DropDownItems.AddRange(PanelRepos.GetContextMenu(menuMainRepository.DropDown));
 
-            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionClick, Keys.F10) {Tag = "Repos"};
+            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionClick, Keys.F10) { Tag = "Repos" };
             menuMainRepository.DropDownItems.AddRange(new ToolStripItem[] { mRepos });
         }
 
@@ -585,7 +591,7 @@ namespace GitForce
             menuMainBranch.DropDownItems.Clear();
             menuMainBranch.DropDownItems.AddRange(PanelBranches.GetContextMenu(menuMainBranch.DropDown));
 
-            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8) {Tag = "Branches"};
+            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8) { Tag = "Branches" };
             menuMainBranch.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
         }
 
@@ -602,8 +608,8 @@ namespace GitForce
             if (Properties.Settings.Default.viewRightPanel == "Revisions")
                 menuMainChangelist.DropDownItems.AddRange(PanelRevlist.GetContextMenu(menuMainChangelist.DropDown));
 
-            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionClick, Keys.F6) {Tag = "Commits"};
-            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionClick, Keys.F7) {Tag = "Revisions"};
+            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionClick, Keys.F6) { Tag = "Commits" };
+            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionClick, Keys.F7) { Tag = "Revisions" };
             menuMainChangelist.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mPending, mSubmitted });
         }
 
@@ -646,7 +652,7 @@ namespace GitForce
             listStatus.Items.Clear();
         }
 
-        #endregion
+        #endregion Status menu handlers
 
         /// <summary>
         /// Manage SSH Keys
@@ -690,7 +696,7 @@ namespace GitForce
         {
             FormStash formStash = new FormStash();
             if (formStash.ShowDialog() == DialogResult.OK)
-                App.DoRefresh();                
+                App.DoRefresh();
         }
 
         /// <summary>
@@ -718,11 +724,11 @@ namespace GitForce
                 new ToolStripMenuItem("Export", null, ExportToolMenuItemClick) });
 
             // Add all custom tools to the tools menu
-            if(App.CustomTools.Tools.Count>0)
+            if (App.CustomTools.Tools.Count > 0)
             {
                 menuMainTools.DropDownItems.Add(new ToolStripSeparator());
                 foreach (var tool in App.CustomTools.Tools)
-                    menuMainTools.DropDownItems.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) {Tag = tool});
+                    menuMainTools.DropDownItems.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
             }
         }
 
@@ -741,7 +747,7 @@ namespace GitForce
         /// </summary>
         private void ImportToolMenuItemClick(object sender, EventArgs e)
         {
-            if(openTools.ShowDialog()==DialogResult.OK)
+            if (openTools.ShowDialog() == DialogResult.OK)
             {
                 ClassCustomTools newTools = ClassCustomTools.Load(openTools.FileName);
                 if (newTools != null)
@@ -774,7 +780,7 @@ namespace GitForce
             PanelView.CustomToolClicked(sender, e);
         }
 
-        #endregion
+        #endregion Custom Tools menu handlers
 
         /// <summary>
         /// Getting started help menu
@@ -801,13 +807,15 @@ namespace GitForce
         /// </summary>
         private void CmdBoxTextReady(object sender, string cmd)
         {
-            foreach (string command in cmd.Split(new[] {" && "}, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string command in cmd.Split(new[] { " && " }, StringSplitOptions.RemoveEmptyEntries))
             {
                 // Print out the command itself
                 App.PrintStatusMessage(command);
+
                 // If the command text started with a command 'git', remove it
                 string[] tokens = command.Split(' ');
                 string args = String.Join(" ", tokens, 1, tokens.Count() - 1);
+
                 // We are guaranteed to have at least one token (by the TextBoxEx control)
                 string run;
                 if (tokens[0].ToLower() == "git")
