@@ -566,6 +566,11 @@ namespace GitForce
             bool @checked = menuViewCommandLine.Checked;
             Properties.Settings.Default.ShowCommandLine = menuViewCommandLine.Checked = !@checked;
             cmdBox.Visible = !@checked;
+            if (cmdBox.Visible)
+            {
+                cmdBox.SelectAll();
+                cmdBox.Focus();
+            }
 
             // This is purely cosmetic: pushes the list pane text up to cleanly reveal the tail
             listStatus.TopIndex = listStatus.Items.Count - 1;
