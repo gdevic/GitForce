@@ -38,6 +38,13 @@ namespace GitForce
             { "Branches", PanelBranches },
         };
 
+        private static readonly Dictionary<string, string> PanelsRShortcuts = new Dictionary<string, string> {
+            { "Repos", "F10" },
+            { "Commits", "F6" },
+            { "Revisions", "F7" },
+            { "Branches", "F8"},
+        };
+
         /// <summary>
         /// Flags to use when calling SelectiveRefresh function
         /// </summary>
@@ -73,10 +80,12 @@ namespace GitForce
             PanelView.Dock = DockStyle.Fill;
 
             // Right set of panels:
-            foreach (UserControl control in PanelsR.Select(uc => uc.Value))
+            foreach (var panel in PanelsR)
             {
-                splitContainer2.Panel2.Controls.Add(control);
-                control.Dock = DockStyle.Fill;
+                var tabPage = new TabPage(panel.Key) { Name = panel.Key, ToolTipText = panel.Key + " (" + PanelsRShortcuts[panel.Key] + ")" };
+                panel.Value.Dock = DockStyle.Fill;
+                tabPage.Controls.Add(panel.Value);
+                rightTabControl.TabPages.Add(tabPage);
             }
 
             // Show or hide command line
@@ -290,14 +299,13 @@ namespace GitForce
         /// </summary>
         private void ChangeRightPanel(string panelName)
         {
-            UserControl panel = PanelsR[panelName];
-            panel.BringToFront();
+            rightTabControl.SelectTab(panelName);
             Properties.Settings.Default.viewRightPanel = panelName;
         }
 
         private void RightPanelSelectionClick(object sender, EventArgs e)
         {
-            ChangeRightPanel((sender as ToolStripItem).Tag.ToString());
+            ChangeRightPanel(((ToolStripItem)sender).Tag.ToString());
         }
 
         /// <summary>
