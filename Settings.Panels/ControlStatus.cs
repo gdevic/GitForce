@@ -14,6 +14,9 @@ namespace GitForce.Settings.Panels
         public ControlStatus()
         {
             InitializeComponent();
+
+            // Update visuals on dependent checkbox as described below
+            CheckBoxShowTimestampCheckedChanged(null, null);
         }
 
         /// <summary>
@@ -42,6 +45,14 @@ namespace GitForce.Settings.Panels
             Properties.Settings.Default.logCommands = checkBoxShowGitCommands.Checked;
             Properties.Settings.Default.logTime = checkBoxShowTimestamp.Checked;
             Properties.Settings.Default.logTime24 = checkBoxUse24HourClock.Checked;
+        }
+
+        /// <summary>
+        /// The option to use 24-hour clock is dependent on showing the timestamp
+        /// </summary>
+        private void CheckBoxShowTimestampCheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxUse24HourClock.Enabled = checkBoxShowTimestamp.Checked;
         }
     }
 }

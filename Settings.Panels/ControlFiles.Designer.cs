@@ -31,6 +31,8 @@
             this.checkBoxIgnoreCase = new System.Windows.Forms.CheckBox();
             this.checkBoxShowDotGit = new System.Windows.Forms.CheckBox();
             this.checkBoxDeepScan = new System.Windows.Forms.CheckBox();
+            this.checkBoxRefreshOnChange = new System.Windows.Forms.CheckBox();
+            this.checkBoxReaddOnChange = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // checkBoxIgnoreCase
@@ -63,10 +65,33 @@
             this.checkBoxDeepScan.Text = "Perform deep Repo Scan (able to find submodules)";
             this.checkBoxDeepScan.UseVisualStyleBackColor = true;
             // 
+            // checkBoxRefreshOnChange
+            // 
+            this.checkBoxRefreshOnChange.AutoSize = true;
+            this.checkBoxRefreshOnChange.Location = new System.Drawing.Point(3, 72);
+            this.checkBoxRefreshOnChange.Name = "checkBoxRefreshOnChange";
+            this.checkBoxRefreshOnChange.Size = new System.Drawing.Size(250, 17);
+            this.checkBoxRefreshOnChange.TabIndex = 3;
+            this.checkBoxRefreshOnChange.Text = "Automatically refresh if any index file is changed";
+            this.checkBoxRefreshOnChange.UseVisualStyleBackColor = true;
+            this.checkBoxRefreshOnChange.CheckedChanged += new System.EventHandler(this.CheckBoxRefreshOnChangeCheckedChanged);
+            // 
+            // checkBoxReaddOnChange
+            // 
+            this.checkBoxReaddOnChange.AutoSize = true;
+            this.checkBoxReaddOnChange.Location = new System.Drawing.Point(30, 95);
+            this.checkBoxReaddOnChange.Name = "checkBoxReaddOnChange";
+            this.checkBoxReaddOnChange.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxReaddOnChange.TabIndex = 4;
+            this.checkBoxReaddOnChange.Text = "Re-add files to index on change";
+            this.checkBoxReaddOnChange.UseVisualStyleBackColor = true;
+            // 
             // ControlFiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBoxReaddOnChange);
+            this.Controls.Add(this.checkBoxRefreshOnChange);
             this.Controls.Add(this.checkBoxDeepScan);
             this.Controls.Add(this.checkBoxShowDotGit);
             this.Controls.Add(this.checkBoxIgnoreCase);
@@ -82,5 +107,7 @@
         private System.Windows.Forms.CheckBox checkBoxIgnoreCase;
         private System.Windows.Forms.CheckBox checkBoxShowDotGit;
         private System.Windows.Forms.CheckBox checkBoxDeepScan;
+        private System.Windows.Forms.CheckBox checkBoxRefreshOnChange;
+        private System.Windows.Forms.CheckBox checkBoxReaddOnChange;
     }
 }

@@ -52,6 +52,7 @@
             this.checkBoxShowTimestamp.TabIndex = 1;
             this.checkBoxShowTimestamp.Text = "Show timestamp for status messages";
             this.checkBoxShowTimestamp.UseVisualStyleBackColor = true;
+            this.checkBoxShowTimestamp.CheckedChanged += new System.EventHandler(this.CheckBoxShowTimestampCheckedChanged);
             // 
             // checkBoxUse24HourClock
             // 

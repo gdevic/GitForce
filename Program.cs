@@ -204,8 +204,9 @@ namespace GitForce
 
                         Version = new ClassVersion();
 
-                        MainForm = new FormMain();
-                        Application.Run(MainForm);
+                        MainForm = new FormMain();      // Create the main form
+                        DoRefresh();                    // Initial global refresh
+                        Application.Run(MainForm);      // Run the main form
 
                         Properties.Settings.Default.Save();
 

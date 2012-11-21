@@ -18,6 +18,16 @@ namespace GitForce.Main.Right.Panels
         private ClassStatus Status;
 
         /// <summary>
+        /// File system watchers for files in the index
+        /// </summary>
+        private readonly List<FileSystemWatcher> watcher = new List<FileSystemWatcher>();
+
+        /// <summary>
+        /// Timer used to postpone refresh operation: 500ms trigger, single-shot
+        /// </summary>
+        private readonly System.Timers.Timer timer = new System.Timers.Timer(500) { AutoReset = false };
+
+        /// <summary>
         /// Class constructor
         /// </summary>
         public PanelCommits()
@@ -27,6 +37,8 @@ namespace GitForce.Main.Right.Panels
             treeCommits.ImageList = ClassView.GetImageList();
 
             App.Refresh += CommitsRefresh;
+
+            timer.Elapsed += MenuRefreshClick;
         }
 
         /// <summary>
@@ -36,6 +48,8 @@ namespace GitForce.Main.Right.Panels
         {
             treeCommits.BeginUpdate();
             treeCommits.NodesClear();
+            foreach (var fileSystemWatcher in watcher)
+                fileSystemWatcher.Dispose();
 
             if (App.Repos.Current != null)
             {
@@ -59,14 +73,72 @@ namespace GitForce.Main.Right.Panels
 
                 // Always keep the root node expanded by default
                 node.Expand();
+
+                // If enabled, create a set of file system watchers for files in the index
+                if (Properties.Settings.Default.RefreshOnChange)
+                try
+                {
+                    foreach (var file in files)
+                    {
+                        string fullPath = Path.Combine(Status.Repo.Root, file);
+                        var watch = new FileSystemWatcher(Path.GetDirectoryName(fullPath))
+                        {
+                            Filter = Path.GetFileName(fullPath),
+                            EnableRaisingEvents = true,
+                            NotifyFilter = NotifyFilters.LastWrite
+                        };
+                        // When a file changes, we don't simply call the refresh since that would
+                        // result in multiple consecutive refreshes, especially since the
+                        // FileSystemWatcher generates multiple events for a single file changed.
+                        // We 'arm' the refresh and then postpone it just a bit every time it is
+                        // triggered. At the end of a sequence, refresh is actually called.
+                        watch.Changed += delegate { ArmRefresh(); };
+                        watcher.Add(watch);
+                    }
+
+                    // If enabled, automatically ***re-add*** files that are in the index and changed
+                    if (Properties.Settings.Default.ReaddOnChange)
+                    {
+                        List<string> modified = files.Where(s => (Status.Ycode(s) == 'M')).ToList();
+                        if (modified.Count > 0)
+                        {
+                            Status.Repo.GitUpdate(modified);
+                            ArmRefresh();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // We don't expect this to happen, but file system watcher is finicky...
+                    App.PrintStatusMessage(ex.Message);
+                }
             }
             treeCommits.EndUpdate();
         }
 
         /// <summary>
         /// Shortcut function to the panel refresh
+        /// This is a thread-safe refresh function: it is also triggered by a timer event
         /// </summary>
-        private void MenuRefreshClick(object sender, EventArgs e) { CommitsRefresh(); }
+        private void MenuRefreshClick(object sender, EventArgs e)
+        {
+            MethodInvoker refresh = () =>
+                App.MainForm.SelectiveRefresh(FormMain.SelectveRefreshFlags.View | FormMain.SelectveRefreshFlags.Commits);
+            if (InvokeRequired)
+                BeginInvoke(refresh);
+            else
+                refresh.Invoke();            
+        }
+
+        /// <summary>
+        /// Arms the future refresh operation
+        /// </summary>
+        private void ArmRefresh()
+        {
+            // Stop and re-enable the timer: this effectively postpones it
+            timer.Stop();
+            timer.Enabled = true;
+        }
 
         /// <summary>
         /// Returns a set of selected git files

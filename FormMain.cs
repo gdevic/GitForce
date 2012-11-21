@@ -124,9 +124,6 @@ namespace GitForce
             ChangeRightPanel(App.Repos.Current == null ?
                 "Repos" :
                 Properties.Settings.Default.viewRightPanel);
-
-            // Initiate the first global refresh
-            App.DoRefresh();
         }
 
         /// <summary>

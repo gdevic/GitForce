@@ -14,6 +14,9 @@ namespace GitForce.Settings.Panels
         public ControlFiles()
         {
             InitializeComponent();
+
+            // Update visuals on dependent checkbox as described below
+            CheckBoxRefreshOnChangeCheckedChanged(null, null);
         }
 
         /// <summary>
@@ -26,9 +29,13 @@ namespace GitForce.Settings.Panels
             checkBoxIgnoreCase.Checked = (value.ToLower() == "true") ? true : false;
             checkBoxShowDotGit.Checked = Properties.Settings.Default.ShowDotGitFolders;
             checkBoxDeepScan.Checked = Properties.Settings.Default.RepoDeepScan;
+            checkBoxRefreshOnChange.Checked = Properties.Settings.Default.RefreshOnChange;
+            checkBoxReaddOnChange.Checked = Properties.Settings.Default.ReaddOnChange;
 
             // Add the dirty (modified) value changed helper
             checkBoxIgnoreCase.CheckStateChanged += ControlDirtyHelper.ControlDirty;
+            checkBoxRefreshOnChange.CheckStateChanged += ControlDirtyHelper.ControlDirty;
+            checkBoxReaddOnChange.CheckStateChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>
@@ -51,6 +58,23 @@ namespace GitForce.Settings.Panels
 
             Properties.Settings.Default.ShowDotGitFolders = checkBoxShowDotGit.Checked;
             Properties.Settings.Default.RepoDeepScan = checkBoxDeepScan.Checked;
+            Properties.Settings.Default.RefreshOnChange = checkBoxRefreshOnChange.Checked;
+            Properties.Settings.Default.ReaddOnChange = checkBoxReaddOnChange.Checked;
+
+            // If the auto-refresh settings were changed, run the commits refresh to (de)arm the code
+            if(checkBoxRefreshOnChange.Tag != null || checkBoxReaddOnChange.Tag != null)
+            {
+                App.MainForm.SelectiveRefresh(FormMain.SelectveRefreshFlags.Commits);
+                checkBoxRefreshOnChange.Tag = checkBoxReaddOnChange.Tag = null;
+            }
+        }
+
+        /// <summary>
+        /// The option to re-add on change is dependent on refresh on change
+        /// </summary>
+        private void CheckBoxRefreshOnChangeCheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxReaddOnChange.Enabled = checkBoxRefreshOnChange.Checked;
         }
     }
 }

@@ -501,7 +501,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 51);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -513,8 +513,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listStatus);
             this.splitContainer1.Panel2.Controls.Add(this.cmdBox);
-            this.splitContainer1.Size = new System.Drawing.Size(784, 431);
-            this.splitContainer1.SplitterDistance = 239;
+            this.splitContainer1.Size = new System.Drawing.Size(784, 429);
+            this.splitContainer1.SplitterDistance = 237;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
@@ -523,7 +523,7 @@
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Size = new System.Drawing.Size(784, 239);
+            this.splitContainer2.Size = new System.Drawing.Size(784, 237);
             this.splitContainer2.SplitterDistance = 373;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -615,7 +615,7 @@
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip.Size = new System.Drawing.Size(784, 25);
+            this.toolStrip.Size = new System.Drawing.Size(784, 27);
             this.toolStrip.TabIndex = 3;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -626,7 +626,7 @@
             this.btAdd.Image = ((System.Drawing.Image)(resources.GetObject("btAdd.Image")));
             this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(23, 22);
+            this.btAdd.Size = new System.Drawing.Size(23, 24);
             this.btAdd.Text = "Add file to Git";
             // 
             // btUpdate
@@ -636,7 +636,7 @@
             this.btUpdate.Image = ((System.Drawing.Image)(resources.GetObject("btUpdate.Image")));
             this.btUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btUpdate.Name = "btUpdate";
-            this.btUpdate.Size = new System.Drawing.Size(23, 22);
+            this.btUpdate.Size = new System.Drawing.Size(23, 24);
             this.btUpdate.Text = "Update Changelist";
             // 
             // btUpdateAll
@@ -646,7 +646,7 @@
             this.btUpdateAll.Image = ((System.Drawing.Image)(resources.GetObject("btUpdateAll.Image")));
             this.btUpdateAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btUpdateAll.Name = "btUpdateAll";
-            this.btUpdateAll.Size = new System.Drawing.Size(23, 22);
+            this.btUpdateAll.Size = new System.Drawing.Size(23, 24);
             this.btUpdateAll.Text = "Update Changelist with All Files";
             // 
             // btRevert
@@ -656,7 +656,7 @@
             this.btRevert.Image = ((System.Drawing.Image)(resources.GetObject("btRevert.Image")));
             this.btRevert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btRevert.Name = "btRevert";
-            this.btRevert.Size = new System.Drawing.Size(23, 22);
+            this.btRevert.Size = new System.Drawing.Size(23, 24);
             this.btRevert.Text = "Revert";
             // 
             // btDelete
@@ -666,7 +666,7 @@
             this.btDelete.Image = ((System.Drawing.Image)(resources.GetObject("btDelete.Image")));
             this.btDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(23, 22);
+            this.btDelete.Size = new System.Drawing.Size(23, 24);
             this.btDelete.Text = "Open for Delete";
             // 
             // btDeleteFs
@@ -676,7 +676,7 @@
             this.btDeleteFs.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteFs.Image")));
             this.btDeleteFs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btDeleteFs.Name = "btDeleteFs";
-            this.btDeleteFs.Size = new System.Drawing.Size(23, 22);
+            this.btDeleteFs.Size = new System.Drawing.Size(23, 24);
             this.btDeleteFs.Text = "Delete from File System";
             // 
             // btEdit
@@ -686,13 +686,13 @@
             this.btEdit.Image = ((System.Drawing.Image)(resources.GetObject("btEdit.Image")));
             this.btEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btEdit.Name = "btEdit";
-            this.btEdit.Size = new System.Drawing.Size(23, 22);
+            this.btEdit.Size = new System.Drawing.Size(23, 24);
             this.btEdit.Text = "Edit using default editor";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 27);
             // 
             // btPull
             // 
@@ -701,7 +701,7 @@
             this.btPull.Image = ((System.Drawing.Image)(resources.GetObject("btPull.Image")));
             this.btPull.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btPull.Name = "btPull";
-            this.btPull.Size = new System.Drawing.Size(23, 22);
+            this.btPull.Size = new System.Drawing.Size(23, 24);
             this.btPull.Text = "Pull from Remote Repo";
             this.btPull.Click += new System.EventHandler(this.MenuRepoPull);
             // 
@@ -712,14 +712,14 @@
             this.btPush.Image = ((System.Drawing.Image)(resources.GetObject("btPush.Image")));
             this.btPush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btPush.Name = "btPush";
-            this.btPush.Size = new System.Drawing.Size(23, 22);
+            this.btPush.Size = new System.Drawing.Size(23, 24);
             this.btPush.Text = "Push to Remote Repo";
             this.btPush.Click += new System.EventHandler(this.MenuRepoPush);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 27);
             // 
             // btChangelists
             // 
@@ -728,7 +728,7 @@
             this.btChangelists.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btChangelists.ImageTransparentColor = System.Drawing.Color.Black;
             this.btChangelists.Name = "btChangelists";
-            this.btChangelists.Size = new System.Drawing.Size(23, 22);
+            this.btChangelists.Size = new System.Drawing.Size(23, 24);
             this.btChangelists.Tag = "Commits";
             this.btChangelists.Text = "View Pending Changelists";
             this.btChangelists.Click += new System.EventHandler(this.RightPanelSelectionClick);
@@ -740,7 +740,7 @@
             this.btSubmitted.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btSubmitted.ImageTransparentColor = System.Drawing.Color.Black;
             this.btSubmitted.Name = "btSubmitted";
-            this.btSubmitted.Size = new System.Drawing.Size(23, 22);
+            this.btSubmitted.Size = new System.Drawing.Size(23, 24);
             this.btSubmitted.Tag = "Revisions";
             this.btSubmitted.Text = "View Submitted Changelists";
             this.btSubmitted.Click += new System.EventHandler(this.RightPanelSelectionClick);
@@ -752,7 +752,7 @@
             this.btBranches.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btBranches.ImageTransparentColor = System.Drawing.Color.Black;
             this.btBranches.Name = "btBranches";
-            this.btBranches.Size = new System.Drawing.Size(23, 22);
+            this.btBranches.Size = new System.Drawing.Size(23, 24);
             this.btBranches.Tag = "Branches";
             this.btBranches.Text = "View Branches";
             this.btBranches.Click += new System.EventHandler(this.RightPanelSelectionClick);
@@ -764,7 +764,7 @@
             this.btRepos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btRepos.ImageTransparentColor = System.Drawing.Color.Black;
             this.btRepos.Name = "btRepos";
-            this.btRepos.Size = new System.Drawing.Size(23, 22);
+            this.btRepos.Size = new System.Drawing.Size(23, 24);
             this.btRepos.Tag = "Repos";
             this.btRepos.Text = "View Repositories";
             this.btRepos.Click += new System.EventHandler(this.RightPanelSelectionClick);
@@ -772,7 +772,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // btCancelOperation
             // 
@@ -781,7 +781,7 @@
             this.btCancelOperation.Image = ((System.Drawing.Image)(resources.GetObject("btCancelOperation.Image")));
             this.btCancelOperation.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btCancelOperation.Name = "btCancelOperation";
-            this.btCancelOperation.Size = new System.Drawing.Size(23, 22);
+            this.btCancelOperation.Size = new System.Drawing.Size(23, 24);
             this.btCancelOperation.Text = "Cancel Operation";
             this.btCancelOperation.Click += new System.EventHandler(this.BtCancelOperationClick);
             // 
@@ -792,7 +792,7 @@
             this.btOptions.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btOptions.ImageTransparentColor = System.Drawing.Color.Black;
             this.btOptions.Name = "btOptions";
-            this.btOptions.Size = new System.Drawing.Size(23, 22);
+            this.btOptions.Size = new System.Drawing.Size(23, 24);
             this.btOptions.Text = "Set GitForce Options";
             this.btOptions.Click += new System.EventHandler(this.MenuOptions);
             // 
@@ -803,7 +803,7 @@
             this.btSsh.Image = ((System.Drawing.Image)(resources.GetObject("btSsh.Image")));
             this.btSsh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btSsh.Name = "btSsh";
-            this.btSsh.Size = new System.Drawing.Size(23, 22);
+            this.btSsh.Size = new System.Drawing.Size(23, 24);
             this.btSsh.Text = "Manage SSH Keys";
             this.btSsh.Click += new System.EventHandler(this.MenuMainManageKeysClick);
             // 
