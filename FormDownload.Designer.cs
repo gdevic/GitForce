@@ -44,7 +44,7 @@
             this.labelInfo.Name = "labelInfo";
             this.labelInfo.Size = new System.Drawing.Size(335, 79);
             this.labelInfo.TabIndex = 0;
-            this.labelInfo.Text = "label1";
+            this.labelInfo.Text = "Info";
             // 
             // btCancel
             // 

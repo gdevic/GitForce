@@ -164,7 +164,11 @@ namespace GitForce
         /// </summary>
         void ClientDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            Thread.Sleep(1500);     // A short pause for a better visual flow
+            // The class is done downloading, print a message which may be seen if there is a pause
+            // after a file has been downloaded (seen that happen with virus scanners active)
+            UIThread(() => labelInfo.Text = labelInfo.Text + Environment.NewLine + "Preparing to install...");
+            UIThread(() => btCancel.Enabled = false);
+            Thread.Sleep(500);  // Pause a bit for a better visual (to show the progress bar at 100%)
 
             inProgress.Set();
             isCompleted = !e.Cancelled;
