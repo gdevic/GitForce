@@ -54,15 +54,15 @@
             // 
             this.textArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textArgs.Location = new System.Drawing.Point(0, 80);
+            this.textArgs.Location = new System.Drawing.Point(3, 80);
             this.textArgs.Name = "textArgs";
-            this.textArgs.Size = new System.Drawing.Size(300, 20);
+            this.textArgs.Size = new System.Drawing.Size(294, 20);
             this.textArgs.TabIndex = 14;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 64);
+            this.label2.Location = new System.Drawing.Point(0, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 13;
@@ -71,7 +71,7 @@
             // btBrowse
             // 
             this.btBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btBrowse.Location = new System.Drawing.Point(225, 40);
+            this.btBrowse.Location = new System.Drawing.Point(222, 40);
             this.btBrowse.Name = "btBrowse";
             this.btBrowse.Size = new System.Drawing.Size(75, 23);
             this.btBrowse.TabIndex = 12;
@@ -84,9 +84,9 @@
             this.comboBoxPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxPath.FormattingEnabled = true;
-            this.comboBoxPath.Location = new System.Drawing.Point(0, 40);
+            this.comboBoxPath.Location = new System.Drawing.Point(3, 40);
             this.comboBoxPath.Name = "comboBoxPath";
-            this.comboBoxPath.Size = new System.Drawing.Size(219, 21);
+            this.comboBoxPath.Size = new System.Drawing.Size(213, 21);
             this.comboBoxPath.TabIndex = 11;
             this.comboBoxPath.SelectionChangeCommitted += new System.EventHandler(this.ComboBoxPathSelectionChangeCommitted);
             // 
@@ -97,10 +97,10 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 37);
+            this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 10;
-            this.label1.Text = "Chose a diff utility to use with GitForce, or select one from those detected on yo" +
-                "ur system:";
+            this.label1.Text = "Chose a diff utility to use with GitForce, or select one from those detected on y" +
+                "our system:";
             // 
             // ControlDiff
             // 

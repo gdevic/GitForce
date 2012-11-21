@@ -41,7 +41,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 29);
+            this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 1;
             this.label1.Text = "On Windows OS, GitForce uses PuTTY internally to manage SSL connections.";
             // 
@@ -50,7 +50,7 @@
             this.checkBoxLeavePageant.AutoSize = true;
             this.checkBoxLeavePageant.Location = new System.Drawing.Point(3, 70);
             this.checkBoxLeavePageant.Name = "checkBoxLeavePageant";
-            this.checkBoxLeavePageant.Size = new System.Drawing.Size(289, 17);
+            this.checkBoxLeavePageant.Size = new System.Drawing.Size(296, 17);
             this.checkBoxLeavePageant.TabIndex = 3;
             this.checkBoxLeavePageant.Text = "Leave Pageant daemon running after GitForce has exited";
             this.checkBoxLeavePageant.UseVisualStyleBackColor = true;
@@ -67,7 +67,7 @@
             // btSsh
             // 
             this.btSsh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSsh.Location = new System.Drawing.Point(214, 41);
+            this.btSsh.Location = new System.Drawing.Point(222, 41);
             this.btSsh.Name = "btSsh";
             this.btSsh.Size = new System.Drawing.Size(75, 23);
             this.btSsh.TabIndex = 4;

@@ -51,7 +51,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 46);
+            this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Select fixed width font for commit specificaitons. Also chose wrap around columns" +
                 ".";
@@ -59,7 +59,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(-3, 56);
+            this.label2.Location = new System.Drawing.Point(3, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(241, 56);
+            this.label4.Location = new System.Drawing.Point(241, 30);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 13);
             this.label4.TabIndex = 3;
@@ -82,9 +82,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listFonts.FormattingEnabled = true;
             this.listFonts.IntegralHeight = false;
-            this.listFonts.Location = new System.Drawing.Point(0, 72);
+            this.listFonts.Location = new System.Drawing.Point(3, 46);
             this.listFonts.Name = "listFonts";
-            this.listFonts.Size = new System.Drawing.Size(238, 96);
+            this.listFonts.Size = new System.Drawing.Size(235, 96);
             this.listFonts.TabIndex = 4;
             this.listFonts.SelectedIndexChanged += new System.EventHandler(this.ListFontsSelectedIndexChanged);
             // 
@@ -94,9 +94,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listSizes.FormattingEnabled = true;
             this.listSizes.IntegralHeight = false;
-            this.listSizes.Location = new System.Drawing.Point(244, 72);
+            this.listSizes.Location = new System.Drawing.Point(244, 46);
             this.listSizes.Name = "listSizes";
-            this.listSizes.Size = new System.Drawing.Size(56, 96);
+            this.listSizes.Size = new System.Drawing.Size(53, 96);
             this.listSizes.TabIndex = 6;
             this.listSizes.SelectedIndexChanged += new System.EventHandler(this.ListFontsSelectedIndexChanged);
             // 
@@ -105,7 +105,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.labelSample);
-            this.groupBox1.Location = new System.Drawing.Point(0, 173);
+            this.groupBox1.Location = new System.Drawing.Point(0, 147);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(300, 52);
             this.groupBox1.TabIndex = 7;
@@ -126,7 +126,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(0, 235);
+            this.label6.Location = new System.Drawing.Point(3, 207);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(177, 13);
             this.label6.TabIndex = 8;
@@ -136,7 +136,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(0, 256);
+            this.label7.Location = new System.Drawing.Point(3, 230);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(220, 13);
             this.label7.TabIndex = 9;
@@ -145,7 +145,7 @@
             // numWrap1
             // 
             this.numWrap1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numWrap1.Location = new System.Drawing.Point(250, 228);
+            this.numWrap1.Location = new System.Drawing.Point(247, 205);
             this.numWrap1.Maximum = new decimal(new int[] {
             200,
             0,
@@ -168,7 +168,7 @@
             // numWrap2
             // 
             this.numWrap2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numWrap2.Location = new System.Drawing.Point(250, 254);
+            this.numWrap2.Location = new System.Drawing.Point(247, 228);
             this.numWrap2.Maximum = new decimal(new int[] {
             200,
             0,

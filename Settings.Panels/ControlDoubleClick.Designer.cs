@@ -42,7 +42,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 29);
+            this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Select the action when you double-click on a file:";
             // 
@@ -50,7 +50,7 @@
             // 
             this.radioButton0.AutoSize = true;
             this.radioButton0.Checked = true;
-            this.radioButton0.Location = new System.Drawing.Point(3, 32);
+            this.radioButton0.Location = new System.Drawing.Point(3, 33);
             this.radioButton0.Name = "radioButton0";
             this.radioButton0.Size = new System.Drawing.Size(77, 17);
             this.radioButton0.TabIndex = 0;
@@ -63,7 +63,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(3, 78);
+            this.radioButton2.Location = new System.Drawing.Point(3, 79);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(180, 17);
             this.radioButton2.TabIndex = 2;
@@ -77,15 +77,15 @@
             this.comboApps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.comboApps.FormattingEnabled = true;
-            this.comboApps.Location = new System.Drawing.Point(22, 101);
+            this.comboApps.Location = new System.Drawing.Point(22, 102);
             this.comboApps.Name = "comboApps";
-            this.comboApps.Size = new System.Drawing.Size(278, 21);
+            this.comboApps.Size = new System.Drawing.Size(275, 21);
             this.comboApps.TabIndex = 3;
             // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(3, 55);
+            this.radioButton1.Location = new System.Drawing.Point(3, 56);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(253, 17);
             this.radioButton1.TabIndex = 1;

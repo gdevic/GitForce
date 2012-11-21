@@ -36,7 +36,7 @@
             // 
             // textBoxLast
             // 
-            this.textBoxLast.Location = new System.Drawing.Point(93, 54);
+            this.textBoxLast.Location = new System.Drawing.Point(93, 55);
             this.textBoxLast.MaxLength = 5;
             this.textBoxLast.Name = "textBoxLast";
             this.textBoxLast.Size = new System.Drawing.Size(45, 20);
@@ -45,7 +45,7 @@
             // rbRetrieveLast
             // 
             this.rbRetrieveLast.AutoSize = true;
-            this.rbRetrieveLast.Location = new System.Drawing.Point(3, 55);
+            this.rbRetrieveLast.Location = new System.Drawing.Point(3, 56);
             this.rbRetrieveLast.Name = "rbRetrieveLast";
             this.rbRetrieveLast.Size = new System.Drawing.Size(87, 17);
             this.rbRetrieveLast.TabIndex = 1;
@@ -57,7 +57,7 @@
             // rbRetrieveAll
             // 
             this.rbRetrieveAll.AutoSize = true;
-            this.rbRetrieveAll.Location = new System.Drawing.Point(3, 32);
+            this.rbRetrieveAll.Location = new System.Drawing.Point(3, 33);
             this.rbRetrieveAll.Name = "rbRetrieveAll";
             this.rbRetrieveAll.Size = new System.Drawing.Size(78, 17);
             this.rbRetrieveAll.TabIndex = 0;
@@ -73,7 +73,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 29);
+            this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 3;
             this.label1.Text = "When retrieving submitted commits from the repo:";
             // 

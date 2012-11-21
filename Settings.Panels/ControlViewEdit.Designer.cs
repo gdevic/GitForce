@@ -42,10 +42,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listPrograms.FormattingEnabled = true;
             this.listPrograms.IntegralHeight = false;
-            this.listPrograms.Location = new System.Drawing.Point(0, 32);
+            this.listPrograms.Location = new System.Drawing.Point(3, 33);
             this.listPrograms.Name = "listPrograms";
             this.listPrograms.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listPrograms.Size = new System.Drawing.Size(300, 236);
+            this.listPrograms.Size = new System.Drawing.Size(294, 235);
             this.listPrograms.TabIndex = 0;
             // 
             // label1
@@ -55,7 +55,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 29);
+            this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 1;
             this.label1.Text = "Select a list of programs to be available to edit or view a file:";
             // 
