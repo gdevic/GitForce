@@ -78,6 +78,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.rightTabControl = new System.Windows.Forms.TabControl();
+            this.RightPanelImages = new System.Windows.Forms.ImageList(this.components);
             this.listStatus = new System.Windows.Forms.ListBox();
             this.menuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStatusCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,11 +97,6 @@
             this.btPull = new System.Windows.Forms.ToolStripButton();
             this.btPush = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.btChangelists = new System.Windows.Forms.ToolStripButton();
-            this.btSubmitted = new System.Windows.Forms.ToolStripButton();
-            this.btBranches = new System.Windows.Forms.ToolStripButton();
-            this.btRepos = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btCancelOperation = new System.Windows.Forms.ToolStripButton();
             this.btOptions = new System.Windows.Forms.ToolStripButton();
             this.btSsh = new System.Windows.Forms.ToolStripButton();
@@ -536,12 +532,19 @@
             // rightTabControl
             // 
             this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightTabControl.ImageList = this.RightPanelImages;
             this.rightTabControl.Location = new System.Drawing.Point(0, 0);
             this.rightTabControl.Name = "rightTabControl";
             this.rightTabControl.SelectedIndex = 0;
             this.rightTabControl.ShowToolTips = true;
             this.rightTabControl.Size = new System.Drawing.Size(407, 239);
             this.rightTabControl.TabIndex = 0;
+            // 
+            // RightPanelImages
+            // 
+            this.RightPanelImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.RightPanelImages.ImageSize = new System.Drawing.Size(16, 16);
+            this.RightPanelImages.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // listStatus
             // 
@@ -607,11 +610,6 @@
             this.btPull,
             this.btPush,
             this.toolStripSeparator7,
-            this.btChangelists,
-            this.btSubmitted,
-            this.btBranches,
-            this.btRepos,
-            this.toolStripSeparator2,
             this.btCancelOperation,
             this.btOptions,
             this.btSsh,
@@ -724,59 +722,6 @@
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btChangelists
-            // 
-            this.btChangelists.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btChangelists.Image = ((System.Drawing.Image)(resources.GetObject("btChangelists.Image")));
-            this.btChangelists.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btChangelists.ImageTransparentColor = System.Drawing.Color.Black;
-            this.btChangelists.Name = "btChangelists";
-            this.btChangelists.Size = new System.Drawing.Size(23, 22);
-            this.btChangelists.Tag = "Commits";
-            this.btChangelists.Text = "View Pending Changelists";
-            this.btChangelists.Click += new System.EventHandler(this.RightPanelSelectionClick);
-            // 
-            // btSubmitted
-            // 
-            this.btSubmitted.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btSubmitted.Image = ((System.Drawing.Image)(resources.GetObject("btSubmitted.Image")));
-            this.btSubmitted.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btSubmitted.ImageTransparentColor = System.Drawing.Color.Black;
-            this.btSubmitted.Name = "btSubmitted";
-            this.btSubmitted.Size = new System.Drawing.Size(23, 22);
-            this.btSubmitted.Tag = "Revisions";
-            this.btSubmitted.Text = "View Submitted Changelists";
-            this.btSubmitted.Click += new System.EventHandler(this.RightPanelSelectionClick);
-            // 
-            // btBranches
-            // 
-            this.btBranches.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btBranches.Image = ((System.Drawing.Image)(resources.GetObject("btBranches.Image")));
-            this.btBranches.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btBranches.ImageTransparentColor = System.Drawing.Color.Black;
-            this.btBranches.Name = "btBranches";
-            this.btBranches.Size = new System.Drawing.Size(23, 22);
-            this.btBranches.Tag = "Branches";
-            this.btBranches.Text = "View Branches";
-            this.btBranches.Click += new System.EventHandler(this.RightPanelSelectionClick);
-            // 
-            // btRepos
-            // 
-            this.btRepos.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btRepos.Image = ((System.Drawing.Image)(resources.GetObject("btRepos.Image")));
-            this.btRepos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btRepos.ImageTransparentColor = System.Drawing.Color.Black;
-            this.btRepos.Name = "btRepos";
-            this.btRepos.Size = new System.Drawing.Size(23, 22);
-            this.btRepos.Tag = "Repos";
-            this.btRepos.Text = "View Repositories";
-            this.btRepos.Click += new System.EventHandler(this.RightPanelSelectionClick);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btCancelOperation
             // 
@@ -921,11 +866,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainRepository;
         private System.Windows.Forms.ToolStripMenuItem menuMainHelp;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton btChangelists;
-        private System.Windows.Forms.ToolStripButton btSubmitted;
-        private System.Windows.Forms.ToolStripButton btBranches;
-        private System.Windows.Forms.ToolStripButton btRepos;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btCancelOperation;
         private System.Windows.Forms.ToolStripButton btOptions;
         private System.Windows.Forms.ToolStripButton btSsh;
@@ -982,6 +922,7 @@
         private System.Windows.Forms.ToolStripButton btNewVersion;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesMenuItem;
         private System.Windows.Forms.TabControl rightTabControl;
+        private System.Windows.Forms.ImageList RightPanelImages;
     }
 }
 

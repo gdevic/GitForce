@@ -31,18 +31,18 @@ namespace GitForce
         private static readonly PanelRevlist PanelRevlist = new PanelRevlist();
         private static readonly PanelBranches PanelBranches = new PanelBranches();
 
-        private static readonly Dictionary<string, UserControl> PanelsR = new Dictionary<string, UserControl> {
-            { "Repos", PanelRepos },
-            { "Commits", PanelCommits },
-            { "Revisions", PanelRevlist },
-            { "Branches", PanelBranches },
-        };
+        private class PanelData
+        {
+            public UserControl Panel;
+            public string ShortcutName;
+            public string ImageName;
+        }
 
-        private static readonly Dictionary<string, string> PanelsRShortcuts = new Dictionary<string, string> {
-            { "Repos", "F10" },
-            { "Commits", "F6" },
-            { "Revisions", "F7" },
-            { "Branches", "F8"},
+        private static readonly Dictionary<string, PanelData> PanelsR = new Dictionary<string, PanelData> {
+            { "Repos", new PanelData {Panel= PanelRepos , ShortcutName = "F10", ImageName = "btRepos.Image"}},
+            { "Commits", new PanelData {Panel= PanelCommits , ShortcutName = "F6", ImageName = "btChangelists.Image"}},
+            { "Revisions", new PanelData {Panel= PanelRevlist , ShortcutName = "F7", ImageName = "btSubmitted.Image"}},
+            { "Branches", new PanelData {Panel= PanelBranches , ShortcutName = "F8", ImageName = "btBranches.Image"}},
         };
 
         /// <summary>
@@ -78,13 +78,20 @@ namespace GitForce
             // Left panel:
             splitContainer2.Panel1.Controls.Add(PanelView);
             PanelView.Dock = DockStyle.Fill;
+            var resources = new ComponentResourceManager(typeof(FormMain));
 
             // Right set of panels:
             foreach (var panel in PanelsR)
             {
-                var tabPage = new TabPage(panel.Key) { Name = panel.Key, ToolTipText = panel.Key + " (" + PanelsRShortcuts[panel.Key] + ")" };
-                panel.Value.Dock = DockStyle.Fill;
-                tabPage.Controls.Add(panel.Value);
+                var tabPage = new TabPage(panel.Key) { Name = panel.Key, ToolTipText = panel.Key + " (" + panel.Value.ShortcutName + ")" };
+                panel.Value.Panel.Dock = DockStyle.Fill;
+                tabPage.Controls.Add(panel.Value.Panel);
+                var image = (Image)(resources.GetObject(panel.Value.ImageName));
+                if (image != null)
+                {
+                    RightPanelImages.Images.Add(image);
+                    tabPage.ImageIndex = RightPanelImages.Images.Count - 1;
+                }
                 rightTabControl.TabPages.Add(tabPage);
             }
 
