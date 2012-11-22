@@ -87,6 +87,8 @@ namespace GitForce
                 rightTabControl.TabPages.Add(tabPage);
             }
 
+            SetRightPanelSelectionInToolbar();
+
             // Show or hide command line
             menuViewCommandLine.Checked = cmdBox.Visible = Properties.Settings.Default.ShowCommandLine;
 
@@ -138,6 +140,19 @@ namespace GitForce
             ChangeRightPanel(App.Repos.Current == null ?
                 "Repos" :
                 Properties.Settings.Default.viewRightPanel);
+        }
+
+        private void SetRightPanelSelectionInToolbar()
+        {
+            foreach (var button in new[] { btChangelists, btSubmitted, btBranches, btRepos })
+            {
+                button.CheckState = rightTabControl.SelectedTab.Name.Equals(button.Tag) ? CheckState.Checked : CheckState.Unchecked;
+            }
+        }
+
+        private void OnRightTabControlSelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetRightPanelSelectionInToolbar();
         }
 
         /// <summary>
