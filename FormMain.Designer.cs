@@ -542,6 +542,7 @@
             this.rightTabControl.ShowToolTips = true;
             this.rightTabControl.Size = new System.Drawing.Size(407, 239);
             this.rightTabControl.TabIndex = 0;
+            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.OnRightTabControlSelectedIndexChanged);
             // 
             // listStatus
             // 
@@ -746,7 +747,7 @@
             this.btChangelists.Name = "btChangelists";
             this.btChangelists.Size = new System.Drawing.Size(23, 22);
             this.btChangelists.Tag = "Commits";
-            this.btChangelists.Text = "View Pending Changelists";
+            this.btChangelists.Text = "View Pending Changelists (F6)";
             this.btChangelists.Click += new System.EventHandler(this.RightPanelSelectionClick);
             // 
             // btSubmitted
@@ -758,7 +759,7 @@
             this.btSubmitted.Name = "btSubmitted";
             this.btSubmitted.Size = new System.Drawing.Size(23, 22);
             this.btSubmitted.Tag = "Revisions";
-            this.btSubmitted.Text = "View Submitted Changelists";
+            this.btSubmitted.Text = "View Submitted Changelists (F7)";
             this.btSubmitted.Click += new System.EventHandler(this.RightPanelSelectionClick);
             // 
             // btBranches
@@ -770,7 +771,7 @@
             this.btBranches.Name = "btBranches";
             this.btBranches.Size = new System.Drawing.Size(23, 22);
             this.btBranches.Tag = "Branches";
-            this.btBranches.Text = "View Branches";
+            this.btBranches.Text = "View Branches (F8)";
             this.btBranches.Click += new System.EventHandler(this.RightPanelSelectionClick);
             // 
             // btRepos
@@ -782,7 +783,7 @@
             this.btRepos.Name = "btRepos";
             this.btRepos.Size = new System.Drawing.Size(23, 22);
             this.btRepos.Tag = "Repos";
-            this.btRepos.Text = "View Repositories";
+            this.btRepos.Text = "View Repositories (F10)";
             this.btRepos.Click += new System.EventHandler(this.RightPanelSelectionClick);
             // 
             // toolStripSeparator2
