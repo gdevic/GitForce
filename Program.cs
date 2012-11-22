@@ -166,7 +166,7 @@ namespace GitForce
             // Check that only one application instance is running
             bool mAcquired;
             Mutex mAppMutex = new Mutex(true, "gitforce", out mAcquired);
-            if(!mAcquired)
+            if (!mAcquired && Properties.Settings.Default.WarnMultipleInstances)
             {
                 if (MessageBox.Show("GitForce is already running.\nDo you want to open a new instance?", "Warning",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.No)
