@@ -142,19 +142,6 @@ namespace GitForce
                 Properties.Settings.Default.viewRightPanel);
         }
 
-        private void SetRightPanelSelectionInToolbar()
-        {
-            foreach (var button in new[] { btChangelists, btSubmitted, btBranches, btRepos })
-            {
-                button.CheckState = rightTabControl.SelectedTab.Name.Equals(button.Tag) ? CheckState.Checked : CheckState.Unchecked;
-            }
-        }
-
-        private void OnRightTabControlSelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetRightPanelSelectionInToolbar();
-        }
-
         /// <summary>
         /// Form is closing
         /// </summary>
@@ -277,6 +264,8 @@ namespace GitForce
                 ClassWorkspace.Save(saveWk.FileName);
         }
 
+        #region Views and Panel selection code
+
         /// <summary>
         /// Menu "View" has been opened. Set the bullet next to the current view mode.
         /// </summary>
@@ -320,10 +309,34 @@ namespace GitForce
             Properties.Settings.Default.viewRightPanel = panelName;
         }
 
+        /// <summary>
+        /// Handler for right panel selected event
+        /// </summary>
         private void RightPanelSelectionClick(object sender, EventArgs e)
         {
             ChangeRightPanel(((ToolStripItem)sender).Tag.ToString());
         }
+
+        /// <summary>
+        /// Handler for right panel selected from the toolbar event
+        /// </summary>
+        private void SetRightPanelSelectionInToolbar()
+        {
+            foreach (var button in new[] { btChangelists, btSubmitted, btBranches, btRepos })
+            {
+                button.CheckState = rightTabControl.SelectedTab.Name.Equals(button.Tag) ? CheckState.Checked : CheckState.Unchecked;
+            }
+        }
+
+        /// <summary>
+        /// Handler for right panel selected from the tabs event
+        /// </summary>
+        private void OnRightTabControlSelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetRightPanelSelectionInToolbar();
+        }
+
+        #endregion
 
         /// <summary>
         /// Print into the status pane (and the aux log window).
