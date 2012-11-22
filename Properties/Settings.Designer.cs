@@ -384,5 +384,17 @@ namespace GitForce.Properties {
                 this["ReaddOnChange"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowTabsOnRightPane {
+            get {
+                return ((bool)(this["ShowTabsOnRightPane"]));
+            }
+            set {
+                this["ShowTabsOnRightPane"] = value;
+            }
+        }
     }
 }

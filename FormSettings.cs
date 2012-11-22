@@ -45,6 +45,7 @@ namespace GitForce
             { "Diff", new ControlDiff() },
             { "Merge", new ControlMerge() },
             { "DoubleClick", new ControlDoubleClick() },
+            { "Options", new ControlOptions() },
             { "Aliases", new ControlAliases() },
             { "Ssl", new ControlSsl() },
             { "Specifications", new ControlSpecifications() },

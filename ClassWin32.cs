@@ -17,6 +17,7 @@ namespace GitForce
         public const int WM_VSCROLL = 0x0115;
         public const int HWND_BROADCAST = 0xffff;
         public const int WM_COMMAND = 0x0111;
+        public const int TCM_ADJUSTRECT = 0x1328;
 
         public static readonly uint WmShowme = RegisterWindowMessage("WM_SHOWME");
 

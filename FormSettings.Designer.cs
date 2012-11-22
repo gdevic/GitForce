@@ -156,6 +156,7 @@
             treeNode14.Tag = "Ssl";
             treeNode14.Text = "SSL";
             treeNode15.Name = "Node2";
+            treeNode15.Tag = "Options";
             treeNode15.Text = "Options";
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode6,

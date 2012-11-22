@@ -26,16 +26,22 @@ namespace GitForce
 
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
-
         private static readonly PanelCommits PanelCommits = new PanelCommits();
         private static readonly PanelRevlist PanelRevlist = new PanelRevlist();
         private static readonly PanelBranches PanelBranches = new PanelBranches();
 
         private static readonly Dictionary<string, UserControl> PanelsR = new Dictionary<string, UserControl> {
-            { "Repos", PanelRepos },
             { "Commits", PanelCommits },
             { "Revisions", PanelRevlist },
             { "Branches", PanelBranches },
+            { "Repos", PanelRepos }
+        };
+
+        private static readonly Dictionary<string, string> PanelsRShortcuts = new Dictionary<string, string> {
+            { "Commits", "F6" },
+            { "Revisions", "F7" },
+            { "Branches", "F8"},
+            { "Repos", "F10" }
         };
 
         /// <summary>
@@ -73,14 +79,18 @@ namespace GitForce
             PanelView.Dock = DockStyle.Fill;
 
             // Right set of panels:
-            foreach (UserControl control in PanelsR.Select(uc => uc.Value))
+            foreach (var panel in PanelsR)
             {
-                splitContainer2.Panel2.Controls.Add(control);
-                control.Dock = DockStyle.Fill;
+                var tabPage = new TabPage(panel.Key) { Name = panel.Key, ToolTipText = panel.Key + " (" + PanelsRShortcuts[panel.Key] + ")" };
+                panel.Value.Dock = DockStyle.Fill;
+                tabPage.Controls.Add(panel.Value);
+                rightTabControl.TabPages.Add(tabPage);
             }
 
             // Show or hide command line
             menuViewCommandLine.Checked = cmdBox.Visible = Properties.Settings.Default.ShowCommandLine;
+
+            UpdateRightPaneTabs();
 
             // Enable SSH only if the PuTTY support class has been instantiated
             if (App.Putty != null)
@@ -287,14 +297,13 @@ namespace GitForce
         /// </summary>
         private void ChangeRightPanel(string panelName)
         {
-            UserControl panel = PanelsR[panelName];
-            panel.BringToFront();
+            rightTabControl.SelectTab(panelName);
             Properties.Settings.Default.viewRightPanel = panelName;
         }
 
         private void RightPanelSelectionClick(object sender, EventArgs e)
         {
-            ChangeRightPanel((sender as ToolStripItem).Tag.ToString());
+            ChangeRightPanel(((ToolStripItem)sender).Tag.ToString());
         }
 
         /// <summary>
@@ -344,6 +353,15 @@ namespace GitForce
             // Set the title and wait one time slice for it to be painted
             Text = title;
             Application.DoEvents();
+        }
+
+        /// <summary>
+        /// Update the state of the tab control (show/hide)
+        /// </summary>
+        public void UpdateRightPaneTabs()
+        {
+            rightTabControl.ShowTabs = Properties.Settings.Default.ShowTabsOnRightPane;
+            rightTabControl.UpdateTabState();
         }
 
         /// <summary>

@@ -382,6 +382,12 @@
     <Compile Include="Settings.Panels\ControlMerge.Designer.cs">
       <DependentUpon>ControlMerge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.Panels\ControlOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlOptions.designer.cs">
+      <DependentUpon>ControlOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.Panels\ControlSpecifications.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -642,6 +648,9 @@
       <DependentUpon>ControlMerge.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlOptions.resx">
+      <DependentUpon>ControlOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Settings.Panels\ControlSpecifications.resx">
       <DependentUpon>ControlSpecifications.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -686,6 +695,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TabEx.cs">
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
