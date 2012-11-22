@@ -129,6 +129,10 @@ namespace GitForce
             // Load custom tools
             App.CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile);
 
+            // If there are no tools on the list, find some local tools and add them
+            if (App.CustomTools.Tools.Count==0)
+                App.CustomTools.Tools.AddRange(ClassCustomTools.FindLocalTools());
+
             // If there is no current repo, switch the right panel view to Repos
             // Otherwise, restore the last view panel
             ChangeRightPanel(App.Repos.Current == null ?

@@ -16,11 +16,29 @@ namespace GitForce
     /// </summary>
     public class ClassTool : ICloneable
     {
+        /// <summary>
+        /// Short name of the tool
+        /// </summary>
         public string Name;
+        /// <summary>
+        /// Full path and name of the tool executable
+        /// </summary>
         public string Cmd;
+        /// <summary>
+        /// Arguments to pass to the tool before it executes. Macros allowed.
+        /// </summary>
         public string Args;
+        /// <summary>
+        /// Starting directory for a tool
+        /// </summary>
         public string Dir;
+        /// <summary>
+        /// Longer description of the tool
+        /// </summary>
         public string Desc;
+        /// <summary>
+        /// A set of checks
+        /// </summary>
         public bool[] Checks = new bool[7];
 
         /// <summary>
@@ -31,14 +49,31 @@ namespace GitForce
             return MemberwiseClone();
         }
 
-        // A set of access functions to return a specific boolean tool's settings
-        public bool IsAddToContextMenu() { return Checks[0]; }
-        private bool IsConsoleApp() { return Checks[1]; }
-        private bool IsWriteOutput() { return Checks[2]; }
-        private bool IsCloseWindowOnExit() { return Checks[3]; }
-        private bool IsRefresh() { return Checks[4]; }
-        private bool IsPromptForArgs() { return Checks[5]; }
-        private bool IsAddBrowse() { return Checks[6]; }
+        /// <summary>
+        /// Enumeration of checks indices into the Checks[] array of booleans
+        /// </summary>
+        public const int AddToContextMenu = 0;
+        public const int ConsoleApp = 1;
+        public const int WriteOutput = 2;
+        public const int CloseWindowOnExit = 3;
+        public const int Refresh = 4;
+        public const int PromptForArgs = 5;
+        public const int AddBrowse = 6;
+
+        // A set of access functions to return a specific boolean tool's check
+        public bool IsAddToContextMenu() { return Checks[AddToContextMenu]; }
+        public bool IsConsoleApp() { return Checks[ConsoleApp]; }
+        public bool IsWriteOutput() { return Checks[WriteOutput]; }
+        public bool IsCloseWindowOnExit() { return Checks[CloseWindowOnExit]; }
+        public bool IsRefresh() { return Checks[Refresh]; }
+        public bool IsPromptForArgs() { return Checks[PromptForArgs]; }
+        public bool IsAddBrowse() { return Checks[AddBrowse]; }
+
+        // An access function to set a specific boolean tool's check
+        public void SetCheck(int check, bool value)
+        {
+            Checks[check] = value;
+        }
 
         /// <summary>
         /// ToString override dumps all tool information for debug.
@@ -79,7 +114,7 @@ namespace GitForce
 
             // Prepare the process to be run
             Process proc = new Process();
-            proc.StartInfo.FileName = Cmd;
+            proc.StartInfo.FileName = "\"" + Cmd + "\"";
             proc.StartInfo.Arguments = args;
             proc.StartInfo.WorkingDirectory = DeMacroise(Dir, new List<string>());
             proc.StartInfo.UseShellExecute = false;
@@ -272,5 +307,44 @@ namespace GitForce
                 ct.Tools.Add((ClassTool)classTool.Clone());
             return ct;
         }
+
+        #region Utility function to find local tools
+
+        /// <summary>
+        /// Utility function to find few local tools: experimental
+        /// </summary>
+        public static List<ClassTool> FindLocalTools()
+        {
+            List<ClassTool> tools = new List<ClassTool>();
+
+            try
+            {
+                // If we have msysgit, we should also have few other bundled tools
+                string gitpath = Properties.Settings.Default.GitPath;
+                if (File.Exists(gitpath))
+                {
+                    string gitRoot = Path.GetDirectoryName(gitpath);
+
+                    //      ======= Find and add Git Bash =======
+                    string GitBash = Path.Combine(gitRoot, "sh.exe");
+                    if (File.Exists(GitBash))
+                    {
+                        ClassTool newTool = new ClassTool();
+                        newTool.Name = "Git Bash";
+                        newTool.Cmd = GitBash;
+                        newTool.Dir = "%r";
+                        newTool.Args = "--login -i";
+                        newTool.SetCheck(ClassTool.ConsoleApp, true);
+                        newTool.SetCheck(ClassTool.AddToContextMenu, true);
+                        tools.Add(newTool);
+                    }
+                }
+            }
+            catch { }   // Never mind.
+
+            return tools;
+        }
+
+        #endregion
     }
 }

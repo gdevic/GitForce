@@ -53,14 +53,16 @@ namespace GitForce
 
         /// <summary>
         /// Based on the number of tools in the list and the index of a selected tool,
-        /// adjust all button enables.
+        /// adjust all button enables. If multiple tools are selected, only Remove
+        /// operation is enabled.
         /// Also, fill in the information from the selected tool into this form.
         /// </summary>
         private void AdjustEnables()
         {
             ClassTool tool = new ClassTool();
-            btEdit.Enabled = btRemove.Enabled = btUp.Enabled = btDown.Enabled = listTools.Items.Count > 0;
-            if (listTools.Items.Count > 0)
+            btEdit.Enabled = btUp.Enabled = btDown.Enabled = listTools.Items.Count == 1;
+            btRemove.Enabled = listTools.Items.Count > 0;
+            if (listTools.Items.Count==1)
             {
                 int sel = listTools.SelectedIndex;
                 tool = CustomTools.Tools[sel];
@@ -113,15 +115,17 @@ namespace GitForce
         }
 
         /// <summary>
-        /// User clicked on the Remove button to remove a selected tool.
+        /// User clicked on the Remove button to remove one or more selected tools.
         /// </summary>
         private void BtRemoveClick(object sender, EventArgs e)
         {
-            if(MessageBox.Show("This will permanently remove the tool. Proceed?", "Remove tool", 
+            if(MessageBox.Show("This will permanently remove selected tool(s). Proceed?", "Remove tool", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.Yes)
             {
-                int sel = listTools.SelectedIndex;
-                CustomTools.Tools.RemoveAt(sel);
+                for (int i = listTools.SelectedIndices.Count - 1; i >= 0; i--)
+                {
+                    CustomTools.Tools.RemoveAt(listTools.SelectedIndices[i]);
+                }
                 RefreshList();
             }
         }

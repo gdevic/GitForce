@@ -342,6 +342,7 @@
             this.listTools.IntegralHeight = false;
             this.listTools.Location = new System.Drawing.Point(6, 19);
             this.listTools.Name = "listTools";
+            this.listTools.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listTools.Size = new System.Drawing.Size(404, 114);
             this.listTools.TabIndex = 0;
             this.listTools.SelectedIndexChanged += new System.EventHandler(this.ListToolsSelectedIndexChanged);
