@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Drawing.Text;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace GitForce.Settings.Panels
@@ -26,35 +23,6 @@ namespace GitForce.Settings.Panels
         public void Init(string[] options)
         {
             _font = Properties.Settings.Default.commitFont;
-
-            // Load all available fonts
-            LoadGlobalFonts();
-
-            // Add them to the fonts listbox
-            foreach (FontFamily fontFamily in ClassGlobals.Fonts)
-            {
-                Font font = new Font(fontFamily, 10, FontStyle.Regular);
-                listFonts.Items.Add(font.Name);
-
-                // Select the active font
-                if (font.Name == _font.Name)
-                    listFonts.SelectedIndex = listFonts.Items.Count - 1;
-            }
-
-            // Add the font sizes and select the current active font size
-            List<int> sizes = new List<int> { 8, 9, 10, 11, 12, 14, 16, 18, 20 };
-            foreach (int size in sizes)
-            {
-                listSizes.Items.Add(size);
-                if (size == (int)_font.Size)
-                    listSizes.SelectedIndex = listSizes.Items.Count - 1;
-            }
-
-            // Set the wrap around columns
-            numWrap1.Value = Properties.Settings.Default.commitW1;
-            numWrap2.Value = Properties.Settings.Default.commitW2;
-
-            SetExampleText();
         }
 
         /// <summary>
@@ -62,6 +30,13 @@ namespace GitForce.Settings.Panels
         /// </summary>
         public void Focus(bool focused)
         {
+            // When this tab gets the focus, rebuild the fonts.
+            // This implementation will still take a time but only when the
+            // user clicks on the font tab. It is also heavily cached.
+            if(focused)
+            {
+                CollectAndShowFonts();
+            }
         }
 
         /// <summary>
@@ -75,14 +50,6 @@ namespace GitForce.Settings.Panels
         }
 
         /// <summary>
-        /// Sets the example text to a specific font
-        /// </summary>
-        private void SetExampleText()
-        {
-            labelSample.Font = _font;
-        }
-
-        /// <summary>
         /// User clicked on one of the font families or sizes
         /// </summary>
         private void ListFontsSelectedIndexChanged(object sender, EventArgs e)
@@ -92,8 +59,53 @@ namespace GitForce.Settings.Panels
                 FontFamily fontFamily = ClassGlobals.Fonts[listFonts.SelectedIndex];
                 int fontSize = int.Parse(listSizes.SelectedItem.ToString());
                 _font = new Font(fontFamily, fontSize, FontStyle.Regular);
-                SetExampleText();
+
+                labelSample.Font = _font;
             }
+        }
+
+        /// <summary>
+        /// Enumerate all fixed-width fonts and add them to the selection listbox
+        /// This call uses caching, so it only takes time to execute the very first
+        /// time it is called. Also, fonts are cached globally, so the enumeration only
+        /// takes place once per program run.
+        /// </summary>
+        void CollectAndShowFonts()
+        {
+            // Load all available fonts. They are cached, so a second invocation will be quick.
+            LoadGlobalFonts();
+
+            // If we already have fonts in the listbox, return
+            if(listFonts.Items.Count > 0)
+                return;
+
+            // Add fonts to the fonts listbox
+            foreach (FontFamily fontFamily in ClassGlobals.Fonts)
+            {
+                Font font = new Font(fontFamily, 10, FontStyle.Regular);
+                listFonts.Items.Add(font.Name);
+
+                // Select the active font
+                if (font.Name == _font.Name)
+                    listFonts.SelectedIndex = listFonts.Items.Count - 1;
+            }
+
+            // Add the font sizes and select the current active font size
+            List<int> sizes = new List<int> { 8, 9, 10, 11, 12, 14, 16, 18, 20 };
+            listSizes.Items.Clear();
+            foreach (int size in sizes)
+            {
+                var newSize = size;
+                listSizes.Items.Add(newSize);
+                if (size == (int)_font.Size)
+                    listSizes.SelectedIndex = listSizes.Items.Count - 1;
+            }
+
+            // Set the wrap around columns
+            numWrap1.Value = Properties.Settings.Default.commitW1;
+            numWrap2.Value = Properties.Settings.Default.commitW2;
+
+            labelSample.Font = _font;
         }
 
         /// <summary>
