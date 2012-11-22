@@ -77,13 +77,13 @@ namespace GitForce
             textArgs.Text = tool.Args;
             textDir.Text = tool.Dir;
             textDesc.Text = tool.Desc;
-            checkAddToContextMenu.Checked = tool.Checks[0];
-            checkConsoleApp.Checked = tool.Checks[1];
-            checkWriteToStatus.Checked = tool.Checks[2];
-            checkCloseUponExit.Checked = tool.Checks[3];
-            checkRefresh.Checked = tool.Checks[4];
-            checkPrompt.Checked = tool.Checks[5];
-            checkBrowse.Checked = tool.Checks[6];            
+            checkAddToContextMenu.Checked = tool.IsAddToContextMenu;
+            checkConsoleApp.Checked = tool.IsConsoleApp;
+            checkWriteToStatus.Checked = tool.IsWriteOutput;
+            checkCloseUponExit.Checked = tool.IsCloseWindowOnExit;
+            checkRefresh.Checked = tool.IsRefresh;
+            checkPrompt.Checked = tool.IsPromptForArgs;
+            checkBrowse.Checked = tool.IsAddBrowse;            
         }
 
         /// <summary>

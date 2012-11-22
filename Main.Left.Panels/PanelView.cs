@@ -424,7 +424,7 @@ namespace GitForce.Main.Left.Panels
                 // Add custom tools
                 // TODO: Visually, we add a separator line even if no custom tools are present. This might need fixing.
                 contextMenu.Items.Add(new ToolStripSeparator());
-                foreach (var tool in App.CustomTools.Tools.Where(tool => tool.IsAddToContextMenu()))
+                foreach (var tool in App.CustomTools.Tools.Where(tool => tool.IsAddToContextMenu))
                     contextMenu.Items.Add(new ToolStripMenuItem(tool.Name, null, CustomToolClicked) { Tag = tool });
             }
         }

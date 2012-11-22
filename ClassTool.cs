@@ -37,9 +37,33 @@ namespace GitForce
         /// </summary>
         public string Desc;
         /// <summary>
-        /// A set of checks
+        /// Add a tool to the context menu
         /// </summary>
-        public bool[] Checks = new bool[7];
+        public bool IsAddToContextMenu;
+        /// <summary>
+        /// Tool is a console app
+        /// </summary>
+        public bool IsConsoleApp;
+        /// <summary>
+        /// Capture and write the output of a console tool into the status pane
+        /// </summary>
+        public bool IsWriteOutput;
+        /// <summary>
+        /// After a console tool exits, close its host command window
+        /// </summary>
+        public bool IsCloseWindowOnExit;
+        /// <summary>
+        /// After a tool exits, do a GitForce global refresh
+        /// </summary>
+        public bool IsRefresh;
+        /// <summary>
+        /// Before running a tool, prompt the user for extra arguments
+        /// </summary>
+        public bool IsPromptForArgs;
+        /// <summary>
+        /// Within the extra arguments dialog, show the file browse button
+        /// </summary>
+        public bool IsAddBrowse;
 
         /// <summary>
         /// Implements the clonable interface.
@@ -47,32 +71,6 @@ namespace GitForce
         public object Clone()
         {
             return MemberwiseClone();
-        }
-
-        /// <summary>
-        /// Enumeration of checks indices into the Checks[] array of booleans
-        /// </summary>
-        public const int AddToContextMenu = 0;
-        public const int ConsoleApp = 1;
-        public const int WriteOutput = 2;
-        public const int CloseWindowOnExit = 3;
-        public const int Refresh = 4;
-        public const int PromptForArgs = 5;
-        public const int AddBrowse = 6;
-
-        // A set of access functions to return a specific boolean tool's check
-        public bool IsAddToContextMenu() { return Checks[AddToContextMenu]; }
-        public bool IsConsoleApp() { return Checks[ConsoleApp]; }
-        public bool IsWriteOutput() { return Checks[WriteOutput]; }
-        public bool IsCloseWindowOnExit() { return Checks[CloseWindowOnExit]; }
-        public bool IsRefresh() { return Checks[Refresh]; }
-        public bool IsPromptForArgs() { return Checks[PromptForArgs]; }
-        public bool IsAddBrowse() { return Checks[AddBrowse]; }
-
-        // An access function to set a specific boolean tool's check
-        public void SetCheck(int check, bool value)
-        {
-            Checks[check] = value;
         }
 
         /// <summary>
@@ -97,13 +95,13 @@ namespace GitForce
             string args = DeMacroise(Args, files);
 
             // Add custom arguments if the checkbox to Prompt for Arguments was checked
-            if (IsPromptForArgs())
+            if (IsPromptForArgs)
             {
                 // Description is used as a question for the arguments, shown in the window title bar
                 string desc = Name;
                 if (!string.IsNullOrEmpty(Desc)) desc += ": " + Desc;
 
-                FormCustomToolArgs formCustomToolArgs = new FormCustomToolArgs(desc, args, IsAddBrowse());
+                FormCustomToolArgs formCustomToolArgs = new FormCustomToolArgs(desc, args, IsAddBrowse);
                 if (formCustomToolArgs.ShowDialog() == DialogResult.Cancel)
                     return string.Empty;
 
@@ -122,7 +120,7 @@ namespace GitForce
             try
             {
                 // Run the custom tool in two ways (console app and GUI app)
-                if (IsConsoleApp())
+                if (IsConsoleApp)
                 {
                     // Start a console process
                     proc.StartInfo.CreateNoWindow = false;
@@ -130,12 +128,12 @@ namespace GitForce
                     // If we have to keep the window open (CMD/SHELL) after exit,
                     // we start the command line app in a different way, using a
                     // shell command (in which case we cannot redirect the stdout)
-                    if (IsCloseWindowOnExit())
+                    if (IsCloseWindowOnExit)
                     {
                         App.MainForm.SetTitle("Waiting for " + Cmd + " to finish...");
 
                         // Redirect standard output to our status pane if requested
-                        if (IsWriteOutput())
+                        if (IsWriteOutput)
                         {
                             proc.StartInfo.RedirectStandardOutput = true;
                             proc.StartInfo.RedirectStandardError = true;
@@ -173,7 +171,7 @@ namespace GitForce
                     proc.Start();
                 }
 
-                if (IsRefresh())
+                if (IsRefresh)
                 {
                     App.MainForm.SetTitle("Waiting for " + Cmd + " to finish...");
 
@@ -334,8 +332,8 @@ namespace GitForce
                         newTool.Cmd = GitBash;
                         newTool.Dir = "%r";
                         newTool.Args = "--login -i";
-                        newTool.SetCheck(ClassTool.ConsoleApp, true);
-                        newTool.SetCheck(ClassTool.AddToContextMenu, true);
+                        newTool.IsConsoleApp = true;
+                        newTool.IsAddToContextMenu = true;
                         tools.Add(newTool);
                     }
                 }

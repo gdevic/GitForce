@@ -30,13 +30,13 @@ namespace GitForce
             textArgs.Text = tool.Args;
             textDir.Text = tool.Dir;
             textDesc.Text = tool.Desc;
-            checkAddToContextMenu.Checked = tool.Checks[0];
-            checkConsoleApp.Checked = tool.Checks[1];
-            checkWriteToStatus.Checked = tool.Checks[2];
-            checkCloseUponExit.Checked = tool.Checks[3];
-            checkRefresh.Checked = tool.Checks[4];
-            checkPrompt.Checked = tool.Checks[5];
-            checkBrowse.Checked = tool.Checks[6];
+            checkAddToContextMenu.Checked = tool.IsAddToContextMenu;
+            checkConsoleApp.Checked = tool.IsConsoleApp;
+            checkWriteToStatus.Checked = tool.IsWriteOutput;
+            checkCloseUponExit.Checked = tool.IsCloseWindowOnExit;
+            checkRefresh.Checked = tool.IsRefresh;
+            checkPrompt.Checked = tool.IsPromptForArgs;
+            checkBrowse.Checked = tool.IsAddBrowse;
 
             // TODO: Running a command line tool does not work on Linux at the moment
             if(ClassUtils.IsMono())
@@ -106,13 +106,13 @@ namespace GitForce
             Tool.Args = textArgs.Text.Trim();
             Tool.Dir = textDir.Text.Trim();
             Tool.Desc = textDesc.Text.Trim();
-            Tool.Checks[0] = checkAddToContextMenu.Checked;
-            Tool.Checks[1] = checkConsoleApp.Checked;
-            Tool.Checks[2] = checkWriteToStatus.Checked;
-            Tool.Checks[3] = checkCloseUponExit.Checked;
-            Tool.Checks[4] = checkRefresh.Checked;
-            Tool.Checks[5] = checkPrompt.Checked;
-            Tool.Checks[6] = checkBrowse.Checked;
+            Tool.IsAddToContextMenu = checkAddToContextMenu.Checked;
+            Tool.IsConsoleApp = checkConsoleApp.Checked;
+            Tool.IsWriteOutput = checkWriteToStatus.Checked;
+            Tool.IsCloseWindowOnExit = checkCloseUponExit.Checked;
+            Tool.IsRefresh = checkRefresh.Checked;
+            Tool.IsPromptForArgs = checkPrompt.Checked;
+            Tool.IsAddBrowse = checkBrowse.Checked;
         }
 
         /// <summary>
