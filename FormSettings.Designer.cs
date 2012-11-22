@@ -130,6 +130,7 @@
             treeNode5.Tag = "Status";
             treeNode5.Text = "Status";
             treeNode6.Name = "Node0";
+            treeNode6.Tag = "Global";
             treeNode6.Text = "GitForce Objects";
             treeNode7.Name = "Node4";
             treeNode7.Tag = "ViewEdit";

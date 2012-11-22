@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using GitForce.Repo.Edit.Panels;
+using ControlGitconfig = GitForce.Repo.Edit.Panels.ControlGitconfig;
+using ControlGitignore = GitForce.Repo.Edit.Panels.ControlGitignore;
+using ControlUser = GitForce.Repo.Edit.Panels.ControlUser;
+using ControlLocal = GitForce.Repo.Edit.Panels.ControlLocal;
 
 namespace GitForce
 {
@@ -28,6 +26,7 @@ namespace GitForce
         /// of an setting tree view) to the actual repo edit panel instance:
         /// </summary>
         private readonly Dictionary<string, UserControl> _panels = new Dictionary<string, UserControl> {
+            { "Local", new ControlLocal() },
             { "User", new ControlUser() },
             { "Gitignore", new ControlGitignore() },
             { "Gitconfig", new ControlGitconfig() },

@@ -69,6 +69,7 @@
             treeNode3.Tag = "Gitconfig";
             treeNode3.Text = "Git config";
             treeNode4.Name = "Node0";
+            treeNode4.Tag = "Local";
             treeNode4.Text = "Repo Objects";
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode4});

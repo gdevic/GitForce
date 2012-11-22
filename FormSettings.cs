@@ -35,6 +35,7 @@ namespace GitForce
         /// of an option set tree view) to the actual option panel instance:
         /// </summary>
         private readonly Dictionary<string, UserControl> _panels = new Dictionary<string, UserControl> {
+            { "Global", new ControlGlobal() },
             { "User", new ControlUser() },
             { "Status", new ControlStatus() },
             { "Commits", new ControlCommits() },

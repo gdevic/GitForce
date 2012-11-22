@@ -325,6 +325,12 @@
     <Compile Include="Repo.Edit.Panels\ControlGitignore.Designer.cs">
       <DependentUpon>ControlGitignore.cs</DependentUpon>
     </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlLocal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlLocal.designer.cs">
+      <DependentUpon>ControlLocal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repo.Edit.Panels\ControlUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -375,6 +381,12 @@
     </Compile>
     <Compile Include="Settings.Panels\ControlGitignore.Designer.cs">
       <DependentUpon>ControlGitignore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlGlobal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.Panels\ControlGlobal.designer.cs">
+      <DependentUpon>ControlGlobal.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.Panels\ControlMerge.cs">
       <SubType>UserControl</SubType>
@@ -613,6 +625,9 @@
       <DependentUpon>ControlGitignore.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Repo.Edit.Panels\ControlLocal.resx">
+      <DependentUpon>ControlLocal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Repo.Edit.Panels\ControlUser.resx">
       <DependentUpon>ControlUser.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -643,6 +658,9 @@
     <EmbeddedResource Include="Settings.Panels\ControlGitignore.resx">
       <DependentUpon>ControlGitignore.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.Panels\ControlGlobal.resx">
+      <DependentUpon>ControlGlobal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings.Panels\ControlMerge.resx">
       <DependentUpon>ControlMerge.cs</DependentUpon>
