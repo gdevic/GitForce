@@ -13,16 +13,36 @@ namespace GitForce
     public partial class FormNewRepoStep1 : Form
     {
         /// <summary>
-        /// Describes the source for the new repo: "empty", "local" or "remote"
+        /// Describes source for a new repo: "empty", "local" or "remote"
         /// </summary>
-        public string Type = "empty";
-        public string Local = "";
+        public string Type { get { return type; }
+            set { type = value;
+            if (type.Equals("empty")) rbEmpty.Checked = true;
+            if (type.Equals("local")) rbLocal.Checked = true;
+            if (type.Equals("remote")) rbRemote.Checked = true;
+        }}
+        private string type;
+
+        /// <summary>
+        /// Path to a local git repo
+        /// </summary>
+        public string Local {
+            get { return textBoxLocal.Text; }
+            set { textBoxLocal.Text = value; }
+        }
+
+        /// <summary>
+        /// ClassRemote structure of a new repo
+        /// </summary>
         public ClassRemotes.Remote Remote;
 
         public FormNewRepoStep1()
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
+
+            Type = "empty";
+            Local = String.Empty;
 
             // Set the default remote name
             Remote.Name = "origin";
@@ -45,7 +65,7 @@ namespace GitForce
         private void BtBrowseClick(object sender, EventArgs e)
         {
             if (folderDlg.ShowDialog() == DialogResult.OK)
-                textBoxLocal.Text = folderDlg.SelectedPath;
+                Local = folderDlg.SelectedPath;
         }
 
         /// <summary>

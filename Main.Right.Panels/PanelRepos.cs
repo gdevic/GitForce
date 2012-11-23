@@ -97,13 +97,14 @@ namespace GitForce.Main.Right.Panels
             ToolStripMenuItem mScan = new ToolStripMenuItem("Scan...", null, MenuScanRepoClick);
             ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit...", null, MenuRepoEditClick);
             ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteRepoClick);
+            ToolStripMenuItem mClone = new ToolStripMenuItem("Clone...", null, MenuNewRepoClick);
             ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, ListReposDoubleClick);
             ToolStripMenuItem mSetDefault = new ToolStripMenuItem("Set Default to...", null, MenuSetDefaultRepoToClick);
             ToolStripMenuItem mCommand = new ToolStripMenuItem("Command Prompt...", null, MenuViewCommandClick);
             ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mNew, mScan, mEdit, mDelete,
+                mNew, mScan, mEdit, mDelete, mClone,
                 new ToolStripSeparator(),
                 mSwitchTo, mSetDefault, mCommand,
                 new ToolStripSeparator(),
@@ -114,9 +115,10 @@ namespace GitForce.Main.Right.Panels
             ClassRepo repo = GetSelectedRepo();
 
             if (repo == null)
-                mEdit.Enabled = mDelete.Enabled = mSwitchTo.Enabled = mSetDefault.Enabled = mCommand.Enabled = false;
+                mEdit.Enabled = mDelete.Enabled = mClone.Enabled = mSwitchTo.Enabled = mSetDefault.Enabled = mCommand.Enabled = false;
             else
             {
+                mNew.Tag = String.Empty;
                 if (repo == App.Repos.Current)
                     mSwitchTo.Enabled = false;
 
@@ -128,6 +130,7 @@ namespace GitForce.Main.Right.Panels
             {
                 mDelete.Enabled = true;
                 mCommand.Enabled = false;
+                mClone.Enabled = false;
             }
 
             // Add the specific singular repo name
@@ -136,18 +139,28 @@ namespace GitForce.Main.Right.Panels
                 string repoName = listRepos.SelectedItems[0].Text.Replace('\\', '/').Split('/').Last();
                 mSwitchTo.Text = "Switch to " + repoName;
                 mSetDefault.Text = "Set Default to " + repoName;
+                mClone.Tag = App.Repos.Repos[listRepos.SelectedIndices[0]];
             }
 
             return menu;
         }
 
         /// <summary>
-        /// Create or clone a new git repository
+        /// Create or clone a new git repository.
+        /// If the Tag field is non-empty, it contains the Repo to clone.
         /// </summary>
         private void MenuNewRepoClick(object sender, EventArgs e)
         {
             FormNewRepoStep1 newRepoStep1 = new FormNewRepoStep1();
             FormNewRepoStep2 newRepoStep2 = new FormNewRepoStep2();
+
+            // If we need to clone a repo, set the cloning parameters within the Step1 form
+            ClassRepo repoToClone = ((ToolStripDropDownItem) sender).Tag as ClassRepo;
+            if (repoToClone!=null)
+            {
+                newRepoStep1.Type = "local";
+                newRepoStep1.Local = repoToClone.ToString();
+            }
 
             BackToStep1:
             if (newRepoStep1.ShowDialog() == DialogResult.OK)
