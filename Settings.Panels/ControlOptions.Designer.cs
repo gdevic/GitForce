@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.checkBoxTabs = new System.Windows.Forms.CheckBox();
+            this.checkBoxWarnMultipleInstances = new System.Windows.Forms.CheckBox(); 
             this.SuspendLayout();
             // 
             // checkBoxTabs
@@ -41,11 +42,22 @@
             this.checkBoxTabs.Text = "Show tabs on the right pane";
             this.checkBoxTabs.UseVisualStyleBackColor = true;
             // 
+            // checkBoxWarnMultipleInstances
+            // 
+            this.checkBoxWarnMultipleInstances.AutoSize = true;
+            this.checkBoxWarnMultipleInstances.Location = new System.Drawing.Point(3, 26);
+            this.checkBoxWarnMultipleInstances.Name = "checkBoxWarnMultipleInstances";
+            this.checkBoxWarnMultipleInstances.Size = new System.Drawing.Size(259, 17);
+            this.checkBoxWarnMultipleInstances.TabIndex = 1;
+            this.checkBoxWarnMultipleInstances.Text = "&Warn before starting additional instance of GitForce";
+            this.checkBoxWarnMultipleInstances.UseVisualStyleBackColor = true;
+            // 
             // ControlOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.checkBoxTabs);
+            this.Controls.Add(this.checkBoxWarnMultipleInstances);
             this.Name = "ControlOptions";
             this.Size = new System.Drawing.Size(300, 300);
             this.Tag = "Options";
@@ -57,6 +69,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox checkBoxTabs;
+        private System.Windows.Forms.CheckBox checkBoxWarnMultipleInstances;
 
     }
 }

@@ -23,6 +23,7 @@ namespace GitForce.Settings.Panels
         public void Init(string[] options)
         {
             checkBoxTabs.Checked = Properties.Settings.Default.ShowTabsOnRightPane;
+            checkBoxWarnMultipleInstances.Checked = Properties.Settings.Default.WarnMultipleInstances;
 
             // Add the dirty (modified) value changed helper
             checkBoxTabs.CheckStateChanged += ControlDirtyHelper.ControlDirty;
@@ -41,6 +42,7 @@ namespace GitForce.Settings.Panels
         public void ApplyChanges()
         {
             Properties.Settings.Default.ShowTabsOnRightPane = checkBoxTabs.Checked;
+            Properties.Settings.Default.WarnMultipleInstances = checkBoxWarnMultipleInstances.Checked;
 
             if (checkBoxTabs.Tag != null)
                 App.MainForm.UpdateRightPaneTabs();

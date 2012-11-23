@@ -396,5 +396,17 @@ namespace GitForce.Properties {
                 this["ShowTabsOnRightPane"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WarnMultipleInstances {
+            get {
+                return ((bool)(this["WarnMultipleInstances"]));
+            }
+            set {
+                this["WarnMultipleInstances"] = value;
+            }
+        }
     }
 }
