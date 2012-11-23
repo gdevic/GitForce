@@ -12,7 +12,7 @@ namespace GitForce
     {
         [Category("Appearance")]
         [Description("Shows or hides the tab control")]
-        [DefaultValue(true)]
+        [DefaultValue(typeof(bool),"false")]
         public bool ShowTabs { get; set; }
 
         public void UpdateTabState()
