@@ -86,12 +86,12 @@
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dummyMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(153, 48);
+            this.contextMenu.Size = new System.Drawing.Size(150, 26);
             // 
             // dummyMenuItem
             // 
             this.dummyMenuItem.Name = "dummyMenuItem";
-            this.dummyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dummyMenuItem.Size = new System.Drawing.Size(149, 22);
             this.dummyMenuItem.Text = "No Repository";
             // 
             // imageList
@@ -110,6 +110,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "PanelBranches";
             this.Size = new System.Drawing.Size(400, 400);
+            this.Tag = "Branches";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenu.ResumeLayout(false);

@@ -45,7 +45,7 @@ namespace GitForce.Settings.Panels
             Properties.Settings.Default.WarnMultipleInstances = checkBoxWarnMultipleInstances.Checked;
 
             if (checkBoxTabs.Tag != null)
-                App.MainForm.UpdateRightPaneTabs();
+                App.MainForm.UpdateRightPaneTabsShowState();
         }
     }
 }

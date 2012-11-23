@@ -199,6 +199,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "PanelRevlist";
             this.Size = new System.Drawing.Size(400, 400);
+            this.Tag = "Revisions";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenu.ResumeLayout(false);

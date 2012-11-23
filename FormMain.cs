@@ -83,18 +83,16 @@ namespace GitForce
             // Right set of panels:
             foreach (var panel in PanelsR)
             {
-                var tabPage = new TabPage(panel.Key) { Name = panel.Key, ToolTipText = panel.Key + " (" + PanelsRShortcuts[panel.Key] + ")" };
+                var tabPage = new TabPage(panel.Key) { Name = panel.Key, Tag = panel.Key, ToolTipText = panel.Key + " (" + PanelsRShortcuts[panel.Key] + ")" };
                 panel.Value.Dock = DockStyle.Fill;
                 tabPage.Controls.Add(panel.Value);
                 rightTabControl.TabPages.Add(tabPage);
             }
 
-            SetRightPanelSelectionInToolbar();
-
             // Show or hide command line
             menuViewCommandLine.Checked = cmdBox.Visible = Properties.Settings.Default.ShowCommandLine;
 
-            UpdateRightPaneTabs();
+            UpdateRightPaneTabsShowState();
 
             // Enable SSH only if the PuTTY support class has been instantiated
             if (App.Putty != null)
@@ -303,39 +301,38 @@ namespace GitForce
         }
 
         /// <summary>
-        /// This function is called when user changes a right panel
+        /// Programmatically change the right panel and all related controls
         /// </summary>
         private void ChangeRightPanel(string panelName)
         {
+            // Update checkbox next to the menu items
+            foreach (var menu in new[] { menuMainPendingChanges, menuMainSubmittedChanges, menuMainBranches, menuMainRepos })
+                menu.CheckState = panelName.Equals(menu.Tag) ? CheckState.Checked : CheckState.Unchecked;
+
+            // Update controls that show the right panel: toolbar buttons and tab control
+            foreach (var button in new[] { btChangelists, btSubmitted, btBranches, btRepos })
+                button.CheckState = panelName.Equals(button.Tag) ? CheckState.Checked : CheckState.Unchecked;
+
+            // Update the right panel tab
             rightTabControl.SelectTab(panelName);
+
+            // Update the persistent store state
             Properties.Settings.Default.viewRightPanel = panelName;
         }
 
         /// <summary>
-        /// Handler for right panel selected event
+        /// Handler for right panel change events from various controls:
+        /// * Menu item selections           (sender is ToolStripDropDownItem)
+        /// * Toolbar buttons                (sender is ToolStripItem)
+        /// * Tab control of the right panel (sender is TabEx)
         /// </summary>
-        private void RightPanelSelectionClick(object sender, EventArgs e)
+        private void RightPanelSelectionEvent(object sender, EventArgs e)
         {
-            ChangeRightPanel(((ToolStripItem)sender).Tag.ToString());
-        }
-
-        /// <summary>
-        /// Handler for right panel selected from the toolbar event
-        /// </summary>
-        private void SetRightPanelSelectionInToolbar()
-        {
-            foreach (var button in new[] { btChangelists, btSubmitted, btBranches, btRepos })
-            {
-                button.CheckState = rightTabControl.SelectedTab.Name.Equals(button.Tag) ? CheckState.Checked : CheckState.Unchecked;
-            }
-        }
-
-        /// <summary>
-        /// Handler for right panel selected from the tabs event
-        /// </summary>
-        private void OnRightTabControlSelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetRightPanelSelectionInToolbar();
+            string tag = String.Empty;
+            if (sender is TabEx) tag = ((TabEx) sender).SelectedTab.Tag.ToString();
+            if (sender is ToolStripItem) tag = ((ToolStripItem)sender).Tag.ToString();
+            if (sender is ToolStripDropDownItem) tag = ((ToolStripDropDownItem)sender).Tag.ToString();
+            ChangeRightPanel(tag);
         }
 
         #endregion
@@ -392,7 +389,7 @@ namespace GitForce
         /// <summary>
         /// Update the state of the tab control (show/hide)
         /// </summary>
-        public void UpdateRightPaneTabs()
+        public void UpdateRightPaneTabsShowState()
         {
             rightTabControl.ShowTabs = Properties.Settings.Default.ShowTabsOnRightPane;
             rightTabControl.UpdateTabState();
@@ -633,7 +630,7 @@ namespace GitForce
             menuMainRepository.DropDownItems.Clear();
             menuMainRepository.DropDownItems.AddRange(PanelRepos.GetContextMenu(menuMainRepository.DropDown));
 
-            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionClick, Keys.F10) { Tag = "Repos" };
+            ToolStripMenuItem mRepos = new ToolStripMenuItem("View Repos", null, RightPanelSelectionEvent, Keys.F10) { Tag = "Repos" };
             menuMainRepository.DropDownItems.AddRange(new ToolStripItem[] { mRepos });
         }
 
@@ -645,7 +642,7 @@ namespace GitForce
             menuMainBranch.DropDownItems.Clear();
             menuMainBranch.DropDownItems.AddRange(PanelBranches.GetContextMenu(menuMainBranch.DropDown));
 
-            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionClick, Keys.F8) { Tag = "Branches" };
+            ToolStripMenuItem mRefresh = new ToolStripMenuItem("View Branches", null, RightPanelSelectionEvent, Keys.F8) { Tag = "Branches" };
             menuMainBranch.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
         }
 
@@ -662,8 +659,8 @@ namespace GitForce
             if (Properties.Settings.Default.viewRightPanel == "Revisions")
                 menuMainChangelist.DropDownItems.AddRange(PanelRevlist.GetContextMenu(menuMainChangelist.DropDown));
 
-            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionClick, Keys.F6) { Tag = "Commits" };
-            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionClick, Keys.F7) { Tag = "Revisions" };
+            ToolStripMenuItem mPending = new ToolStripMenuItem("View Pending Changelists", null, RightPanelSelectionEvent, Keys.F6) { Tag = "Commits" };
+            ToolStripMenuItem mSubmitted = new ToolStripMenuItem("View Submitted Changelists", null, RightPanelSelectionEvent, Keys.F7) { Tag = "Revisions" };
             menuMainChangelist.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mPending, mSubmitted });
         }
 

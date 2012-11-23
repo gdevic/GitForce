@@ -132,6 +132,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "PanelRepos";
             this.Size = new System.Drawing.Size(400, 400);
+            this.Tag = "Repos";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenu.ResumeLayout(false);
