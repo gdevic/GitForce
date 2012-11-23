@@ -58,11 +58,13 @@ namespace GitForce
             All = 31
         }
 
-        // Path to the default custom tools file
+        /// <summary>
+        /// Path to the default custom tools file
+        /// </summary>
         private static readonly string DefaultCustomToolsFile = Path.Combine(App.AppHome, "CustomTools.xml");
 
         /// <summary>
-        /// This is the main entry point to the application main form. Doing all the initialization here.
+        /// This is the main entry point to the application main form.
         /// </summary>
         public FormMain()
         {

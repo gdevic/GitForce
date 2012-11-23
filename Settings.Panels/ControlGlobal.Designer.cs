@@ -61,7 +61,7 @@
             this.radio1.Location = new System.Drawing.Point(3, 50);
             this.radio1.Name = "radio1";
             this.radio1.Size = new System.Drawing.Size(229, 17);
-            this.radio1.TabIndex = 1;
+            this.radio1.TabIndex = 0;
             this.radio1.TabStop = true;
             this.radio1.Tag = "true";
             this.radio1.Text = "Checkout Windows-style, commit Unix-style";
@@ -85,7 +85,7 @@
             this.radio3.Location = new System.Drawing.Point(3, 96);
             this.radio3.Name = "radio3";
             this.radio3.Size = new System.Drawing.Size(158, 17);
-            this.radio3.TabIndex = 1;
+            this.radio3.TabIndex = 2;
             this.radio3.TabStop = true;
             this.radio3.Tag = "false";
             this.radio3.Text = "Checkout as-is, commit as-is";
