@@ -201,7 +201,7 @@ namespace GitForce
 
         /// <summary>
         /// Reset a list of files to a specific head.
-        /// Returns true if a git command succeeded, fail otherwise.
+        /// Returns true if a git command succeeded, false otherwise.
         /// </summary>
         public bool GitReset(string head, List<string> files)
         {
@@ -218,10 +218,12 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Commit a list of files
+        /// Commit a list of files.
+        /// Returns true if commit succeeded, false otherwise.
         /// </summary>
-        public void GitCommit(string cmd, bool isAmend, List<string> files)
+        public bool GitCommit(string cmd, bool isAmend, List<string> files)
         {
+            ExecResult result;
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Submit " + list);
 
@@ -233,12 +235,15 @@ namespace GitForce
             // file (the first file on the list), and append for each successive chunk.
             if (isAmend == false && list.Length >= 2000)
             {
-                RunCmd("commit " + cmd + " -- " + "\"" + files[0] + "\"");
+                result = RunCmd("commit " + cmd + " -- " + "\"" + files[0] + "\"");
+                if (result.Success() == false)
+                    return false;
                 isAmend = true;
                 files.RemoveAt(0);
                 list = QuoteAndFlattenPaths(files);
             }
-            RunCmd(string.Format("commit {0} {1} -- {2}", cmd, isAmend ? "--amend" : "", list));
+            result = RunCmd(string.Format("commit {0} {1} -- {2}", cmd, isAmend ? "--amend" : "", list));
+            return result.Success();
         }
 
         /// <summary>

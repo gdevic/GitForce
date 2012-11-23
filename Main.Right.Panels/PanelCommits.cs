@@ -385,17 +385,18 @@ namespace GitForce.Main.Right.Panels
                     File.WriteAllText(tempFile, commitForm.GetDescription());
 
                     // Form the final command with the description file and an optional amend
-                    Status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final);
+                    if (Status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final))
+                    {
+                        File.Delete(tempFile);
 
-                    File.Delete(tempFile);
-
-                    // If the current commit bundle is not default, remove it. Refresh which follows
-                    // will reset all files which were _not_ submitted as part of this change to be
-                    // moved to the default changelist.
-                    if (!c.IsDefault)
-                        App.Repos.Current.Commits.Bundle.Remove(c);
-                    else
-                        c.Description = "Default";
+                        // If the current commit bundle is not default, remove it. Refresh which follows
+                        // will reset all files which were _not_ submitted as part of this change to be
+                        // moved to the default changelist.
+                        if (!c.IsDefault)
+                            App.Repos.Current.Commits.Bundle.Remove(c);
+                        else
+                            c.Description = "Default";
+                    }
                 }
                 App.DoRefresh();
             }
