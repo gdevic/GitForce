@@ -21,7 +21,7 @@ namespace GitForce
                 // Windows OS:
                 new AppHelper( "p4merge",        Path.Combine(ProgramFiles,@"Perforce\P4Merge.exe"),       "%1 %2 %3 %4" ),
                 new AppHelper( "WinMerge",       Path.Combine(ProgramFiles,@"WinMerge\WinMergeU.exe"),     "/e /x /u %2 %3 %4" ),
-                new AppHelper( "BC3",            Path.Combine(ProgramFiles,@"Beyond Compare 3\BComp.com"), "%2 %3 /mergeoutput=%4" ),
+                new AppHelper( "bc3",            Path.Combine(ProgramFiles,@"Beyond Compare 3\BComp.exe"), "%2 %3 %1 %4" ),
                 new AppHelper( "KDiff3",         Path.Combine(ProgramFiles,@"KDiff3\kdiff3.exe"),          "%1 %2 %3 -o %4" ),
 
                 // Linux OS:
@@ -90,9 +90,11 @@ namespace GitForce
                 string arg = "'" + path + "' " + usr;
                 ClassConfig.SetGlobal("mergetool." + app.Name + ".path", path);
                 ClassConfig.SetGlobal("mergetool." + app.Name + ".cmd", arg);
+                ClassConfig.SetGlobal("mergetool." + app.Name + ".trustExitCode", "false");
 
-                // TODO: This might be an option: Set our default tool to be the Git merge tool?
-                // ClassConfig.SetGlobal("merge.tool", app.Name);
+                // Set the default merge tool
+                ClassConfig.SetGlobal("merge.tool", app.Name);
+                ClassConfig.SetGlobal("mergetool.keepBackup", "false");
             }
         }
 

@@ -25,7 +25,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Timer used to postpone refresh operation: 500ms trigger, single-shot
         /// </summary>
-        private readonly System.Timers.Timer timer = new System.Timers.Timer(500) { AutoReset = false };
+        private readonly System.Timers.Timer timer = new System.Timers.Timer(500) {AutoReset = false};
 
         /// <summary>
         /// Class constructor
@@ -66,7 +66,7 @@ namespace GitForce.Main.Right.Panels
                 treeCommits.Nodes.Add(node);
 
                 // Set the first node (root) image according to the view mode
-                node.ImageIndex = (int)ClassView.Img.ChangelistRoot;
+                node.ImageIndex = (int) ClassView.Img.ChangelistRoot;
 
                 // Assign the icons to the nodes of tree view
                 ClassView.ViewAssignIcon(Status, node, true);
@@ -127,7 +127,7 @@ namespace GitForce.Main.Right.Panels
             if (InvokeRequired)
                 BeginInvoke(refresh);
             else
-                refresh.Invoke();            
+                refresh.Invoke();
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace GitForce.Main.Right.Panels
                 if (opclass.ContainsKey(status.Ycode(s)))
                     opclass[status.Ycode(s)].Add(s);
                 else
-                    opclass[status.Ycode(s)] = new List<string> { s };
+                    opclass[status.Ycode(s)] = new List<string> {s};
             }
 
             // Perform required operations on the files
@@ -207,7 +207,7 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] droppedFiles = (string[]) e.Data.GetData(DataFormats.FileDrop);
 
             // Files can come from anywhere. Prune those that are not from this repo.
             List<string> files = (from file in droppedFiles.ToList()
@@ -219,9 +219,9 @@ namespace GitForce.Main.Right.Panels
             // Find which node the files have been dropped to, so we can
             // move them to the selected commit bundle
 
-            Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+            Point pt = ((TreeView) sender).PointToClient(new Point(e.X, e.Y));
             TreeNode destNode = ((TreeView) sender).GetNodeAt(pt);
-            if (destNode!=null)
+            if (destNode != null)
             {
                 // Destination node could be a bundle root, or a file node (with a parent root)
                 ClassCommit bundle = null;
@@ -231,7 +231,7 @@ namespace GitForce.Main.Right.Panels
                     bundle = destNode.Parent.Tag as ClassCommit;
 
                 // If we have a valid class bundle where the files should be moved to, move them
-                if(bundle!=null)
+                if (bundle != null)
                 {
                     List<string> list = files.Where(s => Status.IsMarked(s)).ToList();
                     App.Repos.Current.Commits.MoveOrAdd(bundle, list);
@@ -275,25 +275,35 @@ namespace GitForce.Main.Right.Panels
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, object tag)
         {
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick) {Tag = tag};
-            ToolStripMenuItem mSub = new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) {Tag = tag};
+            ToolStripMenuItem mSub = Status.IsMergeState()
+                                         ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
+                                         : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) {Tag = tag};
             ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, MenuNewCommitClick);
-            ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) {Tag = tag};
+            ToolStripMenuItem mEdit = Status.IsMergeState()
+                                          ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
+                                          : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) {Tag = tag};
             ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) {Tag = tag};
             ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, MenuRevertClick) {Tag = tag};
 
             // Build the "Resolve" submenu
-            ToolStripMenuItem mResolveTool = new ToolStripMenuItem("Run Merge Tool...", null, MenuMergeTool) { Tag = tag };
+            ToolStripMenuItem mResolveTool = new ToolStripMenuItem("Run Merge Tool...", null, MenuMergeTool) {Tag = tag};
+            ToolStripMenuItem mAcceptOurs = new ToolStripMenuItem("Accept ours", null, MenuAcceptClick) {Tag = "--ours"};
+            ToolStripMenuItem mAcceptTheirs = new ToolStripMenuItem("Accept theirs", null, MenuAcceptClick) {Tag = "--theirs"};
+            ToolStripMenuItem mAbort = new ToolStripMenuItem("Abort Merge", null, MenuAbortMergeClick);
+            ToolStripMenuItem mExitMerge = new ToolStripMenuItem("Exit Merge state", null, MenuExitMergeClick);
             ToolStripMenuItem mResolve = new ToolStripMenuItem("Resolve");
-            mResolve.DropDownItems.AddRange(new ToolStripItem[] { mResolveTool });
+            mResolve.DropDownItems.AddRange(new ToolStripItem[] {
+                mResolveTool, mAcceptOurs, mAcceptTheirs,
+                new ToolStripSeparator(),
+                mAbort, mExitMerge });
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mDiff, mSub, 
+                mDiff, mSub,
                 new ToolStripSeparator(),
                 mNew, mEdit, mDel,
                 new ToolStripSeparator(),
                 mRevert,
-                mResolve
-            });
+                mResolve });
 
             if (treeCommits.Nodes.Count == 0 || tag == treeCommits.Nodes[0].Tag)
                 mSub.Enabled = false;
@@ -307,8 +317,25 @@ namespace GitForce.Main.Right.Panels
             if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
                 mDel.Enabled = false;
 
-            if (!((tag is string) && Status.IsMarked(tag as string) && Status.Xcode(tag as string) == 'U'))
-                mResolve.Enabled = false;
+            // If the repo is the merge state, adjust some menu enables
+            if (!Status.IsMergeState())
+                mResolve.Enabled = false; // Disable resolves if the repo is _not_ in the merge state
+            else
+            {
+                if (Status.IsUnmerged()) // If there are files that are not merged yet, do not allow submits
+                {
+                    mSub.Enabled = false;
+                    mExitMerge.Enabled = false;
+                    // Enable accept choices only when some files are selected
+                    if (treeCommits.SelectedNodes.Count == 0)
+                        mAcceptOurs.Enabled = mAcceptTheirs.Enabled = false;
+                }
+                else // If there are no unmerged files left disable resolve tools
+                {
+                    mResolveTool.Enabled = false;
+                    mAcceptOurs.Enabled = mAcceptTheirs.Enabled = false;
+                }
+            }
 
             return menu;
         }
@@ -352,6 +379,8 @@ namespace GitForce.Main.Right.Panels
 
         /// <summary>
         /// Submit selected files within a changelist
+        /// Two versions of submit are used: one for the ordinary submit and the
+        /// other one for the submit when the operation will be a merge.
         /// </summary>
         private void MenuSubmitClick(object sender, EventArgs e)
         {
@@ -400,6 +429,69 @@ namespace GitForce.Main.Right.Panels
                 }
                 App.DoRefresh();
             }
+        }
+
+        /// <summary>
+        /// Edit merge commit description
+        /// </summary>
+        private void MenuEditCommitMergeClick(object sender, EventArgs e)
+        {
+            try
+            {
+                ClassCommit c = GetMergeCommitBundle();
+                FormCommitMerge commitMerge = new FormCommitMerge(false, c.Description);
+                commitMerge.SetFiles(c);
+                if (commitMerge.ShowDialog() == DialogResult.OK)
+                {
+                    // Overwrite default merge message file with our updated text
+                    File.WriteAllText(Status.pathToMergeMsg, commitMerge.GetDescription());
+                    App.DoRefresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                App.PrintStatusMessage(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Submit merge
+        /// </summary>
+        private void MenuSubmitMergeClick(object sender, EventArgs e)
+        {
+            try
+            {
+                ClassCommit c = GetMergeCommitBundle();
+                FormCommitMerge commitMerge = new FormCommitMerge(true, c.Description);
+                commitMerge.SetFiles(c);
+                if (commitMerge.ShowDialog() == DialogResult.OK)
+                {
+                    if (Status.Repo.GitCommit("-F \"" + Status.pathToMergeMsg + "\"", false, new List<string>()))
+                    {
+                        App.DoRefresh();                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                App.PrintStatusMessage(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Return the commit bundle for the merge operation
+        /// </summary>
+        private ClassCommit GetMergeCommitBundle()
+        {
+            string desc = File.ReadAllText(Status.pathToMergeMsg);
+            ClassCommit c = new ClassCommit(desc);
+
+            // Merge commits all affected files, we can't do merge commit with a partial file list
+            List<string> files = Status.GetFiles();
+            files = files.Where(s => (Status.Xcode(s) == 'M') || (Status.Xcode(s) == 'U')).ToList();
+            c.AddFiles(files);
+
+            return c;
         }
 
         /// <summary>
@@ -474,13 +566,51 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// Run the merge tool
+        /// Run the merge tool. Tag of a sender may contain an individual file name.
         /// </summary>
         private void MenuMergeTool(object sender, EventArgs e)
         {
-            string file = (sender as ToolStripMenuItem).Tag.ToString();
+            string file = (sender as ToolStripMenuItem).Tag as string ?? "";
             string cmd = "mergetool " + ClassMerge.GetMergeCmd() + " \"" + file + "\"";
             Status.Repo.RunCmd(cmd);
+            App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Accept one particula version of a file, details of a command are sent in Tag
+        /// </summary>
+        private void MenuAcceptClick(object sender, EventArgs e)
+        {
+            string cmd = (sender as ToolStripMenuItem).Tag as string;
+            List<string> files = GetSelectedFiles();
+            Status.Repo.GitCheckout(cmd, files);
+            Status.Repo.GitAdd(files);
+            App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Abort the merge.. All files will be lost!
+        /// </summary>
+        private void MenuAbortMergeClick(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(@"Aborting the merge will unstage and reset all files. You will lose all changes since the last commit. Proceed with Abort?",
+                    "Abort Merge", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
+
+            string cmd = "reset --merge";
+            Status.Repo.RunCmd(cmd);
+            App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Exit Merge state by deleting MERGE_HEAD
+        /// </summary>
+        private void MenuExitMergeClick(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(@"Exiting the merge state will transform your merge commit into a regular commit. Proceed with the exit?",
+                    "Exit Merge state", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
+
+            string pathToMergeHead = Status.Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
+            ClassUtils.DeleteFile(pathToMergeHead);
             App.DoRefresh();
         }
     }

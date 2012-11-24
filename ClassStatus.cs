@@ -30,6 +30,12 @@ namespace GitForce
         private readonly Dictionary<string, string> AltFile = new Dictionary<string, string>();
 
         /// <summary>
+        /// Helper accessor to get the path to the MERGE_MSG file
+        /// </summary>
+        public string pathToMergeMsg {
+            get { return Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_MSG"; } }
+
+        /// <summary>
         /// Class constructor
         /// </summary>
         public ClassStatus(ClassRepo repo)
@@ -72,7 +78,7 @@ namespace GitForce
             string[] response = result.stdout
                 .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
                 .Split(("\0")
-                           .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < response.Length; i++)
             {
@@ -101,6 +107,25 @@ namespace GitForce
         public bool IsMarked(string path)
         {
             return XY.ContainsKey(path);
+        }
+
+        /// <summary>
+        /// Return true if the repo contains files that are not yet merged
+        /// </summary>
+        public bool IsUnmerged()
+        {
+            if (XY.Values.Any(status => status[0]=='U' || status[1]=='U'))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Return true if the repo is in the merge state
+        /// </summary>
+        public bool IsMergeState()
+        {
+            string checkFile = Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
+            return File.Exists(checkFile);
         }
 
         /// <summary>

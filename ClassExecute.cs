@@ -85,7 +85,6 @@ namespace GitForce
                 Proc.StartInfo.CreateNoWindow = false;
                 Proc.StartInfo.RedirectStandardOutput = false;
                 Proc.StartInfo.RedirectStandardError = false;
-                Exited = new Semaphore(0, 0);
             }
 
             // Add all environment variables registered for our process environment

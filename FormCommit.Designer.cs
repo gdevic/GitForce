@@ -39,7 +39,7 @@
             this.btCommit = new System.Windows.Forms.Button();
             this.labelWidth = new System.Windows.Forms.Label();
             this.labelCursor = new System.Windows.Forms.Label();
-            this.textDescription = new RichTextBoxEx();
+            this.textDescription = new GitForce.RichTextBoxEx();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -181,6 +181,7 @@
             this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDescription.DetectUrls = false;
             this.textDescription.Location = new System.Drawing.Point(66, 0);
             this.textDescription.Name = "textDescription";
             this.textDescription.Size = new System.Drawing.Size(584, 234);
@@ -191,8 +192,10 @@
             // 
             // FormCommit
             // 
+            this.AcceptButton = this.btCommit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(674, 496);
             this.Controls.Add(this.labelCursor);
             this.Controls.Add(this.labelWidth);

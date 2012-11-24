@@ -190,6 +190,16 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Checkout a list of files
+        /// </summary>
+        public void GitCheckout(string options, List<string> files)
+        {
+            string list = QuoteAndFlattenPaths(files);
+            App.PrintStatusMessage("Checkout " + options + " " + list);
+            RunCmd("checkout " + options + " -- " + list);
+        }
+
+        /// <summary>
         /// Revert a list of files
         /// </summary>
         public void GitRevert(List<string> files)
