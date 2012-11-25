@@ -55,10 +55,7 @@ namespace GitForce
                 gitFilter += " --after=" + String.Format("{0:yyyy/MM/dd}", dt);                
             }
 
-            if (string.IsNullOrEmpty(gitFilter))
-                DialogResult = DialogResult.Cancel;
-            else
-                App.PrintLogMessage("Condition: " + gitFilter);
+            App.PrintLogMessage("Condition: " + gitFilter);
         }
     }
 }
