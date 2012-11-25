@@ -157,7 +157,10 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsItemDrag(object sender, ItemDragEventArgs e)
         {
             // Get the list of selected files, prepend the repo root path and send it as a drag/drop list of files
-            string[] files = treeCommits.SelectedNodes.Select(s => Path.Combine(Status.Repo.Root, s.Tag.ToString())).ToArray();
+            string[] files = treeCommits.SelectedNodes
+                                        .Where(s => s.Parent != null && !(s.Tag is ClassCommit))
+                                        .Select(s => Path.Combine(Status.Repo.Root, s.Tag.ToString())).ToArray();
+            if (files.Length == 0) return;
             DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Copy);
         }
 
