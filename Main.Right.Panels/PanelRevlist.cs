@@ -101,6 +101,7 @@ namespace GitForce.Main.Right.Panels
             foreach (string s in response)
             {
                 string[] cat = s.Split('\t');
+                if (s.Length < 2) continue; // Handle empty results (single empty string) correctly
 
                 // Convert the date/time from UNIX second based to C# date structure
                 DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(cat[1])).ToLocalTime();
