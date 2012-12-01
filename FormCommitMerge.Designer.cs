@@ -30,13 +30,13 @@
         {
             this.btCancel = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.textDescription = new GitForce.RichTextBoxEx();
             this.label1 = new System.Windows.Forms.Label();
+            this.listFiles = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.labelCursor = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
             this.btCommit = new System.Windows.Forms.Button();
-            this.listFiles = new System.Windows.Forms.ListBox();
-            this.textDescription = new GitForce.RichTextBoxEx();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -75,6 +75,20 @@
             this.splitContainer1.SplitterDistance = 286;
             this.splitContainer1.TabIndex = 1;
             // 
+            // textDescription
+            // 
+            this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDescription.DetectUrls = false;
+            this.textDescription.Location = new System.Drawing.Point(66, 0);
+            this.textDescription.Name = "textDescription";
+            this.textDescription.Size = new System.Drawing.Size(606, 286);
+            this.textDescription.TabIndex = 0;
+            this.textDescription.Text = "";
+            this.textDescription.SelectionChanged += new System.EventHandler(this.TextDescriptionTextChanged);
+            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -83,6 +97,19 @@
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Description:";
+            // 
+            // listFiles
+            // 
+            this.listFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listFiles.FormattingEnabled = true;
+            this.listFiles.IntegralHeight = false;
+            this.listFiles.Location = new System.Drawing.Point(66, 0);
+            this.listFiles.Name = "listFiles";
+            this.listFiles.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listFiles.Size = new System.Drawing.Size(584, 153);
+            this.listFiles.TabIndex = 1;
             // 
             // label2
             // 
@@ -125,39 +152,10 @@
             this.btCommit.Text = "Commit";
             this.btCommit.UseVisualStyleBackColor = true;
             // 
-            // listFiles
-            // 
-            this.listFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.listFiles.FormattingEnabled = true;
-            this.listFiles.IntegralHeight = false;
-            this.listFiles.Location = new System.Drawing.Point(66, 0);
-            this.listFiles.Name = "listFiles";
-            this.listFiles.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listFiles.Size = new System.Drawing.Size(584, 153);
-            this.listFiles.TabIndex = 1;
-            // 
-            // textDescription
-            // 
-            this.textDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textDescription.DetectUrls = false;
-            this.textDescription.Location = new System.Drawing.Point(66, 0);
-            this.textDescription.Name = "textDescription";
-            this.textDescription.Size = new System.Drawing.Size(606, 286);
-            this.textDescription.TabIndex = 0;
-            this.textDescription.Text = "";
-            this.textDescription.SelectionChanged += new System.EventHandler(this.TextDescriptionTextChanged);
-            this.textDescription.TextChanged += new System.EventHandler(this.TextDescriptionTextChanged);
-            // 
             // FormCommitMerge
             // 
-            this.AcceptButton = this.btCommit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(674, 496);
             this.Controls.Add(this.btCommit);
             this.Controls.Add(this.labelCursor);
