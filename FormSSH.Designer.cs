@@ -47,6 +47,7 @@
             this.tabLocalKeys = new System.Windows.Forms.TabPage();
             this.tabRemoteKeys = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btTestHost = new System.Windows.Forms.Button();
             this.btRemoveHost = new System.Windows.Forms.Button();
             this.btAddHost = new System.Windows.Forms.Button();
             this.listHosts = new System.Windows.Forms.ListBox();
@@ -285,6 +286,7 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.btTestHost);
             this.groupBox3.Controls.Add(this.btRemoveHost);
             this.groupBox3.Controls.Add(this.btAddHost);
             this.groupBox3.Controls.Add(this.textBoxHost);
@@ -295,6 +297,18 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Known hosts";
+            // 
+            // btTestHost
+            // 
+            this.btTestHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btTestHost.Enabled = false;
+            this.btTestHost.Location = new System.Drawing.Point(411, 48);
+            this.btTestHost.Name = "btTestHost";
+            this.btTestHost.Size = new System.Drawing.Size(75, 23);
+            this.btTestHost.TabIndex = 4;
+            this.btTestHost.Text = "Test";
+            this.btTestHost.UseVisualStyleBackColor = true;
+            this.btTestHost.Click += new System.EventHandler(this.BtTestHostClick);
             // 
             // btRemoveHost
             // 
@@ -446,5 +460,6 @@
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.Button btHelp;
         private System.Windows.Forms.Button btRemoveHost;
+        private System.Windows.Forms.Button btTestHost;
     }
 }

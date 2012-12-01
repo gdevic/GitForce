@@ -14,22 +14,22 @@ namespace GitForce
     /// </summary>
     public class ClassPutty
     {
-        private readonly string _pathPageant;
-        private readonly string _pathPlink;
-        private readonly string _pathPuttyGen;
-        private Process _procPageant;
+        private readonly string pathPageant;
+        private readonly string pathPlink;
+        private readonly string pathPuttyGen;
+        private Process procPageant;
 
         /// <summary>
         /// Constructor class function, create executables in temp space
         /// </summary>
         public ClassPutty()
         {
-            _pathPageant = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "pageant.exe", Properties.Resources.pageant);
-            _pathPlink = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
-            _pathPuttyGen = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
+            pathPageant = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "pageant.exe", Properties.Resources.pageant);
+            pathPlink = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
+            pathPuttyGen = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
 
             ClassUtils.AddEnvar("PLINK_PROTOCOL", "ssh");
-            ClassUtils.AddEnvar("GIT_SSH", _pathPlink);
+            ClassUtils.AddEnvar("GIT_SSH", pathPlink);
 
             // Run the daemon process, update keys
             RunPageantUpdateKeys();
@@ -47,9 +47,9 @@ namespace GitForce
                 // Dont attempt to stop/remove Pageant if the user wanted to leave it running
                 if (Properties.Settings.Default.leavePageant == false)
                 {
-                    if (_procPageant != null)
+                    if (procPageant != null)
                     {
-                        if (!_procPageant.HasExited)
+                        if (!procPageant.HasExited)
                         {
                             // Send a notification to Pageant to close
                             IntPtr winHandle = NativeMethods.FindWindow("Pageant", null);
@@ -73,7 +73,28 @@ namespace GitForce
         /// </summary>
         public void RunPuTTYgen()
         {
-            Process.Start(_pathPuttyGen).WaitForExit();
+            Process.Start(pathPuttyGen).WaitForExit();
+        }
+
+        /// <summary>
+        /// Run plink program with the given arguments
+        /// </summary>
+        public void RunPLink(string args)
+        {
+            // Start a console process
+            Process proc = new Process();
+            proc.StartInfo.FileName = ClassUtils.GetShellExecCmd();
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = false;
+
+            // We need to keep the CMD/SHELL window open, so start the process using
+            // the CMD/SHELL as the root process and pass it our command to execute
+            proc.StartInfo.Arguments = string.Format("{0} {1} {2}",
+                ClassUtils.GetShellExecFlags(), pathPlink, args);
+
+            App.PrintLogMessage(proc.StartInfo.Arguments);
+
+            proc.Start();
         }
 
         /// <summary>
@@ -102,12 +123,12 @@ namespace GitForce
 
             if (args.Length > 0 || isPageantRunning==false)
             {
-                _procPageant = new Process();
-                _procPageant.StartInfo.FileName = _pathPageant;
-                _procPageant.StartInfo.Arguments = args.ToString();
+                procPageant = new Process();
+                procPageant.StartInfo.FileName = pathPageant;
+                procPageant.StartInfo.Arguments = args.ToString();
 
                 // TODO: Handle unsuccessful process start
-                _procPageant.Start();                    
+                procPageant.Start();                    
             }
         }
 
@@ -157,7 +178,7 @@ namespace GitForce
                           " " + url.Host;
 
             // plink does everything through its stderr stream
-            ExecResult result = Exec.Run(_pathPlink, args);
+            ExecResult result = Exec.Run(pathPlink, args);
             App.PrintLogMessage(result.stderr);
         }
     }

@@ -15,12 +15,12 @@ namespace GitForce
         /// <summary>
         /// Keeps the actual list of passphrases in plain text format
         /// </summary>
-        private readonly List<string> _phrases = new List<string>();
+        private readonly List<string> phrases = new List<string>();
 
         /// <summary>
         /// Show passphrases in plain text format or encrypted
         /// </summary>
-        private bool _isPlain;
+        private bool isPlain;
 
         /// <summary>
         /// Form constructor
@@ -34,7 +34,7 @@ namespace GitForce
                 Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             listBoxKeys.Items.AddRange(keys);
 
-            _phrases = App.Putty.GetPassPhrases();
+            phrases = App.Putty.GetPassPhrases();
             RefreshPf();
             RefreshRemoteHosts();
         }
@@ -72,7 +72,7 @@ namespace GitForce
         /// </summary>
         private void SavePfs()
         {
-            App.Putty.SetPassPhrases(_phrases);
+            App.Putty.SetPassPhrases(phrases);
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace GitForce
         private void BtAddPClick(object sender, EventArgs e)
         {
             // For security reasons, make sure the Show button hides plain text phrases
-            if (_isPlain) BtShowClick(null, null);
-            _phrases.Add(textBoxInputPf.Text);
+            if (isPlain) BtShowClick(null, null);
+            phrases.Add(textBoxInputPf.Text);
             textBoxInputPf.Text = "";
             SavePfs();
             RefreshPf();
@@ -130,7 +130,7 @@ namespace GitForce
         /// </summary>
         private void BtRemovePClick(object sender, EventArgs e)
         {
-            _phrases.RemoveAt(listBoxPf.SelectedIndex);
+            phrases.RemoveAt(listBoxPf.SelectedIndex);
             listBoxPf.Items.Remove(listBoxPf.SelectedItem);
             SavePfs();
             btImport1.Enabled = btImport2.Enabled = true;
@@ -153,8 +153,8 @@ namespace GitForce
         {
             listBoxPf.Items.Clear();
             listBoxPf.Items.AddRange(
-                _phrases.Select(
-                    item => _isPlain ?
+                phrases.Select(
+                    item => isPlain ?
                         item :
                         item[0] + new String('*', item.Length)).ToArray());
         }
@@ -164,8 +164,8 @@ namespace GitForce
         /// </summary>
         private void BtShowClick(object sender, EventArgs e)
         {
-            btShowPf.Text = _isPlain ? "Show" : "Hide";
-            _isPlain = !_isPlain;
+            btShowPf.Text = isPlain ? "Show" : "Hide";
+            isPlain = !isPlain;
             RefreshPf();
         }
 
@@ -214,7 +214,7 @@ namespace GitForce
 
         #region Remote keys management
 
-        private ClassUrl.Url _remoteUrl;
+        private ClassUrl.Url remoteUrl;
         private const string PuTTY_Regkey = @"Software\SimonTatham\PuTTY\SshHostKeys";
 
         /// <summary>
@@ -252,8 +252,8 @@ namespace GitForce
         /// </summary>
         private void TextBoxHostTextChanged(object sender, EventArgs e)
         {
-            _remoteUrl = ClassUrl.Parse(textBoxHost.Text);
-            btAddHost.Enabled = textBoxHost.Text.Length > 0 && _remoteUrl.Type == ClassUrl.UrlType.Ssh;
+            remoteUrl = ClassUrl.Parse(textBoxHost.Text);
+            btAddHost.Enabled = textBoxHost.Text.Length > 0 && remoteUrl.Type == ClassUrl.UrlType.Ssh;
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace GitForce
         /// </summary>
         private void BtAddHostClick(object sender, EventArgs e)
         {
-            App.Putty.ImportRemoteSshKey(_remoteUrl);
+            App.Putty.ImportRemoteSshKey(remoteUrl);
             RefreshRemoteHosts();
             btAddHost.Enabled = false;
             textBoxHost.Text = "";
@@ -291,11 +291,22 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Manage "Remove" host button: enable it when one or more hosts are selected
+        /// Test connection to the selected host
+        /// </summary>
+        private void BtTestHostClick(object sender, EventArgs e)
+        {
+            string[] keys = listHosts.Tag as string[];
+            string key = keys[listHosts.SelectedIndex];
+            ClassUrl.Url url = ClassUrl.Parse(key);
+            App.Putty.RunPLink(String.Format("-agent git@{0} -P {1}", url.Path, url.Host));
+        }
+
+        /// <summary>
+        /// Manage "Remove"/"Test" host buttons: enable them when one or more hosts are selected
         /// </summary>
         private void ListHostsSelectedIndexChanged(object sender, EventArgs e)
         {
-            btRemoveHost.Enabled = listHosts.SelectedIndices.Count > 0;
+            btRemoveHost.Enabled = btTestHost.Enabled = listHosts.SelectedIndices.Count > 0;
         }
 
         /// <summary>
