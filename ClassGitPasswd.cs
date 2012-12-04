@@ -14,7 +14,7 @@ namespace GitForce
         /// <summary>
         /// A file that provides password for HTTPS operations
         /// </summary>
-        private readonly string _pathPasswordBatchHelper;
+        private readonly string pathPasswordBatchHelper;
 
         /// <summary>
         /// Constructor creates a shell executable file that echoes the PASSWORD
@@ -27,12 +27,12 @@ namespace GitForce
             if( ClassUtils.IsMono())
             {
                 // Mono: Use the Shell script
-                _pathPasswordBatchHelper = Path.Combine(App.AppHome, "passwd.sh");
-                File.WriteAllText(_pathPasswordBatchHelper, "echo $PASSWORD" + Environment.NewLine);
+                pathPasswordBatchHelper = Path.Combine(App.AppHome, "passwd.sh");
+                File.WriteAllText(pathPasswordBatchHelper, "echo $PASSWORD" + Environment.NewLine);
 
                 // Set the execute bit
-                if (Exec.Run("chmod", "+x " + _pathPasswordBatchHelper).Success() == false)
-                    App.PrintLogMessage("ClassGitPasswd: Unable to chmod +x on " + _pathPasswordBatchHelper);
+                if (Exec.Run("chmod", "+x " + pathPasswordBatchHelper).Success() == false)
+                    App.PrintLogMessage("ClassGitPasswd: Unable to chmod +x on " + pathPasswordBatchHelper);
             }
             else
             {
@@ -40,12 +40,12 @@ namespace GitForce
                 // Note: Using "App.AppHome" directory to host the batch helper file
                 //       fails on XP where that directory has spaces in the name ("Documents and Settings")
                 //       which git cannot handle in this context. Default Temp path seem to be OK.
-                _pathPasswordBatchHelper = Path.Combine(Path.GetTempPath(), "passwd.bat");
-                File.WriteAllText(_pathPasswordBatchHelper, "@echo %PASSWORD%" + Environment.NewLine);
+                pathPasswordBatchHelper = Path.Combine(Path.GetTempPath(), "passwd.bat");
+                File.WriteAllText(pathPasswordBatchHelper, "@echo %PASSWORD%" + Environment.NewLine);
             }
-            ClassUtils.AddEnvar("GIT_ASKPASS", _pathPasswordBatchHelper);
+            ClassUtils.AddEnvar("GIT_ASKPASS", pathPasswordBatchHelper);
 
-            App.PrintLogMessage("Created HTTP password helper file: " + _pathPasswordBatchHelper);
+            App.PrintLogMessage("Created HTTP password helper file: " + pathPasswordBatchHelper);
         }
     }
 }

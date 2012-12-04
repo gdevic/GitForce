@@ -61,7 +61,7 @@ namespace GitForce
         /// WAR: This is marked as Non-Serialized since Mono 2.6.7 does not support serialization of HashSet.
         /// </summary>
         [NonSerialized]
-        private HashSet<string> _viewExpansionSet = new HashSet<string>();
+        private HashSet<string> viewExpansionSet = new HashSet<string>();
 
         /// <summary>
         /// Stats of all files known to git in this repo. This status is refreshed
@@ -106,7 +106,7 @@ namespace GitForce
         /// </summary>
         public void ExpansionSet(string path)
         {
-            _viewExpansionSet.Add(path);
+            viewExpansionSet.Add(path);
         }
 
         /// <summary>
@@ -116,9 +116,9 @@ namespace GitForce
         public void ExpansionReset(string path)
         {
             if (path == null)
-                _viewExpansionSet = new HashSet<string>();
+                viewExpansionSet = new HashSet<string>();
             else
-                _viewExpansionSet.Remove(path);
+                viewExpansionSet.Remove(path);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace GitForce
         /// </summary>
         public bool IsExpanded(string path)
         {
-            return _viewExpansionSet.Contains(path);
+            return viewExpansionSet.Contains(path);
         }
 
         /// <summary>

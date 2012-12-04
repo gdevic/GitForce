@@ -15,7 +15,7 @@ namespace GitForce.Repo.Edit.Panels
         /// <summary>
         /// File containing the excludes patterns
         /// </summary>
-        private string _excludesFile;
+        private string excludesFile;
 
         public ControlGitignore()
         {
@@ -27,11 +27,11 @@ namespace GitForce.Repo.Edit.Panels
         /// </summary>
         public void Init(ClassRepo repo)
         {
-            _excludesFile = repo.Root + Path.DirectorySeparatorChar +
+            excludesFile = repo.Root + Path.DirectorySeparatorChar +
                             ".git" + Path.DirectorySeparatorChar +
                             "info" + Path.DirectorySeparatorChar +
                             "exclude";
-            userControlEditGitignore.LoadGitIgnore(_excludesFile);
+            userControlEditGitignore.LoadGitIgnore(excludesFile);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace GitForce.Repo.Edit.Panels
         /// </summary>
         public void ApplyChanges(ClassRepo repo)
         {
-            userControlEditGitignore.SaveGitIgnore(_excludesFile);
+            userControlEditGitignore.SaveGitIgnore(excludesFile);
         }
     }
 }

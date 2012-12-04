@@ -15,7 +15,7 @@ namespace GitForce.Repo.Edit.Panels
         /// <summary>
         /// File containing repo git config settings
         /// </summary>
-        private string _configFile;
+        private string configFile;
 
         public ControlGitconfig()
         {
@@ -27,7 +27,7 @@ namespace GitForce.Repo.Edit.Panels
         /// </summary>
         public void Init(ClassRepo repo)
         {
-            _configFile = repo.Root + Path.DirectorySeparatorChar +
+            configFile = repo.Root + Path.DirectorySeparatorChar +
                             ".git" + Path.DirectorySeparatorChar +
                             "config";
         }
@@ -38,7 +38,7 @@ namespace GitForce.Repo.Edit.Panels
         public void Focus(bool focused)
         {
             if (focused)
-                userControlEditFile.LoadFile(_configFile);
+                userControlEditFile.LoadFile(configFile);
             else
             {
                 // As the control is losing its focus, if the text was changed, ask the user
@@ -47,9 +47,9 @@ namespace GitForce.Repo.Edit.Panels
                 if (userControlEditFile.Dirty)
                 {
                     if (MessageBox.Show("Save changes to the configuration file?", "Edit config", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        userControlEditFile.SaveFile(_configFile);
+                        userControlEditFile.SaveFile(configFile);
                     else
-                        userControlEditFile.LoadFile(_configFile);
+                        userControlEditFile.LoadFile(configFile);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace GitForce.Repo.Edit.Panels
         public void ApplyChanges(ClassRepo repo)
         {
             if (userControlEditFile.Dirty)
-                userControlEditFile.SaveFile(_configFile);
+                userControlEditFile.SaveFile(configFile);
         }
     }
 }

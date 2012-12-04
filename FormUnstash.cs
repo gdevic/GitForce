@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Currently selected stash string (stash id part only)
         /// </summary>
-        private string _stash;
+        private string stash;
 
         public FormUnstash()
         {
@@ -54,7 +54,7 @@ namespace GitForce
             if (listStashes.Items.Count > 0)
             {
                 string s = listStashes.Items[0].ToString();
-                _stash = s.Substring(0, s.IndexOf(':'));
+                stash = s.Substring(0, s.IndexOf(':'));
                 listStashes.SelectedIndex = 0;
                 btApply.Enabled = btRemove.Enabled = btShow.Enabled = true;
             }
@@ -67,7 +67,7 @@ namespace GitForce
         private void ListStashesSelectedIndexChanged(object sender, EventArgs e)
         {
             string s = listStashes.SelectedItem.ToString();
-            _stash = s.Substring(0, s.IndexOf(':'));
+            stash = s.Substring(0, s.IndexOf(':'));
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace GitForce
         {
             string cmd = String.Format("stash {0} {1}",
                                        checkKeepStash.Checked ? "apply" : "pop",
-                                       _stash);
+                                       stash);
 
             ExecResult result = App.Repos.Current.RunCmd(cmd);
         }
@@ -87,7 +87,7 @@ namespace GitForce
         /// </summary>
         private void BtRemoveClick(object sender, EventArgs e)
         {
-            string cmd = "stash drop " + _stash;
+            string cmd = "stash drop " + stash;
 
             ExecResult result = App.Repos.Current.RunCmd(cmd);
 
@@ -103,7 +103,7 @@ namespace GitForce
             DialogResult result;
             do
             {
-                formShowChangelist.LoadChangelist(_stash);
+                formShowChangelist.LoadChangelist(stash);
 
                 // Walk the list of stashes up and down
                 result = formShowChangelist.ShowDialog();

@@ -7,16 +7,16 @@ namespace GitForce
 {
     public class ClassException : Exception
     {
-        private readonly string _msg;
+        private readonly string msg;
 
         public override string Message
         {
-            get { return _msg; }
+            get { return msg; }
         }
 
         public ClassException(string message)
         {
-            _msg = message;
+            msg = message;
         }
     }
 }

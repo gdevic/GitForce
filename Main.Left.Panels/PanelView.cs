@@ -19,7 +19,7 @@ namespace GitForce.Main.Left.Panels
         /// <summary>
         /// Status class containing git status of the files in the current repo
         /// </summary>
-        private ClassStatus Status;
+        private ClassStatus status;
 
         /// <summary>
         /// PanelView constructor
@@ -83,24 +83,24 @@ namespace GitForce.Main.Left.Panels
 
             if (App.Repos.Current != null)
             {
-                Status = App.Repos.Current.Status;
+                status = App.Repos.Current.Status;
 
-                btListView.Checked = !Status.Repo.IsTreeView;
-                menuSortFilesByExtension.Checked = Status.Repo.SortBy == GitDirectoryInfo.SortBy.Extension;
+                btListView.Checked = !status.Repo.IsTreeView;
+                menuSortFilesByExtension.Checked = status.Repo.SortBy == GitDirectoryInfo.SortBy.Extension;
 
                 List<string> files = new List<string>();
 
                 switch (mode)
                 {
                     case 0:     // Git status of all files: status + untracked
-                        files = Status.GetFiles();
+                        files = status.GetFiles();
                         break;
 
                     case 1:     // Git status of files: status - untracked
-                        files = Status.GetFiles();
+                        files = status.GetFiles();
 
                         // Remove all untracked files
-                        files = files.Where(s => Status.Xcode(s) != '?').ToList();
+                        files = files.Where(s => status.Xcode(s) != '?').ToList();
                         break;
 
                     case 2:     // Git view of repo: ls-tree
@@ -124,26 +124,26 @@ namespace GitForce.Main.Left.Panels
                         break;
 
                     case 4:     // Local files not in repo: untracked only
-                        files = Status.GetFiles();
+                        files = status.GetFiles();
 
                         // Leave only untracked files
-                        files = files.Where(s => Status.Xcode(s) == '?').ToList();
+                        files = files.Where(s => status.Xcode(s) == '?').ToList();
                         break;
                 }
 
                 // Build the tree view (or a list view)
                 TreeNode node = new TreeNode(App.Repos.Current.Root) { Tag = String.Empty };
 
-                if (Status.Repo.IsTreeView)
-                    ClassView.BuildTree(node, files, Status.Repo.SortBy);
+                if (status.Repo.IsTreeView)
+                    ClassView.BuildTree(node, files, status.Repo.SortBy);
                 else
-                    ClassView.BuildFileList(node, files, Status.Repo.SortBy);
+                    ClassView.BuildFileList(node, files, status.Repo.SortBy);
 
                 // Add the resulting tree to the tree view control
                 treeView.Nodes.Add(node);
 
                 // Assign the icons to the nodes of tree view
-                ClassView.ViewAssignIcon(Status, node, false);
+                ClassView.ViewAssignIcon(status, node, false);
 
                 // Set the first node (root) image according to the view mode
                 node.ImageIndex = mode == 2
@@ -293,8 +293,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void TreeViewMouseMove(object sender, MouseEventArgs e)
         {
-            if (Status != null)
-                Status.ShowTreeInfo(treeView.GetNodeAt(e.X, e.Y));
+            if (status != null)
+                status.ShowTreeInfo(treeView.GetNodeAt(e.X, e.Y));
         }
 
         /// <summary>
@@ -303,8 +303,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void BtListViewClick(object sender, EventArgs e)
         {
-            btListView.Checked = Status.Repo.IsTreeView;
-            Status.Repo.IsTreeView = !Status.Repo.IsTreeView;
+            btListView.Checked = status.Repo.IsTreeView;
+            status.Repo.IsTreeView = !status.Repo.IsTreeView;
             ViewRefresh();
         }
 
@@ -314,7 +314,7 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuSortFilesByExtensionClick(object sender, EventArgs e)
         {
-            Status.Repo.SortBy = menuSortFilesByExtension.Checked
+            status.Repo.SortBy = menuSortFilesByExtension.Checked
                                      ? GitDirectoryInfo.SortBy.Extension
                                      : GitDirectoryInfo.SortBy.Name;
             ViewRefresh();
@@ -385,11 +385,11 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void TreeViewAfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (Status == null || treeView.SelectedNodes.Count == 0)
+            if (status == null || treeView.SelectedNodes.Count == 0)
                 return;
 
             // The selection of files contains classes of operations (keys)
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             List<char> keys = sel.Opclass.Keys.ToList();
             foreach (var key in keys)
                 allowedOps.AddRange(ops[key]);
@@ -519,7 +519,7 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         public void CustomToolClicked(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
 
             // Create a list of selected files to send to the Run method
             // Each file needs to have an absolute path, so prepend the repo root
@@ -569,9 +569,9 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewAddFilesClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             if (sel.Opclass.ContainsKey('?'))
-                Status.Repo.GitAdd(sel.Opclass['?']);
+                status.Repo.GitAdd(sel.Opclass['?']);
             App.DoRefresh();
         }
 
@@ -580,13 +580,13 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewUpdateChangelistClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             if (sel.Opclass.ContainsKey('M'))
-                Status.Repo.GitUpdate(sel.Opclass['M']);
+                status.Repo.GitUpdate(sel.Opclass['M']);
             if (sel.Opclass.ContainsKey('D'))
-                Status.Repo.GitDelete(sel.Opclass['D']);
+                status.Repo.GitDelete(sel.Opclass['D']);
             if (sel.Opclass.ContainsKey('R'))
-                Status.Repo.GitRename(sel.Opclass['R']);
+                status.Repo.GitRename(sel.Opclass['R']);
             App.DoRefresh();
         }
 
@@ -596,8 +596,8 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewUpdateAllClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
-            PanelCommits.DoDropFiles(Status, sel.SelFiles.ToList());
+            Selection sel = new Selection(treeView, status);
+            PanelCommits.DoDropFiles(status, sel.SelFiles.ToList());
             App.DoRefresh();
         }
 
@@ -606,16 +606,16 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewRevertClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             if (MessageBox.Show("This will revert all changes to selected files in your working directory. It will not affect staged files in Changelists.\r\rProceed with Revert?",
                 "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (sel.Opclass.ContainsKey('M'))
-                    Status.Repo.GitRevert(sel.Opclass['M']);
+                    status.Repo.GitRevert(sel.Opclass['M']);
                 if (sel.Opclass.ContainsKey('D'))
-                    Status.Repo.GitRevert(sel.Opclass['D']);
+                    status.Repo.GitRevert(sel.Opclass['D']);
                 if (sel.Opclass.ContainsKey('R'))
-                    Status.Repo.GitRevert(sel.Opclass['R']);
+                    status.Repo.GitRevert(sel.Opclass['R']);
                 App.DoRefresh();
             }
         }
@@ -625,7 +625,7 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewRenameClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             FormRename formRename = new FormRename();
             if (formRename.LoadFiles(App.Repos.Current, sel.SelFiles))
                 if (formRename.ShowDialog() == DialogResult.OK)
@@ -642,13 +642,13 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewOpenForDeleteClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             if (sel.Opclass.ContainsKey(' '))
-                Status.Repo.GitDelete(sel.Opclass[' ']);
+                status.Repo.GitDelete(sel.Opclass[' ']);
             if (sel.Opclass.ContainsKey('M'))
-                Status.Repo.GitDelete(sel.Opclass['M']);
+                status.Repo.GitDelete(sel.Opclass['M']);
             if (sel.Opclass.ContainsKey('R'))
-                Status.Repo.GitDelete(sel.Opclass['R']);
+                status.Repo.GitDelete(sel.Opclass['R']);
             App.DoRefresh();
         }
 
@@ -657,7 +657,7 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewRemoveFromFsClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             App.PrintStatusMessage("Removing " + string.Join(" ", sel.SelFiles.ToArray()));
 
             foreach (string s in sel.SelFiles)
@@ -717,9 +717,9 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewDiffClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             string opt = (sender as ToolStripMenuItem).Tag.ToString();
-            Status.Repo.GitDiff(opt, sel.SelFiles.ToList());
+            status.Repo.GitDiff(opt, sel.SelFiles.ToList());
         }
 
         /// <summary>
@@ -728,7 +728,7 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewRevHistClick(object sender, EventArgs e)
         {
-            Selection sel = new Selection(treeView, Status);
+            Selection sel = new Selection(treeView, status);
             if (sel.SelFiles.Count() == 1)
             {
                 FormRevisionHistory formRevisionHistory = new FormRevisionHistory(sel.SelFiles[0]);

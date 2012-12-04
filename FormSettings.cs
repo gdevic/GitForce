@@ -28,13 +28,13 @@ namespace GitForce
         /// This is placed first, before initializing the user panels, so that the
         /// strings are accessible to individual panels should they need to use them.
         /// </summary>
-        private string[] Config = ClassGit.Run("config --global --list -z").ToString().Split('\0');
+        private readonly string[] config = ClassGit.Run("config --global --list -z").ToString().Split('\0');
 
         /// <summary>
         /// Create a lookup from panel names (which are set in each corresponding node
         /// of an option set tree view) to the actual option panel instance:
         /// </summary>
-        private readonly Dictionary<string, UserControl> _panels = new Dictionary<string, UserControl> {
+        private readonly Dictionary<string, UserControl> panels = new Dictionary<string, UserControl> {
             { "Global", new ControlGlobal() },
             { "User", new ControlUser() },
             { "Status", new ControlStatus() },
@@ -55,7 +55,7 @@ namespace GitForce
         /// <summary>
         /// Settings panel that is currently on the top
         /// </summary>
-        private UserControl _current;
+        private UserControl current;
 
         public FormSettings()
         {
@@ -64,10 +64,10 @@ namespace GitForce
 
             Cursor = Cursors.WaitCursor;
             // Add all user panels to the base options panel; call their init
-            foreach (KeyValuePair<string, UserControl> key in _panels)
+            foreach (KeyValuePair<string, UserControl> key in panels)
             {
                 panel.Controls.Add(key.Value);
-                (key.Value as IUserSettings).Init(Config);
+                (key.Value as IUserSettings).Init(config);
                 key.Value.Dock = DockStyle.Fill;
             }
 
@@ -91,13 +91,13 @@ namespace GitForce
         private void TreeSectionsAfterSelect(object sender, TreeViewEventArgs e)
         {
             string panelName = e.Node.Tag as string;
-            if (panelName != null && _panels.ContainsKey(panelName))
+            if (panelName != null && panels.ContainsKey(panelName))
             {
-                if (_current != null)
-                    (_current as IUserSettings).Focus(false);
-                _current = _panels[panelName];
-                _current.BringToFront();
-                (_current as IUserSettings).Focus(true);
+                if (current != null)
+                    (current as IUserSettings).Focus(false);
+                current = panels[panelName];
+                current.BringToFront();
+                (current as IUserSettings).Focus(true);
             }
         }
 
@@ -109,7 +109,7 @@ namespace GitForce
         /// </summary>
         private void BtApplyClick(object sender, EventArgs e)
         {
-            (_current as IUserSettings).ApplyChanges();
+            (current as IUserSettings).ApplyChanges();
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace GitForce
         /// </summary>
         private void BtOkClick(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, UserControl> key in _panels)
+            foreach (KeyValuePair<string, UserControl> key in panels)
                 (key.Value as IUserSettings).ApplyChanges();
         }
     }

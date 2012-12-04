@@ -10,13 +10,13 @@ namespace GitForce
     public class Arguments
     {
         // Variables
-        private readonly StringDictionary _parameters;
-        private readonly List<string> _unassociated = new List<string>();
+        private readonly StringDictionary parameters;
+        private readonly List<string> unassociated = new List<string>();
 
         // Constructor
         public Arguments(string[] args)
         {
-            _parameters = new StringDictionary();
+            parameters = new StringDictionary();
             Regex spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             Regex remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             string parameter = null;
@@ -35,17 +35,17 @@ namespace GitForce
                     case 1:
                         if (parameter != null)
                         {
-                            if (!_parameters.ContainsKey(parameter))
+                            if (!parameters.ContainsKey(parameter))
                             {
                                 parts[0] = remover.Replace(parts[0], "$1");
-                                _parameters.Add(parameter, parts[0]);
+                                parameters.Add(parameter, parts[0]);
                             }
                             parameter = null;
                         }
                         else
                         {
                             // No parameter waiting for a value
-                            _unassociated.Add(parts[0]);
+                            unassociated.Add(parts[0]);
                         }
                         break;
                     // Found just a parameter
@@ -53,7 +53,7 @@ namespace GitForce
                         // The last parameter is still waiting. With no value, set it to true.
                         if (parameter != null)
                         {
-                            if (!_parameters.ContainsKey(parameter)) _parameters.Add(parameter, "true");
+                            if (!parameters.ContainsKey(parameter)) parameters.Add(parameter, "true");
                         }
                         parameter = parts[1];
                         break;
@@ -62,14 +62,14 @@ namespace GitForce
                         // The last parameter is still waiting. With no value, set it to true.
                         if (parameter != null)
                         {
-                            if (!_parameters.ContainsKey(parameter)) _parameters.Add(parameter, "true");
+                            if (!parameters.ContainsKey(parameter)) parameters.Add(parameter, "true");
                         }
                         parameter = parts[1];
                         // Remove possible enclosing characters (",')
-                        if (!_parameters.ContainsKey(parameter))
+                        if (!parameters.ContainsKey(parameter))
                         {
                             parts[2] = remover.Replace(parts[2], "$1");
-                            _parameters.Add(parameter, parts[2]);
+                            parameters.Add(parameter, parts[2]);
                         }
                         parameter = null;
                         break;
@@ -78,7 +78,7 @@ namespace GitForce
             // In case a parameter is still waiting
             if (parameter != null)
             {
-                if (!_parameters.ContainsKey(parameter)) _parameters.Add(parameter, "true");
+                if (!parameters.ContainsKey(parameter)) parameters.Add(parameter, "true");
             }
         }
 
@@ -87,13 +87,13 @@ namespace GitForce
         {
             get
             {
-                return (_parameters[param]);
+                return (parameters[param]);
             }
         }
         // Returns all arguments not associated with any --parameter
         public List<string> GetUnassociatedArgs()
         {
-            return _unassociated;
+            return unassociated;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Status class containing the git status of current repo files
         /// </summary>
-        private ClassStatus Status;
+        private ClassStatus status;
 
         /// <summary>
         /// File system watchers for files in the index
@@ -53,14 +53,14 @@ namespace GitForce.Main.Right.Panels
 
             if (App.Repos.Current != null)
             {
-                Status = App.Repos.Current.Status;
+                status = App.Repos.Current.Status;
 
                 // List files that are updated in the index (code X is not ' ' or '?')
-                List<string> files = Status.GetFiles();
-                files = files.Where(s => (Status.Xcode(s) != ' ' && Status.Xcode(s) != '?')).ToList();
+                List<string> files = status.GetFiles();
+                files = files.Where(s => (status.Xcode(s) != ' ' && status.Xcode(s) != '?')).ToList();
 
                 // Build a list view of these files
-                TreeNode node = ClassView.BuildCommitsView(Status.Repo, files);
+                TreeNode node = ClassView.BuildCommitsView(status.Repo, files);
 
                 // Add the resulting list to the tree view control
                 treeCommits.Nodes.Add(node);
@@ -69,7 +69,7 @@ namespace GitForce.Main.Right.Panels
                 node.ImageIndex = (int) ClassView.Img.ChangelistRoot;
 
                 // Assign the icons to the nodes of tree view
-                ClassView.ViewAssignIcon(Status, node, true);
+                ClassView.ViewAssignIcon(status, node, true);
 
                 // Always keep the root node expanded by default
                 node.Expand();
@@ -80,7 +80,7 @@ namespace GitForce.Main.Right.Panels
                 {
                     foreach (var file in files)
                     {
-                        string fullPath = Path.Combine(Status.Repo.Root, file);
+                        string fullPath = Path.Combine(status.Repo.Root, file);
                         var watch = new FileSystemWatcher(Path.GetDirectoryName(fullPath))
                         {
                             Filter = Path.GetFileName(fullPath),
@@ -99,10 +99,10 @@ namespace GitForce.Main.Right.Panels
                     // If enabled, automatically ***re-add*** files that are in the index and changed
                     if (Properties.Settings.Default.ReaddOnChange)
                     {
-                        List<string> modified = files.Where(s => (Status.Ycode(s) == 'M')).ToList();
+                        List<string> modified = files.Where(s => (status.Ycode(s) == 'M')).ToList();
                         if (modified.Count > 0)
                         {
-                            Status.Repo.GitUpdate(modified);
+                            status.Repo.GitUpdate(modified);
                             ArmRefresh();
                         }
                     }
@@ -146,7 +146,7 @@ namespace GitForce.Main.Right.Panels
         private List<string> GetSelectedFiles()
         {
             List<string> files = (from n in treeCommits.SelectedNodes
-                                  where Status.IsMarked(n.Tag.ToString())
+                                  where status.IsMarked(n.Tag.ToString())
                                   select n.Tag.ToString()).ToList();
             return files;
         }
@@ -159,7 +159,7 @@ namespace GitForce.Main.Right.Panels
             // Get the list of selected files, prepend the repo root path and send it as a drag/drop list of files
             string[] files = treeCommits.SelectedNodes
                                         .Where(s => s.Parent != null && !(s.Tag is ClassCommit))
-                                        .Select(s => Path.Combine(Status.Repo.Root, s.Tag.ToString())).ToArray();
+                                        .Select(s => Path.Combine(status.Repo.Root, s.Tag.ToString())).ToArray();
             if (files.Length == 0) return;
             DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Copy);
         }
@@ -214,10 +214,10 @@ namespace GitForce.Main.Right.Panels
 
             // Files can come from anywhere. Prune those that are not from this repo.
             List<string> files = (from file in droppedFiles.ToList()
-                                  where file.StartsWith(Status.Repo.Root)
-                                  select file.Substring(Status.Repo.Root.Length + 1)).ToList();
+                                  where file.StartsWith(status.Repo.Root)
+                                  select file.Substring(status.Repo.Root.Length + 1)).ToList();
 
-            DoDropFiles(Status, files.ToList());
+            DoDropFiles(status, files.ToList());
 
             // Find which node the files have been dropped to, so we can
             // move them to the selected commit bundle
@@ -236,7 +236,7 @@ namespace GitForce.Main.Right.Panels
                 // If we have a valid class bundle where the files should be moved to, move them
                 if (bundle != null)
                 {
-                    List<string> list = files.Where(s => Status.IsMarked(s)).ToList();
+                    List<string> list = files.Where(s => status.IsMarked(s)).ToList();
                     App.Repos.Current.Commits.MoveOrAdd(bundle, list);
                 }
             }
@@ -249,8 +249,8 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void TreeCommitsMouseMove(object sender, MouseEventArgs e)
         {
-            if (Status != null)
-                Status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
+            if (status != null)
+                status.ShowTreeInfo(treeCommits.GetNodeAt(e.X, e.Y));
         }
 
         /// <summary>
@@ -278,11 +278,11 @@ namespace GitForce.Main.Right.Panels
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, object tag)
         {
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick) {Tag = tag};
-            ToolStripMenuItem mSub = Status.IsMergeState()
+            ToolStripMenuItem mSub = status.IsMergeState()
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
                                          : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) {Tag = tag};
             ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, MenuNewCommitClick);
-            ToolStripMenuItem mEdit = Status.IsMergeState()
+            ToolStripMenuItem mEdit = status.IsMergeState()
                                           ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
                                           : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) {Tag = tag};
             ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) {Tag = tag};
@@ -321,11 +321,11 @@ namespace GitForce.Main.Right.Panels
                 mDel.Enabled = false;
 
             // If the repo is the merge state, adjust some menu enables
-            if (!Status.IsMergeState())
+            if (!status.IsMergeState())
                 mResolve.Enabled = false; // Disable resolves if the repo is _not_ in the merge state
             else
             {
-                if (Status.IsUnmerged()) // If there are files that are not merged yet, do not allow submits
+                if (status.IsUnmerged()) // If there are files that are not merged yet, do not allow submits
                 {
                     mSub.Enabled = false;
                     mExitMerge.Enabled = false;
@@ -349,11 +349,11 @@ namespace GitForce.Main.Right.Panels
         private void MenuNewCommitClick(object sender, EventArgs e)
         {
             FormCommit commitForm = new FormCommit(false, "Update");
-            commitForm.SetFiles(Status.Repo.Commits.Bundle[0]);
+            commitForm.SetFiles(status.Repo.Commits.Bundle[0]);
             if (commitForm.ShowDialog() == DialogResult.OK)
             {
                 // Create a new commit bundle and move selected files to it
-                Status.Repo.Commits.NewBundle(commitForm.GetDescription(), commitForm.GetFiles());
+                status.Repo.Commits.NewBundle(commitForm.GetDescription(), commitForm.GetFiles());
                 CommitsRefresh();
             }
         }
@@ -375,7 +375,7 @@ namespace GitForce.Main.Right.Panels
 
                 // Renew only files that were left checked, the rest add back to the Default commit
                 List<string> removedFiles = c.Renew(commitForm.GetFiles());
-                Status.Repo.Commits.Bundle[0].AddFiles(removedFiles);
+                status.Repo.Commits.Bundle[0].AddFiles(removedFiles);
                 CommitsRefresh();
             }
         }
@@ -398,7 +398,7 @@ namespace GitForce.Main.Right.Panels
                 // into a pseudo-bundle to submit
                 c = new ClassCommit("ad-hoc");
                 List<string> files = (from n in treeCommits.SelectedNodes
-                                      where Status.IsMarked(n.Tag.ToString())
+                                      where status.IsMarked(n.Tag.ToString())
                                       select n.Tag.ToString()).ToList();
                 c.AddFiles(files);
             }
@@ -417,7 +417,7 @@ namespace GitForce.Main.Right.Panels
                     File.WriteAllText(tempFile, commitForm.GetDescription());
 
                     // Form the final command with the description file and an optional amend
-                    if (Status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final))
+                    if (status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final))
                     {
                         File.Delete(tempFile);
 
@@ -447,7 +447,7 @@ namespace GitForce.Main.Right.Panels
                 if (commitMerge.ShowDialog() == DialogResult.OK)
                 {
                     // Overwrite default merge message file with our updated text
-                    File.WriteAllText(Status.pathToMergeMsg, commitMerge.GetDescription());
+                    File.WriteAllText(status.pathToMergeMsg, commitMerge.GetDescription());
                     App.DoRefresh();
                 }
             }
@@ -469,7 +469,7 @@ namespace GitForce.Main.Right.Panels
                 commitMerge.SetFiles(c);
                 if (commitMerge.ShowDialog() == DialogResult.OK)
                 {
-                    if (Status.Repo.GitCommit("-F \"" + Status.pathToMergeMsg + "\"", false, new List<string>()))
+                    if (status.Repo.GitCommit("-F \"" + status.pathToMergeMsg + "\"", false, new List<string>()))
                     {
                         App.DoRefresh();                        
                     }
@@ -486,12 +486,12 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private ClassCommit GetMergeCommitBundle()
         {
-            string desc = File.ReadAllText(Status.pathToMergeMsg);
+            string desc = File.ReadAllText(status.pathToMergeMsg);
             ClassCommit c = new ClassCommit(desc);
 
             // Merge commits all affected files, we can't do merge commit with a partial file list
-            List<string> files = Status.GetFiles();
-            files = files.Where(s => (Status.Xcode(s) == 'M') || (Status.Xcode(s) == 'U')).ToList();
+            List<string> files = status.GetFiles();
+            files = files.Where(s => (status.Xcode(s) == 'M') || (status.Xcode(s) == 'U')).ToList();
             c.AddFiles(files);
 
             return c;
@@ -505,7 +505,7 @@ namespace GitForce.Main.Right.Panels
         {
             // Recover the commit class bundle that was selected
             ClassCommit c = (sender as ToolStripMenuItem).Tag as ClassCommit;
-            Status.Repo.Commits.Bundle.Remove(c);
+            status.Repo.Commits.Bundle.Remove(c);
             CommitsRefresh();
         }
 
@@ -517,7 +517,7 @@ namespace GitForce.Main.Right.Panels
             if ((sender as ToolStripMenuItem).Tag is string)
             {
                 List<string> files = GetSelectedFiles();
-                Status.Repo.GitDiff("--cached", files);
+                status.Repo.GitDiff("--cached", files);
             }
         }
 
@@ -546,9 +546,9 @@ namespace GitForce.Main.Right.Panels
             List<string> used = new List<string>();
             foreach (var s in files)
             {
-                string alt = Status.GetAltFile(s);
+                string alt = status.GetAltFile(s);
                 if (alt == string.Empty) continue;
-                Status.Repo.GitMove(s, alt);
+                status.Repo.GitMove(s, alt);
                 used.Add(s);
             }
             files = files.Except(used).ToList();
@@ -559,10 +559,10 @@ namespace GitForce.Main.Right.Panels
                 // There are 2 ways to unstage a file:
                 // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
                 // Can't figure out how to find out which one to use at this moment, so use both.
-                if (Status.Repo.GitReset("HEAD", files) == true)
+                if (status.Repo.GitReset("HEAD", files) == true)
                 {
                     App.PrintStatusMessage("Retrying using the `rm` option...");
-                    Status.Repo.GitDelete("--cached", files);
+                    status.Repo.GitDelete("--cached", files);
                 }
             }
             App.DoRefresh();
@@ -575,7 +575,7 @@ namespace GitForce.Main.Right.Panels
         {
             string file = (sender as ToolStripMenuItem).Tag as string ?? "";
             string cmd = "mergetool " + ClassMerge.GetMergeCmd() + " \"" + file + "\"";
-            Status.Repo.RunCmd(cmd);
+            status.Repo.RunCmd(cmd);
             App.DoRefresh();
         }
 
@@ -586,8 +586,8 @@ namespace GitForce.Main.Right.Panels
         {
             string cmd = (sender as ToolStripMenuItem).Tag as string;
             List<string> files = GetSelectedFiles();
-            Status.Repo.GitCheckout(cmd, files);
-            Status.Repo.GitAdd(files);
+            status.Repo.GitCheckout(cmd, files);
+            status.Repo.GitAdd(files);
             App.DoRefresh();
         }
 
@@ -600,7 +600,7 @@ namespace GitForce.Main.Right.Panels
                     "Abort Merge", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
 
             string cmd = "reset --merge";
-            Status.Repo.RunCmd(cmd);
+            status.Repo.RunCmd(cmd);
             App.DoRefresh();
         }
 
@@ -612,7 +612,7 @@ namespace GitForce.Main.Right.Panels
             if (MessageBox.Show(@"Exiting the merge state will transform your merge commit into a regular commit. Proceed with the exit?",
                     "Exit Merge state", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
 
-            string pathToMergeHead = Status.Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
+            string pathToMergeHead = status.Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
             ClassUtils.DeleteFile(pathToMergeHead);
             App.DoRefresh();
         }

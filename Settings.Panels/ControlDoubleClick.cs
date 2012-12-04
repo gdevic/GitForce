@@ -12,7 +12,7 @@ namespace GitForce.Settings.Panels
     public partial class ControlDoubleClick : UserControl, IUserSettings
     {
         // Selected radio button option number
-        private string _option = Properties.Settings.Default.DoubleClick;
+        private string option = Properties.Settings.Default.DoubleClick;
 
         public ControlDoubleClick()
         {
@@ -35,10 +35,10 @@ namespace GitForce.Settings.Panels
             Dictionary<string, RadioButton> rb = new Dictionary<string, RadioButton> {
                 { "0", radioButton0 }, { "1", radioButton1 }, { "2", radioButton2 } };
 
-            if (!rb.ContainsKey(_option))
-                _option = "1";
-            rb[_option].Checked = true;
-            comboApps.Enabled = _option == "2";
+            if (!rb.ContainsKey(option))
+                option = "1";
+            rb[option].Checked = true;
+            comboApps.Enabled = option == "2";
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace GitForce.Settings.Panels
         public void ApplyChanges()
         {
             Properties.Settings.Default.DoubleClickProgram = comboApps.Text;
-            Properties.Settings.Default.DoubleClick = _option;
+            Properties.Settings.Default.DoubleClick = option;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace GitForce.Settings.Panels
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                _option = rb.Tag.ToString();
+                option = rb.Tag.ToString();
                 comboApps.Enabled = rb.Tag.ToString() == "2";
             }
         }

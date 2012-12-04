@@ -14,7 +14,7 @@ namespace GitForce
     /// </summary>
     public partial class FormShowChangelist : Form
     {
-        private readonly string CR;     // Just a convinient shortcut
+        private readonly string cr;     // Just a convinient shortcut
 
         /// <summary>
         /// Constructor, set the same font as for commit text box.
@@ -23,7 +23,7 @@ namespace GitForce
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
-            CR = Environment.NewLine;
+            cr = Environment.NewLine;
 
             textChangelist.Font = Properties.Settings.Default.commitFont;
             comboShow.SelectedIndex = Properties.Settings.Default.ShowFormatIndex;
@@ -50,7 +50,7 @@ namespace GitForce
             ExecResult result = App.Repos.Current.Run(cmd);
             string[] response = new[] { string.Empty };
             if (result.Success())
-                response = result.stdout.Split(new[] { CR }, StringSplitOptions.None);
+                response = result.stdout.Split(new[] { cr }, StringSplitOptions.None);
 
             // Go over the resulting list and add to our text box
             textChangelist.Text = "";       // Clear the rich text box
@@ -61,10 +61,10 @@ namespace GitForce
 
             // ---------------- Print the comment section ----------------
             foreach (string s in comment)
-                textChangelist.AppendText(s + CR);
+                textChangelist.AppendText(s + cr);
 
             // ---------------- Print the files section ----------------
-            textChangelist.AppendText(CR + "Files:" + CR + CR, Color.Red);
+            textChangelist.AppendText(cr + "Files:" + cr + cr, Color.Red);
 
             foreach (string s in files)
             {
@@ -82,10 +82,10 @@ namespace GitForce
                     string tag = string.Format("{0}#{1}#{2}", s.Substring(39), chunk[2], chunk[3]);
                     textChangelist.AppendText(s.Substring(37, 2));
                     textChangelist.InsertLink(s.Substring(39), tag);
-                    textChangelist.AppendText(CR);
+                    textChangelist.AppendText(cr);
                 }
                 else
-                    textChangelist.AppendText(s + CR);
+                    textChangelist.AppendText(s + cr);
             }
 
             // Now optionally run the detailed show command, but if the number of files is large,
@@ -107,13 +107,13 @@ namespace GitForce
             cmd = "show -t " + sha + " --format=" + comboShow.SelectedItem;
             result = App.Repos.Current.Run(cmd);
             if (result.Success())
-                response = result.stdout.Split(new[] { CR }, StringSplitOptions.None);
+                response = result.stdout.Split(new[] { cr }, StringSplitOptions.None);
 
-            textChangelist.AppendText(CR + "Details" + CR + CR, Color.Red);
+            textChangelist.AppendText(cr + "Details" + cr + cr, Color.Red);
 
             // Write out the complete response text containing all files' differences
             foreach (string s in response)
-                textChangelist.SelectedText = s + CR;
+                textChangelist.SelectedText = s + cr;
 
             textChangelist.Select(0, 0);
         }

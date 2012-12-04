@@ -15,19 +15,19 @@ namespace GitForce
         /// <summary>
         /// Radio button selection mode
         /// </summary>
-        private int _radioSelection;
+        private int radioSelection;
 
         /// <summary>
         /// Root directory to delete from
         /// </summary>
-        private readonly string _dir;
+        private readonly string dir;
 
         public FormDeleteRepo(string root)
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            _dir = textPath.Text = root;
+            dir = textPath.Text = root;
         }
 
         /// <summary>
@@ -53,21 +53,21 @@ namespace GitForce
             // 2: delete only .git tree
             // 3: delete complete repo folder
 
-            if (_radioSelection == 1)
+            if (radioSelection == 1)
             {
-                DirectoryInfo dirInfo = new DirectoryInfo(_dir);
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
                 ret = ClassUtils.DeleteFolder(dirInfo, true, true);     // Preserve .git, preserve root folder
             }
 
-            if (_radioSelection == 2)
+            if (radioSelection == 2)
             {
-                DirectoryInfo dirInfo = new DirectoryInfo(_dir + Path.DirectorySeparatorChar + ".git");
+                DirectoryInfo dirInfo = new DirectoryInfo(dir + Path.DirectorySeparatorChar + ".git");
                 ret = ClassUtils.DeleteFolder(dirInfo, false, false);    // Remove .git, remove root folder (.git)
             }
 
-            if(_radioSelection == 3)
+            if(radioSelection == 3)
             {
-                DirectoryInfo dirInfo = new DirectoryInfo(_dir);
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
                 ret = ClassUtils.DeleteFolder(dirInfo, false, false);   // Remove .git, remove root folder
             }
 
@@ -80,7 +80,7 @@ namespace GitForce
         /// </summary>
         private void RadioButtonClicked(object sender, EventArgs e)
         {
-            _radioSelection = int.Parse((sender as RadioButton).Tag.ToString());
+            radioSelection = int.Parse((sender as RadioButton).Tag.ToString());
         }
     }
 }

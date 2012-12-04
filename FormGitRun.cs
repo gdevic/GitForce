@@ -12,7 +12,7 @@ namespace GitForce
     public partial class FormGitRun : Form
     {
         private Exec job;
-        private ExecResult _result = new ExecResult();
+        private ExecResult result = new ExecResult();
 
         /// <summary>
         /// Class constructor that also pre-sets the command and argument to be run
@@ -56,7 +56,7 @@ namespace GitForce
         /// </summary>
         public ExecResult GetResult()
         {
-            return _result;
+            return result;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace GitForce
         /// </summary>
         private void PComplete(ExecResult result)
         {
-            _result = result;
+            this.result = result;
             if (result.Success())
             {
                 toolStripStatus.Text = "Git command completed successfully.";

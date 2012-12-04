@@ -14,7 +14,7 @@ namespace GitForce
         /// <summary>
         /// Command string that is being built based on the selected options
         /// </summary>
-        public string cmd = "";
+        public string Cmd = "";
 
         public FormReset()
         {
@@ -41,13 +41,13 @@ namespace GitForce
                 switch (rb.Tag.ToString())
                 {
                     case "0":
-                        cmd = "--soft";
+                        Cmd = "--soft";
                         break;
                     case "1":
-                        cmd = "--mixed";
+                        Cmd = "--mixed";
                         break;
                     case "2":
-                        cmd = "--hard";
+                        Cmd = "--hard";
                         break;
                 }
             }

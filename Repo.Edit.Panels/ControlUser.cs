@@ -19,7 +19,6 @@ namespace GitForce.Repo.Edit.Panels
         /// <summary>
         /// Initialize pertinent settings
         /// </summary>
-        /// <param name="repo"></param>
         public void Init(ClassRepo repo)
         {
             textBoxUserName.Text = ClassConfig.GetLocal(repo, "user.name");

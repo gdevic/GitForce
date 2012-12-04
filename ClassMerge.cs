@@ -39,7 +39,7 @@ namespace GitForce
                 new AppHelper( "opendiff",       @"/usr/bin/opendiff",          "%1 %2 %3 %4" ), // Not tested!
         };
 
-        private List<AppHelper> _merge = new List<AppHelper>();
+        private List<AppHelper> merge = new List<AppHelper>();
 
         /// <summary>
         /// Init code to be called on the application startup.
@@ -56,20 +56,20 @@ namespace GitForce
             }
 
             // Search for any of the predefined tools
-            _merge = GetDetected();
+            merge = GetDetected();
 
             // If none of the pre-set merge apps are present, show the missing merge dialog
             // and return with its selection of whether to continue or quit the app
-            if (_merge.Count == 0)
+            if (merge.Count == 0)
             {
                 FormMergeMissing formMergeMissing = new FormMergeMissing();
                 return formMergeMissing.ShowDialog() == DialogResult.OK;
             }
 
             // Otherwise, at least one merge app is present, select it as default
-            Properties.Settings.Default.MergeAppHelper = _merge[0].ToString();
+            Properties.Settings.Default.MergeAppHelper = merge[0].ToString();
 
-            Configure(_merge[0]);
+            Configure(merge[0]);
             return true;
         }
 

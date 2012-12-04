@@ -15,7 +15,7 @@ namespace GitForce.Settings.Panels
         /// <summary>
         /// File containing user gitignore settings
         /// </summary>
-        private string _excludesFile;
+        private string excludesFile;
 
         public ControlGitignore()
         {
@@ -29,25 +29,25 @@ namespace GitForce.Settings.Panels
         public void Init(string[] options)
         {
             // Get a path to user excludes file, or create that file if it is not defined
-            _excludesFile = options.FirstOrDefault(s => s.Contains("core.excludesfile"));
+            excludesFile = options.FirstOrDefault(s => s.Contains("core.excludesfile"));
 
             // If the file does not exist, reset it
-            if (_excludesFile == null)
-                _excludesFile = Path.Combine(App.AppHome, ".gitexcludesfile");
+            if (excludesFile == null)
+                excludesFile = Path.Combine(App.AppHome, ".gitexcludesfile");
 
-            _excludesFile = _excludesFile.Split('\n').Last();
+            excludesFile = excludesFile.Split('\n').Last();
 
-            if (!File.Exists(_excludesFile))
+            if (!File.Exists(excludesFile))
                 try
                 {
-                    File.CreateText(_excludesFile).Close();
+                    File.CreateText(excludesFile).Close();
                 }
                 catch (Exception ex)
                 {
-                    App.PrintStatusMessage("Error loading " + _excludesFile + ": " + ex.Message);
+                    App.PrintStatusMessage("Error loading " + excludesFile + ": " + ex.Message);
                 }
 
-            userControlEditGitignore.LoadGitIgnore(_excludesFile);
+            userControlEditGitignore.LoadGitIgnore(excludesFile);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace GitForce.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            userControlEditGitignore.SaveGitIgnore(_excludesFile);
-            ClassConfig.SetGlobal("core.excludesfile", _excludesFile);
+            userControlEditGitignore.SaveGitIgnore(excludesFile);
+            ClassConfig.SetGlobal("core.excludesfile", excludesFile);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GitForce.Settings.Panels
         /// <summary>
         /// List of helper programs
         /// </summary>
-        private List<AppHelper> _helpers;
+        private List<AppHelper> helpers;
 
         public ControlMerge()
         {
@@ -35,9 +35,9 @@ namespace GitForce.Settings.Panels
         public void Init(string[] options)
         {
             // Detect all merge utilities on the system and populate a listbox
-            _helpers = ClassMerge.GetDetected();
+            helpers = ClassMerge.GetDetected();
             comboBoxPath.Items.Clear();
-            foreach (var appHelper in _helpers)
+            foreach (var appHelper in helpers)
                 comboBoxPath.Items.Add(appHelper.Path);
 
             // Get our program default merge tool and set the listbox text
@@ -90,7 +90,7 @@ namespace GitForce.Settings.Panels
         private void ComboBoxPathSelectionChangeCommitted(object sender, EventArgs e)
         {
             ComboBox senderComboBox = (ComboBox) sender;
-            textArgs.Text = _helpers[senderComboBox.SelectedIndex].Args;
+            textArgs.Text = helpers[senderComboBox.SelectedIndex].Args;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace GitForce.Settings.Panels
 {
     public partial class ControlSpecifications : UserControl, IUserSettings
     {
-        private Font _font;
+        private Font font;
 
         public ControlSpecifications()
         {
@@ -22,7 +22,7 @@ namespace GitForce.Settings.Panels
         /// <param name="options">All git global settings</param>
         public void Init(string[] options)
         {
-            _font = Properties.Settings.Default.commitFont;
+            font = Properties.Settings.Default.commitFont;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace GitForce.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            Properties.Settings.Default.commitFont = _font;
+            Properties.Settings.Default.commitFont = font;
             Properties.Settings.Default.commitW1 = numWrap1.Value;
             Properties.Settings.Default.commitW2 = numWrap2.Value;
         }
@@ -58,9 +58,9 @@ namespace GitForce.Settings.Panels
             {
                 FontFamily fontFamily = ClassGlobals.Fonts[listFonts.SelectedIndex];
                 int fontSize = int.Parse(listSizes.SelectedItem.ToString());
-                _font = new Font(fontFamily, fontSize, FontStyle.Regular);
+                font = new Font(fontFamily, fontSize, FontStyle.Regular);
 
-                labelSample.Font = _font;
+                labelSample.Font = font;
             }
         }
 
@@ -82,11 +82,11 @@ namespace GitForce.Settings.Panels
             // Add fonts to the fonts listbox
             foreach (FontFamily fontFamily in ClassGlobals.Fonts)
             {
-                Font font = new Font(fontFamily, 10, FontStyle.Regular);
-                listFonts.Items.Add(font.Name);
+                Font fontTemplate = new Font(fontFamily, 10, FontStyle.Regular);
+                listFonts.Items.Add(fontTemplate.Name);
 
                 // Select the active font
-                if (font.Name == _font.Name)
+                if (fontTemplate.Name == font.Name)
                     listFonts.SelectedIndex = listFonts.Items.Count - 1;
             }
 
@@ -97,7 +97,7 @@ namespace GitForce.Settings.Panels
             {
                 var newSize = size;
                 listSizes.Items.Add(newSize);
-                if (size == (int)_font.Size)
+                if (size == (int)font.Size)
                     listSizes.SelectedIndex = listSizes.Items.Count - 1;
             }
 
@@ -105,7 +105,7 @@ namespace GitForce.Settings.Panels
             numWrap1.Value = Properties.Settings.Default.commitW1;
             numWrap2.Value = Properties.Settings.Default.commitW2;
 
-            labelSample.Font = _font;
+            labelSample.Font = font;
         }
 
         /// <summary>

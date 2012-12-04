@@ -16,17 +16,17 @@ namespace GitForce
     /// </summary>
     public partial class FormNewRepoScanAdd : Form
     {
-        private readonly List<string> _dirs;
-        private bool _enableAdd;
+        private readonly List<string> dirs;
+        private bool enableAdd;
 
-        public FormNewRepoScanAdd(List<string> dirs)
+        public FormNewRepoScanAdd(List<string> dirList)
         {
             InitializeComponent();
-            _dirs = dirs;
+            dirs = dirList;
 
             // If there are 5 repos or more, display the progress bar
-            progressBar.Visible = _dirs.Count() >= 5;
-            progressBar.Maximum = _dirs.Count();
+            progressBar.Visible = dirs.Count() >= 5;
+            progressBar.Maximum = dirs.Count();
             progressBar.Value = 0;
         }
 
@@ -35,13 +35,13 @@ namespace GitForce
         /// </summary>
         private void FormNewRepoScanAddShown(object sender, EventArgs e)
         {
-            _enableAdd = true;
+            enableAdd = true;
             int count = 1;
 
             // Create each of the repos for the selected directories
-            foreach (var d in _dirs)
+            foreach (var d in dirs)
             {
-                if (_enableAdd == false)
+                if (enableAdd == false)
                     return;
                 try
                 {
@@ -70,7 +70,7 @@ namespace GitForce
         /// </summary>
         private void BtCancelClick(object sender, EventArgs e)
         {
-            _enableAdd = false;
+            enableAdd = false;
             DialogResult = DialogResult.OK;
         }
     }

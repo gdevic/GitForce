@@ -17,19 +17,19 @@ namespace GitForce
         /// <summary>
         /// Shortcut variable to the main app's current repo
         /// </summary>
-        private readonly ClassBranches _branches;
+        private readonly ClassBranches branches;
 
         /// <summary>
         /// Singular branch origin selected among various options with a radio button
         /// </summary>
-        private string _origin = "";
+        private string origin = "";
 
         public FormNewBranch()
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            _branches = App.Repos.Current.Branches;
+            branches = App.Repos.Current.Branches;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace GitForce
                         listBranches.BackColor = SystemColors.Control;
                         break;
                 }
-                _origin = null;
+                origin = null;
             }
             else
             {
@@ -71,14 +71,14 @@ namespace GitForce
                         break;
                     case "Local":
                         listBranches.Items.Clear();
-                        foreach (var branch in _branches.Local)
+                        foreach (var branch in branches.Local)
                             listBranches.Items.Add(branch);
                         listBranches.Enabled = true;
                         listBranches.BackColor = SystemColors.Window;
                         break;
                     case "Remote":
                         listBranches.Items.Clear();
-                        foreach (var branch in _branches.Remote)
+                        foreach (var branch in branches.Remote)
                             listBranches.Items.Add(branch);
                         listBranches.Enabled = true;
                         listBranches.BackColor = SystemColors.Window;
@@ -108,7 +108,7 @@ namespace GitForce
         {
             string name = textBranchName.Text.Trim();
 
-            string cmd = String.Format("branch {0} {1}", name, _origin);
+            string cmd = String.Format("branch {0} {1}", name, origin);
             ExecResult result = App.Repos.Current.RunCmd(cmd);
             if (result.Success())
             {
@@ -131,7 +131,7 @@ namespace GitForce
         /// </summary>
         private void ListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            _origin = listBranches.SelectedItem.ToString();
+            origin = listBranches.SelectedItem.ToString();
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace GitForce
         /// </summary>
         private void TextSha1TextChanged(object sender, EventArgs e)
         {
-            _origin = textSHA1.Text;
+            origin = textSHA1.Text;
         }
 
         /// <summary>

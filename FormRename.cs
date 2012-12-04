@@ -15,9 +15,9 @@ namespace GitForce
     /// </summary>
     public partial class FormRename : Form
     {
-        private ClassRepo _repo;
-        private string _multiFileCommonPath;
-        private readonly List<string> _inFiles = new List<string>();
+        private ClassRepo repo;
+        private string multiFileCommonPath;
+        private readonly List<string> inFiles = new List<string>();
 
         public FormRename()
         {
@@ -37,28 +37,28 @@ namespace GitForce
         /// Loads a file or a set of files and prepares the dialog controls
         /// Two different modes of opeation: single file or multiple files
         /// </summary>
-        public bool LoadFiles(ClassRepo repo, string[] files)
+        public bool LoadFiles(ClassRepo targetRepo, string[] files)
         {
-            _repo = repo;
+            repo = targetRepo;
 
             // Load the original list of files into the text box to show what will be renamed
             // Only load files, not directories
             foreach (string file in files.Where(file => !file.EndsWith(Convert.ToString(Path.DirectorySeparatorChar))))
-                _inFiles.Add(file);
+                inFiles.Add(file);
 
-            if (_inFiles.Count == 0)
+            if (inFiles.Count == 0)
                 return false;
 
             // Show files as relative to the repo root
             textOriginalNames.Clear();
-            foreach (string file in _inFiles)
+            foreach (string file in inFiles)
                 textOriginalNames.Text += @"//" + file + Environment.NewLine;
 
             // Set the New Name(s) accordingly
-            if (_inFiles.Count == 1)
+            if (inFiles.Count == 1)
             {
                 // Single file - initial proposed new name is the same
-                textNewName.Text = _inFiles[0];
+                textNewName.Text = inFiles[0];
             }
             else
             {
@@ -68,22 +68,22 @@ namespace GitForce
                 // Iteratively find the common path prefix
                 for (i = 0; !fDone; i++)
                 {
-                    char c = _inFiles[0][i];
-                    foreach (string file in _inFiles)
+                    char c = inFiles[0][i];
+                    foreach (string file in inFiles)
                         if (file.Length == i || file[i] != c)
                             fDone = true;
                 }
-                i = _inFiles[0].Substring(0, i).LastIndexOf('/');
+                i = inFiles[0].Substring(0, i).LastIndexOf('/');
                 if (i > 0)
                 {
-                    _multiFileCommonPath = _inFiles[0].Substring(0, i);
-                    textNewName.Text = _multiFileCommonPath + @"/...";
+                    multiFileCommonPath = inFiles[0].Substring(0, i);
+                    textNewName.Text = multiFileCommonPath + @"/...";
                 }
             }
 
             // Set the changelist options
             comboChangelist.Items.Clear();
-            foreach (ClassCommit bundle in _repo.Commits.Bundle)
+            foreach (ClassCommit bundle in repo.Commits.Bundle)
                 comboChangelist.Items.Add(bundle);
             comboChangelist.Items.Add("New");
             comboChangelist.SelectedIndex = 0;
@@ -98,9 +98,9 @@ namespace GitForce
         public List<string> GetGitCmds()
         {
             List<string> cmds = new List<string>();
-            if (_inFiles.Count == 1)
+            if (inFiles.Count == 1)
             {
-                cmds.Add("mv " + _inFiles[0] + " " + textNewName.Text);
+                cmds.Add("mv " + inFiles[0] + " " + textNewName.Text);
             }
             else
             {
@@ -109,7 +109,7 @@ namespace GitForce
                 string path = textNewName.Text;
                 path = path.Substring(0, path.Length - 4);
 
-                cmds.AddRange(from line in _inFiles
+                cmds.AddRange(from line in inFiles
                               select "mv " + line + " " + path + "/" + line);
             }
             return cmds;
@@ -120,11 +120,11 @@ namespace GitForce
         /// </summary>
         private bool IsValid()
         {
-            string path = Path.Combine(_repo.Root, textNewName.Text);
+            string path = Path.Combine(repo.Root, textNewName.Text);
 
             // With a single file, check that the new file name is writable
             // With multiple files, check that the new path is accessible
-            if (_inFiles.Count == 1)
+            if (inFiles.Count == 1)
             {
                 // Check file valid path
                 try
@@ -146,7 +146,7 @@ namespace GitForce
                     if (path.EndsWith(@"/"))
                         path = path.Substring(0, path.Length - 1);
 
-                    if (_multiFileCommonPath != path)
+                    if (multiFileCommonPath != path)
                     {
                         try
                         {

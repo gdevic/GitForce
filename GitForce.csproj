@@ -731,18 +731,6 @@
     <None Include="Resources\App\git.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Diff\p4merge.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\QtCore4.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\QtGui4.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Diff\QtXml4.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\PuTTY\pageant.exe" />
   </ItemGroup>
   <ItemGroup>
@@ -795,7 +783,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="git.ico" />
-    <None Include="Resources\App\new-version.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

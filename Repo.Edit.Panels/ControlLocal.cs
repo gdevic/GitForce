@@ -17,7 +17,6 @@ namespace GitForce.Repo.Edit.Panels
         /// <summary>
         /// Initialize pertinent settings
         /// </summary>
-        /// <param name="repo"></param>
         public void Init(ClassRepo repo)
         {
             // Initialize the line endings radio buttons

@@ -20,15 +20,15 @@ namespace GitForce
         /// </summary>
         public readonly List<string> Gits = new List<string>();
 
-        private readonly string _dir;
-        private readonly bool _deepScan;
-        private bool _enableScan;
+        private readonly string dir;
+        private readonly bool deepScan;
+        private bool enableScan;
 
-        public FormNewRepoScanProgress(string dir, bool fDeepScan)
+        public FormNewRepoScanProgress(string directory, bool fDeepScan)
         {
             InitializeComponent();
-            _dir = dir;
-            _deepScan = fDeepScan;
+            dir = directory;
+            deepScan = fDeepScan;
         }
 
         /// <summary>
@@ -44,13 +44,13 @@ namespace GitForce
                 {
                     textDir.Text = d;
                     Application.DoEvents();
-                    if(_enableScan==false)
+                    if(enableScan==false)
                         return;
 
                     if (d.EndsWith(Path.DirectorySeparatorChar + ".git"))
                     {
                         Gits.Add(d.Substring(0, d.Length - 5));
-                        if (_deepScan == false)
+                        if (deepScan == false)
                             break;
                     }
                     else
@@ -66,15 +66,15 @@ namespace GitForce
         private void FormNewRepoScanProgressShown(object sender, EventArgs e)
         {
             Gits.Clear();
-            _enableScan = true;
+            enableScan = true;
             try
             {
-                SearchGit(_dir);
+                SearchGit(dir);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _enableScan = false;
+                enableScan = false;
             }
             DialogResult = DialogResult.OK;
             Close();
@@ -85,7 +85,7 @@ namespace GitForce
         /// </summary>
         private void BtStopClick(object sender, EventArgs e)
         {
-            _enableScan = false;
+            enableScan = false;
             Application.DoEvents();
             DialogResult = DialogResult.OK;
         }

@@ -25,7 +25,7 @@ namespace GitForce
         /// Create a lookup from panel names (which are set in each corresponding node
         /// of an setting tree view) to the actual repo edit panel instance:
         /// </summary>
-        private readonly Dictionary<string, UserControl> _panels = new Dictionary<string, UserControl> {
+        private readonly Dictionary<string, UserControl> panels = new Dictionary<string, UserControl> {
             { "Local", new ControlLocal() },
             { "User", new ControlUser() },
             { "Gitignore", new ControlGitignore() },
@@ -35,18 +35,18 @@ namespace GitForce
         /// <summary>
         /// Settings panel that is currently on the top
         /// </summary>
-        private UserControl _current;
+        private UserControl current;
 
         /// <summary>
         /// Current repo that we are editing
         /// </summary>
-        private readonly ClassRepo _repo;
+        private readonly ClassRepo repo;
 
-        public FormRepoEdit(ClassRepo repo)
+        public FormRepoEdit(ClassRepo targetRepo)
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
-            _repo = repo;
+            repo = targetRepo;
 
             // Get all local configuration strings and assign various panel controls.
             // This is placed first, before initializing the user panels, so that the
@@ -55,10 +55,10 @@ namespace GitForce
             //string[] config = _repo.Run("config --local --list -z").Split('\0');
 
             // Add all user panels to the base repo edit panel; call their init
-            foreach (KeyValuePair<string, UserControl> key in _panels)
+            foreach (KeyValuePair<string, UserControl> key in panels)
             {
                 panel.Controls.Add(key.Value);
-                (key.Value as IRepoSettings).Init(_repo);
+                (key.Value as IRepoSettings).Init(repo);
                 key.Value.Dock = DockStyle.Fill;
             }
 
@@ -81,13 +81,13 @@ namespace GitForce
         private void TreeSectionsAfterSelect(object sender, TreeViewEventArgs e)
         {
             string panelName = e.Node.Tag as string;
-            if (panelName != null && _panels.ContainsKey(panelName))
+            if (panelName != null && panels.ContainsKey(panelName))
             {
-                if (_current != null)
-                    (_current as IRepoSettings).Focus(false);
-                _current = _panels[panelName];
-                _current.BringToFront();
-                (_current as IRepoSettings).Focus(true);
+                if (current != null)
+                    (current as IRepoSettings).Focus(false);
+                current = panels[panelName];
+                current.BringToFront();
+                (current as IRepoSettings).Focus(true);
             }
         }
 
@@ -99,7 +99,7 @@ namespace GitForce
         /// </summary>
         private void BtApplyClick(object sender, EventArgs e)
         {
-            (_current as IRepoSettings).ApplyChanges(_repo);
+            (current as IRepoSettings).ApplyChanges(repo);
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace GitForce
         /// </summary>
         private void BtOkClick(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, UserControl> key in _panels)
-                (key.Value as IRepoSettings).ApplyChanges(_repo);
+            foreach (KeyValuePair<string, UserControl> key in panels)
+                (key.Value as IRepoSettings).ApplyChanges(repo);
         }
     }
 }

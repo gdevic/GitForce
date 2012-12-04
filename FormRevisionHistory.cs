@@ -20,7 +20,7 @@ namespace GitForce
         /// <summary>
         /// The file name whose log this form shows
         /// </summary>
-        private string _file;
+        private readonly string file;
 
         /// <summary>
         /// The current SHA string to initialize the list
@@ -30,12 +30,12 @@ namespace GitForce
         /// <summary>
         /// 2 last recently selected SHA submits
         /// </summary>
-        private string[] _lruSha = new string[2];
+        private readonly string[] lruSha = new string[2];
 
         /// <summary>
         /// Form constructor. Takes the git file name whose history is to be shown.
         /// </summary>
-        public FormRevisionHistory(string file)
+        public FormRevisionHistory(string targetFile)
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
@@ -44,9 +44,9 @@ namespace GitForce
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
 
-            _file = file;
+            file = targetFile;
             Sha = String.Empty;
-            Text = @"Revision History for //" + file;
+            Text = @"Revision History for //" + targetFile;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace GitForce
                 cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
             // Get the log of a single file only
-            cmd.Append(" -- " + _file);
+            cmd.Append(" -- " + file);
 
             ExecResult result = App.Repos.Current.Run(cmd.ToString());
             if(result.Success())
@@ -113,18 +113,18 @@ namespace GitForce
 
             // Set up for 2 SHA checkins: the one in the [0] spot being the most recently selected
             if (listRev.SelectedIndices.Count == 1)
-                _lruSha[0] = _lruSha[1] = listRev.SelectedItems[0].Text;
+                lruSha[0] = lruSha[1] = listRev.SelectedItems[0].Text;
             if (listRev.SelectedIndices.Count > 1)
             {
-                if (listRev.SelectedItems[0].Text == _lruSha[0])
-                    _lruSha[1] = listRev.SelectedItems[1].Text;
+                if (listRev.SelectedItems[0].Text == lruSha[0])
+                    lruSha[1] = listRev.SelectedItems[1].Text;
                 else
-                    _lruSha[1] = listRev.SelectedItems[0].Text;
+                    lruSha[1] = listRev.SelectedItems[0].Text;
             }
 
             if(listRev.SelectedIndices.Count==1)
             {
-                string sha = _lruSha[1];
+                string sha = lruSha[1];
                 string cmd = string.Format("show -s {0}", sha);
                 ExecResult result = App.Repos.Current.Run(cmd);
                 textDescription.Text = result.Success() ? result.stdout : result.stderr;
@@ -144,7 +144,7 @@ namespace GitForce
         /// </summary>
         private void DiffVsClientFileMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + _lruSha[0] + "..HEAD -- " + _file;
+            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + lruSha[0] + "..HEAD -- " + file;
             RunDiff(cmd);
         }
 
@@ -153,7 +153,7 @@ namespace GitForce
         /// </summary>
         private void DiffRevisionsMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + _lruSha[0] + ".." + _lruSha[1] + " -- " + _file;
+            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + lruSha[0] + ".." + lruSha[1] + " -- " + file;
             RunDiff(cmd);
         }
 
@@ -193,10 +193,10 @@ namespace GitForce
             if( MessageBox.Show("This will sync file to a previous version. Continue?", "Revision Sync",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
-                string cmd = string.Format("checkout {1} -- {0}", _file, _lruSha[0]);
+                string cmd = string.Format("checkout {1} -- {0}", file, lruSha[0]);
                 ExecResult result = App.Repos.Current.RunCmd(cmd);
                 if(result.Success())
-                    App.PrintStatusMessage("File checked out at a previous revision " + _lruSha[0] + ": " + _file);
+                    App.PrintStatusMessage("File checked out at a previous revision " + lruSha[0] + ": " + file);
                 else
                     MessageBox.Show(result.stderr, "Sync error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -225,7 +225,7 @@ namespace GitForce
         private void MenuViewEditClick(object sender, EventArgs e)
         {
             // Create a temp file on the selected git file version
-            string temp = GetTempFile(_file, listRev.SelectedItems[0].Text);
+            string temp = GetTempFile(file, listRev.SelectedItems[0].Text);
             if (!string.IsNullOrEmpty(temp))
                 ClassUtils.FileOpenFromMenu(sender, temp);
         }
@@ -241,7 +241,7 @@ namespace GitForce
             if (listRev.SelectedIndices.Count == 1)
             {
                 // Create a temp file and open the file
-                string temp = GetTempFile(_file, listRev.SelectedItems[0].Text);
+                string temp = GetTempFile(file, listRev.SelectedItems[0].Text);
                 if (!string.IsNullOrEmpty(temp))
                     ClassUtils.FileDoubleClick(temp);
             }

@@ -17,7 +17,7 @@ namespace GitForce
         /// <summary>
         /// Singular branch name that is selected to be switched to
         /// </summary>
-        private string _branchName;
+        private string branchName;
 
         public FormSwitchToBranch()
         {
@@ -43,7 +43,7 @@ namespace GitForce
         private void SwitchBranchClick(object sender, EventArgs e)
         {
             // Execute the final branch command
-            App.Repos.Current.Branches.SwitchTo(_branchName);
+            App.Repos.Current.Branches.SwitchTo(branchName);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace GitForce
         /// </summary>
         private void ListBranchesSelectedIndexChanged(object sender, EventArgs e)
         {
-            _branchName = listBranches.SelectedItem.ToString();
+            branchName = listBranches.SelectedItem.ToString();
             btSwitch.Enabled = true;
         }
     }

@@ -37,14 +37,14 @@ namespace GitForce
         /// Stores the current list of remotes and serves as a
         /// lookup dictionary of passwords for a given remote name
         /// </summary>
-        private Dictionary<string, Remote> _remotes = new Dictionary<string, Remote>();
+        private Dictionary<string, Remote> remotes = new Dictionary<string, Remote>();
 
         /// <summary>
         /// Return the list of names of remote repos
         /// </summary>
         public List<string> GetListNames()
         {
-            List<string> list = _remotes.Select(kvp => kvp.Key).ToList();
+            List<string> list = remotes.Select(kvp => kvp.Key).ToList();
             return list;
         }
 
@@ -53,7 +53,7 @@ namespace GitForce
         /// </summary>
         public Remote Get(string name)
         {
-            return _remotes[name];
+            return remotes[name];
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace GitForce
                     if (newlist.ContainsKey(name))
                         r = newlist[name];
 
-                    if (_remotes.ContainsKey(name))
+                    if (remotes.ContainsKey(name))
                     {
-                        r.Password = _remotes[name].Password;
-                        r.PushCmd = _remotes[name].PushCmd;
+                        r.Password = remotes[name].Password;
+                        r.PushCmd = remotes[name].PushCmd;
                     }
 
                     // Set all other fields that we refresh every time                
@@ -101,11 +101,11 @@ namespace GitForce
             }
 
             // Set the newly built list to be the master list
-            _remotes = newlist;
+            remotes = newlist;
 
             // Fixup the new current string name
-            if (!_remotes.ContainsKey(Current))
-                Current = _remotes.Count > 0 ? _remotes.ElementAt(0).Key : "";
+            if (!remotes.ContainsKey(Current))
+                Current = remotes.Count > 0 ? remotes.ElementAt(0).Key : "";
         }
 
         /// <summary>
@@ -115,10 +115,10 @@ namespace GitForce
         public void SetPassword(string name, string password)
         {
             Remote r;
-            if (!_remotes.TryGetValue(name, out r))
+            if (!remotes.TryGetValue(name, out r))
                 r.Name = name;
             r.Password = password;
-            _remotes[name] = r;
+            remotes[name] = r;
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace GitForce
             Remote r;
             r.Password = "";
             if (name == "") name = Current;
-            _remotes.TryGetValue(name, out r);
+            remotes.TryGetValue(name, out r);
             return r.Password;
         }
 
@@ -141,10 +141,10 @@ namespace GitForce
         public void SetPushCmd(string name, string cmd)
         {
             Remote r;
-            if (!_remotes.TryGetValue(name, out r))
+            if (!remotes.TryGetValue(name, out r))
                 r.Name = name;
             r.PushCmd = cmd;
-            _remotes[name] = r;
+            remotes[name] = r;
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace GitForce
             Remote r;
             r.PushCmd = "";
             if (name == "") name = Current;
-            _remotes.TryGetValue(name, out r);
+            remotes.TryGetValue(name, out r);
             return r.PushCmd;
         }    
     }

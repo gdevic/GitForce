@@ -20,7 +20,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Branch name the log is using to display history
         /// </summary>
-        private string _logBranch;
+        private string logBranch;
 
         public PanelRevlist()
         {
@@ -44,15 +44,15 @@ namespace GitForce.Main.Right.Panels
                 ClassBranches branches = App.Repos.Current.Branches;
 
                 // Initialize our tracking branch
-                if (!branches.Local.Contains(_logBranch) && !branches.Remote.Contains(_logBranch))
-                    _logBranch = branches.Current;
+                if (!branches.Local.Contains(logBranch) && !branches.Remote.Contains(logBranch))
+                    logBranch = branches.Current;
 
                 // If the repo does not have a branch at all (new repo that was just initialized), exit
-                if (string.IsNullOrEmpty(_logBranch))
+                if (string.IsNullOrEmpty(logBranch))
                     return;
 
-                if (_logBranch != branches.Current)
-                    labelLogBranch.Text = String.Format(" (Branch: \"{0}\")", _logBranch);
+                if (logBranch != branches.Current)
+                    labelLogBranch.Text = String.Format(" (Branch: \"{0}\")", logBranch);
 
                 // Populate the drop-down list of branches: local and remote)
                 foreach (var branch in branches.Local)
@@ -74,8 +74,8 @@ namespace GitForce.Main.Right.Panels
                 cmd.Append("%an%x09");                  // Author name
                 cmd.Append("%s");                       // Subject
                 // Add the branch name using only the first token in order to handle links (br -> br)
-                if(_logBranch!="(no branch)")
-                    cmd.Append(" " + _logBranch.Split(' ').First());
+                if(logBranch!="(no branch)")
+                    cmd.Append(" " + logBranch.Split(' ').First());
                 // Limit the number of commits to show
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
@@ -132,7 +132,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void LogBranchChanged(object sender, EventArgs e)
         {
-            _logBranch = sender.ToString();
+            logBranch = sender.ToString();
             RevlistRefresh();
         }
 
@@ -239,7 +239,7 @@ namespace GitForce.Main.Right.Panels
                 FormReset formReset = new FormReset();
                 if( formReset.ShowDialog()==DialogResult.OK)
                 {
-                    string cmd = String.Format("reset {0} {1}", formReset.cmd, sha);
+                    string cmd = String.Format("reset {0} {1}", formReset.Cmd, sha);
                     App.Repos.Current.RunCmd(cmd);
                     App.DoRefresh();                    
                 }

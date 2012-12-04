@@ -15,7 +15,7 @@ namespace GitForce.Settings.Panels
         /// <summary>
         /// File containing user gitconfig settings
         /// </summary>
-        private string _configFile;
+        private string configFile;
 
         public ControlGitconfig()
         {
@@ -28,7 +28,7 @@ namespace GitForce.Settings.Panels
         /// <param name="options">All git global settings</param>
         public void Init(string[] options)
         {
-            _configFile = Path.Combine(App.UserHome, ".gitconfig");
+            configFile = Path.Combine(App.UserHome, ".gitconfig");
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace GitForce.Settings.Panels
         public void Focus(bool focused)
         {
             if (focused)
-                userControlEditFile.LoadFile(_configFile);
+                userControlEditFile.LoadFile(configFile);
             else
             {
                 // As the control is losing its focus, if the text was changed, ask the user
@@ -46,9 +46,9 @@ namespace GitForce.Settings.Panels
                 if (userControlEditFile.Dirty)
                 {
                     if (MessageBox.Show("Save changes to the configuration file?", "Edit .gitconfig", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        userControlEditFile.SaveFile(_configFile);
+                        userControlEditFile.SaveFile(configFile);
                     else
-                        userControlEditFile.LoadFile(_configFile);
+                        userControlEditFile.LoadFile(configFile);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace GitForce.Settings.Panels
         public void ApplyChanges()
         {
             if (userControlEditFile.Dirty)
-                userControlEditFile.SaveFile(_configFile);
+                userControlEditFile.SaveFile(configFile);
         }
     }
 }
