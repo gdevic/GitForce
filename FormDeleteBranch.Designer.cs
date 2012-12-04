@@ -30,8 +30,8 @@
         {
             this.checkForce = new System.Windows.Forms.CheckBox();
             this.listBranches = new System.Windows.Forms.ListBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioRemoteBranch = new System.Windows.Forms.RadioButton();
+            this.radioLocalBranch = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.btDelete = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
@@ -61,31 +61,31 @@
             this.listBranches.TabIndex = 12;
             this.listBranches.SelectedIndexChanged += new System.EventHandler(this.ListBranchesSelectedIndexChanged);
             // 
-            // radioButton2
+            // radioRemoteBranch
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(13, 62);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(101, 17);
-            this.radioButton2.TabIndex = 11;
-            this.radioButton2.Tag = "Remote";
-            this.radioButton2.Text = "Remote branch:";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButton1CheckedChanged);
+            this.radioRemoteBranch.AutoSize = true;
+            this.radioRemoteBranch.Location = new System.Drawing.Point(13, 62);
+            this.radioRemoteBranch.Name = "radioRemoteBranch";
+            this.radioRemoteBranch.Size = new System.Drawing.Size(101, 17);
+            this.radioRemoteBranch.TabIndex = 11;
+            this.radioRemoteBranch.Tag = "Remote";
+            this.radioRemoteBranch.Text = "Remote branch:";
+            this.radioRemoteBranch.UseVisualStyleBackColor = true;
+            this.radioRemoteBranch.CheckedChanged += new System.EventHandler(this.RadioButton1CheckedChanged);
             // 
-            // radioButton1
+            // radioLocalBranch
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 39);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(90, 17);
-            this.radioButton1.TabIndex = 10;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Tag = "Local";
-            this.radioButton1.Text = "Local branch:";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButton1CheckedChanged);
+            this.radioLocalBranch.AutoSize = true;
+            this.radioLocalBranch.Checked = true;
+            this.radioLocalBranch.Location = new System.Drawing.Point(13, 39);
+            this.radioLocalBranch.Name = "radioLocalBranch";
+            this.radioLocalBranch.Size = new System.Drawing.Size(90, 17);
+            this.radioLocalBranch.TabIndex = 10;
+            this.radioLocalBranch.TabStop = true;
+            this.radioLocalBranch.Tag = "Local";
+            this.radioLocalBranch.Text = "Local branch:";
+            this.radioLocalBranch.UseVisualStyleBackColor = true;
+            this.radioLocalBranch.CheckedChanged += new System.EventHandler(this.RadioButton1CheckedChanged);
             // 
             // label1
             // 
@@ -128,8 +128,8 @@
             this.ClientSize = new System.Drawing.Size(329, 219);
             this.Controls.Add(this.checkForce);
             this.Controls.Add(this.listBranches);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.radioRemoteBranch);
+            this.Controls.Add(this.radioLocalBranch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btDelete);
             this.Controls.Add(this.btCancel);
@@ -151,8 +151,8 @@
 
         private System.Windows.Forms.CheckBox checkForce;
         private System.Windows.Forms.ListBox listBranches;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioRemoteBranch;
+        private System.Windows.Forms.RadioButton radioLocalBranch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.Button btCancel;

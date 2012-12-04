@@ -17,22 +17,22 @@ namespace GitForce
         /// <summary>
         /// Shortcut variable to the main app's current repo
         /// </summary>
-        private readonly ClassBranches _branches;
+        private readonly ClassBranches branches;
 
         /// <summary>
         /// Singular branch name selected among options for local or remote
         /// </summary>
-        private string _branchName;
+        private string selectedBranch;
 
         public FormDeleteBranch()
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            _branches = App.Repos.Current.Branches;
+            branches = App.Repos.Current.Branches;
 
             // Initialize local branches as the default selection
-            foreach (var branch in _branches.Local)
+            foreach (var branch in branches.Local)
                 listBranches.Items.Add(branch);
         }
 
@@ -49,10 +49,18 @@ namespace GitForce
         /// </summary>
         private void DeleteClick(object sender, EventArgs e)
         {
-            string cmd = String.Format("branch {0} {1} {2}",
-                checkForce.Checked? "-D" : "-d",
-                radioButton2.Checked? "-r": "",
-                _branchName );
+            string cmd;
+
+            // Depending on the branch (local or remote), use a different way to delete it
+            if (radioLocalBranch.Checked)
+                cmd = String.Format("branch {0} {1}", checkForce.Checked ? "-D" : "-d", selectedBranch);
+            else
+            {
+                // Remote branch
+                string repoName = selectedBranch.Split('/')[0];
+                string branchName = selectedBranch.Split('/')[1];
+                cmd = String.Format("push {0} :{1}", repoName, branchName);
+            }
 
             // Execute the final branch command and if fail, show the dialog box asking to retry
             ExecResult result = App.Repos.Current.RunCmd(cmd);
@@ -74,11 +82,11 @@ namespace GitForce
                 switch (rb.Tag.ToString())
                 {
                     case "Local":
-                        foreach (var branch in _branches.Local)
+                        foreach (var branch in branches.Local)
                             listBranches.Items.Add(branch);
                         break;
                     case "Remote":
-                        foreach (var branch in _branches.Remote)
+                        foreach (var branch in branches.Remote)
                             listBranches.Items.Add(branch);
                         break;
                 }
@@ -93,7 +101,7 @@ namespace GitForce
         {
             if (listBranches.SelectedItem != null)
             {
-                _branchName = listBranches.SelectedItem.ToString();
+                selectedBranch = listBranches.SelectedItem.ToString();
                 btDelete.Enabled = true;
             }
         }
