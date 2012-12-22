@@ -40,6 +40,9 @@ namespace GitForce
         {
             gitFilter = "";
 
+            if (checkBoxMessage.Checked)
+                gitFilter += " --grep=\"" + textBoxMessage.Text + "\"";
+
             if (checkBoxAuthor.Checked)
                 gitFilter += " --author=\"" + textBoxAuthor.Text + "\"";
 
