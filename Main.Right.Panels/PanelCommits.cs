@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,7 +25,7 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Timer used to postpone refresh operation: 500ms trigger, single-shot
         /// </summary>
-        private readonly System.Timers.Timer timer = new System.Timers.Timer(500) {AutoReset = false};
+        private readonly System.Timers.Timer timer = new System.Timers.Timer(500) { AutoReset = false };
 
         /// <summary>
         /// Class constructor
@@ -66,7 +66,7 @@ namespace GitForce.Main.Right.Panels
                 treeCommits.Nodes.Add(node);
 
                 // Set the first node (root) image according to the view mode
-                node.ImageIndex = (int) ClassView.Img.ChangelistRoot;
+                node.ImageIndex = (int)ClassView.Img.ChangelistRoot;
 
                 // Assign the icons to the nodes of tree view
                 ClassView.ViewAssignIcon(status, node, true);
@@ -76,42 +76,43 @@ namespace GitForce.Main.Right.Panels
 
                 // If enabled, create a set of file system watchers for files in the index
                 if (Properties.Settings.Default.RefreshOnChange)
-                try
-                {
-                    foreach (var file in files)
+                    try
                     {
-                        string fullPath = Path.Combine(status.Repo.Root, file);
-                        var watch = new FileSystemWatcher(Path.GetDirectoryName(fullPath))
+                        foreach (var file in files)
                         {
-                            Filter = Path.GetFileName(fullPath),
-                            EnableRaisingEvents = true,
-                            NotifyFilter = NotifyFilters.LastWrite
-                        };
-                        // When a file changes, we don't simply call the refresh since that would
-                        // result in multiple consecutive refreshes, especially since the
-                        // FileSystemWatcher generates multiple events for a single file changed.
-                        // We 'arm' the refresh and then postpone it just a bit every time it is
-                        // triggered. At the end of a sequence, refresh is actually called.
-                        watch.Changed += delegate { ArmRefresh(); };
-                        watcher.Add(watch);
-                    }
+                            string fullPath = Path.Combine(status.Repo.Root, file);
+                            var watch = new FileSystemWatcher(Path.GetDirectoryName(fullPath))
+                            {
+                                Filter = Path.GetFileName(fullPath),
+                                EnableRaisingEvents = true,
+                                NotifyFilter = NotifyFilters.LastWrite
+                            };
 
-                    // If enabled, automatically ***re-add*** files that are in the index and changed
-                    if (Properties.Settings.Default.ReaddOnChange)
-                    {
-                        List<string> modified = files.Where(s => (status.Ycode(s) == 'M')).ToList();
-                        if (modified.Count > 0)
+                            // When a file changes, we don't simply call the refresh since that would
+                            // result in multiple consecutive refreshes, especially since the
+                            // FileSystemWatcher generates multiple events for a single file changed.
+                            // We 'arm' the refresh and then postpone it just a bit every time it is
+                            // triggered. At the end of a sequence, refresh is actually called.
+                            watch.Changed += delegate { ArmRefresh(); };
+                            watcher.Add(watch);
+                        }
+
+                        // If enabled, automatically ***re-add*** files that are in the index and changed
+                        if (Properties.Settings.Default.ReaddOnChange)
                         {
-                            status.Repo.GitUpdate(modified);
-                            ArmRefresh();
+                            List<string> modified = files.Where(s => (status.Ycode(s) == 'M')).ToList();
+                            if (modified.Count > 0)
+                            {
+                                status.Repo.GitUpdate(modified);
+                                ArmRefresh();
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    // We don't expect this to happen, but file system watcher is finicky...
-                    App.PrintStatusMessage(ex.Message);
-                }
+                    catch (Exception ex)
+                    {
+                        // We don't expect this to happen, but file system watcher is finicky...
+                        App.PrintStatusMessage(ex.Message);
+                    }
             }
             treeCommits.EndUpdate();
         }
@@ -189,7 +190,7 @@ namespace GitForce.Main.Right.Panels
                 if (opclass.ContainsKey(status.Ycode(s)))
                     opclass[status.Ycode(s)].Add(s);
                 else
-                    opclass[status.Ycode(s)] = new List<string> {s};
+                    opclass[status.Ycode(s)] = new List<string> { s };
             }
 
             // Perform required operations on the files
@@ -210,7 +211,7 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] droppedFiles = (string[]) e.Data.GetData(DataFormats.FileDrop);
+            string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             // Files can come from anywhere. Prune those that are not from this repo.
             List<string> files = (from file in droppedFiles.ToList()
@@ -222,8 +223,8 @@ namespace GitForce.Main.Right.Panels
             // Find which node the files have been dropped to, so we can
             // move them to the selected commit bundle
 
-            Point pt = ((TreeView) sender).PointToClient(new Point(e.X, e.Y));
-            TreeNode destNode = ((TreeView) sender).GetNodeAt(pt);
+            Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+            TreeNode destNode = ((TreeView)sender).GetNodeAt(pt);
             if (destNode != null)
             {
                 // Destination node could be a bundle root, or a file node (with a parent root)
@@ -268,7 +269,7 @@ namespace GitForce.Main.Right.Panels
 
                 // Add the Refresh (F5) menu item
                 ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
-                contextMenu.Items.AddRange(new ToolStripItem[] {new ToolStripSeparator(), mRefresh});
+                contextMenu.Items.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
             }
         }
 
@@ -277,21 +278,21 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, object tag)
         {
-            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick) {Tag = tag};
+            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick) { Tag = tag };
             ToolStripMenuItem mSub = status.IsMergeState()
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
-                                         : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) {Tag = tag};
+                                         : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) { Tag = tag };
             ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, MenuNewCommitClick);
             ToolStripMenuItem mEdit = status.IsMergeState()
                                           ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
-                                          : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) {Tag = tag};
-            ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) {Tag = tag};
-            ToolStripMenuItem mRevert = new ToolStripMenuItem("Revert", null, MenuRevertClick) {Tag = tag};
+                                          : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) { Tag = tag };
+            ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) { Tag = tag };
+            ToolStripMenuItem mUnstage = new ToolStripMenuItem("Remove From Index", null, MenuUnstageClick) { Tag = tag };
 
             // Build the "Resolve" submenu
-            ToolStripMenuItem mResolveTool = new ToolStripMenuItem("Run Merge Tool...", null, MenuMergeTool) {Tag = tag};
-            ToolStripMenuItem mAcceptOurs = new ToolStripMenuItem("Accept ours", null, MenuAcceptClick) {Tag = "--ours"};
-            ToolStripMenuItem mAcceptTheirs = new ToolStripMenuItem("Accept theirs", null, MenuAcceptClick) {Tag = "--theirs"};
+            ToolStripMenuItem mResolveTool = new ToolStripMenuItem("Run Merge Tool...", null, MenuMergeTool) { Tag = tag };
+            ToolStripMenuItem mAcceptOurs = new ToolStripMenuItem("Accept ours", null, MenuAcceptClick) { Tag = "--ours" };
+            ToolStripMenuItem mAcceptTheirs = new ToolStripMenuItem("Accept theirs", null, MenuAcceptClick) { Tag = "--theirs" };
             ToolStripMenuItem mAbort = new ToolStripMenuItem("Abort Merge", null, MenuAbortMergeClick);
             ToolStripMenuItem mExitMerge = new ToolStripMenuItem("Exit Merge state", null, MenuExitMergeClick);
             ToolStripMenuItem mResolve = new ToolStripMenuItem("Resolve");
@@ -305,20 +306,23 @@ namespace GitForce.Main.Right.Panels
                 new ToolStripSeparator(),
                 mNew, mEdit, mDel,
                 new ToolStripSeparator(),
-                mRevert,
+                mUnstage,
                 mResolve });
 
             if (treeCommits.Nodes.Count == 0 || tag == treeCommits.Nodes[0].Tag)
                 mSub.Enabled = false;
 
             if (App.Repos.Current == null)
-                mDiff.Enabled = mNew.Enabled = mRevert.Enabled = false;
+                mDiff.Enabled = mNew.Enabled = mUnstage.Enabled = false;
 
             if (!(tag is ClassCommit))
                 mEdit.Enabled = false;
 
             if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
                 mDel.Enabled = false;
+
+            if (GetFilesToUnstage(tag).Count == 0)
+                mUnstage.Enabled = false;
 
             // If the repo is the merge state, adjust some menu enables
             if (!status.IsMergeState())
@@ -329,6 +333,7 @@ namespace GitForce.Main.Right.Panels
                 {
                     mSub.Enabled = false;
                     mExitMerge.Enabled = false;
+
                     // Enable accept choices only when some files are selected
                     if (treeCommits.SelectedNodes.Count == 0)
                         mAcceptOurs.Enabled = mAcceptTheirs.Enabled = false;
@@ -409,6 +414,7 @@ namespace GitForce.Main.Right.Panels
             {
                 // Get the files checked for commit
                 List<string> final = commitForm.GetFiles();
+
                 // Unless we are amending, there should be at least one file selected
                 if (final.Count > 0 || commitForm.GetCheckAmend())
                 {
@@ -471,7 +477,7 @@ namespace GitForce.Main.Right.Panels
                 {
                     if (status.Repo.GitCommit("-F \"" + status.pathToMergeMsg + "\"", false, new List<string>()))
                     {
-                        App.DoRefresh();                        
+                        App.DoRefresh();
                     }
                 }
             }
@@ -521,25 +527,25 @@ namespace GitForce.Main.Right.Panels
             }
         }
 
-        /// <summary>
-        /// Revert selected files or a submit bundle
-        /// </summary>
-        private void MenuRevertClick(object sender, EventArgs e)
+        private List<string> GetFilesToUnstage(object tag)
         {
-            List<string> files;
-
-            // If the right-click selected a changelist bundle, revert it
+            // If the right-click selected a changelist bundle, unstage it
             // If the right-click selected files, gather all files selected
-            if ((sender as ToolStripMenuItem).Tag is ClassCommit)
-                files = ((sender as ToolStripMenuItem).Tag as ClassCommit).Files;
-            else
-                files = GetSelectedFiles();
+            return tag is ClassCommit ? ((ClassCommit)tag).Files : GetSelectedFiles();
+        }
+
+        /// <summary>
+        /// Unstage selected files or a submit bundle
+        /// </summary>
+        private void MenuUnstageClick(object sender, EventArgs e)
+        {
+            var files = GetFilesToUnstage(((ToolStripMenuItem)sender).Tag);
 
             // Get the files checked for commit
             if (files.Count <= 0) return;
 
-            if (MessageBox.Show(@"Revert will unstage all the selected files and will lose the changes.Proceed with Revert?",
-                    "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
+            if (MessageBox.Show("This will remove all the selected files from the git index (but will not change the actual files).\n\nProceed?",
+                    "Remove From Index (Unstage)", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
 
             // Renamed files are handled first
             // Simply rename them back to their original names
@@ -554,7 +560,7 @@ namespace GitForce.Main.Right.Panels
             files = files.Except(used).ToList();
 
             // With whatever is left...
-            if(files.Count>0)
+            if (files.Count > 0)
             {
                 // There are 2 ways to unstage a file:
                 // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
