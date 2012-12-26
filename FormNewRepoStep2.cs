@@ -71,7 +71,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage(ex.Message);
+                App.PrintLogMessage(ex.Message, MessageType.Error);
                 btOK.Enabled = false;
             }
 

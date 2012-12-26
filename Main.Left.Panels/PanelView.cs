@@ -529,8 +529,8 @@ namespace GitForce.Main.Left.Panels
                 files.Add(Path.Combine(App.Repos.Current.Root, s));
 
             ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
-            App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args));
-            App.PrintStatusMessage(tool.Run(files));
+            App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args), MessageType.Command);
+            App.PrintStatusMessage(tool.Run(files), MessageType.Output);
         }
 
         /// <summary>
@@ -658,13 +658,13 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewRemoveFromFsClick(object sender, EventArgs e)
         {
             Selection sel = new Selection(treeView, status);
-            App.PrintStatusMessage("Removing " + string.Join(" ", sel.SelFiles.ToArray()));
+            App.PrintStatusMessage("Removing " + string.Join(" ", sel.SelFiles.ToArray()), MessageType.General);
 
             foreach (string s in sel.SelFiles)
             {
                 string fullPath = Path.Combine(App.Repos.Current.Root, s);
                 if (ClassUtils.DeleteFile(fullPath) == false)
-                    App.PrintStatusMessage("Error removing " + fullPath);
+                    App.PrintStatusMessage("Error removing " + fullPath, MessageType.Error);
             }
             App.DoRefresh();
         }
@@ -679,7 +679,7 @@ namespace GitForce.Main.Left.Panels
             string file = GetSelectedFile();
             if (file != string.Empty)
             {
-                App.PrintStatusMessage("Editing " + file);
+                App.PrintStatusMessage("Editing " + file, MessageType.General);
                 ClassUtils.FileOpenFromMenu(sender, file);
                 WatchAndRefresh(file);
             }

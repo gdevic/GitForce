@@ -32,7 +32,7 @@ namespace GitForce
             }
             else
             {
-                App.PrintStatusMessage("Internal Error: Please report that `topic " + topic + "` not found!");
+                App.PrintStatusMessage("Internal Error: Please report that `topic " + topic + "` not found!", MessageType.Error);
             }
         }
     }

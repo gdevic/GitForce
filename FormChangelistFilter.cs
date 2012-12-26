@@ -58,7 +58,7 @@ namespace GitForce
                 gitFilter += " --after=" + String.Format("{0:yyyy/MM/dd}", dt);                
             }
 
-            App.PrintLogMessage("Condition: " + gitFilter);
+            App.PrintLogMessage("Condition: " + gitFilter, MessageType.General);
         }
     }
 }

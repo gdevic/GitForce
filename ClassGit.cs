@@ -66,7 +66,7 @@ namespace GitForce
             {
                 // Run the version again to get the version code (for simplicity did not save it earlier)
                 string version = string.Format("Using {0} at {1}", Exec.Run(gitPath, "--version"),gitPath);
-                App.PrintLogMessage(version);
+                App.PrintLogMessage(version, MessageType.General);
                 Properties.Settings.Default.GitPath = gitPath;                
             }
             return retValue;
@@ -97,7 +97,9 @@ namespace GitForce
             }
 
             var job = new Exec(Properties.Settings.Default.GitPath, gitcmd);
-            job.AsyncRun(s => App.PrintStatusMessage(s), s => App.PrintStatusMessage(s), null);
+            job.AsyncRun(s => App.PrintStatusMessage(s, MessageType.Output),
+                         s => App.PrintStatusMessage(s, MessageType.Error),
+                         null);
             return new ExecResult();
         }
     }

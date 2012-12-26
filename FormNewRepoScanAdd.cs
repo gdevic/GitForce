@@ -58,8 +58,8 @@ namespace GitForce
                 }
                 catch (Exception ex)
                 {
-                    App.PrintLogMessage("Unable to add repo: " + ex.Message);
-                    App.PrintStatusMessage(ex.Message);
+                    App.PrintLogMessage("Unable to add repo: " + ex.Message, MessageType.Error);
+                    App.PrintStatusMessage(ex.Message, MessageType.Error);
                 }
             }
             DialogResult = DialogResult.OK;
