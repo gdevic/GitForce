@@ -32,7 +32,7 @@ namespace GitForce
 
                 // Set the execute bit
                 if (Exec.Run("chmod", "+x " + pathPasswordBatchHelper).Success() == false)
-                    App.PrintLogMessage("ClassGitPasswd: Unable to chmod +x on " + pathPasswordBatchHelper);
+                    App.PrintLogMessage("ClassGitPasswd: Unable to chmod +x on " + pathPasswordBatchHelper, MessageType.Error);
             }
             else
             {
@@ -45,7 +45,7 @@ namespace GitForce
             }
             ClassUtils.AddEnvar("GIT_ASKPASS", pathPasswordBatchHelper);
 
-            App.PrintLogMessage("Created HTTP password helper file: " + pathPasswordBatchHelper);
+            App.PrintLogMessage("Created HTTP password helper file: " + pathPasswordBatchHelper, MessageType.General);
         }
     }
 }

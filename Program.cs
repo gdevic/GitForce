@@ -40,9 +40,9 @@ namespace GitForce
         /// Delegate to main form to print a status message in the status pane.
         /// We do it via delegate since it might be called before the main form is created.
         /// </summary>
-        public delegate void PrintStatusMessageHandler(string message);
+        public delegate void PrintStatusMessageHandler(string message, MessageType type);
         public static PrintStatusMessageHandler PrintStatusMessage = VoidMessage;
-        private static void VoidMessage(string m) { }
+        private static void VoidMessage(string m, MessageType type) { }
 
         /// <summary>
         /// Delegate to main form to set the busy status.
@@ -56,7 +56,7 @@ namespace GitForce
         /// Delegate to Log form to print a message in the log window.
         /// We do it via delegate since it might be called before or after log form is valid.
         /// </summary>
-        public delegate void PrintLogMessageHandler(string message);
+        public delegate void PrintLogMessageHandler(string message, MessageType type);
         public static PrintLogMessageHandler PrintLogMessage = VoidMessage;
 
         #endregion
@@ -217,5 +217,15 @@ namespace GitForce
             }
             return -1;
         }
+    }
+
+    public enum MessageType
+    {
+        General,
+        Command,
+        Output,
+        Error,
+        Debug,
+        NewVersion,
     }
 }

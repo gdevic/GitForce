@@ -78,7 +78,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage(ex.Message);
+                App.PrintLogMessage(ex.Message, MessageType.Error);
             }
             return ret;
         }
@@ -110,7 +110,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage(ex.Message);
+                App.PrintLogMessage(ex.Message, MessageType.Error);
             }
             return ret;
         }
@@ -127,7 +127,7 @@ namespace GitForce
             // Remove all invalid repos from the workspace
             foreach (var r in invalidRepos)
             {
-                App.PrintStatusMessage("Removing invalid repo " + r);
+                App.PrintStatusMessage("Removing invalid repo " + r, MessageType.General);
                 Delete(r);
             }
         }
@@ -150,7 +150,7 @@ namespace GitForce
                 throw new ClassException("Unable to initialize git repository!");
 
             Repos.Add(repo);
-            App.PrintStatusMessage("Adding repo " + repo);
+            App.PrintStatusMessage("Adding repo " + repo, MessageType.General);
 
             // If this is a very first repo, set it as default and current
             if (Repos.Count == 1)

@@ -59,7 +59,7 @@ namespace GitForce
             if (name == null)
                 name = Properties.Settings.Default.WorkspaceFile;
 
-            App.PrintStatusMessage("Loading workspace: " + name);
+            App.PrintStatusMessage("Loading workspace: " + name, MessageType.General);
             if (App.Repos.Load(name))
             {
                 AddLRU(name);
@@ -78,7 +78,7 @@ namespace GitForce
             if (name == null)
                 name = Properties.Settings.Default.WorkspaceFile;
 
-            App.PrintStatusMessage("Saving workspace: " + name);
+            App.PrintStatusMessage("Saving workspace: " + name, MessageType.General);
             if (App.Repos.Save(name))
             {
                 AddLRU(name);

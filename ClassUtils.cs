@@ -51,7 +51,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage(ex.Message);
+                App.PrintLogMessage(ex.Message, MessageType.Error);
             }
             return path;
         }
@@ -72,7 +72,7 @@ namespace GitForce
             Directory.SetCurrentDirectory(where);
             try
             {
-                App.PrintStatusMessage("Command prompt at " + where);
+                App.PrintStatusMessage("Command prompt at " + where, MessageType.General);
                 Process proc = new Process();
                 proc.StartInfo.UseShellExecute = false;
 
@@ -106,7 +106,7 @@ namespace GitForce
         {
             try
             {
-                App.PrintStatusMessage("Opening a file browser at " + where);
+                App.PrintStatusMessage("Opening a file browser at " + where, MessageType.General);
 
                 // WAR: Opening an "Explorer" is platform-specific
                 if (IsMono())
@@ -119,12 +119,13 @@ namespace GitForce
                     string path = selFile == string.Empty
                                       ? "/e,\"" + where + "\""
                                       : "/e, /select,\"" + selFile + "\"";
-                    App.PrintLogMessage(path);
+                    App.PrintLogMessage(path, MessageType.Command);
                     Process.Start("explorer.exe", path);
                 }
             }
             catch (Exception ex)
             {
+                App.PrintLogMessage(ex.Message, MessageType.Error);
                 MessageBox.Show(ex.Message, "Explorer Here error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
         }
@@ -134,7 +135,7 @@ namespace GitForce
         /// </summary>
         public static string ExecuteShellCommand(string cmd, string args)
         {
-            App.PrintStatusMessage("Shell execute: " + cmd + " " + args);
+            App.PrintStatusMessage("Shell execute: " + cmd + " " + args, MessageType.Command);
 
             // WAR: Shell execute is platform-specific
             if (IsMono())
@@ -199,7 +200,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                App.PrintLogMessage("Error deleting directory " + dirInfo.FullName + ": " + ex.Message, MessageType.Error);
             }
             return f;
         }
@@ -217,7 +218,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage("Error deleting directory " + dirInfo.FullName + ": " + ex.Message);
+                App.PrintLogMessage("Error deleting directory " + dirInfo.FullName + ": " + ex.Message, MessageType.Error);
                 return false;
             }
             return true;
@@ -236,7 +237,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage("Error deleting file " + name + ": " + ex.Message);
+                App.PrintLogMessage("Error deleting file " + name + ": " + ex.Message, MessageType.Error);
                 return false;
             }
             return true;

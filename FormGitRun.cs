@@ -84,7 +84,7 @@ namespace GitForce
             textStdout.ScrollToCaret();
 
             // Append the stderr stream message to a log window
-            App.PrintLogMessage("stderr: " + message);
+            App.PrintLogMessage("stderr: " + message, MessageType.Error);
         }
 
         /// <summary>

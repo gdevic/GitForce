@@ -89,7 +89,7 @@ namespace GitForce
         /// </summary>
         public string Run(List<string> files)
         {
-            App.PrintLogMessage(ToString());
+            App.PrintLogMessage(ToString(), MessageType.Command);
 
             string stdout = string.Empty;
             string args = DeMacroise(Args, files);
@@ -138,7 +138,7 @@ namespace GitForce
                             proc.StartInfo.RedirectStandardOutput = true;
                             proc.StartInfo.RedirectStandardError = true;
                             proc.OutputDataReceived += ProcOutputDataReceived;
-                            proc.ErrorDataReceived += ProcOutputDataReceived;
+                            proc.ErrorDataReceived += ProcErrorDataReceived;
                             proc.Start();
                             proc.BeginOutputReadLine();
                             proc.WaitForExit();
@@ -156,7 +156,7 @@ namespace GitForce
                         proc.StartInfo.Arguments = string.Format("{0} {1} {2}",
                             ClassUtils.GetShellExecFlags(), proc.StartInfo.FileName, proc.StartInfo.Arguments);
                         proc.StartInfo.FileName = ClassUtils.GetShellExecCmd();
-                        App.PrintLogMessage(proc.StartInfo.Arguments);
+                        App.PrintLogMessage(proc.StartInfo.Arguments, MessageType.Command);
 
                         proc.Start();
                     }
@@ -182,7 +182,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage(ex.Message);
+                App.PrintStatusMessage(ex.Message, MessageType.Error);
                 MessageBox.Show(ex.Message, "Error executing custom tool", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -199,7 +199,17 @@ namespace GitForce
         private void ProcOutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.Data)) return;
-            App.PrintStatusMessage(e.Data + Environment.NewLine);
+            App.PrintStatusMessage(e.Data + Environment.NewLine, MessageType.General);
+        }
+
+        /// <summary>
+        /// Callback that handles process printing to stderr
+        /// Print to the application status pane.
+        /// </summary>
+        private void ProcErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(e.Data)) return;
+            App.PrintStatusMessage(e.Data + Environment.NewLine, MessageType.Error);
         }
 
         /// <summary>
@@ -267,7 +277,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage("Error loading custom tools: " + ex.Message);
+                App.PrintStatusMessage("Error loading custom tools: " + ex.Message, MessageType.Error);
             }
             return ct;
         }
@@ -289,7 +299,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage("Error saving custom tools: " + ex.Message);
+                App.PrintStatusMessage("Error saving custom tools: " + ex.Message, MessageType.Error);
                 return false;
             }
             return true;

@@ -111,7 +111,7 @@ namespace GitForce.Main.Right.Panels
                     catch (Exception ex)
                     {
                         // We don't expect this to happen, but file system watcher is finicky...
-                        App.PrintStatusMessage(ex.Message);
+                        App.PrintStatusMessage(ex.Message, MessageType.Error);
                     }
             }
             treeCommits.EndUpdate();
@@ -459,7 +459,7 @@ namespace GitForce.Main.Right.Panels
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage(ex.Message);
+                App.PrintStatusMessage(ex.Message, MessageType.Error);
             }
         }
 
@@ -483,7 +483,7 @@ namespace GitForce.Main.Right.Panels
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage(ex.Message);
+                App.PrintStatusMessage(ex.Message, MessageType.Error);
             }
         }
 
@@ -567,7 +567,7 @@ namespace GitForce.Main.Right.Panels
                 // Can't figure out how to find out which one to use at this moment, so use both.
                 if (status.Repo.GitReset("HEAD", files) == true)
                 {
-                    App.PrintStatusMessage("Retrying using the `rm` option...");
+                    App.PrintStatusMessage("Retrying using the `rm` option...", MessageType.General);
                     status.Repo.GitDelete("--cached", files);
                 }
             }

@@ -33,7 +33,7 @@ namespace GitForce
             textBox.Font = Properties.Settings.Default.commitFont;
 
             if (App.AppLog != null)
-                Print("Logging: " + App.AppLog);
+                Print("Logging: " + App.AppLog, MessageType.General);
 
             // Prints only in Debug build...
             Debug("Debug build.");
@@ -67,10 +67,10 @@ namespace GitForce
         /// For performance reasons, only up to 120 characters of text are added in one call.
         /// This is a thread-safe call.
         /// </summary>
-        private void Print(string text)
+        private void Print(string text, MessageType type)
         {
             if (textBox.InvokeRequired)
-                textBox.BeginInvoke((MethodInvoker)(() => Print(text)));
+                textBox.BeginInvoke((MethodInvoker)(() => Print(text, type)));
             else
             {
                 try
@@ -102,7 +102,7 @@ namespace GitForce
         [Conditional("DEBUG")]
         private void Debug(string text)
         {
-            Print(text);
+            Print(text, MessageType.Debug);
         }
 
         #region Context menu handlers: Copy, Select All and Clear
