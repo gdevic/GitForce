@@ -123,7 +123,7 @@ namespace GitForce
                     { PanelView.FileOps.Edit, btEdit }
                 });
 
-            PrintStatus("GitForce version " + ClassVersion.GetVersion());
+            PrintStatus("GitForce version " + ClassVersion.GetVersion(), MessageType.General);
 
             // Load default set of repositories
             ClassWorkspace.Load(null);
@@ -337,18 +337,31 @@ namespace GitForce
 
         #endregion
 
+        private class StatusListBoxItem
+        {
+            public StatusListBoxItem(string message, MessageType messageType)
+            {
+                Message = message;
+                MessageType = messageType;
+            }
+
+            public string Message { get; set; }
+
+            public MessageType MessageType { get; set; }
+        }
+
         /// <summary>
         /// Print into the status pane (and the aux log window).
         /// It is ok to send null or empty string.
         /// Strings that contain Newline will be broken into separate lines.
         /// This function is thread-safe.
         /// </summary>
-        private void PrintStatus(string message)
+        private void PrintStatus(string message, MessageType type)
         {
             if (string.IsNullOrEmpty(message))
                 return;
             if (listStatus.InvokeRequired)
-                listStatus.BeginInvoke((MethodInvoker)(() => PrintStatus(message)));
+                listStatus.BeginInvoke((MethodInvoker)(() => PrintStatus(message, type)));
             else
             {
                 // Add each line of the message individually
@@ -360,11 +373,11 @@ namespace GitForce
                                    ? "HH:mm:ss"
                                    : "hh:mm:ss") + " "
                                    : "";
-                    listStatus.Items.Add(stamp + line);
+                    listStatus.Items.Add(new StatusListBoxItem(stamp + line, type));
                 }
                 listStatus.TopIndex = listStatus.Items.Count - 1;
 
-                App.PrintLogMessage(message);
+                App.PrintLogMessage(message, type);
             }
         }
 
@@ -523,7 +536,7 @@ namespace GitForce
         /// </summary>
         private void RemoteChanged(object sender, EventArgs e)
         {
-            PrintStatus("Changed remote repository to " + sender);
+            PrintStatus("Changed remote repository to " + sender, MessageType.General);
             App.Repos.Current.Remotes.Current = sender.ToString();
             FormMainRefresh();
         }
@@ -561,7 +574,7 @@ namespace GitForce
         private void MenuRepoFetch(object sender, EventArgs e)
         {
             string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
-            PrintStatus("Fetch from a remote repo: " + args);
+            PrintStatus("Fetch from a remote repo: " + args, MessageType.General);
             App.Repos.Current.RunCmd("fetch " + args);
         }
 
@@ -571,7 +584,7 @@ namespace GitForce
         private void MenuRepoPull(object sender, EventArgs e)
         {
             string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
-            PrintStatus("Pull from a remote repo: " + args);
+            PrintStatus("Pull from a remote repo: " + args, MessageType.General);
             App.Repos.Current.RunCmd("pull " + args);
         }
 
@@ -584,7 +597,7 @@ namespace GitForce
             string args = App.Repos.Current.Remotes.GetPushCmd("");
             if (String.IsNullOrEmpty(args))
                 args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
-            PrintStatus("Push to a remote repo: " + args);
+            PrintStatus("Push to a remote repo: " + args, MessageType.General);
             App.Repos.Current.RunCmd("push " + args);
         }
 
@@ -681,7 +694,7 @@ namespace GitForce
         {
             StringBuilder buffer = new StringBuilder();
             foreach (int i in listStatus.SelectedIndices)
-                buffer.Append(listStatus.Items[i]).Append(Environment.NewLine);
+                buffer.Append(((StatusListBoxItem)listStatus.Items[i]).Message).Append(Environment.NewLine);
             if (buffer.Length > 0)
                 Clipboard.SetText(buffer.ToString());
         }
@@ -804,7 +817,7 @@ namespace GitForce
                 if (newTools != null)
                 {
                     App.CustomTools = newTools;
-                    App.PrintStatusMessage("Loaded custom tools from " + openTools.FileName);
+                    App.PrintStatusMessage("Loaded custom tools from " + openTools.FileName, MessageType.General);
                 }
             }
         }
@@ -817,7 +830,7 @@ namespace GitForce
             if (saveTools.ShowDialog() == DialogResult.OK)
             {
                 if (App.CustomTools.Save(saveTools.FileName))
-                    App.PrintStatusMessage("Saved custom tools to " + saveTools.FileName);
+                    App.PrintStatusMessage("Saved custom tools to " + saveTools.FileName, MessageType.General);
             }
         }
 
@@ -861,7 +874,7 @@ namespace GitForce
             foreach (string command in cmd.Split(new[] { " && " }, StringSplitOptions.RemoveEmptyEntries))
             {
                 // Print out the command itself
-                App.PrintStatusMessage(command);
+                App.PrintStatusMessage(command, MessageType.Command);
 
                 // If the command text started with a command 'git', remove it
                 string[] tokens = command.Split(' ');
@@ -880,7 +893,42 @@ namespace GitForce
                     // Use the command shell to execute it
                     run = ClassUtils.ExecuteShellCommand(tokens[0], args);
                 }
-                App.PrintStatusMessage(run);
+                App.PrintStatusMessage(run, MessageType.Output);
+            }
+        }
+
+        public static Brush GetMessageColor(MessageType type)
+        {
+            switch (type)
+            {
+                case MessageType.Error: return Brushes.Red;
+                case MessageType.Command: return Brushes.Green;
+                case MessageType.Output: return Brushes.Blue;
+                case MessageType.Debug: return Brushes.Gray;
+                case MessageType.NewVersion: return Brushes.Black;
+                default: return Brushes.Black;
+            }
+        }
+
+        private void ListStatusDrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+            var item = listStatus.Items[e.Index] as StatusListBoxItem;
+            if (item != null)
+            {
+                e.DrawBackground();
+                e.DrawFocusRectangle();
+                var font = listStatus.Font;
+                if (item.MessageType == MessageType.NewVersion)
+                {
+                    font = new Font(font, FontStyle.Bold);
+                }
+                e.Graphics.DrawString( // Draw the appropriate text in the ListBox
+                    item.Message, // The message linked to the item
+                    font, // Take the font from the listbox
+                    GetMessageColor(item.MessageType), // Set the color
+                    e.Bounds
+                );
             }
         }
     }

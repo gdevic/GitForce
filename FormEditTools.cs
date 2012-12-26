@@ -207,7 +207,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage("Error: " + ex.Message);
+                App.PrintLogMessage("Error: " + ex.Message, MessageType.Error);
             }
         }
     }

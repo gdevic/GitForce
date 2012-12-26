@@ -92,7 +92,7 @@ namespace GitForce
             proc.StartInfo.Arguments = string.Format("{0} {1} {2}",
                 ClassUtils.GetShellExecFlags(), pathPlink, args);
 
-            App.PrintLogMessage(proc.StartInfo.Arguments);
+            App.PrintLogMessage(proc.StartInfo.Arguments, MessageType.Command);
 
             proc.Start();
         }
@@ -179,7 +179,7 @@ namespace GitForce
 
             // plink does everything through its stderr stream
             ExecResult result = Exec.Run(pathPlink, args);
-            App.PrintLogMessage(result.stderr);
+            App.PrintLogMessage(result.stderr, MessageType.Error);
         }
     }
 }

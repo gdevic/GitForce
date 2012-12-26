@@ -104,7 +104,7 @@ namespace GitForce
         /// </summary>
         public static ExecResult Run(string cmd, string args)
         {
-            App.PrintLogMessage(String.Format("Exec: {0} {1}", cmd, args));
+            App.PrintLogMessage(String.Format("Exec: {0} {1}", cmd, args), MessageType.Command);
             App.StatusBusy(true);
             Exec job = new Exec(cmd, args);
             job.Thread = new Thread(job.ThreadedRun);
@@ -116,7 +116,7 @@ namespace GitForce
             Application.DoEvents();
             App.StatusBusy(false);
             if (job.Result.Success() == false)
-                App.PrintLogMessage("Error: " + job.Result.stderr);
+                App.PrintLogMessage("Error: " + job.Result.stderr, MessageType.Error);
 
             return job.Result;
         }
@@ -144,7 +144,7 @@ namespace GitForce
             }
             catch (Exception)
             {
-                App.PrintLogMessage("Exec.Terminate() exception");
+                App.PrintLogMessage("Exec.Terminate() exception", MessageType.Error);
             }
         }
 
@@ -213,7 +213,7 @@ namespace GitForce
                 }
                 catch (Exception ex)
                 {
-                    App.PrintLogMessage(ex.Message);
+                    App.PrintLogMessage(ex.Message, MessageType.Error);
                 }
             }
             else

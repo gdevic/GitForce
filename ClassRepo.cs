@@ -145,7 +145,7 @@ namespace GitForce
         public void GitAdd(List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Adding " + list);
+            App.PrintStatusMessage("Adding " + list, MessageType.General);
             RunCmd("add -- " + list);
         }
 
@@ -155,7 +155,7 @@ namespace GitForce
         public void GitUpdate(List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Updating " + list);
+            App.PrintStatusMessage("Updating " + list, MessageType.General);
             RunCmd("add -- " + list);
         }
 
@@ -166,7 +166,7 @@ namespace GitForce
         public void GitDelete(string tag, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Removing " + list);
+            App.PrintStatusMessage("Removing " + list, MessageType.General);
             RunCmd("rm " + tag + " -- " + list);
         }
 
@@ -176,7 +176,7 @@ namespace GitForce
         public void GitRename(List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Renaming " + list);
+            App.PrintStatusMessage("Renaming " + list, MessageType.General);
             RunCmd("add -- " + list);
         }
 
@@ -185,7 +185,7 @@ namespace GitForce
         /// </summary>
         public void GitMove(string srcFile, string dstFile)
         {
-            App.PrintStatusMessage(string.Format("Moving {0} to {1}", srcFile, dstFile));
+            App.PrintStatusMessage(string.Format("Moving {0} to {1}", srcFile, dstFile), MessageType.General);
             RunCmd("mv \"" + srcFile + "\" \"" + dstFile + "\"");
         }
 
@@ -195,7 +195,7 @@ namespace GitForce
         public void GitCheckout(string options, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Checkout " + options + " " + list);
+            App.PrintStatusMessage("Checkout " + options + " " + list, MessageType.General);
             RunCmd("checkout " + options + " -- " + list);
         }
 
@@ -205,7 +205,7 @@ namespace GitForce
         public void GitRevert(List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Reverting " + list);
+            App.PrintStatusMessage("Reverting " + list, MessageType.General);
             RunCmd("checkout -- " + list);
         }
 
@@ -216,14 +216,14 @@ namespace GitForce
         public bool GitReset(string head, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage(string.Format("Resetting to {0}: {1}", head, list));
+            App.PrintStatusMessage(string.Format("Resetting to {0}: {1}", head, list), MessageType.General);
             return RunCmd("reset " + head + " -- " + list).Success();
         }
 
         public void GitDiff(string tag, List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Diffing " + list);
+            App.PrintStatusMessage("Diffing " + list, MessageType.General);
             RunCmd("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + list, true);
         }
 
@@ -235,7 +235,7 @@ namespace GitForce
         {
             ExecResult result;
             string list = QuoteAndFlattenPaths(files);
-            App.PrintStatusMessage("Submit " + list);
+            App.PrintStatusMessage("Submit " + list, MessageType.General);
 
             // See below Run() for the description of the problem with long commands.
             // The Run() function breaks any command into chunks of 2000 characters or less
@@ -266,16 +266,16 @@ namespace GitForce
         {
             // Print the actual command line to the status window only if user selected that setting
             if (Properties.Settings.Default.logCommands)
-                App.PrintStatusMessage("git " + args);
+                App.PrintStatusMessage("git " + args, MessageType.Command);
 
             // Run the command and print the response to the status window in any case
             ExecResult result = Run(args, async);
             if (result.stdout.Length > 0)
-                App.PrintStatusMessage(result.stdout);
+                App.PrintStatusMessage(result.stdout, MessageType.Output);
 
             // If the command caused an error, print it also
             if (result.Success() == false)
-                App.PrintStatusMessage(result.stderr);
+                App.PrintStatusMessage(result.stderr, MessageType.Error);
 
             return result;
         }
@@ -329,7 +329,7 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintLogMessage(ex.Message);
+                App.PrintLogMessage(ex.Message, MessageType.Error);
             }
 
             return output;

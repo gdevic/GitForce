@@ -44,7 +44,7 @@ namespace GitForce.Settings.Panels
                 }
                 catch (Exception ex)
                 {
-                    App.PrintStatusMessage("Error loading " + excludesFile + ": " + ex.Message);
+                    App.PrintStatusMessage("Error loading " + excludesFile + ": " + ex.Message, MessageType.Error);
                 }
 
             userControlEditGitignore.LoadGitIgnore(excludesFile);
