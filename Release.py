@@ -51,7 +51,7 @@ print 'Building:'
 subprocess.Popen(["MSBuild.exe", "/t:Rebuild", "/p:Configuration=Release"]).wait()
 
 # Get the summary of changes and append to the subject
-proc = subprocess.Popen(["git.exe", "log", "--format=%B"], stdout=subprocess.PIPE)
+proc = subprocess.Popen(["git.cmd", "log", "--format=%B"], stdout=subprocess.PIPE)
 stdout = proc.communicate()[0]
 stdout = stdout[0:stdout.find("###")]
 
