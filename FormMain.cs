@@ -180,6 +180,28 @@ namespace GitForce
 
         #endregion Initialization
 
+
+        /// <summary>
+        /// Main application form drag/drop handlers: user can drop workspace
+        /// files on the application window to open them.
+        /// </summary>
+        private void FormMainDragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void FormMainDragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Count()==1 && Path.GetExtension(files[0])==".giw")
+            {
+                // Save the current workspace and load the one user dropped in
+                if (ClassWorkspace.Save(null))
+                    if (ClassWorkspace.Load(files[0]))
+                        App.DoRefresh();
+            }
+        }
+
         /// <summary>
         /// Main File menu drop down
         /// </summary>

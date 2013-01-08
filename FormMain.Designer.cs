@@ -870,6 +870,7 @@
             // 
             // FormMain
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 502);
@@ -883,6 +884,8 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "GitForce";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMainDragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormMainDragEnter);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMainFormClosing);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
