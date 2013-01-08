@@ -80,7 +80,8 @@ namespace GitForce
             // Remove temporary file if we did not complete the download
             if(!isCompleted)
             {
-                File.Delete(TargetFile);
+                if (!String.IsNullOrEmpty(TargetFile))
+                    File.Delete(TargetFile);
                 DialogResult = DialogResult.Cancel;
             }
             else
