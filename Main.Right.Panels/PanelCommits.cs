@@ -278,12 +278,15 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner, object tag)
         {
+            // Make sure not to touch the 'status' if it's null
+            bool isMergeState = status != null && status.IsMergeState();
+
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick) { Tag = tag };
-            ToolStripMenuItem mSub = status.IsMergeState()
+            ToolStripMenuItem mSub = isMergeState
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
                                          : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) { Tag = tag };
             ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, MenuNewCommitClick);
-            ToolStripMenuItem mEdit = status.IsMergeState()
+            ToolStripMenuItem mEdit = isMergeState
                                           ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
                                           : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) { Tag = tag };
             ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) { Tag = tag };
@@ -325,7 +328,7 @@ namespace GitForce.Main.Right.Panels
                 mUnstage.Enabled = false;
 
             // If the repo is the merge state, adjust some menu enables
-            if (!status.IsMergeState())
+            if (!isMergeState)
                 mResolve.Enabled = false; // Disable resolves if the repo is _not_ in the merge state
             else
             {
