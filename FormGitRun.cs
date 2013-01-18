@@ -26,6 +26,9 @@ namespace GitForce
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
 
+            // Detect URL in this text box
+            textStdout.DetectUrls = true;
+
             job = new Exec(cmd, args);
 
             // Reuse the same font selected as fixed-pitch
