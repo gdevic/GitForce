@@ -100,7 +100,7 @@
             this.groupBox2.Size = new System.Drawing.Size(492, 135);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Select keys to import";
+            this.groupBox2.Text = "Select private keys to import";
             // 
             // listBoxKeys
             // 
