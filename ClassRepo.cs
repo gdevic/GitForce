@@ -311,16 +311,19 @@ namespace GitForce
                 // same command but with file lists not larger than about 2K
                 int i = args.IndexOf(" -- ") + 3;
                 string cmd = args.Substring(0, i + 1);
-                args = args.Substring(i);
+                args = args.Substring(i);       // We separate git command up to and until the list of files
 
-                // Add files individually up to the length limit
-                string[] files = args.Split(' ');
+                App.PrintLogMessage("Processing large amount of files: please wait...", MessageType.General);
+
+                // Add files individually up to the length limit using the starting " file delimiter
+                string[] files = args.Split(new [] {" \""}, StringSplitOptions.RemoveEmptyEntries);
+                // Note: files in the list are now stripped from their initial " character!
                 i = 0;
                 do
                 {
                     StringBuilder batch = new StringBuilder(2100);
                     while (batch.Length < 2000 && i < files.Length)
-                        batch.Append(files[i++] + " ");
+                        batch.Append("\"" + files[i++] + " ");
 
                     output = ClassGit.Run(cmd + batch, async);
                     if (output.Success() == false)
