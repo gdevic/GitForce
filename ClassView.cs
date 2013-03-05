@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -18,7 +18,8 @@ namespace GitForce
         /// <summary>
         /// Enumeration of icons for files at different stage
         /// </summary>
-        public enum Img {
+        public enum Img
+        {
             FileUnmodified,
             FileModified,
             FileAdded,
@@ -97,7 +98,7 @@ namespace GitForce
             foreach (TreeNode tn in nodes)
             {
                 if (tn.Tag is ClassCommit)
-                    tn.ImageIndex = (int) Img.Changelist;
+                    tn.ImageIndex = (int)Img.Changelist;
                 else
                 {
                     string name = isIndex ? tn.Text : tn.Tag.ToString();
@@ -168,10 +169,11 @@ namespace GitForce
             else
             {
                 var vSort = from s in list
-                    orderby Path.GetExtension(s), s ascending
-                    select s;
+                            orderby Path.GetExtension(s), s ascending
+                            select s;
                 list = vSort.ToList();
             }
+
             // Build a list view);
             foreach (string s in list)
             {
@@ -198,6 +200,8 @@ namespace GitForce
             {
                 TreeNode commitNode = new TreeNode(c.Description);
                 commitNode.Tag = c;
+
+                if (c.IsCollapsed) commitNode.Collapse();
 
                 foreach (var f in c.Files)
                 {

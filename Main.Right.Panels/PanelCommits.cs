@@ -702,5 +702,23 @@ namespace GitForce.Main.Right.Panels
                 treeCommits.SelectedNode.BeginEdit();
             }
         }
+
+        private static void UpdateCommitCollapsed(TreeViewEventArgs e)
+        {
+            if (e.Node == null) return;
+            var commit = e.Node.Tag as ClassCommit;
+            if (commit == null) return;
+            commit.IsCollapsed = !e.Node.IsExpanded;
+        }
+
+        private void TreeCommitsAfterCollapse(object sender, TreeViewEventArgs e)
+        {
+            UpdateCommitCollapsed(e);
+        }
+
+        private void TreeCommitsAfterExpand(object sender, TreeViewEventArgs e)
+        {
+            UpdateCommitCollapsed(e);
+        }
     }
 }
