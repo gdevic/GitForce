@@ -59,6 +59,11 @@ namespace GitForce
         public bool IsDefault;
 
         /// <summary>
+        /// Is this commint node collapsed in the commits tree
+        /// </summary>
+        public bool IsCollapsed;
+
+        /// <summary>
         /// Create a commit with the given description
         /// </summary>
         public ClassCommit(string desc)
