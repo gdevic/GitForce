@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace GitForce.Main.Right.Panels
@@ -270,6 +267,26 @@ namespace GitForce.Main.Right.Panels
                 // Add the Refresh (F5) menu item
                 ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
                 contextMenu.Items.AddRange(new ToolStripItem[] { new ToolStripSeparator(), mRefresh });
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                if (_duringSelect)
+                {
+                    _duringSelect = false;
+                }
+                else
+                {
+                    if (treeCommits.SelectedNodes.Count == 1)
+                    {
+                        var hitTest = treeCommits.HitTest(e.X, e.Y);
+
+                        if (hitTest.Node == treeCommits.SelectedNode && hitTest.Location == TreeViewHitTestLocations.Label)
+                        {
+                            hitTest.Node.BeginEdit();
+                        }
+                    }
+                }
             }
         }
 
@@ -624,6 +641,66 @@ namespace GitForce.Main.Right.Panels
             string pathToMergeHead = status.Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
             ClassUtils.DeleteFile(pathToMergeHead);
             App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Gets the commit for the edit label event.
+        /// Return <code>null</code> and cancels the edit if edit is not allowed.
+        /// </summary>
+        /// <param name="e">The <see cref="NodeLabelEditEventArgs"/> instance containing the event data.</param>
+        /// <returns></returns>
+        private static ClassCommit GetCommitForEditLabel(NodeLabelEditEventArgs e)
+        {
+            if (e.Node == null)
+            {
+                e.CancelEdit = true;
+                return null;
+            }
+
+            var commit = e.Node.Tag as ClassCommit;
+            if (commit == null || commit.IsDefault)
+            {
+                e.CancelEdit = true;
+                return null;
+            }
+
+            return commit;
+        }
+
+        private void TreeCommitsBeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            GetCommitForEditLabel(e);
+        }
+
+        private void TreeCommitsAfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            var commit = GetCommitForEditLabel(e);
+            if (commit == null || e.Label == null || e.Label.Trim().Length == 0)
+            {
+                e.CancelEdit = true;
+                return;
+            }
+
+            commit.DescriptionTitle = e.Label;
+        }
+
+        private bool _duringSelect;
+        private TreeNode _lastSelectedNode;
+
+        private void TreeCommitsAfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (_lastSelectedNode == treeCommits.SelectedNode) return;
+            _lastSelectedNode = treeCommits.SelectedNode;
+            if ((MouseButtons & MouseButtons.Left) == MouseButtons.Left) _duringSelect = true;
+        }
+
+        private void TreeCommitsPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 && treeCommits.SelectedNode != null)
+            {
+                e.IsInputKey = false;
+                treeCommits.SelectedNode.BeginEdit();
+            }
         }
     }
 }

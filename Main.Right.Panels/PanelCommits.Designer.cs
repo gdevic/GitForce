@@ -76,6 +76,7 @@
             this.treeCommits.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeCommits.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeCommits.Indent = 16;
+            this.treeCommits.LabelEdit = true;
             this.treeCommits.Location = new System.Drawing.Point(0, 25);
             this.treeCommits.Name = "treeCommits";
             treeNode1.BackColor = System.Drawing.SystemColors.Window;
@@ -87,6 +88,10 @@
             this.treeCommits.SelectedNodes = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("treeCommits.SelectedNodes")));
             this.treeCommits.Size = new System.Drawing.Size(400, 375);
             this.treeCommits.TabIndex = 1;
+            this.treeCommits.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeCommitsBeforeLabelEdit);
+            this.treeCommits.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeCommitsAfterLabelEdit);
+            this.treeCommits.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterSelect);
+            this.treeCommits.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.TreeCommitsPreviewKeyDown);
             this.treeCommits.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseUp);
             this.treeCommits.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeCommitsDragDrop);
             this.treeCommits.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseMove);

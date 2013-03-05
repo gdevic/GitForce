@@ -318,7 +318,7 @@
             // menuViewCommandLine
             // 
             this.menuViewCommandLine.Name = "menuViewCommandLine";
-            this.menuViewCommandLine.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.menuViewCommandLine.ShortcutKeys = System.Windows.Forms.Keys.F3;
             this.menuViewCommandLine.Size = new System.Drawing.Size(230, 22);
             this.menuViewCommandLine.Text = "Command Line";
             this.menuViewCommandLine.Click += new System.EventHandler(this.MenuViewCommandLineClick);

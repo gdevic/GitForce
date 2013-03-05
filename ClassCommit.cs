@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GitForce
 {
@@ -23,9 +22,39 @@ namespace GitForce
         /// </summary>
         public string Description;
 
+        public string DescriptionTitle
+        {
+            get
+            {
+                if (Description == null) return null;
+                var pos = Description.IndexOfAny(new[] { '\n', '\r' });
+                if (pos == -1) pos = Description.Length;
+                return Description.Substring(0, pos);
+            }
+
+            set
+            {
+                if (Description == null)
+                {
+                    Description = value;
+                    return;
+                }
+
+                var pos = Description.IndexOfAny(new[] { '\n', '\r' });
+                if (pos == -1)
+                {
+                    Description = value;
+                }
+                else
+                {
+                    Description = value + Description.Substring(pos);
+                }
+            }
+        }
+
         /// <summary>
         /// Is this commit a default one (not a user added)
-        /// Default commit cannot be deleted.
+        /// Default commit cannot be deleted or renamed.
         /// </summary>
         public bool IsDefault;
 
