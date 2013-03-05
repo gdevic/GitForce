@@ -26,6 +26,7 @@ namespace GitForce
 
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
+
         private static readonly PanelCommits PanelCommits = new PanelCommits();
         private static readonly PanelRevlist PanelRevlist = new PanelRevlist();
         private static readonly PanelBranches PanelBranches = new PanelBranches();
@@ -132,7 +133,7 @@ namespace GitForce
             App.CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile);
 
             // If there are no tools on the list, find some local tools and add them
-            if (App.CustomTools.Tools.Count==0)
+            if (App.CustomTools.Tools.Count == 0)
                 App.CustomTools.Tools.AddRange(ClassCustomTools.FindLocalTools());
 
             // If there is no current repo, switch the right panel view to Repos
@@ -180,7 +181,6 @@ namespace GitForce
 
         #endregion Initialization
 
-
         /// <summary>
         /// Main application form drag/drop handlers: user can drop workspace
         /// files on the application window to open them.
@@ -193,7 +193,7 @@ namespace GitForce
         private void FormMainDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files.Count()==1 && Path.GetExtension(files[0])==".giw")
+            if (files.Count() == 1 && Path.GetExtension(files[0]) == ".giw")
             {
                 // Save the current workspace and load the one user dropped in
                 if (ClassWorkspace.Save(null))
@@ -351,13 +351,13 @@ namespace GitForce
         private void RightPanelSelectionEvent(object sender, EventArgs e)
         {
             string tag = String.Empty;
-            if (sender is TabEx) tag = ((TabEx) sender).SelectedTab.Tag.ToString();
+            if (sender is TabEx) tag = ((TabEx)sender).SelectedTab.Tag.ToString();
             if (sender is ToolStripItem) tag = ((ToolStripItem)sender).Tag.ToString();
             if (sender is ToolStripDropDownItem) tag = ((ToolStripDropDownItem)sender).Tag.ToString();
             ChangeRightPanel(tag);
         }
 
-        #endregion
+        #endregion Views and Panel selection code
 
         private class StatusListBoxItem
         {
@@ -688,7 +688,9 @@ namespace GitForce
         {
             // Add the menu items from the commit pane followed menu items from the revisions pane
             menuMainChangelist.DropDownItems.Clear();
-            menuMainChangelist.DropDownItems.AddRange(PanelCommits.GetContextMenu(menuMainChangelist.DropDown, null));
+            var selectedNode = PanelCommits.SelectedNode;
+            var selectedTag = selectedNode == null ? null : selectedNode.Tag;
+            menuMainChangelist.DropDownItems.AddRange(PanelCommits.GetContextMenu(menuMainChangelist.DropDown, selectedTag));
 
             // Add the revision list menu only if the revlist right pane is active
             if (Properties.Settings.Default.viewRightPanel == "Revisions")

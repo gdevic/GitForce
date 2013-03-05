@@ -39,6 +39,14 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
+        /// Gets the selected node i nthe commits tree if only one node is selected, or <code>null</code> if no node or more than one node are selected.
+        /// </summary>
+        public TreeNode SelectedNode
+        {
+            get { return treeCommits.SelectedNodes.Count == 1 ? treeCommits.SelectedNode : null; }
+        }
+
+        /// <summary>
         /// Panel commit refresh function
         /// </summary>
         public void CommitsRefresh()
