@@ -90,6 +90,8 @@
             this.treeCommits.TabIndex = 1;
             this.treeCommits.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeCommitsBeforeLabelEdit);
             this.treeCommits.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeCommitsAfterLabelEdit);
+            this.treeCommits.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterCollapse);
+            this.treeCommits.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterExpand);
             this.treeCommits.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterSelect);
             this.treeCommits.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.TreeCommitsPreviewKeyDown);
             this.treeCommits.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseUp);
