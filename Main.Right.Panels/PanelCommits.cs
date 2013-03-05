@@ -306,7 +306,7 @@ namespace GitForce.Main.Right.Panels
             ToolStripMenuItem mEdit = isMergeState
                                           ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
                                           : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) { Tag = tag };
-            ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick) { Tag = tag };
+            ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick, Keys.Delete) { Tag = tag };
             ToolStripMenuItem mUnstage = new ToolStripMenuItem("Remove From Index", null, MenuUnstageClick) { Tag = tag };
 
             // Build the "Resolve" submenu
