@@ -686,6 +686,11 @@ namespace GitForce
         /// </summary>
         private void MenuMainChangelistDropDownOpening(object sender, EventArgs e)
         {
+            BuildChangelistMenu();
+        }
+
+        public void BuildChangelistMenu()
+        {
             // Add the menu items from the commit pane followed menu items from the revisions pane
             menuMainChangelist.DropDownItems.Clear();
             var selectedNode = PanelCommits.SelectedNode;
