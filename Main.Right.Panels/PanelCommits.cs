@@ -700,6 +700,7 @@ namespace GitForce.Main.Right.Panels
             if (_lastSelectedNode == treeCommits.SelectedNode) return;
             _lastSelectedNode = treeCommits.SelectedNode;
             if ((MouseButtons & MouseButtons.Left) == MouseButtons.Left) _duringSelect = true;
+            App.MainForm.BuildChangelistMenu();
         }
 
         private void TreeCommitsPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
