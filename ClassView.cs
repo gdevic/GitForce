@@ -198,15 +198,13 @@ namespace GitForce
 
             foreach (var c in repo.Commits.Bundle)
             {
-                TreeNode commitNode = new TreeNode(c.Description);
-                commitNode.Tag = c;
+                var commitNode = new TreeNode(GetCommitNodeText(c)) { Tag = c };
 
                 if (c.IsCollapsed) commitNode.Collapse();
 
                 foreach (var f in c.Files)
                 {
-                    TreeNode tn = new TreeNode(f);
-                    tn.Tag = f;
+                    var tn = new TreeNode(f) { Tag = f };
                     commitNode.Nodes.Add(tn);
                 }
 
@@ -214,6 +212,17 @@ namespace GitForce
             }
             root.ExpandAll();
             return root;
+        }
+
+        public static string GetCommitNodeText(ClassCommit commit)
+        {
+            if (commit == null) return string.Empty;
+            var rerult = commit.DescriptionTitle;
+            if (commit.Files.Count > 0)
+            {
+                rerult += " (" + commit.Files.Count + ")";
+            }
+            return rerult;
         }
     }
 }
