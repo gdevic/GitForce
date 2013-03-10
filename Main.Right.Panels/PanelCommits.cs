@@ -291,7 +291,7 @@ namespace GitForce.Main.Right.Panels
 
                         if (hitTest.Node == treeCommits.SelectedNode && hitTest.Location == TreeViewHitTestLocations.Label)
                         {
-                            hitTest.Node.BeginEdit();
+                            BeginEditingSelectedNode();
                         }
                     }
                 }
@@ -683,13 +683,13 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsAfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             var commit = GetCommitForEditLabel(e);
-            if (commit == null || e.Label == null || e.Label.Trim().Length == 0)
+            if (commit != null && e.Label != null && e.Label.Trim().Length > 0)
             {
-                e.CancelEdit = true;
-                return;
+                commit.DescriptionTitle = e.Label;
             }
 
-            commit.DescriptionTitle = e.Label;
+            e.CancelEdit = true; // always cancel edit, so we can properly add files count. If edit is not canceled, editted text is automatically set to e.Node.Text
+            e.Node.Text = ClassView.GetCommitNodeText(e.Node.Tag as ClassCommit);
         }
 
         private bool _duringSelect;
@@ -707,8 +707,17 @@ namespace GitForce.Main.Right.Panels
             if (e.KeyCode == Keys.F2 && treeCommits.SelectedNode != null)
             {
                 e.IsInputKey = false;
-                treeCommits.SelectedNode.BeginEdit();
+                BeginEditingSelectedNode();
             }
+        }
+
+        private void BeginEditingSelectedNode()
+        {
+            if (treeCommits.SelectedNode == null) return;
+            var commit = treeCommits.SelectedNode.Tag as ClassCommit;
+            if (commit == null) return;
+            treeCommits.SelectedNode.Text = commit.DescriptionTitle; // remove files count before editing
+            treeCommits.SelectedNode.BeginEdit();
         }
 
         private static void UpdateCommitCollapsed(TreeViewEventArgs e)
