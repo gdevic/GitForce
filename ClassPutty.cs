@@ -89,7 +89,7 @@ namespace GitForce
 
             // We need to keep the CMD/SHELL window open, so start the process using
             // the CMD/SHELL as the root process and pass it our command to execute
-            proc.StartInfo.Arguments = string.Format("{0} {1} {2}",
+            proc.StartInfo.Arguments = string.Format("{0} \"{1}\" {2}",
                 ClassUtils.GetShellExecFlags(), pathPlink, args);
 
             App.PrintLogMessage(proc.StartInfo.Arguments, MessageType.Command);
