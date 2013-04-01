@@ -24,9 +24,13 @@ namespace GitForce
         /// </summary>
         public ClassPutty()
         {
-            pathPageant = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "pageant.exe", Properties.Resources.pageant);
-            pathPlink = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
-            pathPuttyGen = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
+            string pathPageantLong = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "pageant.exe", Properties.Resources.pageant);
+            string pathPlinkLong = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "plink.exe", Properties.Resources.plink);
+            string pathPuttyGenLong = ClassUtils.WriteResourceToFile(Path.GetTempPath(), "puttygen.exe", Properties.Resources.puttygen);
+
+            pathPageant = ClassUtils.GetShortPathName(pathPageantLong);
+            pathPlink = ClassUtils.GetShortPathName(pathPlinkLong);
+            pathPuttyGen = ClassUtils.GetShortPathName(pathPuttyGenLong);
 
             ClassUtils.AddEnvar("PLINK_PROTOCOL", "ssh");
             ClassUtils.AddEnvar("GIT_SSH", pathPlink);

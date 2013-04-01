@@ -176,6 +176,20 @@ namespace GitForce
         }
 
         /// <summary>
+        /// This function is meaningful only on Windows: Given a long file path name,
+        /// return its short version. This is used mainly to avoid various problems with
+        /// paths containing spaces and the inability of git to handle them.
+        /// </summary>
+        public static string GetShortPathName(string path)
+        {
+            if (IsMono())
+                return path;
+            var pathBuilder = new StringBuilder(1024);
+            NativeMethods.GetShortPathName(path, pathBuilder, pathBuilder.Capacity);
+            return pathBuilder.ToString();
+        }
+
+        /// <summary>
         /// Remove given folder and all files and subfolders under it.
         /// If fPreserveGit is true, all folders that are named ".git" will be preserved (not removed)
         /// If fPreserveRootFolder is true, the first (root) folder will also be preserved

@@ -40,6 +40,9 @@ namespace GitForce
         [DllImport("kernel32.dll")]
         public static extern bool FreeConsole();
 
+        [DllImport("kernel32")]
+        public static extern int GetShortPathName(string lpszLongPath, StringBuilder lpszShortPath,int bufSize);
+
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 

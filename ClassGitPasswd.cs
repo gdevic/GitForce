@@ -39,9 +39,12 @@ namespace GitForce
                 // Windows: Use the CMD BAT script
                 // Note: Using "App.AppHome" directory to host the batch helper file
                 //       fails on XP where that directory has spaces in the name ("Documents and Settings")
-                //       which git cannot handle in this context. Default Temp path seem to be OK.
+                //       which git cannot handle in this context. Similarly, git will fail with
+                //       any other path that contains a space.
+                // This redirection is used to provide the password in an automated way.
                 pathPasswordBatchHelper = Path.Combine(Path.GetTempPath(), "passwd.bat");
                 File.WriteAllText(pathPasswordBatchHelper, "@echo %PASSWORD%" + Environment.NewLine);
+                pathPasswordBatchHelper = ClassUtils.GetShortPathName(pathPasswordBatchHelper);
             }
             ClassUtils.AddEnvar("GIT_ASKPASS", pathPasswordBatchHelper);
 
