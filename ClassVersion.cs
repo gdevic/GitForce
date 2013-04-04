@@ -44,25 +44,27 @@ namespace GitForce
         /// <summary>
         /// Thread handle for function that checks for a new version.
         /// </summary>
-        private Thread ThreadCheck;
+        private readonly Thread threadCheck;
 
         /// <summary>
         /// Class constructor starts a new version check thread.
         /// </summary>
         public ClassVersion()
         {
-            ThreadCheck = new Thread(ThreadVersionCheck);
-            ThreadCheck.Start();
+            // TODO: Need to find a new home for release builds
+            //threadCheck = new Thread(ThreadVersionCheck);
+            //threadCheck.Start();
         }
 
         /// <summary>
-        /// Class destructor terminates the version check thread, if it is still running.
+        /// Terminates the version check thread, if it is still running.
+        /// TODO: This never worked consistently
         /// </summary>
         ~ClassVersion()
         {
             // Abort the thread. First give it a nice nudge and then simply abort it.
-            ThreadCheck.Join(1000);
-            ThreadCheck.Abort();
+            //threadCheck.Join(1);
+            //threadCheck.Abort();
         }
 
         /// <summary>
@@ -73,12 +75,16 @@ namespace GitForce
             // A lot of things can go wrong here...
             try
             {
-                WebRequest request = WebRequest.Create("https://github.com/gdevic/GitForce/blob/master/Properties/AssemblyInfo.cs");
-                request.Timeout = 4000;
-                WebResponse response = request.GetResponse();
-                StreamReader reader = new StreamReader(response.GetResponseStream());
                 StringBuilder file = new StringBuilder();
-                file.Append(reader.ReadToEnd());
+                WebRequest request = WebRequest.Create("https://github.com/gdevic/GitForce/blob/master/Properties/AssemblyInfo.cs");
+                request.Timeout = 1000;
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        file.Append(reader.ReadToEnd());
+                    }
+                }
 
                 // Search for the version string, for example:
                 // [assembly: AssemblyFileVersion(&quot;1.0.11&quot;)]
