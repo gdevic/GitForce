@@ -44,7 +44,7 @@ namespace GitForce
         /// <summary>
         /// Thread handle for function that checks for a new version.
         /// </summary>
-        private readonly Thread threadCheck;
+        //private readonly Thread threadCheck;
 
         /// <summary>
         /// Class constructor starts a new version check thread.
