@@ -143,5 +143,16 @@ namespace GitForce
             // with one of the host strings (URLs) added into the input text box, ready to click on Add Host.
             formSsh.ShowDialog();
         }
+
+        /// <summary>
+        /// User clicked on the "->" button to the left of the git repo address.
+        /// Find the canonical web site and open it
+        /// </summary>
+        private void BtWwwClick(object sender, EventArgs e)
+        {
+            string key = ((Button) sender).Tag.ToString();
+            ClassUrl.Url url = key == "Fetch" ? _fetchUrl : _pushUrl;
+            ClassUtils.OpenWebLink("www." + url.Host);
+        }
     }
 }

@@ -36,6 +36,8 @@
             this.textUrlPush = new System.Windows.Forms.TextBox();
             this.textUrlFetch = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btWWW2 = new System.Windows.Forms.Button();
+            this.btWWW1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
@@ -101,7 +103,7 @@
             this.textUrlPush.MaxLength = 128;
             this.textUrlPush.Name = "textUrlPush";
             this.textUrlPush.ReadOnly = true;
-            this.textUrlPush.Size = new System.Drawing.Size(334, 20);
+            this.textUrlPush.Size = new System.Drawing.Size(297, 20);
             this.textUrlPush.TabIndex = 2;
             this.textUrlPush.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -113,7 +115,7 @@
             this.textUrlFetch.MaxLength = 128;
             this.textUrlFetch.Name = "textUrlFetch";
             this.textUrlFetch.ReadOnly = true;
-            this.textUrlFetch.Size = new System.Drawing.Size(334, 20);
+            this.textUrlFetch.Size = new System.Drawing.Size(298, 20);
             this.textUrlFetch.TabIndex = 1;
             this.textUrlFetch.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -122,6 +124,8 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btWWW2);
+            this.groupBox1.Controls.Add(this.btWWW1);
             this.groupBox1.Controls.Add(this.btSsh);
             this.groupBox1.Controls.Add(this.textPushCmd);
             this.groupBox1.Controls.Add(this.label1);
@@ -138,6 +142,32 @@
             this.groupBox1.Size = new System.Drawing.Size(422, 143);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // btWWW2
+            // 
+            this.btWWW2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btWWW2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btWWW2.Location = new System.Drawing.Point(386, 63);
+            this.btWWW2.Name = "btWWW2";
+            this.btWWW2.Size = new System.Drawing.Size(30, 23);
+            this.btWWW2.TabIndex = 12;
+            this.btWWW2.Tag = "Push";
+            this.btWWW2.Text = "->";
+            this.btWWW2.UseVisualStyleBackColor = true;
+            this.btWWW2.Click += new System.EventHandler(this.BtWwwClick);
+            // 
+            // btWWW1
+            // 
+            this.btWWW1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btWWW1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btWWW1.Location = new System.Drawing.Point(386, 37);
+            this.btWWW1.Name = "btWWW1";
+            this.btWWW1.Size = new System.Drawing.Size(30, 23);
+            this.btWWW1.TabIndex = 11;
+            this.btWWW1.Tag = "Fetch";
+            this.btWWW1.Text = "->";
+            this.btWWW1.UseVisualStyleBackColor = true;
+            this.btWWW1.Click += new System.EventHandler(this.BtWwwClick);
             // 
             // label4
             // 
@@ -204,6 +234,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textName;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btWWW2;
+        private System.Windows.Forms.Button btWWW1;
 
     }
 }
