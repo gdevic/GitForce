@@ -158,9 +158,9 @@ namespace GitForce.Main.Right.Panels
         /// <summary>
         /// Delete a branch using a dialog to select the branch
         /// </summary>
-        private static void MenuDeleteBranchClick(object sender, EventArgs e)
+        private void MenuDeleteBranchClick(object sender, EventArgs e)
         {
-            FormDeleteBranch delBranch = new FormDeleteBranch();
+            FormDeleteBranch delBranch = new FormDeleteBranch(GetSelectedBranch());
             if (delBranch.ShowDialog() == DialogResult.OK)
                 App.DoRefresh();
         }

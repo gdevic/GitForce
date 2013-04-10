@@ -20,20 +20,29 @@ namespace GitForce
         private readonly ClassBranches branches;
 
         /// <summary>
-        /// Singular branch name selected among options for local or remote
+        /// Default branch name to select when switching
         /// </summary>
-        private string selectedBranch;
+        private readonly string defaultBranch;
 
-        public FormDeleteBranch()
+        /// <summary>
+        /// Constructor for the Delete Branch operation.
+        /// It is given a name of the branch to select by default.
+        /// </summary>
+        public FormDeleteBranch(string defaultBranch)
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
             branches = App.Repos.Current.Branches;
+            this.defaultBranch = defaultBranch;
 
-            // Initialize local branches as the default selection
-            foreach (var branch in branches.Local)
-                listBranches.Items.Add(branch);
+            // Initialize local branches as the default view.
+            // This assignment will call "RadioButton1CheckedChanged" since
+            // we initialized this radio button to not-checked in the designer.
+            radioLocalBranch.Checked = true;
+
+            // Restore the state of the Force delete option
+            checkForce.Checked = Properties.Settings.Default.ForceDeleteBranch;
         }
 
         /// <summary>
@@ -42,14 +51,17 @@ namespace GitForce
         private void FormDeleteBranchFormClosing(object sender, FormClosingEventArgs e)
         {
             ClassWinGeometry.Save(this);
+            Properties.Settings.Default.ForceDeleteBranch = checkForce.Checked;
         }
 
         /// <summary>
-        /// Button clicked to delete a selected branch
+        /// Button clicked to delete a selected branch.
+        /// This method is called only if a branch has been selected (otherwise the Delete button was disabled)
         /// </summary>
         private void DeleteClick(object sender, EventArgs e)
         {
             string cmd;
+            string selectedBranch = listBranches.SelectedItem.ToString();
 
             // Depending on the branch (local or remote), use a different way to delete it
             if (radioLocalBranch.Checked)
@@ -90,20 +102,21 @@ namespace GitForce
                             listBranches.Items.Add(branch);
                         break;
                 }
+                // Select the default branch if it is present on this list
+                int defaultIndex = listBranches.Items.IndexOf(defaultBranch);
+                btDelete.Enabled = false;
+                if (defaultIndex >= 0)
+                    listBranches.SelectedIndex = defaultIndex;
             }
         }
 
         /// <summary>
-        /// Store the selected item name of a local or remote branch into the branch
-        /// tracking variable.
+        /// Enable the Delete button if something has been selected
         /// </summary>
         private void ListBranchesSelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBranches.SelectedItem != null)
-            {
-                selectedBranch = listBranches.SelectedItem.ToString();
                 btDelete.Enabled = true;
-            }
         }
     }
 }

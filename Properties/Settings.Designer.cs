@@ -408,5 +408,17 @@ namespace GitForce.Properties {
                 this["WarnMultipleInstances"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ForceDeleteBranch {
+            get {
+                return ((bool)(this["ForceDeleteBranch"]));
+            }
+            set {
+                this["ForceDeleteBranch"] = value;
+            }
+        }
     }
 }

@@ -76,12 +76,10 @@
             // radioLocalBranch
             // 
             this.radioLocalBranch.AutoSize = true;
-            this.radioLocalBranch.Checked = true;
             this.radioLocalBranch.Location = new System.Drawing.Point(13, 39);
             this.radioLocalBranch.Name = "radioLocalBranch";
             this.radioLocalBranch.Size = new System.Drawing.Size(90, 17);
             this.radioLocalBranch.TabIndex = 10;
-            this.radioLocalBranch.TabStop = true;
             this.radioLocalBranch.Tag = "Local";
             this.radioLocalBranch.Text = "Local branch:";
             this.radioLocalBranch.UseVisualStyleBackColor = true;
