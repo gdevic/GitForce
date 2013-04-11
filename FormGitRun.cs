@@ -111,6 +111,19 @@ namespace GitForce
         }
 
         /// <summary>
+        /// When the user presses ESC key, close the dialog, but *only* if the git operation
+        /// is completed.
+        /// We need to hook into the key chain and test the completion by checking the button
+        /// text. The text changes depending on the execution status.
+        /// </summary>
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData==Keys.Escape && btCancel.Text=="Done")
+                DialogResult = DialogResult.OK;
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        /// <summary>
         /// User presses a cancel button. This is a multi-function button
         /// that starts as "Cancel"...
         /// </summary>
