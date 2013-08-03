@@ -876,14 +876,6 @@ namespace GitForce
         #endregion Custom Tools menu handlers
 
         /// <summary>
-        /// Getting started help menu
-        /// </summary>
-        private void GettingStartedToolStripMenuClick(object sender, EventArgs e)
-        {
-            ClassHelp.Handler("Getting Started");
-        }
-
-        /// <summary>
         /// User clicked on a 'new version available' button
         /// </summary>
         private void NewVersionButtonClick(object sender, EventArgs e)

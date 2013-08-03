@@ -15,10 +15,10 @@ namespace GitForce
         /// Dictionary containing the translation of help topics to the web pages
         /// </summary>
         private static readonly Dictionary<string, string> Webhelp = new Dictionary<string, string> {
-            { "Getting Started", "http://gdevic.github.com/GitForce/GettingStarted.html" },
-            { "Edit Tools", "http://gdevic.github.com/GitForce/EditTools.html" },
-            { "SSH Windows", "http://gdevic.github.com/GitForce/ssh-windows.html" },
-            { "Download", "https://github.com/gdevic/GitForce/downloads" },
+            { "Getting Started", "https://sites.google.com/site/gitforcetool/getting-started" },
+            { "Edit Tools", "https://sites.google.com/site/gitforcetool/help/custom-tools" },
+            { "SSH Windows", "https://sites.google.com/site/gitforcetool/help/ssh" },
+            { "Download", "http://sourceforge.net/projects/gitforce/" }
         };
 
         /// <summary>

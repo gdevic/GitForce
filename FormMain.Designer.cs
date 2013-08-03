@@ -67,24 +67,21 @@
             this.menuMainRepository = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.homeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gettingStartedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gitHubHomeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusInfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.rightTabControl = new GitForce.TabEx();
             this.listStatus = new System.Windows.Forms.ListBox();
             this.menuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStatusCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStatusSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStatusClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmdBox = new GitForce.TextBoxEx();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btUpdate = new System.Windows.Forms.ToolStripButton();
@@ -111,6 +108,8 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
+            this.rightTabControl = new GitForce.TabEx();
+            this.cmdBox = new GitForce.TextBoxEx();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -431,46 +430,38 @@
             // menuMainHelp
             // 
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.homeMenuItem,
             this.gettingStartedMenuItem,
-            this.documentationMenuItem,
             this.checkForUpdatesMenuItem,
-            this.gitHubHomeMenuItem,
             this.toolStripSeparator6,
             this.aboutToolStripMenuItem});
             this.menuMainHelp.Name = "menuMainHelp";
             this.menuMainHelp.Size = new System.Drawing.Size(44, 20);
             this.menuMainHelp.Text = "Help";
             // 
+            // homeMenuItem
+            // 
+            this.homeMenuItem.Name = "homeMenuItem";
+            this.homeMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.homeMenuItem.Tag = "https://sites.google.com/site/gitforcetool/";
+            this.homeMenuItem.Text = "Home";
+            this.homeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            // 
             // gettingStartedMenuItem
             // 
             this.gettingStartedMenuItem.Name = "gettingStartedMenuItem";
             this.gettingStartedMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.gettingStartedMenuItem.Tag = "https://sites.google.com/site/gitforcetool/getting-started";
             this.gettingStartedMenuItem.Text = "Getting Started";
-            this.gettingStartedMenuItem.Click += new System.EventHandler(this.GettingStartedToolStripMenuClick);
-            // 
-            // documentationMenuItem
-            // 
-            this.documentationMenuItem.Name = "documentationMenuItem";
-            this.documentationMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.documentationMenuItem.Tag = "http://gdevic.github.com/GitForce";
-            this.documentationMenuItem.Text = "Documentation";
-            this.documentationMenuItem.Click += new System.EventHandler(this.WebsiteClick);
+            this.gettingStartedMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // checkForUpdatesMenuItem
             // 
             this.checkForUpdatesMenuItem.Name = "checkForUpdatesMenuItem";
             this.checkForUpdatesMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.checkForUpdatesMenuItem.Tag = "https://github.com/gdevic/GitForce/downloads";
+            this.checkForUpdatesMenuItem.Tag = "http://sourceforge.net/projects/gitforce/";
             this.checkForUpdatesMenuItem.Text = "Check for Updates";
             this.checkForUpdatesMenuItem.Click += new System.EventHandler(this.WebsiteClick);
-            // 
-            // gitHubHomeMenuItem
-            // 
-            this.gitHubHomeMenuItem.Name = "gitHubHomeMenuItem";
-            this.gitHubHomeMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.gitHubHomeMenuItem.Tag = "https://github.com/gdevic/GitForce";
-            this.gitHubHomeMenuItem.Text = "GitHub Home";
-            this.gitHubHomeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
             // toolStripSeparator6
             // 
@@ -533,17 +524,6 @@
             this.splitContainer2.SplitterDistance = 373;
             this.splitContainer2.TabIndex = 0;
             // 
-            // rightTabControl
-            // 
-            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
-            this.rightTabControl.Name = "rightTabControl";
-            this.rightTabControl.SelectedIndex = 0;
-            this.rightTabControl.ShowToolTips = true;
-            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
-            this.rightTabControl.TabIndex = 0;
-            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
-            // 
             // listStatus
             // 
             this.listStatus.ContextMenuStrip = this.menuStatus;
@@ -595,18 +575,6 @@
             this.menuStatusClear.Size = new System.Drawing.Size(122, 22);
             this.menuStatusClear.Text = "Clear";
             this.menuStatusClear.Click += new System.EventHandler(this.MenuSelectClearClick);
-            // 
-            // cmdBox
-            // 
-            this.cmdBox.AcceptsReturn = true;
-            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
-            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdBox.Location = new System.Drawing.Point(0, 165);
-            this.cmdBox.Name = "cmdBox";
-            this.cmdBox.Size = new System.Drawing.Size(784, 23);
-            this.cmdBox.TabIndex = 1;
-            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
             // 
             // toolStrip
             // 
@@ -868,6 +836,29 @@
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
             // 
+            // rightTabControl
+            // 
+            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
+            this.rightTabControl.Name = "rightTabControl";
+            this.rightTabControl.SelectedIndex = 0;
+            this.rightTabControl.ShowToolTips = true;
+            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
+            this.rightTabControl.TabIndex = 0;
+            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
+            // 
+            // cmdBox
+            // 
+            this.cmdBox.AcceptsReturn = true;
+            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
+            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBox.Location = new System.Drawing.Point(0, 165);
+            this.cmdBox.Name = "cmdBox";
+            this.cmdBox.Size = new System.Drawing.Size(784, 23);
+            this.cmdBox.TabIndex = 1;
+            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -884,9 +875,9 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "GitForce";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMainFormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMainDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormMainDragEnter);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMainFormClosing);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -957,11 +948,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainEditRemoteRepo;
         private System.Windows.Forms.ToolStripMenuItem menuMainPullFromRemote;
         private System.Windows.Forms.ToolStripMenuItem menuMainPushToRemote;
-        private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripStatusLabel statusInfoLabel;
         private System.Windows.Forms.Timer timerBusy;
-        private System.Windows.Forms.ToolStripMenuItem gitHubHomeMenuItem;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton btUpdate;
@@ -988,6 +977,7 @@
         private System.Windows.Forms.ToolStripButton btNewVersion;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesMenuItem;
         private TabEx rightTabControl;
+        private System.Windows.Forms.ToolStripMenuItem homeMenuItem;
     }
 }
 
