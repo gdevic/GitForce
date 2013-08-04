@@ -104,7 +104,7 @@
     <Setting Name="ForceDeleteBranch" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="NeedSettingsUpgrade" Provider="GitForce.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+    <Setting Name="NeedSettingsUpgrade" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
