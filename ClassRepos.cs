@@ -10,7 +10,7 @@ namespace GitForce
 {
     /// <summary>
     /// Class containing a set of repos that the program knows about.
-    /// Also contains a pointer to the current, active repo.
+    /// It also contains a pointer to the current, active repo.
     /// </summary>
     public class ClassRepos
     {
@@ -184,6 +184,23 @@ namespace GitForce
             Current = repo;
             if (Current != null)
                 Current.Remotes.Refresh(Current);   // Refresh the list of remote repos
+        }
+
+        /// <summary>
+        /// Reorder the list of repos according to the ordering given in the argument
+        /// That list of strings should list each and all ClassRepo' names in the desired new order
+        /// </summary>
+        public void SetOrder(List<string> order)
+        {
+            // Since ClassRepo implements sorting, use it but provide our own delegate to compare
+            // That delegate simply returns desired compare based on our input list of names
+            Repos.Sort(
+                delegate(ClassRepo a, ClassRepo b) {
+                    int ia = order.FindIndex(x => x.Equals(a.ToString()));
+                    int ib = order.FindIndex(x => x.Equals(b.ToString()));
+                    return ia.CompareTo(ib);
+                }
+            );
         }
     }
 }

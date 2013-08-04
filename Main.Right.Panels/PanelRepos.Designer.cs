@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelRepos));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.listRepos = new System.Windows.Forms.ListView();
-            this.colRoot = new System.Windows.Forms.ColumnHeader();
-            this.colName = new System.Windows.Forms.ColumnHeader();
-            this.colEmail = new System.Windows.Forms.ColumnHeader();
+            this.listRepos = new GitForce.ListViewEx();
+            this.colRoot = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colEmail = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -63,6 +63,8 @@
             // 
             // listRepos
             // 
+            this.listRepos.AllowDrop = true;
+            this.listRepos.AllowRowReorder = true;
             this.listRepos.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colRoot,
             this.colName,
@@ -79,6 +81,7 @@
             this.listRepos.TabIndex = 1;
             this.listRepos.UseCompatibleStateImageBehavior = false;
             this.listRepos.View = System.Windows.Forms.View.Details;
+            this.listRepos.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListReposDragDrop);
             this.listRepos.DoubleClick += new System.EventHandler(this.ListReposDoubleClick);
             this.listRepos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ListReposMouseUp);
             // 
@@ -144,7 +147,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ListView listRepos;
         private System.Windows.Forms.ColumnHeader colRoot;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ColumnHeader colName;
@@ -153,5 +155,6 @@
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+        private ListViewEx listRepos;
     }
 }

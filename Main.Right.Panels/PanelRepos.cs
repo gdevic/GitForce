@@ -323,5 +323,22 @@ namespace GitForce.Main.Right.Panels
             App.StatusBusy(false);
             App.DoRefresh();
         }
+
+        /// <summary>
+        /// This method handles drop objects into our listview.
+        /// 
+        /// At this time we only implement reordering of listview items, implicitly.
+        /// That means we ignore what would be dropped and propagate reorder action down to the
+        /// repos class. Of course, that is an assumption - user might have dropped something
+        /// but we simply ignore that. There is no harm to reorder repos at any time, anyway.
+        /// </summary>
+        private void ListReposDragDrop(object sender, DragEventArgs e)
+        {
+            // Form a list of names by reading them from the listview
+            List<string> names = listRepos.Items.Cast<ListViewItem>()
+                .Select(item => item.Text)
+                .ToList();
+            App.Repos.SetOrder(names);
+        }
     }
 }

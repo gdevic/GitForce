@@ -12,7 +12,7 @@ namespace GitForce
     /// Class containing a single repository and a set of functions operating on it
     /// </summary>
     [Serializable]
-    public class ClassRepo
+    public class ClassRepo : IComparable
     {
         /// <summary>
         /// Root local directory of the repository
@@ -99,6 +99,16 @@ namespace GitForce
         public override string ToString()
         {
             return Root;
+        }
+
+        /// <summary>
+        /// Implement default comparator so these classes can be sorted by their (root) name
+        /// </summary>
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+            ClassRepo a = obj as ClassRepo;
+            return a != null ? ToString().CompareTo(a.ToString()) : 1;
         }
 
         /// <summary>
