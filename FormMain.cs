@@ -241,12 +241,11 @@ namespace GitForce
         /// </summary>
         private void WorkspaceClearMenuItem(object sender, EventArgs e)
         {
-            // Save existing workspace before zapping it
+            // Clear current workspace
             if (MessageBox.Show("Current workspace will be cleared from all git repositories. Continue?",
                 "Clear Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                if (ClassWorkspace.Save(null))
-                    ClassWorkspace.Clear();
+                ClassWorkspace.Clear();
             }
         }
 
