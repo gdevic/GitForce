@@ -420,5 +420,17 @@ namespace GitForce.Properties {
                 this["ForceDeleteBranch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool NeedSettingsUpgrade {
+            get {
+                return ((bool)(this["NeedSettingsUpgrade"]));
+            }
+            set {
+                this["NeedSettingsUpgrade"] = value;
+            }
+        }
     }
 }

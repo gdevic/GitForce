@@ -126,14 +126,12 @@ namespace GitForce
         /// Define a path to the application data folder
         /// </summary>
         public static readonly string AppHome = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "GitForce");
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GitForce");
 
         /// <summary>
         /// Define a path to the user profile. This is normally mapped to users' $HOME
         /// </summary>
-        public static readonly string UserHome = 
-            Environment.GetEnvironmentVariable(ClassUtils.IsMono()? "HOME" : "HOMEPATH");
+        public static readonly string UserHome = Environment.GetEnvironmentVariable(ClassUtils.IsMono()? "HOME" : "HOMEPATH");
 
         /// <summary>
         /// If set to a file name, all log text will be mirrored to that file
@@ -151,6 +149,9 @@ namespace GitForce
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Upgrade application settings across the version increment
+            ClassUtils.UpgradeApplicationSettingsIfNecessary();
 
             // Make sure the application data folder directory exists
             Directory.CreateDirectory(AppHome);
