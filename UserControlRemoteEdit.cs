@@ -78,11 +78,18 @@ namespace GitForce
             if (remoteAddEdit.ShowDialog() == DialogResult.OK)
             {
                 remote = remoteAddEdit.Get();
-                _repo.Run("remote add " + remote.Name + " " + remote.UrlFetch);
-                _repo.Remotes.SetPassword(remote.Name, remote.Password);
-                _repo.Remotes.SetPushCmd(remote.Name, remote.PushCmd);
-
-                SetRepo(_repo);
+                ExecResult result = _repo.Run("remote add " + remote.Name + " " + remote.UrlFetch);
+                if (result.Success())
+                {
+                    _repo.Remotes.SetPassword(remote.Name, remote.Password);
+                    _repo.Remotes.SetPushCmd(remote.Name, remote.PushCmd);
+                    SetRepo(_repo);
+                }
+                else
+                {
+                    MessageBox.Show("Git is unable to add this remote repository.", "Add remote repository", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    App.PrintStatusMessage(result.stderr, MessageType.Error);
+                }
             }
         }
 
