@@ -5,6 +5,7 @@ using ControlGitconfig = GitForce.Repo.Edit.Panels.ControlGitconfig;
 using ControlGitignore = GitForce.Repo.Edit.Panels.ControlGitignore;
 using ControlUser = GitForce.Repo.Edit.Panels.ControlUser;
 using ControlLocal = GitForce.Repo.Edit.Panels.ControlLocal;
+using ControlRemotes = GitForce.Repo.Edit.Panels.ControlRemotes;
 
 namespace GitForce
 {
@@ -30,6 +31,7 @@ namespace GitForce
             { "User", new ControlUser() },
             { "Gitignore", new ControlGitignore() },
             { "Gitconfig", new ControlGitconfig() },
+            { "Remotes", new ControlRemotes() },
         };
 
         /// <summary>

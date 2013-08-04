@@ -342,6 +342,12 @@
     <Compile Include="Repo.Edit.Panels\ControlLocal.designer.cs">
       <DependentUpon>ControlLocal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlRemotes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Repo.Edit.Panels\ControlRemotes.Designer.cs">
+      <DependentUpon>ControlRemotes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repo.Edit.Panels\ControlUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -641,6 +647,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Repo.Edit.Panels\ControlLocal.resx">
       <DependentUpon>ControlLocal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Repo.Edit.Panels\ControlRemotes.resx">
+      <DependentUpon>ControlRemotes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Repo.Edit.Panels\ControlUser.resx">
       <DependentUpon>ControlUser.cs</DependentUpon>

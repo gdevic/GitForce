@@ -35,6 +35,7 @@
             treeNode1,
             treeNode2,
             treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Remotes");
             this.panel = new System.Windows.Forms.Panel();
             this.treeSections = new System.Windows.Forms.TreeView();
             this.btApply = new System.Windows.Forms.Button();
@@ -44,9 +45,9 @@
             // 
             // panel
             // 
-            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel.Location = new System.Drawing.Point(176, 12);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(321, 201);
@@ -54,8 +55,8 @@
             // 
             // treeSections
             // 
-            this.treeSections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeSections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeSections.HideSelection = false;
             this.treeSections.Location = new System.Drawing.Point(12, 12);
             this.treeSections.Name = "treeSections";
@@ -71,8 +72,12 @@
             treeNode4.Name = "Node0";
             treeNode4.Tag = "Local";
             treeNode4.Text = "Repo Objects";
+            treeNode5.Name = "Node1";
+            treeNode5.Tag = "Remotes";
+            treeNode5.Text = "Remotes";
             this.treeSections.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode4,
+            treeNode5});
             this.treeSections.Size = new System.Drawing.Size(158, 230);
             this.treeSections.TabIndex = 5;
             this.treeSections.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeSectionsAfterSelect);
