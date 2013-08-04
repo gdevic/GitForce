@@ -26,24 +26,22 @@ namespace GitForce
 
         /// <summary>
         /// Add a file name to the list of last recently used files.
-        /// If a file is already in the set, it will be ignored.
+        /// Place it at the top (LRU), even if it already exists.
         /// </summary>
         private static void AddLRU(string name)
         {
             List<string> lru = GetLRU();
 
-            // Add a name only if it already does not exist
-            if (!lru.Contains(name))
-            {
-                lru.Insert(0, name);
+            // If a name already exists, remove it first since we will be re-adding it at the top
+            lru.Remove(name);       // Remove is safe to call even if the item is not in the list
+            lru.Insert(0, name);    // Insert the new name to the top of LRU
 
-                // Keep the number of recently used files down to a reasonable number
-                if (lru.Count >= 6)
-                    lru.RemoveRange(5, lru.Count - 5);
+            // Keep the number of recently used files down to a reasonable value
+            if (lru.Count >= 6)
+                lru.RemoveRange(5, lru.Count - 5);
 
-                string s = string.Join("\t", lru.ToArray());
-                Properties.Settings.Default.WorkspaceLRU = s;                
-            }
+            string s = string.Join("\t", lru.ToArray());
+            Properties.Settings.Default.WorkspaceLRU = s;                
         }
 
         /// <summary>
