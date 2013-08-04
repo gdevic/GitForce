@@ -69,9 +69,9 @@ namespace GitForce
         /// </summary>
         public static void CommandPromptHere(string where)
         {
-            Directory.SetCurrentDirectory(where);
             try
             {
+                Directory.SetCurrentDirectory(where);
                 App.PrintStatusMessage("Command prompt at " + where, MessageType.General);
                 Process proc = new Process();
                 proc.StartInfo.UseShellExecute = false;
