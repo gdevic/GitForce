@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>git.ico</ApplicationIcon>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,6 +68,7 @@
     <Compile Include="ClassGlobals.cs" />
     <Compile Include="ClassHelp.cs" />
     <Compile Include="ClassMerge.cs" />
+    <Compile Include="ClassPortableSettings.cs" />
     <Compile Include="ClassVersion.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />

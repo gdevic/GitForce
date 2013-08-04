@@ -2,109 +2,109 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GitForce.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="GitPath" Type="System.String" Scope="User">
+    <Setting Name="GitPath" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ShowLogWindow" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowLogWindow" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ShowDotGitFolders" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowDotGitFolders" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="PuTTYPf" Type="System.String" Scope="User">
+    <Setting Name="PuTTYPf" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PuTTYKeys" Type="System.String" Scope="User">
+    <Setting Name="PuTTYKeys" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="leavePageant" Type="System.Boolean" Scope="User">
+    <Setting Name="leavePageant" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="DoubleClick" Type="System.String" Scope="User">
+    <Setting Name="DoubleClick" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="DoubleClickProgram" Type="System.String" Scope="User">
+    <Setting Name="DoubleClickProgram" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="EditViewPrograms" Type="System.String" Scope="User">
+    <Setting Name="EditViewPrograms" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="viewMode" Type="System.Int32" Scope="User">
+    <Setting Name="viewMode" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="viewRightPanel" Type="System.String" Scope="User">
+    <Setting Name="viewRightPanel" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)">Repos</Value>
     </Setting>
-    <Setting Name="commitFont" Type="System.Drawing.Font" Scope="User">
+    <Setting Name="commitFont" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Courier New, 8.25pt</Value>
     </Setting>
-    <Setting Name="commitsRetrieveAll" Type="System.Boolean" Scope="User">
+    <Setting Name="commitsRetrieveAll" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="commitsRetrieveLast" Type="System.Int32" Scope="User">
+    <Setting Name="commitsRetrieveLast" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="commitW1" Type="System.Decimal" Scope="User">
+    <Setting Name="commitW1" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">60</Value>
     </Setting>
-    <Setting Name="commitW2" Type="System.Decimal" Scope="User">
+    <Setting Name="commitW2" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">72</Value>
     </Setting>
-    <Setting Name="logCommands" Type="System.Boolean" Scope="User">
+    <Setting Name="logCommands" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="logTime" Type="System.Boolean" Scope="User">
+    <Setting Name="logTime" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="logTime24" Type="System.Boolean" Scope="User">
+    <Setting Name="logTime24" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ShowExecuteWindow" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowExecuteWindow" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="RepoDeepScan" Type="System.Boolean" Scope="User">
+    <Setting Name="RepoDeepScan" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="WindowsGeometries" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="WindowsGeometries" Provider="GitForce.PortableSettingsProvider" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string /&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="DiffAppHelper" Type="System.String" Scope="User">
+    <Setting Name="DiffAppHelper" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="MergeAppHelper" Type="System.String" Scope="User">
+    <Setting Name="MergeAppHelper" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="WorkspaceLRU" Type="System.String" Scope="User">
+    <Setting Name="WorkspaceLRU" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="WorkspaceFile" Type="System.String" Scope="User">
+    <Setting Name="WorkspaceFile" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ShowCommandLine" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowCommandLine" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ShowFormatIndex" Type="System.Int32" Scope="User">
+    <Setting Name="ShowFormatIndex" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="RefreshOnChange" Type="System.Boolean" Scope="User">
+    <Setting Name="RefreshOnChange" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ReaddOnChange" Type="System.Boolean" Scope="User">
+    <Setting Name="ReaddOnChange" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ShowTabsOnRightPane" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowTabsOnRightPane" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="WarnMultipleInstances" Type="System.Boolean" Scope="User">
+    <Setting Name="WarnMultipleInstances" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ForceDeleteBranch" Type="System.Boolean" Scope="User">
+    <Setting Name="ForceDeleteBranch" Provider="GitForce.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="NeedSettingsUpgrade" Type="System.Boolean" Scope="User">
+    <Setting Name="NeedSettingsUpgrade" Provider="GitForce.PortableSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
