@@ -190,6 +190,20 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Retruns a path to the home directory.
+        /// </summary>
+        public static string GetHomePath()
+        {
+            if (IsMono())
+                return Environment.GetEnvironmentVariable("HOME");
+            // On Windows, path to the user's home is a combination of a drive and a path
+            string drive = Environment.GetEnvironmentVariable("HOMEDRIVE");
+            string path = Environment.GetEnvironmentVariable("HOMEPATH");
+            // On Windows, the Path.Combine is fundamentally broken can can't be used
+            return drive + path;
+        }
+
+        /// <summary>
         /// Remove given folder and all files and subfolders under it.
         /// If fPreserveGit is true, all folders that are named ".git" will be preserved (not removed)
         /// If fPreserveRootFolder is true, the first (root) folder will also be preserved

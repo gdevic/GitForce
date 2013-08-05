@@ -129,9 +129,9 @@ namespace GitForce
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GitForce");
 
         /// <summary>
-        /// Define a path to the user profile. This is normally mapped to users' $HOME
+        /// Define a path to the user profile.
         /// </summary>
-        public static readonly string UserHome = Environment.GetEnvironmentVariable(ClassUtils.IsMono()? "HOME" : "HOMEPATH");
+        public static readonly string UserHome = ClassUtils.GetHomePath();
 
         /// <summary>
         /// If set to a file name, all log text will be mirrored to that file
