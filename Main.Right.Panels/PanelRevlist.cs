@@ -47,6 +47,9 @@ namespace GitForce.Main.Right.Panels
                 if (!branches.Local.Contains(logBranch) && !branches.Remote.Contains(logBranch))
                     logBranch = branches.Current;
 
+                // TODO: history for arbitrary branch is broken. For now, we will only show the current branch
+                logBranch = branches.Current;
+
                 // If the repo does not have a branch at all (new repo that was just initialized), exit
                 if (string.IsNullOrEmpty(logBranch))
                     return;
@@ -74,8 +77,23 @@ namespace GitForce.Main.Right.Panels
                 cmd.Append("%an%x09");                  // Author name
                 cmd.Append("%s");                       // Subject
                 // Add the branch name using only the first token in order to handle links (br -> br)
-                if(logBranch!="(no branch)")
-                    cmd.Append(" " + logBranch.Split(' ').First());
+                //string branchStr = logBranch;
+                //ExecResult result;
+                //if(logBranch!="(no branch)")
+                //{
+                //    branchStr = logBranch.Split(' ').First();
+                //    if (branchStr != "master")
+                //    {
+                //        // Get the tracking branch for this branch
+                //        //result = App.Repos.Current.Run("config --get branch." + logBranch + ".merge");
+                //        //if (result.Success())
+                //        //    cmd.Append(" " + result + "..");
+                //        //else
+                //            cmd.Append(" .." + branchStr);
+                //    }
+                //    else
+                //        cmd.Append(" " + branchStr);
+                //}
                 // Limit the number of commits to show
                 if (Properties.Settings.Default.commitsRetrieveAll == false)
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
@@ -132,8 +150,9 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void LogBranchChanged(object sender, EventArgs e)
         {
-            logBranch = sender.ToString();
-            RevlistRefresh();
+            // TODO: This is related to the comment above: history for arbitrary branch is broken. For now, dont update branch selector pull-down.
+            //logBranch = sender.ToString();
+            //RevlistRefresh();
         }
 
         /// <summary>
