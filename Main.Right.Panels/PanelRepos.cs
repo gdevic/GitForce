@@ -212,12 +212,15 @@ namespace GitForce.Main.Right.Panels
                             goto BackToStep2;
                         ClassRepo repo = App.Repos.Add(root);
 
-                        // Switch the view mode to Local File View and Local Pending Changelists
-                        App.MainForm.ResetViews();
-
-                        // Finally, switch to the new repo and do a global refresh
+                        // Switch to the new repo and do a global refresh
                         App.Repos.SetCurrent(repo);
                         App.DoRefresh();
+
+                        // Open the Edit Repo dialog since the user may want to fill in user name and email, at least
+                        MenuRepoEditClick(null, null);
+
+                        // Switch the view mode to Local File View and Local Pending Changelists
+                        App.MainForm.ResetViews();
 
                         return;
                     }
