@@ -39,7 +39,8 @@ namespace GitForce
         /// </summary>
         public void SetForCloneOperation(bool isClone)
         {
-            textBoxProjectName.Enabled = cloneOperation = labelCloneOperation.Enabled = isClone;
+            cloneOperation = isClone;
+            textBoxProjectName.Enabled = labelCloneOperation.Enabled = !isClone;
         }
 
         /// <summary>
