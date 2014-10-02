@@ -219,9 +219,6 @@ namespace GitForce.Main.Right.Panels
                         // Open the Edit Repo dialog since the user may want to fill in user name and email, at least
                         MenuRepoEditClick(null, null);
 
-                        // Switch the view mode to Local File View and Local Pending Changelists
-                        App.MainForm.ResetViews();
-
                         return;
                     }
                     catch (ClassException ex)
