@@ -25,7 +25,7 @@ namespace GitForce
             ClassWinGeometry.Restore(this);
 
             CustomTools = customTools.Copy();
-            RefreshList();
+            RefreshList(0);
         }
 
         /// <summary>
@@ -40,14 +40,18 @@ namespace GitForce
         /// Reload the list of tools, set the current tool and show the information
         /// Also set all button enables accordingly.
         /// </summary>
-        private void RefreshList()
+        private void RefreshList(int sel)
         {
-            int sel = listTools.SelectedIndex;
             listTools.Items.Clear();
             foreach (var t in CustomTools.Tools)
                 listTools.Items.Add(t.Name);
             if (listTools.Items.Count > 0)
-                listTools.SelectedIndex = (sel >= 0 ? sel : 0);
+            {
+                if (sel < 0) sel = 0;
+                else if (sel >= listTools.Items.Count)
+                    sel = listTools.Items.Count - 1;
+                listTools.SelectedIndex = sel;
+            }
             AdjustEnables();
         }
 
@@ -59,10 +63,11 @@ namespace GitForce
         /// </summary>
         private void AdjustEnables()
         {
-            ClassTool tool = new ClassTool();
-            btEdit.Enabled = btUp.Enabled = btDown.Enabled = listTools.Items.Count == 1;
-            btRemove.Enabled = listTools.Items.Count > 0;
-            if (listTools.Items.Count==1)
+            var tool = new ClassTool();
+            int numSelected = listTools.SelectedIndices.Count;
+            btEdit.Enabled = btUp.Enabled = btDown.Enabled = numSelected == 1;
+            btRemove.Enabled = numSelected > 0;
+            if (numSelected == 1)
             {
                 int sel = listTools.SelectedIndex;
                 tool = CustomTools.Tools[sel];
@@ -96,7 +101,7 @@ namespace GitForce
             {
                 int sel = listTools.SelectedIndex >= 0 ? listTools.SelectedIndex : 0;
                 CustomTools.Tools.Insert(sel, formEditTools.Tool);
-                RefreshList();
+                RefreshList(sel);
             }
         }
 
@@ -110,7 +115,7 @@ namespace GitForce
             if (formEditTools.ShowDialog() == DialogResult.OK)
             {
                 CustomTools.Tools[sel] = formEditTools.Tool;
-                RefreshList();
+                RefreshList(sel);
             }
         }
 
@@ -122,11 +127,12 @@ namespace GitForce
             if(MessageBox.Show("This will permanently remove selected tool(s). Proceed?", "Remove tool", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.Yes)
             {
+                int sel = listTools.SelectedIndex;
                 for (int i = listTools.SelectedIndices.Count - 1; i >= 0; i--)
                 {
                     CustomTools.Tools.RemoveAt(listTools.SelectedIndices[i]);
                 }
-                RefreshList();
+                RefreshList(sel - 1);
             }
         }
 
@@ -140,8 +146,7 @@ namespace GitForce
             {
                 CustomTools.Tools.Insert(sel - 1, CustomTools.Tools[sel]);
                 CustomTools.Tools.RemoveAt(sel + 1);
-                listTools.SelectedIndex = sel - 1;
-                RefreshList();
+                RefreshList(sel - 1);
             }
         }
 
@@ -155,8 +160,7 @@ namespace GitForce
             {
                 CustomTools.Tools.Insert(sel + 2, CustomTools.Tools[sel]);
                 CustomTools.Tools.RemoveAt(sel);
-                listTools.SelectedIndex = sel + 1;
-                RefreshList();
+                RefreshList(sel + 1);
             }
         }
 
