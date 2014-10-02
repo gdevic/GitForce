@@ -18,7 +18,7 @@ namespace GitForce
         public string Destination = "";
         public string Extra = "";
         public bool IsBare;
-        private bool cloneOperation;
+        public bool CheckTargetDirEmpty;
 
         public FormNewRepoStep2()
         {
@@ -35,12 +35,11 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Show or hide project name edit box if we are doing a clone operation
+        /// Set the project name
         /// </summary>
-        public void SetForCloneOperation(bool isClone)
+        public void SetProjectName(string projectName)
         {
-            cloneOperation = isClone;
-            textBoxProjectName.Enabled = labelCloneOperation.Enabled = !isClone;
+            textBoxProjectName.Text = projectName;
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace GitForce
                 // Additional check for clone operation:
                 //  If a project name is not present, the root needs to exist and be an empty directory
                 //     (the check for 'exist' is already made in the step above)
-                if (cloneOperation && textBoxProjectName.Text.Trim().Length == 0)
+                if (CheckTargetDirEmpty && textBoxProjectName.Text.Trim().Length == 0)
                 {
                     btOK.Enabled &= (Directory.GetFiles(textBoxRepoPath.Text).Length == 0) &&
                                     (Directory.GetDirectories(textBoxRepoPath.Text).Length == 0);

@@ -165,10 +165,32 @@ namespace GitForce.Main.Right.Panels
             BackToStep1:
             if (newRepoStep1.ShowDialog() == DialogResult.OK)
             {
-                // For clone operation, apply extra directory rules:
-                //  The final directory has to exist and be empty, but the user can also
-                //  specify additional 'project name' and that directory will be created
-                newRepoStep2.SetForCloneOperation(newRepoStep1.Type != "empty");
+                // Depending on the type of the source, establish that:
+                //  For clone operations:
+                //  - The final directory has to exist and be empty
+                //  - New repo name will be suggested based on the source project names
+                switch (newRepoStep1.Type)
+                {
+                    case "empty":
+                        newRepoStep2.SetProjectName("");
+                        newRepoStep2.CheckTargetDirEmpty = false;
+                        break;
+                    case "local":
+                        string targetProjectName = newRepoStep1.Local.Replace(Path.GetDirectoryName(newRepoStep1.Local), "");
+                        newRepoStep2.SetProjectName(targetProjectName);
+                        newRepoStep2.CheckTargetDirEmpty = true;
+                        break;
+                    case "remote":
+                        ClassRemotes.Remote r = newRepoStep1.Remote;
+                        string remoteProjectName = r.UrlFetch;
+                        string[] parts = remoteProjectName.Split(new char[] {'.', '\\', '/', ':'});
+                        if (parts.Length>1 && parts[parts.Length-1]=="git")
+                            newRepoStep2.SetProjectName(parts[parts.Length-2]);
+                        else
+                            newRepoStep2.SetProjectName("");
+                        newRepoStep2.CheckTargetDirEmpty = true;
+                        break;
+                }
 
             BackToStep2:
                 DialogResult result = newRepoStep2.ShowDialog();
