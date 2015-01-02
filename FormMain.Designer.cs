@@ -76,12 +76,14 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.rightTabControl = new GitForce.TabEx();
             this.listStatus = new System.Windows.Forms.ListBox();
             this.menuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStatusCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStatusSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStatusClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdBox = new GitForce.TextBoxEx();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btUpdate = new System.Windows.Forms.ToolStripButton();
@@ -108,8 +110,6 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
-            this.rightTabControl = new GitForce.TabEx();
-            this.cmdBox = new GitForce.TextBoxEx();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -524,6 +524,17 @@
             this.splitContainer2.SplitterDistance = 373;
             this.splitContainer2.TabIndex = 0;
             // 
+            // rightTabControl
+            // 
+            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
+            this.rightTabControl.Name = "rightTabControl";
+            this.rightTabControl.SelectedIndex = 0;
+            this.rightTabControl.ShowToolTips = true;
+            this.rightTabControl.Size = new System.Drawing.Size(407, 237);
+            this.rightTabControl.TabIndex = 0;
+            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
+            // 
             // listStatus
             // 
             this.listStatus.ContextMenuStrip = this.menuStatus;
@@ -575,6 +586,18 @@
             this.menuStatusClear.Size = new System.Drawing.Size(122, 22);
             this.menuStatusClear.Text = "Clear";
             this.menuStatusClear.Click += new System.EventHandler(this.MenuSelectClearClick);
+            // 
+            // cmdBox
+            // 
+            this.cmdBox.AcceptsReturn = true;
+            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
+            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBox.Location = new System.Drawing.Point(0, 165);
+            this.cmdBox.Name = "cmdBox";
+            this.cmdBox.Size = new System.Drawing.Size(784, 23);
+            this.cmdBox.TabIndex = 1;
+            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
             // 
             // toolStrip
             // 
@@ -835,29 +858,6 @@
             this.saveTools.DefaultExt = "*.xml";
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
-            // 
-            // rightTabControl
-            // 
-            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
-            this.rightTabControl.Name = "rightTabControl";
-            this.rightTabControl.SelectedIndex = 0;
-            this.rightTabControl.ShowToolTips = true;
-            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
-            this.rightTabControl.TabIndex = 0;
-            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
-            // 
-            // cmdBox
-            // 
-            this.cmdBox.AcceptsReturn = true;
-            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
-            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdBox.Location = new System.Drawing.Point(0, 165);
-            this.cmdBox.Name = "cmdBox";
-            this.cmdBox.Size = new System.Drawing.Size(784, 23);
-            this.cmdBox.TabIndex = 1;
-            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
             // 
             // FormMain
             // 
