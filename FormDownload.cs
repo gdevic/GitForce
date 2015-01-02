@@ -17,14 +17,14 @@ namespace GitForce
         private bool isCompleted;
         private readonly string webPage;
         private readonly string regEx;
-        private readonly bool mergeWebPath;
+        private readonly string mergeWebPath;
 
         /// <summary>
         /// Local path and name of the file that was downloaded
         /// </summary>
         public string TargetFile { get; private set; }
 
-        public FormDownload(string title, string webPageArg, string regExArg, bool mergeWebPathArg)
+        public FormDownload(string title, string webPageArg, string regExArg, string mergeWebPathArg)
         {
             InitializeComponent();
             Text = title;
@@ -120,9 +120,9 @@ namespace GitForce
                 {
                     targetFile = r.Match(file.ToString()).Result("${file}");
 
-                    // Merge the root of the target web page with the name of the file to download
-                    if (mergeWebPath)
-                        targetFile = webPage + targetFile;
+                    // Optionally merge the root of the target web page with the name of the file to download
+                    if (!string.IsNullOrEmpty(mergeWebPath))
+                        targetFile = webPage + mergeWebPath + targetFile;
 
                     return true;
                 }

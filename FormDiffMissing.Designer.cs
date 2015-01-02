@@ -47,15 +47,14 @@
             // 
             // labelInfo
             // 
-            this.labelInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelInfo.BackColor = System.Drawing.SystemColors.Info;
             this.labelInfo.Location = new System.Drawing.Point(12, 9);
             this.labelInfo.Name = "labelInfo";
             this.labelInfo.Size = new System.Drawing.Size(349, 43);
             this.labelInfo.TabIndex = 0;
-            this.labelInfo.Text = "Could not locate a diff utility! This program will have some of its functionality" +
-                " limited until you install a Diff program.";
+            this.labelInfo.Text = "Could not locate a data comparison (or \"diff\") tool. This program may have some of its functionality limited until you install a diff program.\r\n";
             // 
             // btClose
             // 
@@ -70,13 +69,13 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.Location = new System.Drawing.Point(12, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(349, 23);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Currently known diff utilities are:";
+            this.label2.Text = "Recommended diff utilities (pick one):";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label3
@@ -153,7 +152,7 @@
             this.linkLabel5.Size = new System.Drawing.Size(30, 13);
             this.linkLabel5.TabIndex = 9;
             this.linkLabel5.TabStop = true;
-            this.linkLabel5.Tag = "http://meld.sourceforge.net/index.html";
+            this.linkLabel5.Tag = "http://meldmerge.org";
             this.linkLabel5.Text = "Meld";
             this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
@@ -183,16 +182,16 @@
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.Location = new System.Drawing.Point(12, 165);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(349, 65);
             this.label5.TabIndex = 12;
-            this.label5.Text = "GitForce will automatically recognize these if they are installed. In Linux, for " +
-                "example, you can install one by simply issuing \"sudo apt-get install xxdiff\" com" +
-                "mand.";
+            this.label5.Text = "GitForce will automatically recognize one of those if installed. In Linux, for ex" +
+    "ample, you can install one by simply issuing \"sudo apt-get install xxdiff\" comma" +
+    "nd.";
             // 
             // btOK
             // 
@@ -246,7 +245,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Missing Diff utility!";
+            this.Text = "Missing diff utility!";
             this.ResumeLayout(false);
             this.PerformLayout();
 

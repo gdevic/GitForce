@@ -73,9 +73,12 @@ namespace GitForce
             string installerFile = Path.GetTempFileName(); // Junk name so we can safely call 'Delete'
             try
             {
+                // msysgit is hosted at https://github.com/msysgit/msysgit/releases
+                // and the files can be downloaded at the subfolder 'download':
+
                 FormDownload msysgit = new FormDownload("Download msysgit",
-                    @"http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git",
-                    @"//(?<file>\S+.exe)", false);
+                    @"https://github.com/msysgit/msysgit/releases",
+                    @"(?<file>Git-[1-2]+.[0-9]+.[0-9]+-\S+.exe)", "/download/");
 
                 // If the download succeeded, run the installer file
                 if(msysgit.ShowDialog()==DialogResult.OK)

@@ -19,8 +19,11 @@ namespace GitForce
 
             if(!ClassUtils.IsMono())
             {
-                labelInfo.Text += " If you click on the 'Install' button below, I will download and install KDiff3 for you.";
-                //btInstall.Visible = true;
+                // Disabling the auto-download of KDiff3 for now until I figure out
+                // how to pick up a file from that SF site...
+                //
+                // labelInfo.Text += "If you prefer, I can download and install KDiff3 for you.";
+                // btInstall.Visible = true;
             }
         }
 
@@ -49,8 +52,8 @@ namespace GitForce
             try
             {
                 FormDownload formDownload = new FormDownload("Download KDiff3",
-                    @"https://github.com/gdevic/KDiff3/downloads/",
-                    @">(?<file>\S+.exe)", true);
+                    @"https://sourceforge.net/projects/kdiff3/files/kdiff3/0.9.98",
+                    @">(?<file>\S+.exe)", "/download/");
 
                 // If the download succeeded, run the installer file
                 if (formDownload.ShowDialog() == DialogResult.OK)
