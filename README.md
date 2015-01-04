@@ -5,21 +5,19 @@ GitForce is a GUI front-ends for the git command line tool. GitForce runs on bot
 
 ## Links
 
-* Documentation [link](http://gdevic.github.com/GitForce)
-* Forum [link](http://devic.us/GitForce)
+* Documentation [link](https://sites.google.com/site/gitforcetool/home)
+* Forum [link](https://sourceforge.net/p/gitforce/discussion)
 
 Setting up dev environment
 --------------------------
 
-On Windows OS, install MSVC 2008.
-
+On Windows OS, install MSVC 2010 SP1 or MSVC 2012.
 On Linux OS, install Mono.
 
 The current code has been developed on Windows and the same binary works well on Linux (using Mono).
-Going the other way may or may not work.
+It should also work on other OS-es that have Mono support.
 
 Screenshot
 ----------
 
-![http://gdevic.github.com/GitForce/Resources/gitforce-windows.gif](http://gdevic.github.com/GitForce/Resources/gitforce-windows.gif)
-
+![https://a.fsdn.com/con/app/proj/gitforce/screenshots/gitforce-main-window.png](https://sourceforge.net/p/gitforce)
