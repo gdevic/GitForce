@@ -190,8 +190,7 @@
             this.label5.Size = new System.Drawing.Size(349, 65);
             this.label5.TabIndex = 12;
             this.label5.Text = "GitForce will automatically recognize one of those if installed. In Linux, for ex" +
-    "ample, you can install one by simply issuing \"sudo apt-get install xxdiff\" comma" +
-    "nd.";
+    "ample, you can install one by simply issuing \"sudo apt-get install meld\" command.";
             // 
             // btOK
             // 
