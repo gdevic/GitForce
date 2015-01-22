@@ -44,27 +44,37 @@ namespace GitForce
         /// <summary>
         /// Thread handle for function that checks for a new version.
         /// </summary>
-        //private readonly Thread threadCheck;
+        private readonly Thread threadCheck;
+
+        /// <summary>
+        /// Web request object that tries to fetch text from a target website
+        /// </summary>
+        private readonly WebRequest request;
 
         /// <summary>
         /// Class constructor starts a new version check thread.
         /// </summary>
         public ClassVersion()
         {
-            // TODO: Need to find a new home for release builds
-            //threadCheck = new Thread(ThreadVersionCheck);
-            //threadCheck.Start();
+            // Create a web request object
+            request = WebRequest.Create("http://sourceforge.net/projects/gitforce/");
+            request.Timeout = 5000;
+
+            // Create and start the thread to check for the new version
+            threadCheck = new Thread(ThreadVersionCheck);
+            threadCheck.Start();
         }
 
         /// <summary>
         /// Terminates the version check thread, if it is still running.
-        /// TODO: This never worked consistently
         /// </summary>
         ~ClassVersion()
         {
+            // Abort the web request
+            request.Abort();
             // Abort the thread. First give it a nice nudge and then simply abort it.
-            //threadCheck.Join(1);
-            //threadCheck.Abort();
+            threadCheck.Join(1);
+            threadCheck.Abort();
         }
 
         /// <summary>
@@ -76,8 +86,6 @@ namespace GitForce
             try
             {
                 StringBuilder file = new StringBuilder();
-                WebRequest request = WebRequest.Create("https://github.com/gdevic/GitForce/blob/master/Properties/AssemblyInfo.cs");
-                request.Timeout = 1000;
                 using (WebResponse response = request.GetResponse())
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
@@ -88,7 +96,7 @@ namespace GitForce
 
                 // Search for the version string, for example:
                 // [assembly: AssemblyFileVersion(&quot;1.0.11&quot;)]
-                string sPattern = @"AssemblyFileVersion\(&quot;(?<major>\d+).(?<minor>\d+).(?<build>\d+)&quot;\)";
+                string sPattern = @"GitForce-(?<major>\d+).(?<minor>\d+).(?<build>\d+).exe";
                 Regex r = new Regex(sPattern, RegexOptions.Compiled);
                 if (r.IsMatch(file.ToString()))
                 {
