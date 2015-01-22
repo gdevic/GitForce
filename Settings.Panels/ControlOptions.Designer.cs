@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.checkBoxTabs = new System.Windows.Forms.CheckBox();
-            this.checkBoxWarnMultipleInstances = new System.Windows.Forms.CheckBox(); 
+            this.checkBoxWarnMultipleInstances = new System.Windows.Forms.CheckBox();
+            this.checkBoxAutoCloseGitOnSuccess = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // checkBoxTabs
@@ -52,10 +53,21 @@
             this.checkBoxWarnMultipleInstances.Text = "&Warn before starting additional instance of GitForce";
             this.checkBoxWarnMultipleInstances.UseVisualStyleBackColor = true;
             // 
+            // checkBoxAutoCloseGitOnSuccess
+            // 
+            this.checkBoxAutoCloseGitOnSuccess.AutoSize = true;
+            this.checkBoxAutoCloseGitOnSuccess.Location = new System.Drawing.Point(3, 49);
+            this.checkBoxAutoCloseGitOnSuccess.Name = "checkBoxAutoCloseGitOnSuccess";
+            this.checkBoxAutoCloseGitOnSuccess.Size = new System.Drawing.Size(211, 17);
+            this.checkBoxAutoCloseGitOnSuccess.TabIndex = 2;
+            this.checkBoxAutoCloseGitOnSuccess.Text = "&Close git command window on success";
+            this.checkBoxAutoCloseGitOnSuccess.UseVisualStyleBackColor = true;
+            // 
             // ControlOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBoxAutoCloseGitOnSuccess);
             this.Controls.Add(this.checkBoxTabs);
             this.Controls.Add(this.checkBoxWarnMultipleInstances);
             this.Name = "ControlOptions";
@@ -70,6 +82,7 @@
 
         private System.Windows.Forms.CheckBox checkBoxTabs;
         private System.Windows.Forms.CheckBox checkBoxWarnMultipleInstances;
+        private System.Windows.Forms.CheckBox checkBoxAutoCloseGitOnSuccess;
 
     }
 }

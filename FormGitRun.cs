@@ -6,8 +6,7 @@ namespace GitForce
 {
     /// <summary>
     /// Run a Git command using threading and a run window.
-    /// This form should be used for Git commands that take long time to complete,
-    /// such are clone, push and pull.
+    /// This form should be used for Git commands that take long time to complete, such are clone, push and pull.
     /// </summary>
     public partial class FormGitRun : Form
     {
@@ -100,6 +99,10 @@ namespace GitForce
             {
                 toolStripStatus.Text = "Git command completed successfully.";
                 textStdout.AppendText("Git command completed successfully.", Color.Green);
+                // On success, auto-close the dialog if the user's preference was checked
+                // This behavior can be skipped if the user holds down the Control key
+                if (Properties.Settings.Default.AutoCloseGitOnSuccess && Control.ModifierKeys != Keys.Control)
+                    DialogResult = DialogResult.OK;
             }
             else
             {
@@ -111,10 +114,9 @@ namespace GitForce
         }
 
         /// <summary>
-        /// When the user presses ESC key, close the dialog, but *only* if the git operation
-        /// is completed.
-        /// We need to hook into the key chain and test the completion by checking the button
-        /// text. The text changes depending on the execution status.
+        /// When the user presses ESC key, close the dialog, but *only* if the git operation is completed.
+        /// We need to hook into the key chain and test the completion by checking the button text.
+        /// The text changes depending on the execution status.
         /// </summary>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -149,8 +151,7 @@ namespace GitForce
 
         /// <summary>
         /// Call this function when the command completed, or is about to complete.
-        /// It signals to the user the end of command by enabling the text box
-        /// and disabling the progress indicator.
+        /// It signals to the user the end of command by enabling the text box and disabling the progress indicator.
         /// </summary>
         private void StopProgress()
         {
