@@ -48,7 +48,7 @@
             this.btCancel.Location = new System.Drawing.Point(369, 308);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancel.TabIndex = 8;
+            this.btCancel.TabIndex = 9;
             this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
             // 
@@ -59,7 +59,7 @@
             this.btNext.Location = new System.Drawing.Point(288, 308);
             this.btNext.Name = "btNext";
             this.btNext.Size = new System.Drawing.Size(75, 23);
-            this.btNext.TabIndex = 7;
+            this.btNext.TabIndex = 8;
             this.btNext.Text = "Next >>";
             this.btNext.UseVisualStyleBackColor = true;
             // 
@@ -71,7 +71,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(432, 33);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Select what kind of repository you are creating:";
             // 
             // rbEmpty
@@ -106,7 +106,7 @@
             this.rbRemote.Location = new System.Drawing.Point(12, 134);
             this.rbRemote.Name = "rbRemote";
             this.rbRemote.Size = new System.Drawing.Size(200, 17);
-            this.rbRemote.TabIndex = 5;
+            this.rbRemote.TabIndex = 6;
             this.rbRemote.Tag = "remote";
             this.rbRemote.Text = "Clone of an existing remote repository";
             this.rbRemote.UseVisualStyleBackColor = true;
@@ -120,7 +120,7 @@
             this.textBoxLocal.Name = "textBoxLocal";
             this.textBoxLocal.ReadOnly = true;
             this.textBoxLocal.Size = new System.Drawing.Size(331, 20);
-            this.textBoxLocal.TabIndex = 3;
+            this.textBoxLocal.TabIndex = 4;
             this.textBoxLocal.TextChanged += new System.EventHandler(this.TextBoxLocalTextChanged);
             // 
             // label2
@@ -129,7 +129,7 @@
             this.label2.Location = new System.Drawing.Point(29, 88);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(331, 13);
-            this.label2.TabIndex = 8;
+            this.label2.TabIndex = 3;
             this.label2.Text = "Select the location containing a git repository you want to clone from:";
             // 
             // btBrowse
@@ -139,7 +139,7 @@
             this.btBrowse.Location = new System.Drawing.Point(369, 105);
             this.btBrowse.Name = "btBrowse";
             this.btBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btBrowse.TabIndex = 4;
+            this.btBrowse.TabIndex = 5;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
             this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
@@ -152,7 +152,7 @@
             this.remoteDisplay.MinimumSize = new System.Drawing.Size(309, 119);
             this.remoteDisplay.Name = "remoteDisplay";
             this.remoteDisplay.Size = new System.Drawing.Size(412, 148);
-            this.remoteDisplay.TabIndex = 6;
+            this.remoteDisplay.TabIndex = 7;
             // 
             // FormNewRepoStep1
             // 

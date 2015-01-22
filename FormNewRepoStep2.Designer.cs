@@ -49,7 +49,7 @@
             this.btCancel.Location = new System.Drawing.Point(369, 308);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancel.TabIndex = 0;
+            this.btCancel.TabIndex = 7;
             this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
             // 
@@ -61,7 +61,7 @@
             this.btOK.Location = new System.Drawing.Point(288, 308);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 1;
+            this.btOK.TabIndex = 6;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
             // 
@@ -72,7 +72,7 @@
             this.btPrev.Location = new System.Drawing.Point(207, 308);
             this.btPrev.Name = "btPrev";
             this.btPrev.Size = new System.Drawing.Size(75, 23);
-            this.btPrev.TabIndex = 2;
+            this.btPrev.TabIndex = 5;
             this.btPrev.Text = "<< Prev";
             this.btPrev.UseVisualStyleBackColor = true;
             // 
@@ -95,7 +95,7 @@
             this.textBoxRepoPath.Location = new System.Drawing.Point(12, 48);
             this.textBoxRepoPath.Name = "textBoxRepoPath";
             this.textBoxRepoPath.Size = new System.Drawing.Size(351, 20);
-            this.textBoxRepoPath.TabIndex = 4;
+            this.textBoxRepoPath.TabIndex = 0;
             this.textBoxRepoPath.TextChanged += new System.EventHandler(this.TextBoxRepoPathTextChanged);
             // 
             // btBrowse
@@ -104,7 +104,7 @@
             this.btBrowse.Location = new System.Drawing.Point(369, 45);
             this.btBrowse.Name = "btBrowse";
             this.btBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btBrowse.TabIndex = 5;
+            this.btBrowse.TabIndex = 1;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
             this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
@@ -125,7 +125,7 @@
             this.textBoxExtraArgs.Location = new System.Drawing.Point(12, 152);
             this.textBoxExtraArgs.Name = "textBoxExtraArgs";
             this.textBoxExtraArgs.Size = new System.Drawing.Size(351, 20);
-            this.textBoxExtraArgs.TabIndex = 7;
+            this.textBoxExtraArgs.TabIndex = 4;
             this.textBoxExtraArgs.TextChanged += new System.EventHandler(this.TextBoxExtraArgsTextChanged);
             // 
             // checkBoxBare
@@ -134,7 +134,7 @@
             this.checkBoxBare.Location = new System.Drawing.Point(12, 116);
             this.checkBoxBare.Name = "checkBoxBare";
             this.checkBoxBare.Size = new System.Drawing.Size(312, 17);
-            this.checkBoxBare.TabIndex = 8;
+            this.checkBoxBare.TabIndex = 3;
             this.checkBoxBare.Text = "Create a shared or \"bare\" repository with no working files in it";
             this.checkBoxBare.UseVisualStyleBackColor = true;
             this.checkBoxBare.CheckedChanged += new System.EventHandler(this.CheckBoxBareCheckedChanged);
@@ -153,7 +153,7 @@
             this.textBoxProjectName.Location = new System.Drawing.Point(12, 75);
             this.textBoxProjectName.Name = "textBoxProjectName";
             this.textBoxProjectName.Size = new System.Drawing.Size(133, 20);
-            this.textBoxProjectName.TabIndex = 10;
+            this.textBoxProjectName.TabIndex = 2;
             this.textBoxProjectName.TextChanged += new System.EventHandler(this.TextBoxRepoPathTextChanged);
             // 
             // FormNewRepoStep2

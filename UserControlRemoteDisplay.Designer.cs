@@ -51,7 +51,7 @@
             this.btSsh.Location = new System.Drawing.Point(341, 115);
             this.btSsh.Name = "btSsh";
             this.btSsh.Size = new System.Drawing.Size(75, 23);
-            this.btSsh.TabIndex = 10;
+            this.btSsh.TabIndex = 12;
             this.btSsh.Text = "SSH...";
             this.btSsh.UseVisualStyleBackColor = true;
             this.btSsh.Click += new System.EventHandler(this.BtSshClick);
@@ -64,7 +64,7 @@
             this.textPushCmd.Name = "textPushCmd";
             this.textPushCmd.ReadOnly = true;
             this.textPushCmd.Size = new System.Drawing.Size(334, 20);
-            this.textPushCmd.TabIndex = 3;
+            this.textPushCmd.TabIndex = 9;
             // 
             // label1
             // 
@@ -72,7 +72,7 @@
             this.label1.Location = new System.Drawing.Point(6, 94);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
-            this.label1.TabIndex = 9;
+            this.label1.TabIndex = 8;
             this.label1.Text = "Cmd> push";
             // 
             // textPassword
@@ -83,7 +83,7 @@
             this.textPassword.PasswordChar = '*';
             this.textPassword.ReadOnly = true;
             this.textPassword.Size = new System.Drawing.Size(111, 20);
-            this.textPassword.TabIndex = 4;
+            this.textPassword.TabIndex = 11;
             this.textPassword.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
             // label5
@@ -92,7 +92,7 @@
             this.label5.Location = new System.Drawing.Point(6, 120);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 13);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 10;
             this.label5.Text = "HTTPS Pwd:";
             // 
             // textUrlPush
@@ -104,7 +104,7 @@
             this.textUrlPush.Name = "textUrlPush";
             this.textUrlPush.ReadOnly = true;
             this.textUrlPush.Size = new System.Drawing.Size(297, 20);
-            this.textUrlPush.TabIndex = 2;
+            this.textUrlPush.TabIndex = 6;
             this.textUrlPush.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
             // textUrlFetch
@@ -116,7 +116,7 @@
             this.textUrlFetch.Name = "textUrlFetch";
             this.textUrlFetch.ReadOnly = true;
             this.textUrlFetch.Size = new System.Drawing.Size(298, 20);
-            this.textUrlFetch.TabIndex = 1;
+            this.textUrlFetch.TabIndex = 3;
             this.textUrlFetch.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
             // groupBox1
@@ -140,7 +140,7 @@
             this.groupBox1.Location = new System.Drawing.Point(1, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(422, 143);
-            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // btWWW2
@@ -150,7 +150,7 @@
             this.btWWW2.Location = new System.Drawing.Point(386, 63);
             this.btWWW2.Name = "btWWW2";
             this.btWWW2.Size = new System.Drawing.Size(30, 23);
-            this.btWWW2.TabIndex = 12;
+            this.btWWW2.TabIndex = 7;
             this.btWWW2.Tag = "Push";
             this.btWWW2.Text = "->";
             this.btWWW2.UseVisualStyleBackColor = true;
@@ -163,7 +163,7 @@
             this.btWWW1.Location = new System.Drawing.Point(386, 37);
             this.btWWW1.Name = "btWWW1";
             this.btWWW1.Size = new System.Drawing.Size(30, 23);
-            this.btWWW1.TabIndex = 11;
+            this.btWWW1.TabIndex = 4;
             this.btWWW1.Tag = "Fetch";
             this.btWWW1.Text = "->";
             this.btWWW1.UseVisualStyleBackColor = true;
@@ -175,7 +175,7 @@
             this.label4.Location = new System.Drawing.Point(6, 68);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 13);
-            this.label4.TabIndex = 6;
+            this.label4.TabIndex = 5;
             this.label4.Text = "Push URL:";
             // 
             // label3
@@ -184,7 +184,7 @@
             this.label3.Location = new System.Drawing.Point(6, 42);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 5;
+            this.label3.TabIndex = 2;
             this.label3.Text = "Fetch URL:";
             // 
             // textName
@@ -194,7 +194,7 @@
             this.textName.Name = "textName";
             this.textName.ReadOnly = true;
             this.textName.Size = new System.Drawing.Size(111, 20);
-            this.textName.TabIndex = 0;
+            this.textName.TabIndex = 1;
             this.textName.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
             // label2
@@ -203,7 +203,7 @@
             this.label2.Location = new System.Drawing.Point(6, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Name:";
             // 
             // RemoteDisplay
