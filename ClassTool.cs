@@ -266,6 +266,7 @@ namespace GitForce
         /// </summary>
         public static ClassCustomTools Load(string name)
         {
+            App.PrintStatusMessage("Loading custom tools: " + name, MessageType.General);
             ClassCustomTools ct = new ClassCustomTools();
             try
             {
@@ -277,7 +278,10 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage("Error loading custom tools: " + ex.Message, MessageType.Error);
+                // It is OK not to find custom tools file (for example, the app is being run the very first time)
+                // All other errors are being reported
+                if (!(ex is FileNotFoundException))
+                    App.PrintStatusMessage("Error loading custom tools: " + ex.Message, MessageType.Error);
             }
             return ct;
         }
