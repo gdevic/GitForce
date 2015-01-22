@@ -590,36 +590,66 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Fetch from a remote repository
+        /// Fetch from one or more remote repositories.
+        /// If the number of *selected* repos is 2 or more, this function will operate on
+        /// those selected repos irrespective of the current one. Otherwise, fetch the
+        /// current repo. Stops if a repo operation fails.
         /// </summary>
         private void MenuRepoFetch(object sender, EventArgs e)
         {
-            string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
-            PrintStatus("Fetch from a remote repo: " + args, MessageType.General);
-            App.Repos.Current.RunCmd("fetch " + args);
+            List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
+            if (repos.Count <= 1)   // Disregard selected repos and use the current one
+                repos = new List<ClassRepo> { App.Repos.Current };
+            foreach (var r in repos)
+            {
+                string args = r.Remotes.Current + " " + r.Branches.Current;
+                PrintStatus("Fetch from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
+                if (!r.RunCmd("fetch " + args).Success())
+                    break;
+            }
         }
 
         /// <summary>
-        /// Pull from a remote repository
+        /// Pull from one or more remote repositories.
+        /// If the number of *selected* repos is 2 or more, this function will operate on
+        /// those selected repos irrespective of the current one. Otherwise, pull the
+        /// current repo. Stops if a repo operation fails.
         /// </summary>
         private void MenuRepoPull(object sender, EventArgs e)
         {
-            string args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
-            PrintStatus("Pull from a remote repo: " + args, MessageType.General);
-            App.Repos.Current.RunCmd("pull " + args);
+            List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
+            if (repos.Count <= 1)   // Disregard selected repos and use the current one
+                repos = new List<ClassRepo> {App.Repos.Current};
+            foreach (var r in repos)
+            {
+                string args = r.Remotes.Current + " " + r.Branches.Current;
+                PrintStatus("Pull from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
+                if (!r.RunCmd("pull " + args).Success())
+                    break;
+            }
         }
 
         /// <summary>
-        /// Push to remote repository.
+        /// Push to one or more remote repositories.
+        /// If the number of *selected* repos is 2 or more, this function will operate on
+        /// those selected repos irrespective of the current one. Otherwise, push the
+        /// current repo. Stops if a repo operation fails.
         /// Use either the standard form (example: "origin master"), or the user override
         /// </summary>
         private void MenuRepoPush(object sender, EventArgs e)
         {
-            string args = App.Repos.Current.Remotes.GetPushCmd("");
-            if (String.IsNullOrEmpty(args))
-                args = App.Repos.Current.Remotes.Current + " " + App.Repos.Current.Branches.Current;
-            PrintStatus("Push to a remote repo: " + args, MessageType.General);
-            App.Repos.Current.RunCmd("push " + args);
+            List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
+            if (repos.Count <= 1)   // Disregard selected repos and use the current one
+                repos = new List<ClassRepo> { App.Repos.Current };
+            foreach (var r in repos)
+            {
+                string args = r.Remotes.GetPushCmd("");
+                if (String.IsNullOrEmpty(args))
+                    args = r.Remotes.Current + " " + r.Branches.Current;
+                PrintStatus("Push to a remote repo \"" + args + "\" from \"" + r.Root + "\"", MessageType.General);
+                if (!r.RunCmd("push " + args).Success())
+                    break;
+            }
         }
 
         /// <summary>

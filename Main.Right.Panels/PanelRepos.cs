@@ -67,6 +67,21 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
+        /// Returns a list of repos which are selected (not necessarily the "current" or "default")
+        /// </summary>
+        public List<ClassRepo> GetSelectedRepos()
+        {
+            var repos = new List<ClassRepo>();
+            foreach (int index in listRepos.SelectedIndices)
+            {
+                ListViewItem li = listRepos.Items[index];
+                ClassRepo r = li.Tag as ClassRepo;
+                repos.Add(r);
+            }
+            return repos;
+        }
+
+        /// <summary>
         /// Double-clicking on a repository will switch to it.
         /// </summary>
         private void ListReposDoubleClick(object sender, EventArgs e)
