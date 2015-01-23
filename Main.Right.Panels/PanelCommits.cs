@@ -307,7 +307,7 @@ namespace GitForce.Main.Right.Panels
             // Make sure not to touch the 'status' if it's null
             bool isMergeState = status != null && status.IsMergeState();
 
-            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick) { Tag = tag };
+            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick, Keys.Control | Keys.D) { Tag = tag };
             ToolStripMenuItem mSub = isMergeState
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
                                          : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) { Tag = tag };
