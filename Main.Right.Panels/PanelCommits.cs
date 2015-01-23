@@ -39,7 +39,8 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// Gets the selected node i nthe commits tree if only one node is selected, or <code>null</code> if no node or more than one node are selected.
+        /// Gets the selected node in the commits tree if only one node is selected
+        /// or null if no node or more than one node are selected.
         /// </summary>
         public TreeNode SelectedNode
         {
@@ -449,6 +450,11 @@ namespace GitForce.Main.Right.Panels
                     // Create a temp file to store our commit message
                     string tempFile = Path.GetTempFileName();
                     File.WriteAllText(tempFile, commitForm.GetDescription());
+
+                    // If the current repo has only one commit bundle, we don't need to specify each file
+                    // but we can simply commit all files in index
+                    if (status.Repo.Commits.Bundle.Count() == 1)
+                        final = new List<string>();
 
                     // Form the final command with the description file and an optional amend
                     if (status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final))
