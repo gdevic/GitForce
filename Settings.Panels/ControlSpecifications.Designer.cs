@@ -46,15 +46,14 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(300, 30);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Select fixed width font for commit specificaitons. Also chose wrap around columns" +
-                ".";
+            this.label1.Text = "Select fixed width font for commit specificaitons. Also chose wrap around columns.";
             // 
             // label2
             // 
@@ -77,9 +76,9 @@
             // 
             // listFonts
             // 
-            this.listFonts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listFonts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listFonts.FormattingEnabled = true;
             this.listFonts.IntegralHeight = false;
             this.listFonts.Location = new System.Drawing.Point(3, 46);
@@ -90,8 +89,8 @@
             // 
             // listSizes
             // 
-            this.listSizes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listSizes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listSizes.FormattingEnabled = true;
             this.listSizes.IntegralHeight = false;
             this.listSizes.Location = new System.Drawing.Point(244, 46);
@@ -102,8 +101,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.labelSample);
             this.groupBox1.Location = new System.Drawing.Point(0, 147);
             this.groupBox1.Name = "groupBox1";
@@ -120,7 +119,7 @@
             this.labelSample.Name = "labelSample";
             this.labelSample.Size = new System.Drawing.Size(294, 33);
             this.labelSample.TabIndex = 0;
-            this.labelSample.Text = "git: This file caching manager sucks";
+            this.labelSample.Text = "This font will be used for commit messages.";
             // 
             // label6
             // 

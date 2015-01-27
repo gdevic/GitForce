@@ -56,8 +56,8 @@ namespace GitForce
         public void Set(ClassRemotes.Remote repo)
         {
             textName.Text = repo.Name;
-            textUrlFetch.Text = repo.UrlFetch;
-            textUrlPush.Text = repo.UrlPush;
+            textUrlFetch.Text = repo.UrlFetch.Trim();
+            textUrlPush.Text = repo.UrlPush.Trim();
             textPushCmd.Text = repo.PushCmd;
             textPassword.Text = repo.Password;
         }
@@ -69,20 +69,20 @@ namespace GitForce
         public ClassRemotes.Remote Get()
         {
             ClassRemotes.Remote repo = new ClassRemotes.Remote();
-            repo.Name = textName.Text;
-            repo.PushCmd = textPushCmd.Text;
-            repo.Password = textPassword.Text;
+            repo.Name = textName.Text.Trim();
+            repo.PushCmd = textPushCmd.Text.Trim();
+            repo.Password = textPassword.Text.Trim();
 
             // For SSH, make sure the URL string follows the strict format
             if (_fetchUrl.Type == ClassUrl.UrlType.Ssh)
-                repo.UrlFetch = ClassUrl.ToCanonical(textUrlFetch.Text);
+                repo.UrlFetch = ClassUrl.ToCanonical(textUrlFetch.Text.Trim());
             else
-                repo.UrlFetch = textUrlFetch.Text;
+                repo.UrlFetch = textUrlFetch.Text.Trim();
 
             if (_pushUrl.Type == ClassUrl.UrlType.Ssh)
-                repo.UrlPush = ClassUrl.ToCanonical(textUrlPush.Text);
+                repo.UrlPush = ClassUrl.ToCanonical(textUrlPush.Text.Trim());
             else
-                repo.UrlPush = textUrlPush.Text;
+                repo.UrlPush = textUrlPush.Text.Trim();
 
             return repo;
         }
@@ -92,11 +92,11 @@ namespace GitForce
         /// </summary>
         public bool IsValid()
         {
-            _fetchUrl = ClassUrl.Parse(textUrlFetch.Text);
-            _pushUrl = ClassUrl.Parse(textUrlPush.Text);
+            _fetchUrl = ClassUrl.Parse(textUrlFetch.Text.Trim());
+            _pushUrl = ClassUrl.Parse(textUrlPush.Text.Trim());
 
             // Consider valid entry if the name is ok and some combination of urls
-            return textName.Text.Length > 0 && _fetchUrl.Type != ClassUrl.UrlType.Unknown;
+            return textName.Text.Trim().Length > 0 && _fetchUrl.Type != ClassUrl.UrlType.Unknown;
         }
 
         /// <summary>
@@ -128,10 +128,10 @@ namespace GitForce
 
             // Add one of the URLs from our input into the text box of a URL to add
             if (_fetchUrl.Type == ClassUrl.UrlType.Ssh)
-                formSsh.AddHost(textUrlFetch.Text);
+                formSsh.AddHost(textUrlFetch.Text.Trim());
             else
                 if (_pushUrl.Type == ClassUrl.UrlType.Ssh)
-                    formSsh.AddHost(textUrlPush.Text);
+                    formSsh.AddHost(textUrlPush.Text.Trim());
 
             // Show the dialog. A previous call to AddHost will set the "Remote Keys" tab as current,
             // with one of the host strings (URLs) added into the input text box, ready to click on Add Host.
