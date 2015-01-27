@@ -59,8 +59,8 @@ namespace GitForce.Settings.Panels
         {
             if (comboBoxPath.Tag != null || textArgs.Tag !=null)
             {
-                string name = Path.GetFileNameWithoutExtension(comboBoxPath.Text);
-                AppHelper app = new AppHelper(name, comboBoxPath.Text, textArgs.Text);
+                string name = Path.GetFileNameWithoutExtension(comboBoxPath.Text.Trim());
+                AppHelper app = new AppHelper(name, comboBoxPath.Text, textArgs.Text.Trim());
                 Properties.Settings.Default.MergeAppHelper = app.ToString();
 
                 ClassMerge.Configure(app);                

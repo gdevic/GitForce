@@ -37,13 +37,13 @@ namespace GitForce.Settings.Panels
         {
             if (textBoxUserName.Tag != null)
             {
-                ClassConfig.SetGlobal("user.name", textBoxUserName.Text);
+                ClassConfig.SetGlobal("user.name", textBoxUserName.Text.Trim());
                 textBoxUserName.Tag = null;
             }
 
             if (textBoxUserEmail.Tag != null)
             {
-                ClassConfig.SetGlobal("user.email", textBoxUserEmail.Text);
+                ClassConfig.SetGlobal("user.email", textBoxUserEmail.Text.Trim());
                 textBoxUserEmail.Tag = null;
             }
         }

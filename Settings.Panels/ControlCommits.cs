@@ -16,7 +16,7 @@ namespace GitForce.Settings.Panels
         /// <param name="options">All git global settings</param>
         public void Init(string[] options)
         {
-            textBoxLast.Text = Properties.Settings.Default.commitsRetrieveLast.ToString();
+            numBoxLast.Value = Properties.Settings.Default.commitsRetrieveLast;
             rbRetrieveAll.Checked = Properties.Settings.Default.commitsRetrieveAll;
             rbRetrieveLast.Checked = !rbRetrieveAll.Checked;
         }
@@ -33,10 +33,7 @@ namespace GitForce.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            int last;
-            if (int.TryParse(textBoxLast.Text, out last) == false)
-                last = 100;
-            Properties.Settings.Default.commitsRetrieveLast = last;
+            Properties.Settings.Default.commitsRetrieveLast = (int)numBoxLast.Value;
             Properties.Settings.Default.commitsRetrieveAll = rbRetrieveAll.Checked;
         }
 
@@ -45,7 +42,7 @@ namespace GitForce.Settings.Panels
         /// </summary>
         private void RbRetrieveAllCheckedChanged(object sender, EventArgs e)
         {
-            textBoxLast.ReadOnly = rbRetrieveAll.Checked;
+            numBoxLast.ReadOnly = rbRetrieveAll.Checked;
         }
     }
 }
