@@ -39,6 +39,9 @@ namespace GitForce
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
 
+            // Apply the same font we use for description of changes
+            textDescription.Font = Properties.Settings.Default.commitFont;
+
             file = targetFile;
             Sha = String.Empty;
             Text = @"Revision History for //" + targetFile;
