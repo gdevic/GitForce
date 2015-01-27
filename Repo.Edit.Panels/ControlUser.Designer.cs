@@ -32,12 +32,13 @@
             this.textBoxUserName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btCopyGlobal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxUserEmail
             // 
-            this.textBoxUserEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUserEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxUserEmail.Location = new System.Drawing.Point(95, 23);
             this.textBoxUserEmail.Name = "textBoxUserEmail";
             this.textBoxUserEmail.Size = new System.Drawing.Size(205, 20);
@@ -45,8 +46,8 @@
             // 
             // textBoxUserName
             // 
-            this.textBoxUserName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUserName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxUserName.Location = new System.Drawing.Point(95, -3);
             this.textBoxUserName.Name = "textBoxUserName";
             this.textBoxUserName.Size = new System.Drawing.Size(205, 20);
@@ -70,10 +71,23 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Repo User Name:";
             // 
+            // btCopyGlobal
+            // 
+            this.btCopyGlobal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btCopyGlobal.Location = new System.Drawing.Point(95, 49);
+            this.btCopyGlobal.Name = "btCopyGlobal";
+            this.btCopyGlobal.Size = new System.Drawing.Size(205, 23);
+            this.btCopyGlobal.TabIndex = 8;
+            this.btCopyGlobal.Text = "Copy Global Settings";
+            this.btCopyGlobal.UseVisualStyleBackColor = true;
+            this.btCopyGlobal.Click += new System.EventHandler(this.CopyGlobal);
+            // 
             // ControlUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btCopyGlobal);
             this.Controls.Add(this.textBoxUserEmail);
             this.Controls.Add(this.textBoxUserName);
             this.Controls.Add(this.label2);
@@ -91,5 +105,6 @@
         private System.Windows.Forms.TextBox textBoxUserName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btCopyGlobal;
     }
 }

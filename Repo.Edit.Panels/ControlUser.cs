@@ -37,7 +37,7 @@ namespace GitForce.Repo.Edit.Panels
             if (textBoxUserName.Tag != null)
             {
                 // Change the repo config and our internal variable so we dont need to reload
-                ClassConfig.SetLocal(repo, "user.name", textBoxUserName.Text);
+                ClassConfig.SetLocal(repo, "user.name", textBoxUserName.Text.Trim());
                 repo.UserName = textBoxUserName.Text;
                 textBoxUserName.Tag = null;
             }
@@ -45,10 +45,19 @@ namespace GitForce.Repo.Edit.Panels
             if (textBoxUserEmail.Tag != null)
             {
                 // Change the repo config and our internal variable so we dont need to reload
-                ClassConfig.SetLocal(repo, "user.email", textBoxUserEmail.Text);
+                ClassConfig.SetLocal(repo, "user.email", textBoxUserEmail.Text.Trim());
                 repo.UserEmail = textBoxUserEmail.Text;
                 textBoxUserEmail.Tag = null;
             }
+        }
+
+        /// <summary>
+        /// Copy global user name and email address settings
+        /// </summary>
+        private void CopyGlobal(object sender, System.EventArgs e)
+        {
+            textBoxUserName.Text = ClassConfig.GetGlobal("user.name");
+            textBoxUserEmail.Text = ClassConfig.GetGlobal("user.email");
         }
     }
 }
