@@ -307,7 +307,7 @@ namespace GitForce.Main.Right.Panels
             // Make sure not to touch the 'status' if it's null
             bool isMergeState = status != null && status.IsMergeState();
 
-            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick, Keys.Control | Keys.D) { Tag = tag };
+            ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick, Keys.Control | Keys.Z) { Tag = tag };
             ToolStripMenuItem mSub = isMergeState
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
                                          : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) { Tag = tag };
@@ -316,7 +316,7 @@ namespace GitForce.Main.Right.Panels
                                           ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
                                           : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) { Tag = tag };
             ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick, Keys.Delete) { Tag = tag };
-            ToolStripMenuItem mUnstage = new ToolStripMenuItem("Remove From Index", null, MenuUnstageClick) { Tag = tag };
+            ToolStripMenuItem mUnstage = new ToolStripMenuItem("Unstage", null, MenuUnstageClick) { Tag = tag };
 
             // Build the "Resolve" submenu
             ToolStripMenuItem mResolveTool = new ToolStripMenuItem("Run Merge Tool...", null, MenuMergeTool) { Tag = tag };
@@ -569,20 +569,15 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// Unstage selected files or a submit bundle
+        /// Unstage selected files; remove them from index
         /// </summary>
         private void MenuUnstageClick(object sender, EventArgs e)
         {
-            var files = GetFilesToUnstage(((ToolStripMenuItem)sender).Tag);
-
             // Get the files checked for commit
+            var files = GetFilesToUnstage(((ToolStripMenuItem)sender).Tag);
             if (files.Count <= 0) return;
 
-            if (MessageBox.Show("This will remove all the selected files from the git index (but will not change the actual files).\n\nProceed?",
-                    "Remove From Index (Unstage)", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
-
-            // Renamed files are handled first
-            // Simply rename them back to their original names
+            // Renamed files are handled first; simply rename them back to their original names
             List<string> used = new List<string>();
             foreach (var s in files)
             {
@@ -592,18 +587,10 @@ namespace GitForce.Main.Right.Panels
                 used.Add(s);
             }
             files = files.Except(used).ToList();
-
-            // With whatever is left...
             if (files.Count > 0)
             {
-                // There are 2 ways to unstage a file:
-                // https://git.wiki.kernel.org/index.php/GitFaq#Why_is_.22git_rm.22_not_the_inverse_of_.22git_add.22.3F
-                // Can't figure out how to find out which one to use at this moment, so use both.
-                if (status.Repo.GitReset("HEAD", files) == true)
-                {
-                    App.PrintStatusMessage("Retrying using the `rm` option...", MessageType.General);
-                    status.Repo.GitDelete("--cached", files);
-                }
+                // Reset selected files to HEAD
+                status.Repo.GitReset("HEAD", files);
             }
             App.DoRefresh();
         }

@@ -56,8 +56,8 @@ namespace GitForce
         public void Set(ClassRemotes.Remote repo)
         {
             textName.Text = repo.Name;
-            textUrlFetch.Text = repo.UrlFetch.Trim();
-            textUrlPush.Text = repo.UrlPush.Trim();
+            textUrlFetch.Text = repo.UrlFetch;
+            textUrlPush.Text = repo.UrlPush;
             textPushCmd.Text = repo.PushCmd;
             textPassword.Text = repo.Password;
         }
@@ -146,7 +146,12 @@ namespace GitForce
         {
             string key = ((Button) sender).Tag.ToString();
             ClassUrl.Url url = key == "Fetch" ? _fetchUrl : _pushUrl;
-            ClassUtils.OpenWebLink("www." + url.Host);
+            // Find the generic host name
+            string target = "www." + url.Host;
+            // Detect some special hosts for which we can form a complete path
+            if (url.Host.Contains("github"))
+                target += "/" + url.Path;
+            ClassUtils.OpenWebLink(target);
         }
     }
 }

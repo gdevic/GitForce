@@ -33,7 +33,16 @@ namespace GitForce
             try
             {
                 using (StreamReader sr = new StreamReader(file))
-                    textBox.Text = sr.ReadToEnd();
+                {
+                    // Read a configuration file which may use Windows or Unix specific newline code:
+                    // CR = 0D  \r
+                    // LF = 0A  \n
+                    // Windows OS uses CR LF, Unix OS uses LF only
+                    string content = sr.ReadToEnd();
+                    content = content.Replace("\r", String.Empty);        // Remove 0D (\r) character
+                    content = content.Replace("\n", Environment.NewLine); // Make sure we use OS-specific newline
+                    textBox.Text = content;
+                }
                 FileName = file;
             }
             catch (Exception ex)
@@ -52,8 +61,16 @@ namespace GitForce
             bool result = true;
             try
             {
-                using(StreamWriter sw = new StreamWriter(file))
-                    sw.WriteLine(textBox.Text);
+                using (StreamWriter sw = new StreamWriter(file))
+                {
+                    // Write the content of the text box while trimming each line and ignoring empty ones
+                    // IMPORTANT: Write using the OS-specific newline! Required setting: core.autocrlf true
+                    for (int i = 0; i < textBox.Lines.Length; i++)
+                    {
+                        if (textBox.Lines[i].Trim().Length > 0)
+                            sw.WriteLine(textBox.Lines[i].Trim());
+                    }
+                }
                 FileName = file;
             }
             catch (Exception ex)

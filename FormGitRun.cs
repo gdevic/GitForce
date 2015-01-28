@@ -79,6 +79,16 @@ namespace GitForce
         /// </summary>
         private void PStderr(String message)
         {
+            // This is a workaround for Linux Mono:
+            // On Windows, when we clone a remote repo, we receive each status line as a separate message
+            // On Linux, it is all clumped together without any newlines (or 0A), so we inject them
+            if (ClassUtils.IsMono())
+            {
+                // A bit of a hack since we simply hard-code recognized types of messages. Oh, well...
+                message = message.Replace("remote:", Environment.NewLine + "remote:");
+                message = message.Replace("Receiving", Environment.NewLine + "Receiving");
+                message = message.Replace("Resolving", Environment.NewLine + "Resolving");
+            }
             textStdout.AppendText(ClassUtils.ToPlainAscii(message) + Environment.NewLine, Color.Red);
 
             // Keep the newly added text visible

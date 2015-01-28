@@ -347,13 +347,17 @@ namespace GitForce
             StringBuilder str = new StringBuilder();
             for (int i = 0; i < s.Length; i++)
             {
-                if (!Char.IsControl(s[i]))
+                if (!Char.IsControl(s[i]) || s[i]=='\n')
                     str.Append(s[i]);
                 else
                 {   // Strip ANSI escape codes from the string
                     // http://ascii-table.com/ansi-escape-sequences.php
+                    // Skip all non-characters (ANSI code terminates with a alpha character)
                     if (s[i] == 27 && i<s.Length-1 && s[i+1]=='[')
-                        while(i<s.Length && !Char.IsLetter(s[i])) i++;
+                        while (i < s.Length && !Char.IsLetter(s[i])) i++;
+                    // Get rid of the terminating ANSI character
+                    if (i<s.Length && Char.IsLetter(s[i]))
+                        i++;
                 }
             }
             return str.ToString();
