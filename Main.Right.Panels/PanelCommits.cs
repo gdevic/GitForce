@@ -468,6 +468,17 @@ namespace GitForce.Main.Right.Panels
                             App.Repos.Current.Commits.Bundle.Remove(c);
                         else
                             c.Description = "Default";
+
+                        // Occasionally, run the garbage collection on the loose objects in the repo.
+                        // On average, do it once after every 10 commits. This is statistical and not
+                        // guaranteed, but it is very likely that it will prevent accumulation of loose
+                        // objects in the long run and the user will not have to worry about it at all.
+                        Random random = new Random();
+                        if (random.Next(0, 100) <= 10)
+                        {
+                            App.PrintStatusMessage("Running garbage collection, please wait...", MessageType.General);
+                            App.Repos.Current.RunCmd("gc");
+                        }
                     }
                 }
                 App.DoRefresh();
