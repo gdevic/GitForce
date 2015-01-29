@@ -135,9 +135,7 @@ namespace GitForce
         {
             try
             {
-                Proc.Kill();
-                if (Proc.WaitForExit(10000))
-                    Proc.WaitForExit();
+                Proc.Kill();    // Immediately stop the process!
             }
             catch (Exception)
             {

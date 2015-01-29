@@ -23,9 +23,6 @@ namespace GitForce
             if (ClassUtils.IsMono())
                 statusStrip.SizingGrip = false;
 
-            // Reuse the same font selected as fixed-pitch
-            textBox.Font = Properties.Settings.Default.commitFont;
-
             if (App.AppLog != null)
                 Print("Logging: " + App.AppLog, MessageType.General);
 
