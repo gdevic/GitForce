@@ -37,7 +37,7 @@
             this.textBoxLocal = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btBrowse = new System.Windows.Forms.Button();
-            this.folderDlg = new System.Windows.Forms.FolderBrowserDialog();
+            this.folder = new System.Windows.Forms.FolderBrowserDialog();
             this.remoteDisplay = new GitForce.RemoteDisplay();
             this.SuspendLayout();
             // 
@@ -65,8 +65,8 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
@@ -114,8 +114,8 @@
             // 
             // textBoxLocal
             // 
-            this.textBoxLocal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxLocal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxLocal.Location = new System.Drawing.Point(32, 107);
             this.textBoxLocal.Name = "textBoxLocal";
             this.textBoxLocal.ReadOnly = true;
@@ -144,10 +144,14 @@
             this.btBrowse.UseVisualStyleBackColor = true;
             this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
             // 
+            // folder
+            // 
+            this.folder.ShowNewFolderButton = false;
+            // 
             // remoteDisplay
             // 
-            this.remoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.remoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.remoteDisplay.Location = new System.Drawing.Point(32, 153);
             this.remoteDisplay.MinimumSize = new System.Drawing.Size(309, 119);
             this.remoteDisplay.Name = "remoteDisplay";
@@ -196,7 +200,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btBrowse;
         private RemoteDisplay remoteDisplay;
-        private System.Windows.Forms.FolderBrowserDialog folderDlg;
+        private System.Windows.Forms.FolderBrowserDialog folder;
 
     }
 }

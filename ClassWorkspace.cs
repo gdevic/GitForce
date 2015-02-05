@@ -40,7 +40,7 @@ namespace GitForce
                 lru.RemoveRange(5, lru.Count - 5);
 
             string s = string.Join("\t", lru.ToArray());
-            Properties.Settings.Default.WorkspaceLRU = s;                
+            Properties.Settings.Default.WorkspaceLRU = s;
         }
 
         /// <summary>
@@ -49,10 +49,11 @@ namespace GitForce
         /// </summary>
         public static bool Load(string name)
         {
-            // Initialize workspace file name, if this is a first run
+            // If this is the first time run, initialize the default workspace file name
             if (string.IsNullOrEmpty(Properties.Settings.Default.WorkspaceFile))
                 Properties.Settings.Default.WorkspaceFile = Path.Combine(App.AppHome, "repos.giw");
 
+            // If the caller wanted us to load a "default" workspace, load its file name
             if (name == null)
                 name = Properties.Settings.Default.WorkspaceFile;
 
@@ -63,6 +64,7 @@ namespace GitForce
                 Properties.Settings.Default.WorkspaceFile = name;
                 return true;
             }
+            App.PrintStatusMessage("Load cancelled. Current workspace file: " + Properties.Settings.Default.WorkspaceFile, MessageType.General);
             return false;
         }
 

@@ -21,7 +21,7 @@ namespace GitForce
         /// Path to a local git repo
         /// </summary>
         public string Local {
-            get { return textBoxLocal.Text; }
+            get { return textBoxLocal.Text.Trim(); }
             set { textBoxLocal.Text = value; }
         }
 
@@ -29,6 +29,15 @@ namespace GitForce
         /// ClassRemote structure of a new repo
         /// </summary>
         public ClassRemotes.Remote Remote;
+
+        /// <summary>
+        /// Call this method to properly set the remote structure that is going to be used by this dialog
+        /// </summary>
+        public void SetRemote(ClassRemotes.Remote remote)
+        {
+            Remote = remote;
+            remoteDisplay.Set(Remote);
+        }
 
         public FormNewRepoStep1()
         {
@@ -58,8 +67,9 @@ namespace GitForce
         /// </summary>
         private void BtBrowseClick(object sender, EventArgs e)
         {
-            if (folderDlg.ShowDialog() == DialogResult.OK)
-                Local = folderDlg.SelectedPath;
+            folder.Description = @"Select a folder containing the root of a repository to clone:";
+            if (folder.ShowDialog() == DialogResult.OK)
+                Local = folder.SelectedPath;
         }
 
         /// <summary>
@@ -82,8 +92,7 @@ namespace GitForce
                     case "local":
                         textBoxLocal.ReadOnly = false;
                         btBrowse.Enabled = true;
-                        btNext.Enabled = Path.IsPathRooted(textBoxLocal.Text) && Directory.Exists(Path.Combine(textBoxLocal.Text, ".git"));
-                        Local = textBoxLocal.Text;
+                        btNext.Enabled = ClassUtils.DirStat(Local) == ClassUtils.DirStatType.Git;
                         break;
                     case "remote":
                         remoteDisplay.Enabled = true;
@@ -99,8 +108,7 @@ namespace GitForce
         /// </summary>
         private void TextBoxLocalTextChanged(object sender, EventArgs e)
         {
-            btNext.Enabled = Path.IsPathRooted(textBoxLocal.Text) && Directory.Exists(Path.Combine(textBoxLocal.Text, ".git"));
-            Local = textBoxLocal.Text;
+            btNext.Enabled = ClassUtils.DirStat(Local) == ClassUtils.DirStatType.Git;
         }
 
         /// <summary>

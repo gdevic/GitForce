@@ -49,10 +49,19 @@ namespace GitForce
 
         /// <summary>
         /// Return the remote structure associated with a given name
+        /// If the name is not found, return an empty Remote structure
         /// </summary>
         public Remote Get(string name)
         {
-            return remotes[name];
+            return remotes.ContainsKey(name) ? remotes[name] : new Remote();
+        }
+
+        /// <summary>
+        /// Return a list of remote names
+        /// </summary>
+        public List<string> GetRemoteNames()
+        {
+            return remotes.Keys.ToList();
         }
 
         /// <summary>
@@ -88,7 +97,7 @@ namespace GitForce
                         r.PushCmd = remotes[name].PushCmd;
                     }
 
-                    // Set all other fields that we refresh every time                
+                    // Set all other fields that we refresh every time
                     r.Name = name;
 
                     if (url[2] == "(fetch)") r.UrlFetch = url[1];
@@ -157,6 +166,6 @@ namespace GitForce
             if (name == "") name = Current;
             remotes.TryGetValue(name, out r);
             return r.PushCmd;
-        }    
+        }
     }
 }

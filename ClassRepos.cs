@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace GitForce
 {
@@ -32,18 +34,17 @@ namespace GitForce
         /// </summary>
         public override string ToString()
         {
-            return Repos.Count.ToString();
+            return Repos.Count.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// Load a set of repositories from a file.
-        /// Returns true if load succeeded.
+        /// Returns true is loading succeeded and this class is assigned a new set of repos.
+        /// Returns false if loading failed, or was cancelled. The repos in this class did not change.
         /// </summary>
         public bool Load(string fileName)
         {
             bool ret = false;
-            Repos = new List<ClassRepo>();
-
             // Wrap the opening of a repository database with an outer handler
             try
             {
@@ -51,20 +52,35 @@ namespace GitForce
                 {
                     try
                     {
+                        // Load list of repos and the default repo string into temporary objects
                         BinaryFormatter rd = new BinaryFormatter();
-                        Repos = (List<ClassRepo>)rd.Deserialize(file);
+                        List<ClassRepo> newRepos = (List<ClassRepo>)rd.Deserialize(file);
                         string defaultRepo = (string)rd.Deserialize(file);
 
-                        // WAR: Mono 2.6.7 does not support serialization of a HashSet.
-                        foreach (var classRepo in Repos)
-                            classRepo.ExpansionReset(null);
+                        // WAR: Mono 2.6.7 does not support serialization of a HashSet. At the same time...
+                        // Quickly check that each repo is valid (find if at least one is not)
+                        bool allOK = true;
+                        foreach (ClassRepo repo in newRepos)
+                        {
+                            allOK &= ClassUtils.DirStat(repo.Root) == ClassUtils.DirStatType.Git;
+                            repo.ExpansionReset(null);
+                        }
 
+                        // If at least one repo was not valid, give the user a chance to recreate it
+                        if (allOK == false)
+                        {
+                            FormRecreateRepos recreateRepos = new FormRecreateRepos();
+                            recreateRepos.Repos = newRepos;
+                            if (recreateRepos.ShowDialog() != DialogResult.OK)
+                                return false;
+                            newRepos = recreateRepos.Repos;
+                        }
+
+                        // Assign our object's list of repos
+                        Repos = newRepos;
                         // Upon load, set the current based on the default repo
                         Default = Repos.Find(r => r.Root == defaultRepo);
                         SetCurrent(Default);
-
-                        // TODO: Commenting out since it takes long time when loading many repos, and it seems not needed
-                        //App.Repos.Refresh();
 
                         ret = true;
                     }

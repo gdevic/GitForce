@@ -220,6 +220,12 @@
     <Compile Include="FormPathToGit.designer.cs">
       <DependentUpon>FormPathToGit.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormRecreateRepos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRecreateRepos.Designer.cs">
+      <DependentUpon>FormRecreateRepos.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRemoteAddEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -565,6 +571,9 @@
     <EmbeddedResource Include="FormPathToGit.resx">
       <DependentUpon>FormPathToGit.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRecreateRepos.resx">
+      <DependentUpon>FormRecreateRepos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRemoteAddEdit.resx">
       <DependentUpon>FormRemoteAddEdit.cs</DependentUpon>

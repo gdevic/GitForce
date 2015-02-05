@@ -198,16 +198,14 @@ namespace GitForce
                         if (!ClassUtils.IsMono())
                             Putty = new ClassPutty();
 
-                        // Create HTTPS password helper file
-                        GitPasswd = new ClassGitPasswd();
-
-                        Repos = new ClassRepos();
-
-                        Version = new ClassVersion();
-
-                        MainForm = new FormMain();      // Create the main form
-                        DoRefresh();                    // Initial global refresh
-                        Application.Run(MainForm);      // Run the main form
+                        GitPasswd = new ClassGitPasswd();   // Create HTTPS password helper file
+                        Repos = new ClassRepos();           // Create repository canvas
+                        Version = new ClassVersion();       // Start the new version check process
+                        MainForm = new FormMain();          // Create the main form
+                        MainForm.Show();                    // Show the main window so the handles get created
+                        MainForm.Initialize();              // Load repos, custom tools etc.
+                        DoRefresh();                        // Initial global refresh
+                        Application.Run(MainForm);          // Run the main form
 
                         Properties.Settings.Default.Save();
 

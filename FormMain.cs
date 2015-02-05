@@ -122,7 +122,14 @@ namespace GitForce
                 });
 
             PrintStatus("GitForce version " + ClassVersion.GetVersion(), MessageType.General);
+        }
 
+        /// <summary>
+        /// Main form initialization method performs operations that may need the main
+        /// window to have already been shown since we may invoke its UI handlers
+        /// </summary>
+        public void Initialize()
+        {
             // Load default set of repositories
             ClassWorkspace.Load(null);
 

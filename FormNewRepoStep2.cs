@@ -9,8 +9,29 @@ namespace GitForce
         /// <summary>
         /// Destination directory to create a new repo
         /// </summary>
-        public string Destination = "";
-        public string Extra = "";
+        public string Destination
+        {
+            get { return Path.Combine(textBoxRepoPath.Text.Trim(), textBoxProjectName.Text.Trim()); }
+            set { textBoxRepoPath.Text = value; }
+        }
+
+        /// <summary>
+        /// Project name
+        /// </summary>
+        public string ProjectName
+        {
+            get { return textBoxProjectName.Text.Trim(); }
+            set { textBoxProjectName.Text = value; }
+        }
+
+        /// <summary>
+        /// Optional extra parameters which can be set by the user
+        /// </summary>
+        public string Extra
+        {
+            get { return textBoxExtraArgs.Text.Trim(); }
+        }
+
         public bool IsBare;
         public bool CheckTargetDirEmpty;
 
@@ -29,20 +50,13 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Set the project name
-        /// </summary>
-        public void SetProjectName(string projectName)
-        {
-            textBoxProjectName.Text = projectName;
-        }
-
-        /// <summary>
         /// Browse for the final path to the directory to init
         /// </summary>
         private void BtBrowseClick(object sender, EventArgs e)
         {
-            if (folderDlg.ShowDialog() == DialogResult.OK)
-                textBoxRepoPath.Text = folderDlg.SelectedPath;
+            folder.Description = @"Select a folder to host the new repository:";
+            if (folder.ShowDialog() == DialogResult.OK)
+                textBoxRepoPath.Text = folder.SelectedPath;
         }
 
         /// <summary>
@@ -50,26 +64,16 @@ namespace GitForce
         /// </summary>
         private void TextBoxRepoPathTextChanged(object sender, EventArgs e)
         {
-            try
+            // Target folder needs to be a valid directory, with or without files in it
+            ClassUtils.DirStatType type = ClassUtils.DirStat(textBoxRepoPath.Text);
+            btOK.Enabled = type == ClassUtils.DirStatType.Empty || type == ClassUtils.DirStatType.Nongit;
+            // Additional checks for clone operations (where CheckTargetDirEmpty is true)
+            if (CheckTargetDirEmpty)
             {
-                btOK.Enabled = Path.IsPathRooted(textBoxRepoPath.Text) && Directory.Exists(textBoxRepoPath.Text);
-
-                // Additional check for clone operation:
-                //  If a project name is not present, the root needs to exist and be an empty directory
-                //     (the check for 'exist' is already made in the step above)
-                if (CheckTargetDirEmpty && textBoxProjectName.Text.Trim().Length == 0)
-                {
-                    btOK.Enabled &= (Directory.GetFiles(textBoxRepoPath.Text).Length == 0) &&
-                                    (Directory.GetDirectories(textBoxRepoPath.Text).Length == 0);
-                }
+                // If the project name is specified, that complete path should not exist
+                if (textBoxProjectName.Text.Trim().Length > 0)
+                    btOK.Enabled &= ClassUtils.DirStat(Destination) == ClassUtils.DirStatType.Invalid;
             }
-            catch (Exception ex)
-            {
-                App.PrintLogMessage(ex.Message, MessageType.Error);
-                btOK.Enabled = false;
-            }
-
-            Destination = Path.Combine(textBoxRepoPath.Text, textBoxProjectName.Text.Trim());
         }
 
         /// <summary>
@@ -78,14 +82,6 @@ namespace GitForce
         private void CheckBoxBareCheckedChanged(object sender, EventArgs e)
         {
             IsBare = checkBoxBare.Checked;
-        }
-
-        /// <summary>
-        /// Copy the extra string into a public variable that is exposed
-        /// </summary>
-        private void TextBoxExtraArgsTextChanged(object sender, EventArgs e)
-        {
-            Extra = textBoxExtraArgs.Text;
         }
     }
 }

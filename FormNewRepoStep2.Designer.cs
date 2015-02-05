@@ -36,7 +36,7 @@
             this.btBrowse = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxExtraArgs = new System.Windows.Forms.TextBox();
-            this.folderDlg = new System.Windows.Forms.FolderBrowserDialog();
+            this.folder = new System.Windows.Forms.FolderBrowserDialog();
             this.checkBoxBare = new System.Windows.Forms.CheckBox();
             this.labelCloneOperation = new System.Windows.Forms.Label();
             this.textBoxProjectName = new System.Windows.Forms.TextBox();
@@ -78,20 +78,20 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(432, 33);
             this.label1.TabIndex = 3;
             this.label1.Text = "Select or create a local folder to host the repository root. The final folder nee" +
-                "ds to be empty for clone operation.";
+    "ds to be empty for a repo clone operation.";
             // 
             // textBoxRepoPath
             // 
-            this.textBoxRepoPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxRepoPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxRepoPath.Location = new System.Drawing.Point(12, 48);
             this.textBoxRepoPath.Name = "textBoxRepoPath";
             this.textBoxRepoPath.Size = new System.Drawing.Size(351, 20);
@@ -120,13 +120,12 @@
             // 
             // textBoxExtraArgs
             // 
-            this.textBoxExtraArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxExtraArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxExtraArgs.Location = new System.Drawing.Point(12, 152);
             this.textBoxExtraArgs.Name = "textBoxExtraArgs";
             this.textBoxExtraArgs.Size = new System.Drawing.Size(351, 20);
             this.textBoxExtraArgs.TabIndex = 4;
-            this.textBoxExtraArgs.TextChanged += new System.EventHandler(this.TextBoxExtraArgsTextChanged);
             // 
             // checkBoxBare
             // 
@@ -197,7 +196,7 @@
         private System.Windows.Forms.Button btBrowse;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxExtraArgs;
-        private System.Windows.Forms.FolderBrowserDialog folderDlg;
+        private System.Windows.Forms.FolderBrowserDialog folder;
         private System.Windows.Forms.CheckBox checkBoxBare;
         private System.Windows.Forms.Label labelCloneOperation;
         private System.Windows.Forms.TextBox textBoxProjectName;

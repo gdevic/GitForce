@@ -96,7 +96,7 @@ namespace GitForce
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Command Prompt Here error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+            }
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace GitForce
             {
                 App.PrintLogMessage(ex.Message, MessageType.Error);
                 MessageBox.Show(ex.Message, "Explorer Here error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+            }
         }
 
         /// <summary>
@@ -201,6 +201,37 @@ namespace GitForce
             string path = Environment.GetEnvironmentVariable("HOMEPATH");
             // On Windows, the Path.Combine is fundamentally broken can can't be used
             return drive + path;
+        }
+
+        /// <summary>
+        /// List of possible directory types returned by DirStat() method
+        /// </summary>
+        public enum DirStatType
+        {
+            Invalid,            // Specified path does not exist or is not a valid absolute directory path
+            Empty,              // Specified path is a directory which contains no other sub-directories or files
+            Git,                // Specified path is a root directory of a git repo
+            Nongit              // Specified path is a general, non-git repo directory
+        }
+
+        /// <summary>
+        /// Given a fully qualified path to a local directory, return the stat on that folder
+        /// </summary>
+        public static DirStatType DirStat(string path)
+        {
+            // Check that the path is valid and that it specifies an existing directory
+            if (!Directory.Exists(path))
+                return DirStatType.Invalid;
+            // We don't allow relative paths, all paths need to be absolute or UNC
+            if (!Path.IsPathRooted(path))       // Note: This call may throw exceptions but the preceeding call to
+                return DirStatType.Invalid;     // Directory.Exists() will reject such invalid paths w/o exceptions
+            // Second check if the directory is completely empty (no files of subdirectories within it)
+            if ((Directory.GetFiles(path).Length == 0) && (Directory.GetDirectories(path).Length == 0))
+                return DirStatType.Empty;
+            // Lastly, check if there is a subdirectory ".git" with a representative file ("config") which
+            // would make very likely that a given path is the root to a valid git folder structure
+            string testFile = Path.Combine(path, Path.Combine(".git", "config"));
+            return File.Exists(testFile) ? DirStatType.Git : DirStatType.Nongit;
         }
 
         /// <summary>
@@ -293,7 +324,7 @@ namespace GitForce
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+            }
         }
 
         /// <summary>

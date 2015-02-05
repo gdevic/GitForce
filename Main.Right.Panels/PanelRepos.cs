@@ -16,7 +16,7 @@ namespace GitForce.Main.Right.Panels
 
             App.Refresh += ReposRefresh;
         }
-        
+
         /// <summary>
         /// Fill in the list of repositories.
         /// </summary>
@@ -44,7 +44,7 @@ namespace GitForce.Main.Right.Panels
                 if (r == App.Repos.Default)
                     li.ImageIndex |= 1; // Bit [0] is default
 
-                listRepos.Items.Add(li);                    
+                listRepos.Items.Add(li);
             }
 
             // Make columns auto-adjust to fit the width of the largest item
@@ -162,18 +162,54 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void MenuNewRepoClick(object sender, EventArgs e)
         {
+            // If we need to clone a repo, set the cloning parameters within the Step1 form
+            ClassRepo repoToClone = ((ToolStripDropDownItem)sender).Tag as ClassRepo;
+            string root = NewRepoWizard(repoToClone, null);
+            if (!string.IsNullOrEmpty(root))
+            {
+                ClassRepo repo = App.Repos.Add(root);
+
+                // Switch to the new repo and do a global refresh
+                App.Repos.SetCurrent(repo);
+                App.DoRefresh();
+
+                // Open the Edit Repo dialog since the user may want to fill in user name and email, at least
+                MenuRepoEditClick(null, null);
+            }
+        }
+
+        /// <summary>
+        /// Global static function that executes a new repo wizard
+        /// If successful, returns the path to the new local repo
+        /// If failed, returns null
+        /// </summary>
+        public static string NewRepoWizard(ClassRepo repoToClone, ClassRepo repoRemote)
+        {
             FormNewRepoStep1 newRepoStep1 = new FormNewRepoStep1();
             FormNewRepoStep2 newRepoStep2 = new FormNewRepoStep2();
 
-            // If we need to clone a repo, set the cloning parameters within the Step1 form
-            ClassRepo repoToClone = ((ToolStripDropDownItem) sender).Tag as ClassRepo;
-            if (repoToClone!=null)
+            // If the repo to clone parameter was given, build the close repo information
+            if (repoToClone != null)
             {
                 newRepoStep1.Type = "local";
                 newRepoStep1.Local = repoToClone.ToString();
             }
+            // If the remote repo parameter was given, build the remote repo information
+            if (repoRemote != null)
+            {
+                // If the list of remotes contains at least one entry, use it
+                List<string> remotes = repoRemote.Remotes.GetRemoteNames();
+                if (remotes.Count > 0)
+                {
+                    newRepoStep1.Type = "remote";
+                    ClassRemotes.Remote remote = repoRemote.Remotes.Get(remotes[0]);
+                    newRepoStep1.SetRemote(remote);
+                }
+                else
+                    newRepoStep2.Destination = repoRemote.Root;
+            }
 
-            BackToStep1:
+        BackToStep1:
             if (newRepoStep1.ShowDialog() == DialogResult.OK)
             {
                 // Depending on the type of the source, establish that:
@@ -183,22 +219,37 @@ namespace GitForce.Main.Right.Panels
                 switch (newRepoStep1.Type)
                 {
                     case "empty":
-                        newRepoStep2.SetProjectName("");
+                        newRepoStep2.ProjectName = "";
                         newRepoStep2.CheckTargetDirEmpty = false;
                         break;
                     case "local":
-                        string targetProjectName = newRepoStep1.Local.Replace(Path.GetDirectoryName(newRepoStep1.Local), "");
-                        newRepoStep2.SetProjectName(targetProjectName);
+                        // Find the project name from the cloned path (the last part of the path)
+                        string[] parts = newRepoStep1.Local.Split(new char[] { '\\', '/' });
+                        if (parts.Length > 1)
+                            newRepoStep2.ProjectName = parts[parts.Length - 1];
+                        newRepoStep2.Destination = "";
                         newRepoStep2.CheckTargetDirEmpty = true;
                         break;
                     case "remote":
                         ClassRemotes.Remote r = newRepoStep1.Remote;
                         string remoteProjectName = r.UrlFetch;
-                        string[] parts = remoteProjectName.Split(new char[] {'.', '\\', '/', ':'});
-                        if (parts.Length>1 && parts[parts.Length-1]=="git")
-                            newRepoStep2.SetProjectName(parts[parts.Length-2]);
-                        else
-                            newRepoStep2.SetProjectName("");
+                        // Extract the project name from the remote Url specification
+                        parts = remoteProjectName.Split(new char[] { '.', '\\', '/', ':' });
+                        if (parts.Length > 1 && parts[parts.Length - 1] == "git")
+                            newRepoStep2.ProjectName = parts[parts.Length - 2];
+
+                        // If the project name is equal to the last part of the path, use it for the project name instead
+                        // and trim the path. This is done to (1) propagate possible upper-cased letters in the
+                        // path and (2) to fix the cases where we have given repoRemote with a full path which included
+                        // a redundant project name.
+                        // Example: root:         c:\Projects\Arduino    =>   c:\Projects
+                        //          project name: arduino                =>   Arduino
+                        parts = newRepoStep2.Destination.Split(new char[] { '\\', '/' });
+                        if (parts.Length > 1 && String.Compare(parts[parts.Length - 1], newRepoStep2.ProjectName, StringComparison.OrdinalIgnoreCase) == 0)
+                        {
+                            newRepoStep2.ProjectName = parts[parts.Length - 1];
+                            newRepoStep2.Destination = Directory.GetParent(newRepoStep2.Destination).FullName;
+                        }
                         newRepoStep2.CheckTargetDirEmpty = true;
                         break;
                 }
@@ -241,27 +292,20 @@ namespace GitForce.Main.Right.Panels
 
                         // Get out of the way (so the git can remove directory if the clone operation fails)
                         Directory.SetCurrentDirectory(App.AppHome);
-                        if(ClassGit.Run(init).Success()==false)
+                        if (ClassGit.Run(init).Success() == false)
                             goto BackToStep2;
-                        ClassRepo repo = App.Repos.Add(root);
 
-                        // Switch to the new repo and do a global refresh
-                        App.Repos.SetCurrent(repo);
-                        App.DoRefresh();
-
-                        // Open the Edit Repo dialog since the user may want to fill in user name and email, at least
-                        MenuRepoEditClick(null, null);
-
-                        return;
+                        return root;
                     }
                     catch (ClassException ex)
                     {
-                        if (MessageBox.Show(ex.Message, "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)== DialogResult.Cancel)
-                            return;
+                        if (MessageBox.Show(ex.Message, "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+                            return string.Empty;
                     }
                     goto BackToStep2;
                 }
             }
+            return string.Empty;
         }
 
         /// <summary>
@@ -359,7 +403,7 @@ namespace GitForce.Main.Right.Panels
 
         /// <summary>
         /// This method handles drop objects into our listview.
-        /// 
+        ///
         /// At this time we only implement reordering of listview items, implicitly.
         /// That means we ignore what would be dropped and propagate reorder action down to the
         /// repos class. Of course, that is an assumption - user might have dropped something
