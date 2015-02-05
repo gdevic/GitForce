@@ -443,7 +443,7 @@
             // 
             this.homeMenuItem.Name = "homeMenuItem";
             this.homeMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.homeMenuItem.Tag = "https://sites.google.com/site/gitforcetool/";
+            this.homeMenuItem.Tag = "Home";
             this.homeMenuItem.Text = "Home";
             this.homeMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
@@ -451,7 +451,7 @@
             // 
             this.gettingStartedMenuItem.Name = "gettingStartedMenuItem";
             this.gettingStartedMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.gettingStartedMenuItem.Tag = "https://sites.google.com/site/gitforcetool/getting-started";
+            this.gettingStartedMenuItem.Tag = "Getting Started";
             this.gettingStartedMenuItem.Text = "Getting Started";
             this.gettingStartedMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
@@ -459,7 +459,7 @@
             // 
             this.checkForUpdatesMenuItem.Name = "checkForUpdatesMenuItem";
             this.checkForUpdatesMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.checkForUpdatesMenuItem.Tag = "http://sourceforge.net/projects/gitforce/";
+            this.checkForUpdatesMenuItem.Tag = "Update Check";
             this.checkForUpdatesMenuItem.Text = "Check for Updates";
             this.checkForUpdatesMenuItem.Click += new System.EventHandler(this.WebsiteClick);
             // 
@@ -531,7 +531,7 @@
             this.rightTabControl.Name = "rightTabControl";
             this.rightTabControl.SelectedIndex = 0;
             this.rightTabControl.ShowToolTips = true;
-            this.rightTabControl.Size = new System.Drawing.Size(407, 237);
+            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
             this.rightTabControl.TabIndex = 0;
             this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
             // 

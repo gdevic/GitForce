@@ -165,5 +165,13 @@ namespace GitForce
         {
             AdjustEnables();
         }
+
+        /// <summary>
+        /// User clicked on the Help button, open the context help
+        /// </summary>
+        private void BtHelpClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("Edit Tools");
+        }
     }
 }

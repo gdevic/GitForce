@@ -794,7 +794,7 @@ namespace GitForce
         /// </summary>
         private void WebsiteClick(object sender, EventArgs e)
         {
-            Process.Start((sender as ToolStripMenuItem).Tag.ToString());
+            ClassHelp.Handler((sender as ToolStripMenuItem).Tag.ToString());
         }
 
         /// <summary>

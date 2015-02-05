@@ -176,7 +176,7 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Open the context help
+        /// User clicked on the Help button, open the context help
         /// </summary>
         private void BtHelpClick(object sender, EventArgs e)
         {

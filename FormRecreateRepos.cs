@@ -242,5 +242,13 @@ namespace GitForce
                 list.Items.Remove(list.SelectedItems[0]);
             RefreshView();
         }
+
+        /// <summary>
+        /// User clicked on the Help button, open the context help
+        /// </summary>
+        private void BtHelpClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("Workspace");
+        }
     }
 }

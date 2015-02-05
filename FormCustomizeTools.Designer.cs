@@ -52,6 +52,7 @@
             this.btEdit = new System.Windows.Forms.Button();
             this.btAdd = new System.Windows.Forms.Button();
             this.listTools = new System.Windows.Forms.ListBox();
+            this.btHelp = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,9 +80,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
@@ -142,8 +143,8 @@
             // 
             // textDesc
             // 
-            this.textDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textDesc.Location = new System.Drawing.Point(199, 324);
             this.textDesc.Name = "textDesc";
             this.textDesc.ReadOnly = true;
@@ -246,8 +247,8 @@
             // 
             // textDir
             // 
-            this.textDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textDir.Location = new System.Drawing.Point(92, 220);
             this.textDir.Name = "textDir";
             this.textDir.ReadOnly = true;
@@ -256,8 +257,8 @@
             // 
             // textArgs
             // 
-            this.textArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textArgs.Location = new System.Drawing.Point(92, 194);
             this.textArgs.Name = "textArgs";
             this.textArgs.ReadOnly = true;
@@ -266,8 +267,8 @@
             // 
             // textCmd
             // 
-            this.textCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textCmd.Location = new System.Drawing.Point(92, 168);
             this.textCmd.Name = "textCmd";
             this.textCmd.ReadOnly = true;
@@ -335,9 +336,9 @@
             // 
             // listTools
             // 
-            this.listTools.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listTools.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listTools.FormattingEnabled = true;
             this.listTools.IntegralHeight = false;
             this.listTools.Location = new System.Drawing.Point(6, 19);
@@ -347,12 +348,24 @@
             this.listTools.TabIndex = 0;
             this.listTools.SelectedIndexChanged += new System.EventHandler(this.ListToolsSelectedIndexChanged);
             // 
+            // btHelp
+            // 
+            this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btHelp.Location = new System.Drawing.Point(185, 390);
+            this.btHelp.Name = "btHelp";
+            this.btHelp.Size = new System.Drawing.Size(75, 23);
+            this.btHelp.TabIndex = 3;
+            this.btHelp.Text = "Help";
+            this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.BtHelpClick);
+            // 
             // FormCustomizeTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(440, 425);
+            this.Controls.Add(this.btHelp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancel);
@@ -397,5 +410,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textDesc;
+        private System.Windows.Forms.Button btHelp;
     }
 }

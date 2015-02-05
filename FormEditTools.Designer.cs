@@ -84,9 +84,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.comboHelpDir);
             this.groupBox1.Controls.Add(this.comboHelpArg);
             this.groupBox1.Controls.Add(this.textDesc);
@@ -158,8 +158,8 @@
             // 
             // textDesc
             // 
-            this.textDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textDesc.Location = new System.Drawing.Point(199, 200);
             this.textDesc.Name = "textDesc";
             this.textDesc.Size = new System.Drawing.Size(239, 20);
@@ -274,8 +274,8 @@
             // 
             // textDir
             // 
-            this.textDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textDir.Location = new System.Drawing.Point(119, 102);
             this.textDir.Name = "textDir";
             this.textDir.Size = new System.Drawing.Size(215, 20);
@@ -294,8 +294,8 @@
             // 
             // textArgs
             // 
-            this.textArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textArgs.Location = new System.Drawing.Point(119, 74);
             this.textArgs.Name = "textArgs";
             this.textArgs.Size = new System.Drawing.Size(295, 20);
@@ -323,8 +323,8 @@
             // 
             // textCmd
             // 
-            this.textCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textCmd.Location = new System.Drawing.Point(119, 47);
             this.textCmd.Name = "textCmd";
             this.textCmd.Size = new System.Drawing.Size(238, 20);
@@ -342,8 +342,8 @@
             // 
             // textName
             // 
-            this.textName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textName.Location = new System.Drawing.Point(119, 19);
             this.textName.Name = "textName";
             this.textName.Size = new System.Drawing.Size(319, 20);
@@ -364,7 +364,7 @@
             // btHelp
             // 
             this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btHelp.Location = new System.Drawing.Point(219, 266);
+            this.btHelp.Location = new System.Drawing.Point(211, 266);
             this.btHelp.Name = "btHelp";
             this.btHelp.Size = new System.Drawing.Size(75, 23);
             this.btHelp.TabIndex = 3;
@@ -389,8 +389,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Edit Tools Menu Item";
-            this.Shown += new System.EventHandler(this.FormEditToolsShown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEditToolsFormClosing);
+            this.Shown += new System.EventHandler(this.FormEditToolsShown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

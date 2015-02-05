@@ -42,6 +42,7 @@
             this.btBrowse = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.folder = new System.Windows.Forms.FolderBrowserDialog();
+            this.btHelp = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -180,11 +181,24 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
+            // btHelp
+            // 
+            this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btHelp.Location = new System.Drawing.Point(324, 318);
+            this.btHelp.Name = "btHelp";
+            this.btHelp.Size = new System.Drawing.Size(75, 23);
+            this.btHelp.TabIndex = 4;
+            this.btHelp.Tag = "";
+            this.btHelp.Text = "Help";
+            this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.BtHelpClick);
+            // 
             // FormRecreateRepos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(498, 353);
+            this.Controls.Add(this.btHelp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.list);
             this.Controls.Add(this.labelHelp);
@@ -219,5 +233,6 @@
         private System.Windows.Forms.ColumnHeader path;
         private System.Windows.Forms.ColumnHeader status;
         private System.Windows.Forms.FolderBrowserDialog folder;
+        private System.Windows.Forms.Button btHelp;
     }
 }
