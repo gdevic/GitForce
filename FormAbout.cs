@@ -36,18 +36,26 @@ namespace GitForce
         }
 
         /// <summary>
-        /// User clicked on a link label, open a web site
+        /// User clicked on a link to the GPL license
         /// </summary>
-        private void LinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkGplClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ClassUtils.OpenWebLink((sender as LinkLabel).Tag.ToString());
+            ClassHelp.Handler("GPL");
+        }
+
+        /// <summary>
+        /// User clicked a link to the discussion board
+        /// </summary>
+        private void LinkDiscussionClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ClassHelp.Handler("Discussion");
         }
 
         /// <summary>
         /// User clicked on the "Copy Email" button
         /// Copy the email address to clipboard.
         /// </summary>
-        private void btCopyEmail_Click(object sender, EventArgs e)
+        private void BtCopyEmailClick(object sender, EventArgs e)
         {
             Clipboard.SetText("GitForce.Project@gmail.com");
         }
