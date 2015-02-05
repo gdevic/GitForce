@@ -61,7 +61,7 @@ namespace GitForce.Settings.Panels
                 AppHelper app = new AppHelper(name, comboBoxPath.Text, textArgs.Text.Trim());
                 Properties.Settings.Default.DiffAppHelper = app.ToString();
 
-                ClassDiff.Configure(app);                
+                ClassDiff.Configure(app);
             }
         }
 

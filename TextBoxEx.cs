@@ -9,12 +9,12 @@ namespace GitForce
 {
     /// <summary>
     /// This is a fancy text box which is used by the direct command line box.
-    /// 
+    ///
     /// The callback it implements, TextReady(), will trigger when the user
     /// presses Enter in the box. It will be called only when there is a non-empty
     /// text in the box (user does not have to check for empty text.)
     /// Also, text will be trimmed at the front and back from extra spaces.
-    /// 
+    ///
     /// The text box will clear itself after the TextReady() has been sent.
     /// </summary>
     public class TextBoxEx : TextBox
@@ -58,7 +58,7 @@ namespace GitForce
                         Select(Text.Length, 0);
                     }
                     e.Handled = true;
-                    break;                    
+                    break;
             }
             base.OnKeyDown(e);
         }
@@ -83,7 +83,7 @@ namespace GitForce
 
                     iH = history.Count();
                     Text = string.Empty;
-                    
+
                     e.Handled = true;
                     break;
 

@@ -8,14 +8,14 @@ namespace GitForce
 {
     /// <summary>
     /// Yet another TreeViewEx control, written to be suitable for this project.
-    /// 
+    ///
     /// Adds to the standard TreeView the following features:
     /// * Multi-selection via new property SelectedNodes[]
     /// * Deep selection: recursive selection into children nodes
-    /// 
+    ///
     /// Important: Instead of "nodes.Clear()", call this NodesClear() function!
     /// </summary>
-	public class TreeViewEx : TreeView
+    public class TreeViewEx : TreeView
     {
         /// <summary>
         /// Private list of selected nodes

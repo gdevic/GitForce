@@ -63,7 +63,7 @@ namespace GitForce
                 // Run the version again to get the version code (for simplicity did not save it earlier)
                 string version = string.Format("Using {0} at {1}", Exec.Run(gitPath, "--version"),gitPath);
                 App.PrintLogMessage(version, MessageType.General);
-                Properties.Settings.Default.GitPath = gitPath;                
+                Properties.Settings.Default.GitPath = gitPath;
             }
             return retValue;
         }

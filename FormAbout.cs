@@ -17,7 +17,7 @@ namespace GitForce
             // If there is a new version available, show the label and a button
             labelNewVersionAvailable.Visible = btDownload.Visible = App.Version.NewVersionAvailable;
 
-            textLic.Text = 
+            textLic.Text =
                 "THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR " +
                 "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY," +
                 "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE " +

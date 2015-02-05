@@ -270,7 +270,7 @@ namespace GitForce
                 XmlSerializer deserializer = new XmlSerializer(typeof(ClassCustomTools));
                 using (TextReader textReader = new StreamReader(name))
                 {
-                    ct = (ClassCustomTools)deserializer.Deserialize(textReader);                    
+                    ct = (ClassCustomTools)deserializer.Deserialize(textReader);
                 }
             }
             catch (Exception ex)

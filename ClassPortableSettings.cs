@@ -11,7 +11,7 @@ namespace GitForce
     /// <summary>
     /// This class implements portable settings as shared by the project at:
     /// https://github.com/crdx/PortableSettingsProvider
-    /// 
+    ///
     /// Changes have been made to make the location of setting file consistent
     /// and in user space so that we dont lose settings when the application
     /// executable is moved around.
@@ -128,10 +128,10 @@ namespace GitForce
             }
             catch (Exception)
             {
-                /* 
-                 * If this is a portable application and the device has been 
-                 * removed then this will fail, so don't do anything. It's 
-                 * probably better for the application to stop saving settings 
+                /*
+                 * If this is a portable application and the device has been
+                 * removed then this will fail, so don't do anything. It's
+                 * probably better for the application to stop saving settings
                  * rather than just crashing outright. Probably.
                  */
             }

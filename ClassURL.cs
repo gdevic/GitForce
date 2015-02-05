@@ -223,7 +223,7 @@ namespace GitForce
 
             canon = ToCanonical("user@host.xz:/~user/path/to/repo.git/");
 
-            canon = ToCanonical("git@github.com:gdevic/MySpiEeprom.git");        
+            canon = ToCanonical("git@github.com:gdevic/MySpiEeprom.git");
         }
 #endif
     }

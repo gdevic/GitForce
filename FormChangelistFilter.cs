@@ -49,7 +49,7 @@ namespace GitForce
             if (checkBoxAfter.Checked)
             {
                 DateTime dt = dateTimeAfter.Value;
-                gitFilter += " --after=" + String.Format("{0:yyyy/MM/dd}", dt);                
+                gitFilter += " --after=" + String.Format("{0:yyyy/MM/dd}", dt);
             }
 
             App.PrintLogMessage("Condition: " + gitFilter, MessageType.General);

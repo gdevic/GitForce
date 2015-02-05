@@ -50,7 +50,7 @@ namespace GitForce
         /// </summary>
         public static void AttachConsole()
         {
-            AttachConsole(ATTACH_PARENT_PROCESS);            
+            AttachConsole(ATTACH_PARENT_PROCESS);
         }
     }
 }

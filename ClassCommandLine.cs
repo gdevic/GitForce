@@ -69,7 +69,7 @@ namespace GitForce
                     if(!string.IsNullOrEmpty(home))
                     {
                         toWhack.Add(Path.Combine(home, ".config/GitForce"));
-                        toWhack.Add(Path.Combine(home, ".local/share/GitForce"));                        
+                        toWhack.Add(Path.Combine(home, ".local/share/GitForce"));
                     }
                 }
                 else

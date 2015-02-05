@@ -63,7 +63,7 @@ namespace GitForce.Settings.Panels
                 AppHelper app = new AppHelper(name, comboBoxPath.Text, textArgs.Text.Trim());
                 Properties.Settings.Default.MergeAppHelper = app.ToString();
 
-                ClassMerge.Configure(app);                
+                ClassMerge.Configure(app);
             }
         }
 

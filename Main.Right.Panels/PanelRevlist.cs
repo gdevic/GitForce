@@ -186,7 +186,7 @@ namespace GitForce.Main.Right.Panels
             ToolStripMenuItem mCopy = new ToolStripMenuItem("Copy SHA", null, MenuCopyShaClick);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mDescribe, mReset, mCherry, 
+                mDescribe, mReset, mCherry,
                 new ToolStripSeparator(),
                 mCopy
             });
@@ -255,7 +255,7 @@ namespace GitForce.Main.Right.Panels
                 {
                     string cmd = String.Format("reset {0} {1}", formReset.Cmd, sha);
                     App.Repos.Current.RunCmd(cmd);
-                    App.DoRefresh();                    
+                    App.DoRefresh();
                 }
             }
         }

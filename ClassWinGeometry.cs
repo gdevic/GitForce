@@ -44,7 +44,7 @@ namespace GitForce
                     };
                     wnd.Add(s[0], g);
                 }
-            }            
+            }
         }
 
         /// <summary>

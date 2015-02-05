@@ -69,8 +69,8 @@ namespace GitForce
             textStdout.AppendText(ClassUtils.ToPlainAscii(message) + Environment.NewLine);
 
             // Keep the newly added text visible
-            textStdout.SelectionStart = textStdout.TextLength;                    
-            textStdout.ScrollToCaret();                    
+            textStdout.SelectionStart = textStdout.TextLength;
+            textStdout.ScrollToCaret();
         }
 
         /// <summary>

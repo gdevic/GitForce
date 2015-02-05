@@ -32,13 +32,13 @@ namespace GitForce
         /// <summary>
         /// User clicked on a Install KDiff3 button to download and install KDiff3
         /// (Windows only)
-        /// 
+        ///
         /// *** This button was removed ***
         /// I left this code in place should it be needed.
         /// The button was downloading this specific executable and installing it.
         /// However, github does not provide easy file access. There are ways around
         /// it and perhaps it is worth redoing it. One day.
-        /// 
+        ///
         /// </summary>
         private void BtInstallClick(object sender, EventArgs e)
         {
@@ -68,7 +68,7 @@ namespace GitForce
             finally
             {
                 // Make sure we don't leave temporary files around
-                File.Delete(installerFile);                
+                File.Delete(installerFile);
             }
         }
     }

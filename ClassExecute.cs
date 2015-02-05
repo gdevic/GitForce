@@ -36,7 +36,7 @@ namespace GitForce
     /// <summary>
     /// Contains functions to execute external console applications.
     /// Standard streams (stdout/stderr) are captured and returned.
-    /// 
+    ///
     /// Command shell is not invoked as that would prevent capturing
     /// the streams. Internally, the invocation is asynchronous.
     /// </summary>

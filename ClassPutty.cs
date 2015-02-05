@@ -132,7 +132,7 @@ namespace GitForce
                 procPageant.StartInfo.Arguments = args.ToString();
 
                 // TODO: Handle unsuccessful process start
-                procPageant.Start();                    
+                procPageant.Start();
             }
         }
 
@@ -143,7 +143,7 @@ namespace GitForce
         {
             // Base-64 encoded strings, zero-delimited, are read from application settings
             List<string> pfs = Properties.Settings.Default.PuTTYPf.
-                Split(("\0").ToCharArray(), 
+                Split(("\0").ToCharArray(),
                       StringSplitOptions.RemoveEmptyEntries).
                 ToList();
 

@@ -59,7 +59,7 @@ namespace GitForce
                     }
                     else
                     {
-                        UIThread(() => labelInfo.Text = response);                        
+                        UIThread(() => labelInfo.Text = response);
                     }
                 }
                 else
