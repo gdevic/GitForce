@@ -611,6 +611,7 @@ namespace GitForce
                 if (!r.RunCmd("fetch " + args).Success())
                     break;
             }
+            App.DoRefresh();
         }
 
         /// <summary>
@@ -631,6 +632,7 @@ namespace GitForce
                 if (!r.RunCmd("pull " + args).Success())
                     break;
             }
+            App.DoRefresh();
         }
 
         /// <summary>
