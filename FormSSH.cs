@@ -76,10 +76,9 @@ namespace GitForce
         /// </summary>
         private void ByAddClick(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            if (dlg.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string file = dlg.FileName;
+                string file = openFileDialog.FileName;
                 if (!listBoxKeys.Items.Contains(file))
                     listBoxKeys.Items.Add(file);
                 SaveKeys();

@@ -39,7 +39,6 @@
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -122,11 +121,6 @@
             this.imageList.Images.SetKeyName(2, "Repo2.ico");
             this.imageList.Images.SetKeyName(3, "Repo3.ico");
             // 
-            // folderBrowser
-            // 
-            this.folderBrowser.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            this.folderBrowser.ShowNewFolderButton = false;
-            // 
             // PanelRepos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,7 +148,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private ListViewEx listRepos;
     }
 }
