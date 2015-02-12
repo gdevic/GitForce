@@ -20,6 +20,7 @@ namespace GitForce
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
+            checkAutoclose.Checked = Properties.Settings.Default.AutoCloseGitOnSuccess;
 
             // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
             if (ClassUtils.IsMono())
@@ -190,6 +191,16 @@ namespace GitForce
         private void textLinkClicked(object sender, LinkClickedEventArgs e)
         {
             ClassUtils.OpenWebLink(e.LinkText);
+        }
+
+        /// <summary>
+        /// User clicked on the autoclose checkbox, changed the checked state
+        /// Update preferences with the new state
+        /// </summary>
+        private void CheckAutocloseCheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.AutoCloseGitOnSuccess = checkAutoclose.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }
