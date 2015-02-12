@@ -145,6 +145,13 @@ namespace GitForce
             ChangeRightPanel(App.Repos.Current == null ?
                 "Repos" :
                 Properties.Settings.Default.viewRightPanel);
+
+            // Usability improvement: When starting the app, check if the global user name
+            // and email are defined and if not, open the settings dialog. This helps when
+            // starting the app for the first time.
+            if (string.IsNullOrEmpty(ClassConfig.GetGlobal("user.name"))
+                && string.IsNullOrEmpty(ClassConfig.GetGlobal("user.email")))
+                MenuOptions(null, null);
         }
 
         /// <summary>
