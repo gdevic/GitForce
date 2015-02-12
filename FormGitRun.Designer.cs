@@ -99,6 +99,7 @@
             this.textStdout.TabIndex = 1;
             this.textStdout.Text = "";
             this.textStdout.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textLinkClicked);
+            this.textStdout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TextStdoutMouseUp);
             // 
             // FormGitRun
             // 

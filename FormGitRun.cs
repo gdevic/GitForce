@@ -203,5 +203,47 @@ namespace GitForce
             Properties.Settings.Default.AutoCloseGitOnSuccess = checkAutoclose.Checked;
             Properties.Settings.Default.Save();
         }
+
+        /// <summary>
+        /// Context menu for the text box (which is read-only, so we can only select and copy text from it)
+        /// </summary>
+        private void TextStdoutMouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu contextMenu = new ContextMenu();
+
+                MenuItem menuItemSelectAll = new MenuItem("Select All");
+                menuItemSelectAll.Click += SelectAllAction;
+                contextMenu.MenuItems.Add(menuItemSelectAll);
+
+                MenuItem menuItemCopy = new MenuItem("Copy");
+                menuItemCopy.Click += CopyAction;
+                contextMenu.MenuItems.Add(menuItemCopy);
+
+                textStdout.ContextMenu = contextMenu;
+            }
+        }
+
+        /// <summary>
+        /// Context menu to select all text
+        /// </summary>
+        private void SelectAllAction(object sender, EventArgs e)
+        {
+            textStdout.SelectAll();
+        }
+
+        /// <summary>
+        /// Context menu to copy selected text onto the clipboard
+        /// </summary>
+        private void CopyAction(object sender, EventArgs e)
+        {
+            // Copy data in two formats: a simple text format and the more complex rich-text
+            // format that keeps the text color and font information
+            DataObject data = new DataObject();
+            data.SetData(DataFormats.Rtf, true, textStdout.SelectedRtf);
+            data.SetData(DataFormats.Text, true, textStdout.SelectedText);
+            Clipboard.SetDataObject(data, true);
+        }
     }
 }
