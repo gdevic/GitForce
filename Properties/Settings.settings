@@ -110,5 +110,11 @@
     <Setting Name="AutoCloseGitOnSuccess" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="WarnOnTabs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="WarnOnTabsExt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">*.c;*.h;*.cpp;*.cc;*.cs</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

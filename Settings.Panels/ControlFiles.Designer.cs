@@ -33,6 +33,8 @@
             this.checkBoxDeepScan = new System.Windows.Forms.CheckBox();
             this.checkBoxRefreshOnChange = new System.Windows.Forms.CheckBox();
             this.checkBoxReaddOnChange = new System.Windows.Forms.CheckBox();
+            this.checkBoxScanTabs = new System.Windows.Forms.CheckBox();
+            this.textBoxScanExt = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // checkBoxIgnoreCase
@@ -86,10 +88,32 @@
             this.checkBoxReaddOnChange.Text = "Re-add files to index on change";
             this.checkBoxReaddOnChange.UseVisualStyleBackColor = true;
             // 
+            // checkBoxScanTabs
+            // 
+            this.checkBoxScanTabs.AutoSize = true;
+            this.checkBoxScanTabs.Location = new System.Drawing.Point(3, 117);
+            this.checkBoxScanTabs.Name = "checkBoxScanTabs";
+            this.checkBoxScanTabs.Size = new System.Drawing.Size(278, 17);
+            this.checkBoxScanTabs.TabIndex = 5;
+            this.checkBoxScanTabs.Text = "Warn when files to add contain TABs or EOL spaces:";
+            this.checkBoxScanTabs.UseVisualStyleBackColor = true;
+            this.checkBoxScanTabs.CheckedChanged += new System.EventHandler(this.CheckBoxScanTabsCheckedChanged);
+            // 
+            // textBoxScanExt
+            // 
+            this.textBoxScanExt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScanExt.Location = new System.Drawing.Point(30, 140);
+            this.textBoxScanExt.Name = "textBoxScanExt";
+            this.textBoxScanExt.Size = new System.Drawing.Size(239, 20);
+            this.textBoxScanExt.TabIndex = 6;
+            // 
             // ControlFiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBoxScanExt);
+            this.Controls.Add(this.checkBoxScanTabs);
             this.Controls.Add(this.checkBoxReaddOnChange);
             this.Controls.Add(this.checkBoxRefreshOnChange);
             this.Controls.Add(this.checkBoxDeepScan);
@@ -109,5 +133,7 @@
         private System.Windows.Forms.CheckBox checkBoxDeepScan;
         private System.Windows.Forms.CheckBox checkBoxRefreshOnChange;
         private System.Windows.Forms.CheckBox checkBoxReaddOnChange;
+        private System.Windows.Forms.CheckBox checkBoxScanTabs;
+        private System.Windows.Forms.TextBox textBoxScanExt;
     }
 }

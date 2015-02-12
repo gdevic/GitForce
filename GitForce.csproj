@@ -69,6 +69,7 @@
     <Compile Include="ClassHelp.cs" />
     <Compile Include="ClassMerge.cs" />
     <Compile Include="ClassPortableSettings.cs" />
+    <Compile Include="ClassTabCheck.cs" />
     <Compile Include="ClassVersion.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />

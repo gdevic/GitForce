@@ -11,6 +11,7 @@ namespace GitForce.Settings.Panels
 
             // Update visuals on dependent checkbox as described below
             CheckBoxRefreshOnChangeCheckedChanged(null, null);
+            CheckBoxScanTabsCheckedChanged(null, null);
         }
 
         /// <summary>
@@ -25,11 +26,15 @@ namespace GitForce.Settings.Panels
             checkBoxDeepScan.Checked = Properties.Settings.Default.RepoDeepScan;
             checkBoxRefreshOnChange.Checked = Properties.Settings.Default.RefreshOnChange;
             checkBoxReaddOnChange.Checked = Properties.Settings.Default.ReaddOnChange;
+            checkBoxScanTabs.Checked = Properties.Settings.Default.WarnOnTabs;
+            textBoxScanExt.Text = Properties.Settings.Default.WarnOnTabsExt;
 
             // Add the dirty (modified) value changed helper
             checkBoxIgnoreCase.CheckStateChanged += ControlDirtyHelper.ControlDirty;
             checkBoxRefreshOnChange.CheckStateChanged += ControlDirtyHelper.ControlDirty;
             checkBoxReaddOnChange.CheckStateChanged += ControlDirtyHelper.ControlDirty;
+            checkBoxScanTabs.CheckStateChanged += ControlDirtyHelper.ControlDirty;
+            textBoxScanExt.TextChanged += ControlDirtyHelper.ControlDirty;
         }
 
         /// <summary>
@@ -54,6 +59,8 @@ namespace GitForce.Settings.Panels
             Properties.Settings.Default.RepoDeepScan = checkBoxDeepScan.Checked;
             Properties.Settings.Default.RefreshOnChange = checkBoxRefreshOnChange.Checked;
             Properties.Settings.Default.ReaddOnChange = checkBoxReaddOnChange.Checked;
+            Properties.Settings.Default.WarnOnTabs = checkBoxScanTabs.Checked;
+            Properties.Settings.Default.WarnOnTabsExt = textBoxScanExt.Text;
 
             // If the auto-refresh settings were changed, run the commits refresh to (de)arm the code
             if(checkBoxRefreshOnChange.Tag != null || checkBoxReaddOnChange.Tag != null)
@@ -69,6 +76,14 @@ namespace GitForce.Settings.Panels
         private void CheckBoxRefreshOnChangeCheckedChanged(object sender, EventArgs e)
         {
             checkBoxReaddOnChange.Enabled = checkBoxRefreshOnChange.Checked;
+        }
+
+        /// <summary>
+        /// The edit text field to specify which files to check is dependent on the warn on tabs checkbox change
+        /// </summary>
+        private void CheckBoxScanTabsCheckedChanged(object sender, EventArgs e)
+        {
+            textBoxScanExt.Enabled = checkBoxScanTabs.Checked;
         }
     }
 }

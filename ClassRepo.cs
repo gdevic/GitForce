@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace GitForce
 {
@@ -155,6 +156,8 @@ namespace GitForce
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Adding " + list, MessageType.General);
             RunCmd("add -- " + list);
+            // Any git command that adds/updates files in the index might cause file check for TABs
+            ClassTabCheck.CheckForTabs(files);
         }
 
         /// <summary>
@@ -165,6 +168,8 @@ namespace GitForce
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Updating " + list, MessageType.General);
             RunCmd("add -- " + list);
+            // Any git command that adds/updates files in the index might cause file check for TABs
+            ClassTabCheck.CheckForTabs(files);
         }
 
         /// <summary>
@@ -186,6 +191,8 @@ namespace GitForce
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Renaming " + list, MessageType.General);
             RunCmd("add -- " + list);
+            // Any git command that adds/updates files in the index might cause file check for TABs
+            ClassTabCheck.CheckForTabs(files);
         }
 
         /// <summary>
