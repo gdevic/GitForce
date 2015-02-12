@@ -52,6 +52,7 @@ namespace GitForce
         {
             // Start the job using our own output handlers
             job.AsyncRun(PStdout, PStderr, PComplete);
+            textStdout.Cursor = Cursors.WaitCursor;
         }
 
         /// <summary>
@@ -105,6 +106,7 @@ namespace GitForce
         /// </summary>
         private void PComplete(ExecResult result)
         {
+            textStdout.Cursor = Cursors.IBeam;  // Default cursor for the text box
             this.result = result;
             if (result.Success())
             {
@@ -162,13 +164,12 @@ namespace GitForce
 
         /// <summary>
         /// Call this function when the command completed, or is about to complete.
-        /// It signals to the user the end of command by enabling the text box and disabling the progress indicator.
+        /// It signals to the user the end of command by enabling the text box and stopping the progress indicator.
         /// </summary>
         private void StopProgress()
         {
             textStdout.ReadOnly = false;
             timerProgress.Enabled = false;
-            labelProgress.Text = " ";
         }
 
         /// <summary>
@@ -181,8 +182,8 @@ namespace GitForce
         /// </summary>
         private void TimerProgressTick(object sender, EventArgs e)
         {
-            labelProgress.Text = @"|/-\|/-\"[_progressPhase].ToString();
-            _progressPhase = (_progressPhase + 1)%8;
+            toolStripStatus.Text = "Git command in progress... " + @"|/-\|/-\"[_progressPhase];
+            _progressPhase = (_progressPhase + 1) % 8;
         }
 
         /// <summary>

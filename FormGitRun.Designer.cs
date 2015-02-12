@@ -32,7 +32,6 @@
             this.btCancel = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelProgress = new System.Windows.Forms.Label();
             this.timerProgress = new System.Windows.Forms.Timer(this.components);
             this.checkAutoclose = new System.Windows.Forms.CheckBox();
             this.textStdout = new GitForce.RichTextBoxEx();
@@ -66,17 +65,6 @@
             this.toolStripStatus.Name = "toolStripStatus";
             this.toolStripStatus.Size = new System.Drawing.Size(150, 17);
             this.toolStripStatus.Text = "Git command in progress...";
-            // 
-            // labelProgress
-            // 
-            this.labelProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelProgress.AutoSize = true;
-            this.labelProgress.Location = new System.Drawing.Point(483, 218);
-            this.labelProgress.Name = "labelProgress";
-            this.labelProgress.Size = new System.Drawing.Size(10, 13);
-            this.labelProgress.TabIndex = 3;
-            this.labelProgress.Tag = "";
-            this.labelProgress.Text = ".";
             // 
             // timerProgress
             // 
@@ -118,7 +106,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 262);
             this.Controls.Add(this.checkAutoclose);
-            this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.textStdout);
             this.Controls.Add(this.btCancel);
@@ -145,7 +132,6 @@
         private RichTextBoxEx textStdout;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
-        private System.Windows.Forms.Label labelProgress;
         private System.Windows.Forms.Timer timerProgress;
         private System.Windows.Forms.CheckBox checkAutoclose;
     }
