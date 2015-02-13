@@ -40,6 +40,11 @@ namespace GitForce
             }
         }
 
+        /// <summary>
+        /// Internal move vs. the external drop event
+        /// </summary>
+        private bool internalMove = true;
+
         public ListViewEx()
             : base()
         {
@@ -48,6 +53,12 @@ namespace GitForce
 
         protected override void OnDragDrop(DragEventArgs e)
         {
+            // GD: A special case when we are dropping an item from the outside the control
+            if (!internalMove)
+            {
+                base.OnDragDrop(e);
+                return;
+            }
             if (!this.AllowRowReorder)
             {
                 return;
@@ -92,6 +103,12 @@ namespace GitForce
 
         protected override void OnDragOver(DragEventArgs e)
         {
+            // GD: A special case when we are dropping an item from the outside the control
+            if (!internalMove)
+            {
+                base.OnDragOver(e);
+                return;
+            }
             if (!this.AllowRowReorder)
             {
                 e.Effect = DragDropEffects.None;
@@ -134,6 +151,11 @@ namespace GitForce
         protected override void OnDragEnter(DragEventArgs e)
         {
             base.OnDragEnter(e);
+            // GD: A special case when we are dropping an item from the outside the control
+            //     we use Copy effect to track that case
+            internalMove = e.Effect != DragDropEffects.Copy;
+            if (!internalMove)
+                return;
             if (!this.AllowRowReorder)
             {
                 e.Effect = DragDropEffects.None;

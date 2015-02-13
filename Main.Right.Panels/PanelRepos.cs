@@ -166,15 +166,33 @@ namespace GitForce.Main.Right.Panels
             ClassRepo repoToClone = ((ToolStripDropDownItem)sender).Tag as ClassRepo;
             string root = NewRepoWizard(repoToClone, null);
             if (!string.IsNullOrEmpty(root))
+                AddNewRepo(root, true);
+        }
+
+        /// <summary>
+        /// This internal function adds a new repo
+        /// After the repo has been added to the list, the repo edit dialog will open to let the user
+        /// have a chance to modify its settings. This behavior can be disabled by setting openEdit to false.
+        /// </summary>
+        private void AddNewRepo(string path, bool openEdit)
+        {
+            try
             {
-                ClassRepo repo = App.Repos.Add(root);
+                // Simply add the new repo. This method will throw exceptions if something's not right.
+                ClassRepo repo = App.Repos.Add(path);
 
                 // Switch to the new repo and do a global refresh
                 App.Repos.SetCurrent(repo);
                 App.DoRefresh();
 
                 // Open the Edit Repo dialog since the user may want to fill in user name and email, at least
-                MenuRepoEditClick(null, null);
+                if (openEdit)
+                    MenuRepoEditClick(null, null);
+            }
+            catch (Exception ex)
+            {
+                App.PrintLogMessage("Unable to add repo: " + ex.Message, MessageType.Error);
+                App.PrintStatusMessage(ex.Message, MessageType.Error);
             }
         }
 
@@ -402,20 +420,71 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// This method handles drop objects into our listview.
-        ///
-        /// At this time we only implement reordering of listview items, implicitly.
-        /// That means we ignore what would be dropped and propagate reorder action down to the
-        /// repos class. Of course, that is an assumption - user might have dropped something
-        /// but we simply ignore that. There is no harm to reorder repos at any time, anyway.
+        /// This method handles dropping objects into our listview and reordiring the list of repos
+        /// We handle 2 cases:
+        /// 1. Dropping one or more folders that contain roots of the git repos in order to add repos to the list
+        /// 2. Dropping an existing repo name from the listbox itself in order to reorder the list
         /// </summary>
         private void ListReposDragDrop(object sender, DragEventArgs e)
         {
-            // Form a list of names by reading them from the listview
-            List<string> names = listRepos.Items.Cast<ListViewItem>()
-                .Select(item => item.Text)
-                .ToList();
-            App.Repos.SetOrder(names);
+            // User is dropping one or more valid git directory onto the list
+            if (e.Effect == DragDropEffects.Copy)
+            {
+                string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
+                List<string> repos = ValidGitRepos(data);
+                foreach (string repo in repos)
+                {
+                    // Add each repo from the list of valid repos. However, open the repo edit
+                    // dialog only if the user is adding only a single repo (and not multiple)
+                    App.PrintLogMessage("DropRepo: " + repo, MessageType.Debug);
+                    AddNewRepo(repo, repos.Count == 1);
+                }
+            }
+            // The user is dropping another list view item; he is reordering the list
+            if (e.Effect == DragDropEffects.Move)
+            {
+                // Form a list of names by reading them from the listview
+                List<string> names = listRepos.Items.Cast<ListViewItem>()
+                    .Select(item => item.Text)
+                    .ToList();
+                App.Repos.SetOrder(names);
+            }
+        }
+
+        /// <summary>
+        /// This method is called when an object is being dragged onto the control
+        /// If the user drags in one or more valid git root directories, we will add corresponding repos
+        /// </summary>
+        private void ListReposDragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.None;
+            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
+            {
+                string[] data = (string[]) e.Data.GetData(DataFormats.FileDrop);
+                if (ValidGitRepos(data).Count > 0)
+                {
+                    // We use Copy effect for outside drop (see TreeViewEx limitation)
+                    e.Effect = DragDropEffects.Copy;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create a list of valid git repos from the array of potential repo paths
+        /// Input data can be null but the output list may only be empty (not null)
+        /// </summary>
+        private List<string> ValidGitRepos(string[] data)
+        {
+            List<string> repos = new List<string>();
+            if (data != null)
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    if (ClassUtils.DirStat(data[i]) == ClassUtils.DirStatType.Git)
+                        repos.Add(data[i]);
+                }
+            }
+            return repos;
         }
     }
 }
