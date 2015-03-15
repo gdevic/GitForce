@@ -110,6 +110,7 @@
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
+            this.createWk = new System.Windows.Forms.SaveFileDialog();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -859,6 +860,12 @@
             this.saveTools.Filter = "Custom tools files (*.xml)|*.xml|All files (*.*)|*.*";
             this.saveTools.Title = "Save Custom Tools to a File";
             // 
+            // createWk
+            // 
+            this.createWk.DefaultExt = "*.giw";
+            this.createWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
+            this.createWk.Title = "Create Workspace At";
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -978,6 +985,7 @@
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesMenuItem;
         private TabEx rightTabControl;
         private System.Windows.Forms.ToolStripMenuItem homeMenuItem;
+        private System.Windows.Forms.SaveFileDialog createWk;
     }
 }
 

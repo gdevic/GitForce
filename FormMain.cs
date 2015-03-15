@@ -227,6 +227,7 @@ namespace GitForce
             menuMainFile.DropDownItems.AddRange(PanelView.GetContextMenu(menuMainFile.DropDown));
 
             // Add the workspace menu items
+            ToolStripMenuItem mWkCreate = new ToolStripMenuItem("Create Workspace", null, WorkspaceCreateMenuItem);
             ToolStripMenuItem mWkClear = new ToolStripMenuItem("Clear Workspace", null, WorkspaceClearMenuItem);
             ToolStripMenuItem mWkLoad = new ToolStripMenuItem("Load Workspace...", null, WorkspaceLoadMenuItem);
             ToolStripMenuItem mWkSave = new ToolStripMenuItem("Save Workspace As...", null, WorkspaceSaveMenuItem);
@@ -242,9 +243,29 @@ namespace GitForce
 
             menuMainFile.DropDownItems.AddRange(new ToolStripItem[] {
                     new ToolStripSeparator(),
-                    mWkClear, mWkLoad, mWkSave, mWkLru,
+                    mWkCreate, mWkClear, mWkLoad, mWkSave, mWkLru,
                     new ToolStripSeparator(),
                     mExit });
+        }
+
+        /// <summary>
+        /// Create a new workspace at the specified (workspace) file location
+        /// </summary>
+        private void WorkspaceCreateMenuItem(object sender, EventArgs e)
+        {
+            // Save existing workspace before trying to create a new one
+            if (ClassWorkspace.Save(null))
+            {
+                // Ask user to select a new workspace file name
+                if (createWk.ShowDialog() == DialogResult.OK)
+                {
+                    // Create a new workspace by saving an empty one and then reloading it
+                    ClassWorkspace.Clear();
+                    ClassWorkspace.Save(createWk.FileName);
+                    ClassWorkspace.Load(createWk.FileName);
+                    App.DoRefresh();
+                }
+            }
         }
 
         /// <summary>
