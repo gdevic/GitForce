@@ -71,8 +71,9 @@ namespace GitForce
                         {
                             FormRecreateRepos recreateRepos = new FormRecreateRepos();
                             recreateRepos.Repos = newRepos;
-                            if (recreateRepos.ShowDialog() != DialogResult.OK)
-                                return false;
+                            // Ignore the retun value from this dialog since we will keep all
+                            // modifications to the loading repos no matter how the user closes it
+                            recreateRepos.ShowDialog();
                             newRepos = recreateRepos.Repos;
                         }
 
