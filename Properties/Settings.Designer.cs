@@ -534,5 +534,16 @@ namespace GitForce.Properties {
                 this["WarnOnTabsExt"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int[] ReposColumnWidths {
+            get {
+                return ((int[])(this["ReposColumnWidths"]));
+            }
+            set {
+                this["ReposColumnWidths"] = value;
+            }
+        }
     }
 }

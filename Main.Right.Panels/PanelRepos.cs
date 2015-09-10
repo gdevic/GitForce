@@ -47,9 +47,36 @@ namespace GitForce.Main.Right.Panels
                 listRepos.Items.Add(li);
             }
 
-            // Make columns auto-adjust to fit the width of the largest item
-            foreach (ColumnHeader l in listRepos.Columns) l.Width = -2;
+            // Adjust the header columns
+            foreach (ColumnHeader l in listRepos.Columns)
+            {
+                // Either set the column width from the user settings, or
+                // make columns auto-adjust to fit the width of the largest item
+                if (Properties.Settings.Default.ReposColumnWidths != null
+                   && (int)Properties.Settings.Default.ReposColumnWidths.GetValue(l.Index)>0 )
+                    l.Width = (int)Properties.Settings.Default.ReposColumnWidths.GetValue(l.Index);
+                else
+                    l.Width = -2;
+            }
             listRepos.EndUpdate();
+        }
+
+        /// <summary>
+        /// Save columns' widths every time they change. This will happen when the
+        /// form loads for the first time and then every time a user drags and resizes a column
+        /// </summary>
+        private void ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            // Store new width only when there are items on the list. This check also prevents
+            // the code from storing initial loaded columns when the form is created
+            if (listRepos.Items.Count > 0)
+            {
+                int[] columns = (int[])Properties.Settings.Default.ReposColumnWidths;
+                if (columns == null)
+                    columns = new int[4];
+                columns[e.ColumnIndex] = listRepos.Columns[e.ColumnIndex].Width;
+                Properties.Settings.Default.ReposColumnWidths = columns;
+            }
         }
 
         /// <summary>
