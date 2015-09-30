@@ -97,6 +97,27 @@ namespace GitForce
             textStdout.SelectionStart = textStdout.TextLength;
             textStdout.ScrollToCaret();
 
+            // This hack recognizes a common problem where the host RSA key was not added to the list
+            // of known hosts. Help the user by telling him that and (on Windows) offering to open the
+            // Manage Keys dialog.
+            if (message.Contains("key fingerprint is"))
+            {
+                // On Linux / Mono, we don't have a Manage SSH dialog
+                if (ClassUtils.IsMono())
+                {
+                    MessageBox.Show(@"The remote server RSA key was not added to the list of known hosts.", @"Host Key error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                {
+                    DialogResult response = MessageBox.Show(@"The remote server RSA key was not added to the list of known hosts." + Environment.NewLine + @"Would you like to open the Manage SSH Keys dialog to add the host in the Remote Keys tab?", @"Host Key error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (response == DialogResult.Yes)
+                    {
+                        FormSSH ssh = new FormSSH();
+                        ssh.Show();
+                    }
+                }
+            }
+
             // Append the stderr stream message to a log window
             App.PrintLogMessage("stderr: " + message, MessageType.Error);
         }
