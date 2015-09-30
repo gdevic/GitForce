@@ -30,6 +30,7 @@ namespace GitForce
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemoteDisplay));
             this.btSsh = new System.Windows.Forms.Button();
             this.textPushCmd = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -107,7 +108,7 @@ namespace GitForce
             this.textUrlPush.MaxLength = 128;
             this.textUrlPush.Name = "textUrlPush";
             this.textUrlPush.ReadOnly = true;
-            this.textUrlPush.Size = new System.Drawing.Size(272, 20);
+            this.textUrlPush.Size = new System.Drawing.Size(265, 20);
             this.textUrlPush.TabIndex = 6;
             this.textUrlPush.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -119,7 +120,7 @@ namespace GitForce
             this.textUrlFetch.MaxLength = 128;
             this.textUrlFetch.Name = "textUrlFetch";
             this.textUrlFetch.ReadOnly = true;
-            this.textUrlFetch.Size = new System.Drawing.Size(272, 20);
+            this.textUrlFetch.Size = new System.Drawing.Size(265, 20);
             this.textUrlFetch.TabIndex = 3;
             this.textUrlFetch.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -152,9 +153,10 @@ namespace GitForce
             // btListPush
             // 
             this.btListPush.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btListPush.Location = new System.Drawing.Point(360, 63);
+            this.btListPush.Image = ((System.Drawing.Image)(resources.GetObject("btListPush.Image")));
+            this.btListPush.Location = new System.Drawing.Point(353, 63);
             this.btListPush.Name = "btListPush";
-            this.btListPush.Size = new System.Drawing.Size(20, 23);
+            this.btListPush.Size = new System.Drawing.Size(27, 23);
             this.btListPush.TabIndex = 14;
             this.btListPush.Text = ".";
             this.btListPush.UseVisualStyleBackColor = true;
@@ -163,9 +165,10 @@ namespace GitForce
             // btListFetch
             // 
             this.btListFetch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btListFetch.Location = new System.Drawing.Point(360, 37);
+            this.btListFetch.Image = ((System.Drawing.Image)(resources.GetObject("btListFetch.Image")));
+            this.btListFetch.Location = new System.Drawing.Point(353, 37);
             this.btListFetch.Name = "btListFetch";
-            this.btListFetch.Size = new System.Drawing.Size(20, 23);
+            this.btListFetch.Size = new System.Drawing.Size(27, 23);
             this.btListFetch.TabIndex = 13;
             this.btListFetch.Text = ".";
             this.btListFetch.UseVisualStyleBackColor = true;

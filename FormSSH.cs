@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -25,6 +26,9 @@ namespace GitForce
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
+
+            // Add button click handlers that will expand the list of existing fetch and push URLs
+            _menuHosts.ItemClicked += MenuHostsItemClicked;
 
             string[] keys = Properties.Settings.Default.PuTTYKeys.
                 Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -213,6 +217,11 @@ namespace GitForce
         private const string PuTTY_Regkey = @"Software\SimonTatham\PuTTY\SshHostKeys";
 
         /// <summary>
+        /// Context menu used by the convenience button that list all existing remote host URLs
+        /// </summary>
+        private readonly ContextMenuStrip _menuHosts = new ContextMenuStrip();
+
+        /// <summary>
         /// Load a list of remote hosts from the registry into the list box
         /// </summary>
         private void RefreshRemoteHosts()
@@ -322,6 +331,27 @@ namespace GitForce
         private void BtHelpClick(object sender, EventArgs e)
         {
             ClassHelp.Handler("SSH Windows");
+        }
+
+        /// <summary>
+        /// User clicked on the hosts help button, open a context dialog to select from the existing URLs
+        /// </summary>
+        private void BtListHostsClick(object sender, EventArgs e)
+        {
+            _menuHosts.Items.Clear();
+            // Pick up a list of existing remote URLs and show them in the pull-down list
+            List<string> hintUrls = App.Repos.GetRemoteUrls();
+            foreach (var hintUrl in hintUrls)
+                _menuHosts.Items.Add(hintUrl);
+            _menuHosts.Show(btListHosts, new Point(0, btListHosts.Height));
+        }
+
+        /// <summary>
+        /// Item menu handler for the push help button
+        /// </summary>
+        private void MenuHostsItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            textBoxHost.Text = e.ClickedItem.Text;
         }
     }
 }

@@ -112,8 +112,8 @@ namespace GitForce
                     DialogResult response = MessageBox.Show(@"The remote server RSA key was not added to the list of known hosts." + Environment.NewLine + @"Would you like to open the Manage SSH Keys dialog to add the host in the Remote Keys tab?", @"Host Key error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (response == DialogResult.Yes)
                     {
-                        FormSSH ssh = new FormSSH();
-                        ssh.Show();
+                        FormSSH formSsh = new FormSSH();
+                        formSsh.ShowDialog();
                     }
                 }
             }
