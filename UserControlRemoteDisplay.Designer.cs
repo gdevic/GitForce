@@ -58,8 +58,8 @@
             // 
             // textPushCmd
             // 
-            this.textPushCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textPushCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textPushCmd.Location = new System.Drawing.Point(82, 91);
             this.textPushCmd.Name = "textPushCmd";
             this.textPushCmd.ReadOnly = true;
@@ -97,8 +97,8 @@
             // 
             // textUrlPush
             // 
-            this.textUrlPush.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textUrlPush.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textUrlPush.Location = new System.Drawing.Point(82, 65);
             this.textUrlPush.MaxLength = 128;
             this.textUrlPush.Name = "textUrlPush";
@@ -109,8 +109,8 @@
             // 
             // textUrlFetch
             // 
-            this.textUrlFetch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textUrlFetch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textUrlFetch.Location = new System.Drawing.Point(82, 39);
             this.textUrlFetch.MaxLength = 128;
             this.textUrlFetch.Name = "textUrlFetch";
@@ -121,9 +121,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.btWWW2);
             this.groupBox1.Controls.Add(this.btWWW1);
             this.groupBox1.Controls.Add(this.btSsh);
@@ -146,6 +146,7 @@
             // btWWW2
             // 
             this.btWWW2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btWWW2.Enabled = false;
             this.btWWW2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btWWW2.Location = new System.Drawing.Point(386, 63);
             this.btWWW2.Name = "btWWW2";
@@ -159,6 +160,7 @@
             // btWWW1
             // 
             this.btWWW1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btWWW1.Enabled = false;
             this.btWWW1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btWWW1.Location = new System.Drawing.Point(386, 37);
             this.btWWW1.Name = "btWWW1";

@@ -46,6 +46,8 @@ namespace GitForce
             textUrlPush.Text = "";
             textPushCmd.Text = "";
             textPassword.Text = "";
+            btWWW1.Enabled = false;
+            btWWW2.Enabled = false;
             textPassword.ReadOnly = true;
         }
 
@@ -59,6 +61,8 @@ namespace GitForce
             textUrlFetch.Text = repo.UrlFetch;
             textUrlPush.Text = repo.UrlPush;
             textPushCmd.Text = repo.PushCmd;
+            btWWW1.Enabled = isValidUrl(textUrlFetch.Text);
+            btWWW2.Enabled = isValidUrl(textUrlPush.Text);
             textPassword.Text = repo.Password;
         }
 
@@ -112,6 +116,8 @@ namespace GitForce
             btSsh.Enabled = false;
             if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
             if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+            btWWW1.Enabled = _fetchUrl.Ok;
+            btWWW2.Enabled = _pushUrl.Ok;
 
             textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
 
@@ -152,6 +158,15 @@ namespace GitForce
             if (url.Host.Contains("github"))
                 target += "/" + url.Path;
             ClassUtils.OpenWebLink(target);
+        }
+
+        /// <summary>
+        /// Checks the given web target link and returns true if it is reasonably valid URL
+        /// </summary>
+        private bool isValidUrl(string target)
+        {
+            ClassUrl.Url url = ClassUrl.Parse(target.Trim());
+            return url.Ok;
         }
     }
 }
