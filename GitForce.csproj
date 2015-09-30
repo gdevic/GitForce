@@ -299,7 +299,7 @@
     <Compile Include="FormUnstash.Designer.cs">
       <DependentUpon>FormUnstash.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListViewEx.cs">
+    <Compile Include="ListViewReorderEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main.Left.Panels\PanelView.cs">

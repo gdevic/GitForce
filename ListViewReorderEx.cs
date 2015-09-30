@@ -10,7 +10,7 @@ namespace GitForce
     /// This functionality is missing from the standard list view control.
     /// http://www.codeproject.com/Articles/4576/Drag-and-Drop-ListView-row-reordering
     /// </summary>
-    public class ListViewEx : ListView
+    public class ListViewReorderEx : ListView
     {
         private const string reorder = "Reorder";
 
@@ -45,7 +45,7 @@ namespace GitForce
         /// </summary>
         private bool internalMove = true;
 
-        public ListViewEx()
+        public ListViewReorderEx()
             : base()
         {
             this.AllowRowReorder = true;
