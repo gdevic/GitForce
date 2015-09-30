@@ -49,6 +49,10 @@ namespace GitForce
             : base()
         {
             this.AllowRowReorder = true;
+
+            // Optimize drawing to avoid flicker
+            SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(System.Windows.Forms.ControlStyles.AllPaintingInWmPaint, true);
         }
 
         protected override void OnDragDrop(DragEventArgs e)
