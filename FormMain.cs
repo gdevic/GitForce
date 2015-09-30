@@ -122,6 +122,21 @@ namespace GitForce
                 });
 
             PrintStatus("GitForce version " + ClassVersion.GetVersion(), MessageType.General);
+
+            // Arm the timer that will check for the result of the new version test
+            // Since the network access, implemented in ClassVersion, can take some time to
+            // provide with the version check result, we will simply repaint our icon after a delay
+            Timer versionCheckTimer = new Timer {Interval = 10000, Enabled = true};
+            versionCheckTimer.Tick += VersionCheckTimerTick;
+        }
+
+        /// <summary>
+        /// Handler for delayed version check event
+        /// </summary>
+        void VersionCheckTimerTick(object sender, EventArgs e)
+        {
+            // Enable new version button if there is a new version available
+            btNewVersion.Visible = App.Version.NewVersionAvailable;
         }
 
         /// <summary>
