@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GitForce
@@ -12,6 +14,12 @@ namespace GitForce
         private ClassUrl.Url _pushUrl;
 
         /// <summary>
+        /// Context menus used by the convenience buttons that list all existing fetch and push URLs
+        /// </summary>
+        private readonly ContextMenuStrip _menuFetch = new ContextMenuStrip();
+        private readonly ContextMenuStrip _menuPush = new ContextMenuStrip();
+
+        /// <summary>
         /// Callback delegate to signal when a text in a name or URL
         /// fields have changed.
         /// </summary>
@@ -22,6 +30,10 @@ namespace GitForce
         public RemoteDisplay()
         {
             InitializeComponent();
+
+            // Add button click handlers that will expand the list of existing fetch and push URLs
+            _menuFetch.ItemClicked += MenuFetchItemClicked;
+            _menuPush.ItemClicked += MenuPushItemClicked;
         }
 
         /// <summary>
@@ -33,6 +45,7 @@ namespace GitForce
         {
             textName.ReadOnly = !name;
             textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = !all;
+            btListFetch.Enabled = btListPush.Enabled = all;
             SomeTextChanged(null, null);
         }
 
@@ -48,6 +61,7 @@ namespace GitForce
             textPassword.Text = "";
             btWWW1.Enabled = false;
             btWWW2.Enabled = false;
+            btListFetch.Enabled = btListPush.Enabled = false;
             textPassword.ReadOnly = true;
         }
 
@@ -64,6 +78,9 @@ namespace GitForce
             btWWW1.Enabled = isValidUrl(textUrlFetch.Text);
             btWWW2.Enabled = isValidUrl(textUrlPush.Text);
             textPassword.Text = repo.Password;
+
+            // Rebuild the state variables _after_ all the URLs have been inserted
+            SomeTextChanged(null, null);
         }
 
         /// <summary>
@@ -153,7 +170,7 @@ namespace GitForce
             string key = ((Button) sender).Tag.ToString();
             ClassUrl.Url url = key == "Fetch" ? _fetchUrl : _pushUrl;
             // Find the generic host name
-            string target = "www." + url.Host;
+            string target = "http://" + url.Host;
             // Detect some special hosts for which we can form a complete path
             if (url.Host.Contains("github"))
                 target += "/" + url.Path;
@@ -167,6 +184,48 @@ namespace GitForce
         {
             ClassUrl.Url url = ClassUrl.Parse(target.Trim());
             return url.Ok;
+        }
+
+        /// <summary>
+        /// User clicked on the fetch help button, open a context dialog to select from the existing URLs
+        /// </summary>
+        private void BtFetchClicked(object sender, EventArgs e)
+        {
+            _menuFetch.Items.Clear();
+            // Pick up a list of existing remote URLs and show them in the pull-down list
+            List<string> hintUrls = App.Repos.GetRemoteUrls();
+            foreach (var hintUrl in hintUrls)
+                _menuFetch.Items.Add(hintUrl);
+            _menuFetch.Show(btListFetch, new Point(0, btListFetch.Height));
+        }
+
+        /// <summary>
+        /// User clicked on the push help button, open a context dialog to select from the existing URLs
+        /// </summary>
+        private void BtPushClicked(object sender, EventArgs e)
+        {
+            _menuPush.Items.Clear();
+            // Pick up a list of existing remote URLs and show them in the pull-down list
+            List<string> hintUrls = App.Repos.GetRemoteUrls();
+            foreach (var hintUrl in hintUrls)
+                _menuPush.Items.Add(hintUrl);
+            _menuPush.Show(btListPush, new Point(0, btListPush.Height));
+        }
+
+        /// <summary>
+        /// Item menu handler for the fetch help button
+        /// </summary>
+        void MenuFetchItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            textUrlFetch.Text = e.ClickedItem.Text;
+        }
+
+        /// <summary>
+        /// Item menu handler for the push help button
+        /// </summary>
+        void MenuPushItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            textUrlPush.Text = e.ClickedItem.Text;
         }
     }
 }

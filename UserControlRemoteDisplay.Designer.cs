@@ -1,4 +1,6 @@
-﻿namespace GitForce
+﻿using System.Windows.Forms;
+
+namespace GitForce
 {
     partial class RemoteDisplay
     {
@@ -36,6 +38,8 @@
             this.textUrlPush = new System.Windows.Forms.TextBox();
             this.textUrlFetch = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btListPush = new System.Windows.Forms.Button();
+            this.btListFetch = new System.Windows.Forms.Button();
             this.btWWW2 = new System.Windows.Forms.Button();
             this.btWWW1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -103,7 +107,7 @@
             this.textUrlPush.MaxLength = 128;
             this.textUrlPush.Name = "textUrlPush";
             this.textUrlPush.ReadOnly = true;
-            this.textUrlPush.Size = new System.Drawing.Size(297, 20);
+            this.textUrlPush.Size = new System.Drawing.Size(272, 20);
             this.textUrlPush.TabIndex = 6;
             this.textUrlPush.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -115,7 +119,7 @@
             this.textUrlFetch.MaxLength = 128;
             this.textUrlFetch.Name = "textUrlFetch";
             this.textUrlFetch.ReadOnly = true;
-            this.textUrlFetch.Size = new System.Drawing.Size(298, 20);
+            this.textUrlFetch.Size = new System.Drawing.Size(272, 20);
             this.textUrlFetch.TabIndex = 3;
             this.textUrlFetch.TextChanged += new System.EventHandler(this.SomeTextChanged);
             // 
@@ -124,6 +128,8 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btListPush);
+            this.groupBox1.Controls.Add(this.btListFetch);
             this.groupBox1.Controls.Add(this.btWWW2);
             this.groupBox1.Controls.Add(this.btWWW1);
             this.groupBox1.Controls.Add(this.btSsh);
@@ -142,6 +148,28 @@
             this.groupBox1.Size = new System.Drawing.Size(422, 143);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // btListPush
+            // 
+            this.btListPush.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btListPush.Location = new System.Drawing.Point(360, 63);
+            this.btListPush.Name = "btListPush";
+            this.btListPush.Size = new System.Drawing.Size(20, 23);
+            this.btListPush.TabIndex = 14;
+            this.btListPush.Text = ".";
+            this.btListPush.UseVisualStyleBackColor = true;
+            this.btListPush.Click += new System.EventHandler(this.BtPushClicked);
+            // 
+            // btListFetch
+            // 
+            this.btListFetch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btListFetch.Location = new System.Drawing.Point(360, 37);
+            this.btListFetch.Name = "btListFetch";
+            this.btListFetch.Size = new System.Drawing.Size(20, 23);
+            this.btListFetch.TabIndex = 13;
+            this.btListFetch.Text = ".";
+            this.btListFetch.UseVisualStyleBackColor = true;
+            this.btListFetch.Click += new System.EventHandler(this.BtFetchClicked);
             // 
             // btWWW2
             // 
@@ -221,7 +249,6 @@
             this.ResumeLayout(false);
 
         }
-
         #endregion
 
         private System.Windows.Forms.Button btSsh;
@@ -238,6 +265,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btWWW2;
         private System.Windows.Forms.Button btWWW1;
-
+        private System.Windows.Forms.Button btListFetch;
+        private System.Windows.Forms.Button btListPush;
     }
 }

@@ -217,5 +217,29 @@ namespace GitForce
                 }
             );
         }
+
+        /// <summary>
+        /// Return a unique list of all remote repos' URLs that are used with the Fetch and Push commands
+        /// This is a convenience method that is used by the RemoteDisplay form to populate new Remote pull
+        /// down listbox so the user can easily pick from the existing URLs.
+        /// </summary>
+        public List<string> GetRemoteUrls()
+        {
+            var remotes = new List<string>();
+            foreach (ClassRepo repo in Repos)
+            {
+                var r = repo.Remotes.GetListNames();
+                foreach (var name in r)
+                {
+                    string url = repo.Remotes.Get(name).UrlFetch;
+                    if (!remotes.Contains(url))
+                        remotes.Add(url);
+                    url = repo.Remotes.Get(name).UrlPush;
+                    if (!remotes.Contains(url))
+                        remotes.Add(url);
+                }
+            }
+            return remotes;
+        }
     }
 }
