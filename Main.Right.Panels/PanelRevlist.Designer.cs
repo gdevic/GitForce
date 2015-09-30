@@ -39,7 +39,7 @@
             this.btSetFilter = new System.Windows.Forms.ToolStripButton();
             this.btRefresh = new System.Windows.Forms.ToolStripButton();
             this.labelLogBranch = new System.Windows.Forms.ToolStripLabel();
-            this.listRev = new System.Windows.Forms.ListView();
+            this.listRev = new ListViewEx();
             this.colHash = new System.Windows.Forms.ColumnHeader();
             this.colDate = new System.Windows.Forms.ColumnHeader();
             this.colAuthor = new System.Windows.Forms.ColumnHeader();
@@ -212,7 +212,6 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ListView listRev;
         private System.Windows.Forms.ColumnHeader colHash;
         private System.Windows.Forms.ColumnHeader colDate;
         private System.Windows.Forms.ColumnHeader colAuthor;
@@ -226,5 +225,6 @@
         private System.Windows.Forms.ToolStripButton btSetFilter;
         private System.Windows.Forms.ToolStripButton btRefresh;
         private System.Windows.Forms.ToolStripLabel labelLogBranch;
+        private ListViewEx listRev;
     }
 }
