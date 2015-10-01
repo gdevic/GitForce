@@ -34,7 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelBranches));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.treeBranches = new System.Windows.Forms.TreeView();
+            this.treeBranches = new TreeViewEx();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -126,6 +126,6 @@
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
-        private System.Windows.Forms.TreeView treeBranches;
+        private TreeViewEx treeBranches;
     }
 }

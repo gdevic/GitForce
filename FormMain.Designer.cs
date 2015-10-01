@@ -77,7 +77,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.rightTabControl = new GitForce.TabEx();
-            this.listStatus = new System.Windows.Forms.ListBox();
+            this.listStatus = new GitForce.ListBoxEx();
             this.menuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStatusCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStatusSelectAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -910,7 +910,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuMainFile;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListBox listStatus;
         private System.Windows.Forms.ContextMenuStrip menuStatus;
         private System.Windows.Forms.ToolStripMenuItem menuStatusCopy;
         private System.Windows.Forms.ToolStripMenuItem menuStatusSelectAll;
@@ -986,6 +985,7 @@
         private TabEx rightTabControl;
         private System.Windows.Forms.ToolStripMenuItem homeMenuItem;
         private System.Windows.Forms.SaveFileDialog createWk;
+        private ListBoxEx listStatus;
     }
 }
 
