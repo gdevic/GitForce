@@ -44,14 +44,6 @@ namespace GitForce
         }
 
         /// <summary>
-        /// User clicked a link to the discussion board
-        /// </summary>
-        private void LinkDiscussionClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ClassHelp.Handler("Discussion");
-        }
-
-        /// <summary>
         /// User clicked on the "Copy Email" button
         /// Copy the email address to clipboard.
         /// </summary>

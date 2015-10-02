@@ -37,9 +37,6 @@
             this.labelBuild = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.linkDiscussion = new System.Windows.Forms.LinkLabel();
-            this.label3 = new System.Windows.Forms.Label();
             this.btCopyEmail = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.labelNewVersionAvailable = new System.Windows.Forms.Label();
@@ -83,11 +80,11 @@
             this.textLic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textLic.Location = new System.Drawing.Point(12, 203);
+            this.textLic.Location = new System.Drawing.Point(12, 164);
             this.textLic.Multiline = true;
             this.textLic.Name = "textLic";
             this.textLic.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textLic.Size = new System.Drawing.Size(422, 90);
+            this.textLic.Size = new System.Drawing.Size(422, 129);
             this.textLic.TabIndex = 4;
             // 
             // labelCopyright
@@ -126,15 +123,12 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.linkDiscussion);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.btCopyEmail);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.labelCopyright);
             this.groupBox1.Location = new System.Drawing.Point(12, 62);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(422, 135);
+            this.groupBox1.Size = new System.Drawing.Size(422, 96);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contact information";
@@ -143,47 +137,16 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Bitstream Vera Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(135, 111);
+            this.label5.Location = new System.Drawing.Point(6, 72);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(189, 13);
             this.label5.TabIndex = 12;
             this.label5.Text = "GitForce.Project@gmail.com";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 111);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(128, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "You can also email me to:";
-            // 
-            // linkDiscussion
-            // 
-            this.linkDiscussion.AutoSize = true;
-            this.linkDiscussion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkDiscussion.Location = new System.Drawing.Point(6, 82);
-            this.linkDiscussion.Name = "linkDiscussion";
-            this.linkDiscussion.Size = new System.Drawing.Size(268, 16);
-            this.linkDiscussion.TabIndex = 10;
-            this.linkDiscussion.TabStop = true;
-            this.linkDiscussion.Tag = "";
-            this.linkDiscussion.Text = "https://sourceforge.net/p/gitforce/discussion";
-            this.linkDiscussion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkDiscussionClicked);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(165, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Contributor: Shmulik Flint (splintor)";
-            // 
             // btCopyEmail
             // 
             this.btCopyEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btCopyEmail.Location = new System.Drawing.Point(347, 106);
+            this.btCopyEmail.Location = new System.Drawing.Point(347, 67);
             this.btCopyEmail.Name = "btCopyEmail";
             this.btCopyEmail.Size = new System.Drawing.Size(69, 23);
             this.btCopyEmail.TabIndex = 8;
@@ -194,11 +157,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 60);
+            this.label2.Location = new System.Drawing.Point(6, 46);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(355, 13);
+            this.label2.Size = new System.Drawing.Size(265, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "For comments, suggestions or bug reports, please visit a discussion board:";
+            this.label2.Text = "For comments, suggestions or bug reports, email me at:";
             // 
             // labelNewVersionAvailable
             // 
@@ -269,9 +232,6 @@
         private System.Windows.Forms.Button btCopyEmail;
         private System.Windows.Forms.Button btDownload;
         private System.Windows.Forms.Label labelNewVersionAvailable;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.LinkLabel linkDiscussion;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
     }
 }
