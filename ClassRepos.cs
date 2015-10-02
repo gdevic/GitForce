@@ -38,11 +38,12 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Load a set of repositories from a file.
+        /// Load or merge a set of repositories from a file.
         /// Returns true is loading succeeded and this class is assigned a new set of repos.
         /// Returns false if loading failed, or was cancelled. The repos in this class did not change.
+        /// If the requested operation is a merge, isImport=true, the new set of repos will be merged with the existing one.
         /// </summary>
-        public bool Load(string fileName)
+        public bool Load(string fileName, bool isImport)
         {
             bool ret = false;
             // Wrap the opening of a repository database with an outer handler
@@ -77,12 +78,18 @@ namespace GitForce
                             newRepos = recreateRepos.Repos;
                         }
 
-                        // Assign our object's list of repos
-                        Repos = newRepos;
-                        // Upon load, set the current based on the default repo
-                        Default = Repos.Find(r => r.Root == defaultRepo);
-                        SetCurrent(Default);
-
+                        // If the operation is a simple load, assign our object's list of repos
+                        // Otherwise, we merge the new set with the existing one
+                        if (isImport)
+                            Repos.AddRange(newRepos);
+                            // After we merge the new set of repos, current/default repo remains the same
+                        else
+                        {
+                            Repos = newRepos;
+                            // Upon load, set the current based on the default repo
+                            Default = Repos.Find(r => r.Root == defaultRepo);
+                            SetCurrent(Default);
+                        }
                         ret = true;
                     }
                     catch (Exception ex)

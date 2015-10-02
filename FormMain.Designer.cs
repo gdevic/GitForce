@@ -111,6 +111,7 @@
             this.openTools = new System.Windows.Forms.OpenFileDialog();
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
             this.createWk = new System.Windows.Forms.SaveFileDialog();
+            this.importWk = new System.Windows.Forms.OpenFileDialog();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -866,6 +867,12 @@
             this.createWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
             this.createWk.Title = "Create Workspace At";
             // 
+            // importWk
+            // 
+            this.importWk.DefaultExt = "*.giw";
+            this.importWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
+            this.importWk.Title = "Import Workspace";
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -986,6 +993,7 @@
         private System.Windows.Forms.ToolStripMenuItem homeMenuItem;
         private System.Windows.Forms.SaveFileDialog createWk;
         private ListBoxEx listStatus;
+        private System.Windows.Forms.OpenFileDialog importWk;
     }
 }
 

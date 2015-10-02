@@ -44,6 +44,25 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Import workspace given the file name.
+        /// If the file name is null, return false.
+        /// </summary>
+        public static bool Import(string name)
+        {
+            if (name == null)
+                return false;
+
+            App.PrintStatusMessage("Importing workspace: " + name, MessageType.General);
+            if (App.Repos.Load(name, true))     // Merge loaded repos with the current set
+            {
+                AddLRU(name);
+                return true;
+            }
+            App.PrintStatusMessage("Import cancelled. Current workspace file: " + Properties.Settings.Default.WorkspaceFile, MessageType.General);
+            return false;
+        }
+
+        /// <summary>
         /// Load workspace given the file name.
         /// If the file name is null, load default workspace.
         /// </summary>
@@ -58,7 +77,7 @@ namespace GitForce
                 name = Properties.Settings.Default.WorkspaceFile;
 
             App.PrintStatusMessage("Loading workspace: " + name, MessageType.General);
-            if (App.Repos.Load(name))
+            if (App.Repos.Load(name, false))    // Load operation (not merge)
             {
                 AddLRU(name);
                 Properties.Settings.Default.WorkspaceFile = name;

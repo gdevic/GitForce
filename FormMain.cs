@@ -244,6 +244,7 @@ namespace GitForce
             // Add the workspace menu items
             ToolStripMenuItem mWkCreate = new ToolStripMenuItem("Create Workspace", null, WorkspaceCreateMenuItem);
             ToolStripMenuItem mWkClear = new ToolStripMenuItem("Clear Workspace", null, WorkspaceClearMenuItem);
+            ToolStripMenuItem mWkImport = new ToolStripMenuItem("Import Workspace...", null, WorkspaceImportMenuItem);
             ToolStripMenuItem mWkLoad = new ToolStripMenuItem("Load Workspace...", null, WorkspaceLoadMenuItem);
             ToolStripMenuItem mWkSave = new ToolStripMenuItem("Save Workspace As...", null, WorkspaceSaveMenuItem);
             ToolStripMenuItem mWkLru = new ToolStripMenuItem("Recent Workspaces", null, WorkspaceLoadLruMenuItem);
@@ -258,7 +259,7 @@ namespace GitForce
 
             menuMainFile.DropDownItems.AddRange(new ToolStripItem[] {
                     new ToolStripSeparator(),
-                    mWkCreate, mWkClear, mWkLoad, mWkSave, mWkLru,
+                    mWkCreate, mWkClear, mWkImport, mWkLoad, mWkSave, mWkLru,
                     new ToolStripSeparator(),
                     mExit });
         }
@@ -293,6 +294,21 @@ namespace GitForce
                 "Clear Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 ClassWorkspace.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Select and import a specific workspace
+        /// Workspace import merges existing repos with the ones being imported
+        /// </summary>
+        private void WorkspaceImportMenuItem(object sender, EventArgs e)
+        {
+            if (importWk.ShowDialog() == DialogResult.OK)
+            {
+                // Save existing workspace before trying to import a new one
+                if (ClassWorkspace.Save(null))
+                    if (ClassWorkspace.Import(importWk.FileName))
+                        App.DoRefresh();
             }
         }
 
