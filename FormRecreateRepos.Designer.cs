@@ -43,6 +43,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.folder = new System.Windows.Forms.FolderBrowserDialog();
             this.btHelp = new System.Windows.Forms.Button();
+            this.btCancel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,10 +52,10 @@
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btClose.Enabled = false;
-            this.btClose.Location = new System.Drawing.Point(411, 318);
+            this.btClose.Location = new System.Drawing.Point(330, 318);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(75, 23);
-            this.btClose.TabIndex = 2;
+            this.btClose.TabIndex = 3;
             this.btClose.Text = "Accept";
             this.btClose.UseVisualStyleBackColor = true;
             // 
@@ -66,10 +67,10 @@
             this.labelHelp.Location = new System.Drawing.Point(12, 9);
             this.labelHelp.Name = "labelHelp";
             this.labelHelp.Size = new System.Drawing.Size(474, 49);
-            this.labelHelp.TabIndex = 3;
+            this.labelHelp.TabIndex = 0;
             this.labelHelp.Text = "Some of the repos referenced to by the loaded workspace file could not be found o" +
-    "n the designated paths. Please select repos that are not valid and take a desire" +
-    "d action.";
+    "n the designated paths. Please select repos that are not valid, one by one, and " +
+    "take a desired action.";
             // 
             // list
             // 
@@ -87,7 +88,7 @@
             this.list.Name = "list";
             this.list.ShowGroups = false;
             this.list.Size = new System.Drawing.Size(474, 144);
-            this.list.TabIndex = 0;
+            this.list.TabIndex = 1;
             this.list.UseCompatibleStateImageBehavior = false;
             this.list.View = System.Windows.Forms.View.Details;
             this.list.SelectedIndexChanged += new System.EventHandler(this.ListSelectedIndexChanged);
@@ -151,7 +152,7 @@
             this.textRootPath.Name = "textRootPath";
             this.textRootPath.ReadOnly = true;
             this.textRootPath.Size = new System.Drawing.Size(381, 20);
-            this.textRootPath.TabIndex = 4;
+            this.textRootPath.TabIndex = 3;
             // 
             // btBrowse
             // 
@@ -160,7 +161,7 @@
             this.btBrowse.Location = new System.Drawing.Point(393, 68);
             this.btBrowse.Name = "btBrowse";
             this.btBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btBrowse.TabIndex = 5;
+            this.btBrowse.TabIndex = 4;
             this.btBrowse.Text = "Browse...";
             this.btBrowse.UseVisualStyleBackColor = true;
             this.btBrowse.Click += new System.EventHandler(this.BtBrowseClick);
@@ -184,20 +185,32 @@
             // btHelp
             // 
             this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btHelp.Location = new System.Drawing.Point(324, 318);
+            this.btHelp.Location = new System.Drawing.Point(249, 318);
             this.btHelp.Name = "btHelp";
             this.btHelp.Size = new System.Drawing.Size(75, 23);
-            this.btHelp.TabIndex = 4;
+            this.btHelp.TabIndex = 2;
             this.btHelp.Tag = "";
             this.btHelp.Text = "Help";
             this.btHelp.UseVisualStyleBackColor = true;
             this.btHelp.Click += new System.EventHandler(this.BtHelpClick);
+            // 
+            // btCancel
+            // 
+            this.btCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btCancel.Location = new System.Drawing.Point(411, 318);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.TabIndex = 4;
+            this.btCancel.Text = "Cancel";
+            this.btCancel.UseVisualStyleBackColor = true;
             // 
             // FormRecreateRepos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(498, 353);
+            this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btHelp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.list);
@@ -234,5 +247,6 @@
         private System.Windows.Forms.ColumnHeader status;
         private System.Windows.Forms.FolderBrowserDialog folder;
         private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.Button btCancel;
     }
 }

@@ -339,7 +339,7 @@ namespace GitForce
                     App.DoRefresh();
                 else
                 {
-                    if (MessageBox.Show("The specified workspace file cannot be loaded. Do you want to remove it from the list?",
+                    if (MessageBox.Show("The specified workspace file cannot be loaded, or the loading was cancelled." + Environment.NewLine + "Do you want to remove it from the list of recently used workspaces?",
                             "Load Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes) return;
                     // Remove the workspace file from the LRU list
                     var lru = ClassWorkspace.GetLRU();
