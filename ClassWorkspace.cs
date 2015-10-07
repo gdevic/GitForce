@@ -12,8 +12,7 @@ namespace GitForce
     static class ClassWorkspace
     {
         /// <summary>
-        /// Return a set of last recently used workspace files
-        /// as a list of absolute file names.
+        /// Return a set of last recently used workspace files as a list of absolute file names.
         /// </summary>
         public static List<string> GetLRU()
         {
@@ -21,6 +20,16 @@ namespace GitForce
                 Split(("\t").ToCharArray(),
                 StringSplitOptions.RemoveEmptyEntries).ToList();
             return lru;
+        }
+
+        /// <summary>
+        /// Set a list of recently used workspace files as a list of absolute file names.
+        /// Calling this method will overwrite currently stored LRU list!
+        /// </summary>
+        public static void SetLRU(List<string> lru)
+        {
+            string s = string.Join("\t", lru.ToArray());
+            Properties.Settings.Default.WorkspaceLRU = s;
         }
 
         /// <summary>

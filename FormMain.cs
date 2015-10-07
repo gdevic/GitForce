@@ -337,6 +337,15 @@ namespace GitForce
             if (ClassWorkspace.Save(null))
                 if (ClassWorkspace.Load(name))
                     App.DoRefresh();
+                else
+                {
+                    if (MessageBox.Show("The specified workspace file cannot be loaded. Do you want to remove it from the list?",
+                            "Load Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes) return;
+                    // Remove the workspace file from the LRU list
+                    var lru = ClassWorkspace.GetLRU();
+                    lru.Remove(name);
+                    ClassWorkspace.SetLRU(lru);
+                }
         }
 
         /// <summary>
