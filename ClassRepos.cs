@@ -201,11 +201,12 @@ namespace GitForce
 
         /// <summary>
         /// Set the new current repo.
-        /// Given repo can be null.
+        /// Given repo can be null in which case the first repo will be selected as current.
         /// </summary>
         public void SetCurrent(ClassRepo repo)
         {
-            Current = repo;
+            // Assign the new 'current' repo but if null, try to find the first valid repo
+            Current = (repo == null && Repos.Count > 0)? Repos[0] : repo;
             if (Current != null)
                 Current.Remotes.Refresh(Current);   // Refresh the list of remote repos
         }

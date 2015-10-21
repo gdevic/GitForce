@@ -598,6 +598,10 @@ namespace GitForce
 
             if (App.Repos.Current != null)
                 menuMainEditRemoteRepo.Enabled = true;
+
+            // At the end of the refresh chain, reset busy indicator which will also fix up
+            // wait cursor ocasionally left on a Linux platform
+            SetBusy(false);
         }
 
         /// <summary>
