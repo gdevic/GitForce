@@ -12,15 +12,19 @@ namespace GitForce
     {
         // Common diff utilities:
         //
-        // We jam together Windows and Linux utilities
-        private static string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        // We bundle together Windows and Linux utilities
+        // Since we build this app in 32-bit mode, on 64-bit OS Windows Program Files will return a (x86) folder variant
+        private static readonly string ProgramFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        private static readonly string ProgramFilesX64 = ProgramFilesX86.Contains(" (x86)") ? ProgramFilesX86.Replace(" (x86)", "") : ProgramFilesX86;
         private static readonly List<AppHelper> Candidates = new List<AppHelper> {
                 //   Config    Short name        Path                                                      Arguments
-                // Windows OS:
-                new AppHelper( "p4merge",        Path.Combine(ProgramFiles,@"Perforce\P4Merge.exe"),       "%1 %2" ),
-                new AppHelper( "WinMerge",       Path.Combine(ProgramFiles,@"WinMerge\WinMergeU.exe"),     "/e /x /u %1 %2" ),
-                new AppHelper( "BC3",            Path.Combine(ProgramFiles,@"Beyond Compare 3\BComp.com"), "%1 %2" ),
-                new AppHelper( "KDiff3",         Path.Combine(ProgramFiles,@"KDiff3\kdiff3.exe"),          "%1 %2" ),
+                // Windows OS (x32):
+                new AppHelper( "p4merge",        Path.Combine(ProgramFilesX86,@"Perforce\P4Merge.exe"),       "%1 %2" ),
+                new AppHelper( "WinMerge",       Path.Combine(ProgramFilesX86,@"WinMerge\WinMergeU.exe"),     "/e /x /u %1 %2" ),
+                new AppHelper( "BC3",            Path.Combine(ProgramFilesX86,@"Beyond Compare 3\BComp.com"), "%1 %2" ),
+                new AppHelper( "KDiff3",         Path.Combine(ProgramFilesX86,@"KDiff3\kdiff3.exe"),          "%1 %2" ),
+                // Windows OS (x64):
+                new AppHelper( "BC4",            Path.Combine(ProgramFilesX64,@"Beyond Compare 4\BComp.com"), "%1 %2" ),
 
                 // Linux OS:
                 new AppHelper( "KDiff3",         @"/usr/bin/kdiff3",   "%1 %2" ),

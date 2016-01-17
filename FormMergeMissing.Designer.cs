@@ -158,7 +158,7 @@
             this.linkLabel3.TabIndex = 17;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Tag = "http://www.scootersoftware.com/";
-            this.linkLabel3.Text = "Beyond Compare 3";
+            this.linkLabel3.Text = "Beyond Compare";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkClicked);
             // 
             // linkLabel2
