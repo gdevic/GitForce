@@ -56,11 +56,12 @@ namespace GitForce
             url.Port = 0;
             url.Ok = false;
 
+            // URL cannot be empty and cannot have spaces
+            if (string.IsNullOrEmpty(u) || u.Contains(' '))
+                return url;
+
             try
             {
-                if (string.IsNullOrEmpty(u))
-                    throw new ArgumentNullException();
-
                 // Some formats imply SSH, so do a quick sanity check before assigning it
                 if (u.Contains(':'))
                     url.Type = UrlType.Ssh;
@@ -120,7 +121,7 @@ namespace GitForce
 
                 // Find the project name
                 string[] tokens = u.Split(new[] { '\\', '/', '.' });
-                if (tokens.Length >= 2 && tokens[tokens.Length - 1].ToLower() == "git")
+                if (tokens.Length >= 2 && (tokens[tokens.Length - 1].ToLower() == "git" || tokens[tokens.Length - 1].ToLower() == "code"))
                     url.Name = tokens[tokens.Length - 2];
                 else
                     url.Name = tokens[tokens.Length - 1];

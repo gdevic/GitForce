@@ -169,11 +169,13 @@ namespace GitForce
         {
             string key = ((Button) sender).Tag.ToString();
             ClassUrl.Url url = key == "Fetch" ? _fetchUrl : _pushUrl;
-            // Find the generic host name
+            // Find a generic host name
             string target = "http://" + url.Host;
             // Detect some special hosts for which we can form a complete path
             if (url.Host.Contains("github"))
                 target += "/" + url.Path;
+            if (url.Host.Contains(".code.sf.net"))
+                target = "https://sourceforge.net/projects/" + url.Name;
             ClassUtils.OpenWebLink(target);
         }
 
