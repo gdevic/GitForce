@@ -44,6 +44,10 @@ namespace GitForce
                     // Check if a version of git is installed at a known location (or guess a location)
                     string programFilesPath = Environment.GetEnvironmentVariable("PROGRAMFILES(X86)") ??
                                               Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                    // If a git executable does not exist at the default location, try the 64-bit program file folder instead
+                    if (!File.Exists(programFilesPath) && programFilesPath.Contains(" (x86)"))
+                        programFilesPath = programFilesPath.Replace(" (x86)", "");
+
                     gitPath = Path.Combine(programFilesPath, @"Git\bin\git.exe");
                     if (Exec.Run(gitPath, "--version").stdout.Contains("git version") == false)
                     {
