@@ -21,7 +21,7 @@ namespace GitForce
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
-            if (this.Items.Count > 0)
+            if (this.Items.Count > 0 && e.Index>=0)
             {
                 e.DrawBackground();
                 e.Graphics.DrawString(this.Items[e.Index].ToString(), e.Font, new SolidBrush(this.ForeColor), new PointF(e.Bounds.X, e.Bounds.Y));
