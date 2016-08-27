@@ -116,8 +116,8 @@
     <Setting Name="WarnOnTabsExt" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.c;*.h;*.cpp;*.cc;*.cs</Value>
     </Setting>
-    <Setting Name="ReposColumnWidths" Type="System.Int32[]" Scope="User">
-      <Value Profile="(Default)"></Value>
+    <Setting Name="ReposColumnWidths" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-2,-2,-2,0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

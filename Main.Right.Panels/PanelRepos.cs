@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,11 +51,12 @@ namespace GitForce.Main.Right.Panels
             // Adjust the header columns
             foreach (ColumnHeader l in listRepos.Columns)
             {
+                int[] columns = Properties.Settings.Default.ReposColumnWidths.Split(',').Select(Int32.Parse).ToArray(); ;
                 // Either set the column width from the user settings, or
                 // make columns auto-adjust to fit the width of the largest item
                 if (Properties.Settings.Default.ReposColumnWidths != null
-                   && (int)Properties.Settings.Default.ReposColumnWidths.GetValue(l.Index)>0 )
-                    l.Width = (int)Properties.Settings.Default.ReposColumnWidths.GetValue(l.Index);
+                   && columns[l.Index] > 0 )
+                    l.Width = columns[l.Index];
                 else
                     l.Width = -2;
             }
@@ -71,11 +73,12 @@ namespace GitForce.Main.Right.Panels
             // the code from storing initial loaded columns when the form is created
             if (listRepos.Items.Count > 0)
             {
-                int[] columns = (int[])Properties.Settings.Default.ReposColumnWidths;
-                if (columns == null)
-                    columns = new int[4];
+                // WAR: We used to save this int[] type variable directly but in the settings it would embed "<?xml version..."
+                // text in the middle of a file which would break the Linux mono code
+                int[] columns = Properties.Settings.Default.ReposColumnWidths.Split(',').Select(Int32.Parse).ToArray();;
                 columns[e.ColumnIndex] = listRepos.Columns[e.ColumnIndex].Width;
-                Properties.Settings.Default.ReposColumnWidths = columns;
+                string values = String.Join(",", columns.Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray());
+                Properties.Settings.Default.ReposColumnWidths = values;
             }
         }
 

@@ -537,9 +537,10 @@ namespace GitForce.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public int[] ReposColumnWidths {
+        [global::System.Configuration.DefaultSettingValueAttribute("-2,-2,-2,0")]
+        public string ReposColumnWidths {
             get {
-                return ((int[])(this["ReposColumnWidths"]));
+                return ((string)(this["ReposColumnWidths"]));
             }
             set {
                 this["ReposColumnWidths"] = value;
