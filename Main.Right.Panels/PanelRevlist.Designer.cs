@@ -154,6 +154,7 @@
             this.listRev.TabIndex = 1;
             this.listRev.UseCompatibleStateImageBehavior = false;
             this.listRev.View = System.Windows.Forms.View.Details;
+            this.listRev.VisibleChanged += new System.EventHandler(this.ListRevVisibleChanged);
             this.listRev.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListRevMouseDoubleClick);
             this.listRev.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ListRevMouseUp);
             // 

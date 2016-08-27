@@ -30,6 +30,7 @@ namespace GitForce.Main.Right.Panels
         public void RevlistRefresh()
         {
             // Clear the current lists in preparation for the refresh
+            listRev.BeginUpdate();
             listRev.Items.Clear();
             btBranch.DropDownItems.Clear();
             labelLogBranch.Text = "";
@@ -47,7 +48,7 @@ namespace GitForce.Main.Right.Panels
 
                 // If the repo does not have a branch at all (new repo that was just initialized), exit
                 if (string.IsNullOrEmpty(logBranch))
-                    return;
+                    goto End;
 
                 if (logBranch != branches.Current)
                     labelLogBranch.Text = String.Format(" (Branch: \"{0}\")", logBranch);
@@ -97,6 +98,8 @@ namespace GitForce.Main.Right.Panels
                 if(result.Success())
                     UpdateList(listRev, result.stdout);
             }
+        End:
+            listRev.EndUpdate();
         }
 
         /// <summary>
@@ -312,6 +315,20 @@ namespace GitForce.Main.Right.Panels
             // btClearFilter enable is keeping the flag if we are filtering or not
             btClearFilter.Enabled = false;
             RevlistRefresh();
+        }
+
+        /// <summary>
+        /// The only purpose of this handler is to fix a Linux listview issue where
+        /// the header is sometimes not visible when a tab is switched to
+        /// </summary>
+        private void ListRevVisibleChanged(object sender, EventArgs e)
+        {
+            if (!ClassUtils.IsMono()) return; // Linux/Mono fixup only
+            if (!Visible) return; // Only on becoming visible
+            // Make columns auto-adjust to fit the width of the largest item
+            listRev.BeginUpdate();
+            foreach (ColumnHeader l in listRev.Columns) l.Width = -2;
+            listRev.EndUpdate();
         }
     }
 }
