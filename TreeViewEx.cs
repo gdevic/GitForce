@@ -24,8 +24,7 @@ namespace GitForce
         /// </summary>
         protected override void OnHandleCreated(EventArgs e)
         {
-            // Can't send message (and use a DLL) on Mono
-            if (!ClassUtils.IsMono())
+            if (!ClassUtils.IsMono()) // Can't send message (and use a DLL) on Mono
                 SendMessage(this.Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
             base.OnHandleCreated(e);
         }

@@ -214,7 +214,8 @@ namespace GitForce
             IntPtr lpar = Marshal.AllocCoTaskMem( Marshal.SizeOf( cf ) );
             Marshal.StructureToPtr(cf, lpar, false);
 
-            SendMessage(Handle, EM_SETCHARFORMAT, wpar, lpar);
+            if (!ClassUtils.IsMono()) // Can't send message (and use a DLL) on Mono
+                SendMessage(Handle, EM_SETCHARFORMAT, wpar, lpar);
 
             Marshal.FreeCoTaskMem(lpar);
         }
@@ -229,7 +230,8 @@ namespace GitForce
             IntPtr lpar = 	Marshal.AllocCoTaskMem( Marshal.SizeOf( cf ) );
             Marshal.StructureToPtr(cf, lpar, false);
 
-            SendMessage(Handle, EM_GETCHARFORMAT, wpar, lpar);
+            if (!ClassUtils.IsMono()) // Can't send message (and use a DLL) on Mono
+                SendMessage(Handle, EM_GETCHARFORMAT, wpar, lpar);
 
             cf = (CHARFORMAT2_STRUCT)Marshal.PtrToStructure(lpar, typeof(CHARFORMAT2_STRUCT));
 
