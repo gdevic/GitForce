@@ -81,6 +81,7 @@
             this.listRepos.UseCompatibleStateImageBehavior = false;
             this.listRepos.View = System.Windows.Forms.View.Details;
             this.listRepos.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.ColumnWidthChanged);
+            this.listRepos.VisibleChanged += new System.EventHandler(this.ListReposVisibleChanged);
             this.listRepos.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListReposDragDrop);
             this.listRepos.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListReposDragEnter);
             this.listRepos.DoubleClick += new System.EventHandler(this.ListReposDoubleClick);

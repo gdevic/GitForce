@@ -516,5 +516,29 @@ namespace GitForce.Main.Right.Panels
             }
             return repos;
         }
+
+        /// <summary>
+        /// The only purpose of this handler is to fix a Linux listview issue where
+        /// the header is sometimes not visible when a tab is switched to
+        /// </summary>
+        private void ListReposVisibleChanged(object sender, EventArgs e)
+        {
+            if (!ClassUtils.IsMono()) return; // Linux/Mono fixup only
+            if (!Visible) return; // Only on becoming visible
+            // Adjust the header columns
+            listRepos.BeginUpdate();
+            foreach (ColumnHeader l in listRepos.Columns)
+            {
+                int[] columns = Properties.Settings.Default.ReposColumnWidths.Split(',').Select(Int32.Parse).ToArray(); ;
+                // Either set the column width from the user settings, or
+                // make columns auto-adjust to fit the width of the largest item
+                if (Properties.Settings.Default.ReposColumnWidths != null
+                   && columns[l.Index] > 0)
+                    l.Width = columns[l.Index];
+                else
+                    l.Width = -2;
+            }
+            listRepos.EndUpdate();
+        }
     }
 }
