@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GitForce</RootNamespace>
     <AssemblyName>GitForce</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>git.ico</ApplicationIcon>
     <TargetFrameworkProfile />
@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>0169</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -218,7 +218,7 @@
     <Compile Include="FormPathToGit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPathToGit.designer.cs">
+    <Compile Include="FormPathToGit.Designer.cs">
       <DependentUpon>FormPathToGit.cs</DependentUpon>
     </Compile>
     <Compile Include="FormRecreateRepos.cs">
@@ -355,7 +355,7 @@
     <Compile Include="Repo.Edit.Panels\ControlLocal.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Repo.Edit.Panels\ControlLocal.designer.cs">
+    <Compile Include="Repo.Edit.Panels\ControlLocal.Designer.cs">
       <DependentUpon>ControlLocal.cs</DependentUpon>
     </Compile>
     <Compile Include="Repo.Edit.Panels\ControlRemotes.cs">
@@ -418,7 +418,7 @@
     <Compile Include="Settings.Panels\ControlGlobal.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Settings.Panels\ControlGlobal.designer.cs">
+    <Compile Include="Settings.Panels\ControlGlobal.Designer.cs">
       <DependentUpon>ControlGlobal.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.Panels\ControlMerge.cs">
@@ -430,7 +430,7 @@
     <Compile Include="Settings.Panels\ControlOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Settings.Panels\ControlOptions.designer.cs">
+    <Compile Include="Settings.Panels\ControlOptions.Designer.cs">
       <DependentUpon>ControlOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.Panels\ControlSpecifications.cs">
