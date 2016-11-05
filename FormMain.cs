@@ -518,7 +518,7 @@ namespace GitForce
             }
             else
             {
-                Cursor = Cursors.WaitCursor;
+                Cursor.Current = Cursors.WaitCursor;
                 btCancelOperation.Enabled = true;
                 Application.DoEvents();     // Give app the chance to redraw the icon
             }
@@ -532,7 +532,7 @@ namespace GitForce
         {
             if ((bool)timerBusy.Tag == false)
             {
-                Cursor = Cursors.Default;
+                Cursor.Current = Cursors.Default;
                 btCancelOperation.Enabled = false;
                 timerBusy.Enabled = false;
                 Application.DoEvents();     // Give app the chance to redraw the icon
@@ -599,8 +599,7 @@ namespace GitForce
             if (App.Repos.Current != null)
                 menuMainEditRemoteRepo.Enabled = true;
 
-            // At the end of the refresh chain, reset busy indicator which will also fix up
-            // wait cursor ocasionally left on a Linux platform
+            // At the end of the refresh chain, reset busy indicator
             SetBusy(false);
         }
 

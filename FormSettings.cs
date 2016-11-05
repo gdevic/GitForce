@@ -57,7 +57,7 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            Cursor = Cursors.WaitCursor;
+            Cursor.Current = Cursors.WaitCursor;
             // Add all user panels to the base options panel; call their init
             foreach (KeyValuePair<string, UserControl> key in panels)
             {
@@ -69,7 +69,7 @@ namespace GitForce
             // Expand the tree and select the first node
             treeSections.ExpandAll();
             treeSections.SelectedNode = treeSections.Nodes[0].Nodes[0];
-            Cursor = Cursors.Default;
+            Cursor.Current = Cursors.Default;
         }
 
         /// <summary>
