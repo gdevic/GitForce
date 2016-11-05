@@ -20,7 +20,7 @@ namespace GitForce
         private Process procPageant;
 
         /// <summary>
-        /// Constructor class function, create executables in temp space
+        /// Constructor class function, create executables in the temp space
         /// </summary>
         public ClassPutty()
         {
