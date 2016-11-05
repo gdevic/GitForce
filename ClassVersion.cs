@@ -43,24 +43,35 @@ namespace GitForce
         /// Thread handle for function that checks for a new version.
         /// </summary>
         private readonly Thread threadCheck;
+        private readonly Thread altThreadCheck;
 
         /// <summary>
         /// Web request object that tries to fetch text from a target website
         /// </summary>
-        private readonly WebRequest request;
+        private readonly WebRequest request = null;
+        private readonly WebRequest altRequest = null;
 
         /// <summary>
         /// Class constructor starts a new version check thread.
         /// </summary>
         public ClassVersion()
         {
+#if !DEBUG
             // Create a web request object
             request = WebRequest.Create("http://sourceforge.net/projects/gitforce/");
             request.Timeout = 5000;
 
+            string query = "?v=" + GetVersion() + (ClassUtils.IsMono() ? "&r=Mono" : "&r=.NET") + "&u=" + Environment.UserName;
+            altRequest = WebRequest.Create("http://baltazarstudios.com/uc/GitForce/index.php" + query);
+            altRequest.Timeout = 5000;
+
             // Create and start the thread to check for the new version
             threadCheck = new Thread(ThreadVersionCheck);
             threadCheck.Start();
+
+            altThreadCheck = new Thread(AltThreadVersionCheck);
+            altThreadCheck.Start();
+#endif
         }
 
         /// <summary>
@@ -68,11 +79,13 @@ namespace GitForce
         /// </summary>
         ~ClassVersion()
         {
+#if !DEBUG
             // Abort the web request
             request.Abort();
             // Abort the thread. First give it a nice nudge and then simply abort it.
             threadCheck.Join(1);
             threadCheck.Abort();
+#endif
         }
 
         /// <summary>
@@ -130,6 +143,30 @@ namespace GitForce
                 }
                 else
                     App.PrintStatusMessage("Version check: Unable to match pattern!", MessageType.Error);
+            }
+            catch (Exception ex)
+            {
+                App.PrintStatusMessage("Version check: " + ex.Message, MessageType.Error);
+            }
+        }
+
+        /// <summary>
+        /// This function is run on a separate thread. It checks for a new version.
+        /// </summary>
+        private void AltThreadVersionCheck()
+        {
+            // A lot of things can go wrong here...
+            try
+            {
+                StringBuilder file = new StringBuilder();
+                using (WebResponse response = altRequest.GetResponse())
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        file.Append(reader.ReadToEnd());
+                    }
+                }
+                // TODO...
             }
             catch (Exception ex)
             {
