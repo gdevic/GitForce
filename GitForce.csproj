@@ -765,6 +765,9 @@
     <None Include="Resources\App\git.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SSH\git-ssh-helper.sh" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\PuTTY\pageant.exe" />
   </ItemGroup>
   <ItemGroup>

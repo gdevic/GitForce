@@ -89,9 +89,14 @@ namespace GitForce
         public static ClassRepos Repos;
 
         /// <summary>
-        /// Static class PuTTY to manage SSL connections
+        /// Static class PuTTY to manage SSL connections on Windows
         /// </summary>
         public static ClassPutty Putty;
+
+        /// <summary>
+        /// Static class SSH to manage SSL connections on Linux
+        /// </summary>
+        public static ClassSSH Ssh;
 
         /// <summary>
         /// Static class managing Git HTTPS password helper file
@@ -194,9 +199,10 @@ namespace GitForce
                         // Add known text editors
                         Settings.Panels.ControlViewEdit.AddKnownEditors();
 
-                        // Instantiate PuTTY support only on Windows OS
-                        if (!ClassUtils.IsMono())
-                            Putty = new ClassPutty();
+                        if (ClassUtils.IsMono())
+                            Ssh = new ClassSSH();           // Instantiate SSH support only on Linux (Mono)
+                        else
+                            Putty = new ClassPutty();       // Instantiate PuTTY support only on Windows
 
                         GitPasswd = new ClassGitPasswd();   // Create HTTPS password helper file
                         Repos = new ClassRepos();           // Create repository canvas

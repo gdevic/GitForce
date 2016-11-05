@@ -44,8 +44,8 @@ namespace GitForce
         /// </summary>
         ~ClassPutty()
         {
-            // No real harm done if we fail to remove these temp files. Next time GitForce is
-            // run we will reuse the same file names, so the junk will not grow in the temp folder.
+            // No real harm done if we fail to remove temp files. The next time GitForce is
+            // run we will reuse the same files, so the temp folder will not grow.
             try
             {
                 // Dont attempt to stop/remove Pageant if the user wanted to leave it running
