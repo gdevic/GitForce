@@ -135,6 +135,9 @@ namespace GitForce
         {
             try
             {
+                FStdout = null; // Disable all callbacks since the client class could have been disposed of
+                FStderr = null;
+                FComplete = null;
                 Proc.Kill();    // Immediately stop the process!
             }
             catch (Exception)
