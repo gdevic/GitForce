@@ -50,9 +50,9 @@ namespace GitForce
         /// </summary>
         private void FormGitRunShown(object sender, EventArgs e)
         {
+            UseWaitCursor = true;
             // Start the job using our own output handlers
             job.AsyncRun(PStdout, PStderr, PComplete);
-            textStdout.Cursor = Cursors.WaitCursor;
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace GitForce
         /// </summary>
         private void PComplete(ExecResult result)
         {
-            textStdout.Cursor = Cursors.IBeam;  // Default cursor for the text box
+            UseWaitCursor = false;
             this.result = result;
             if (result.Success())
             {
