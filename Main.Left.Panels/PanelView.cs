@@ -443,7 +443,8 @@ namespace GitForce.Main.Left.Panels
             ToolStripMenuItem mEditAssoc = new ToolStripMenuItem("Associated Editor", null, MenuViewEditClick) { ShortcutKeys = Keys.Control | Keys.Enter }; // Enter on it's own is better, but is not supported
             ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Using");
             mEdit.DropDownItems.Add(mEditAssoc);
-            string[] progs = Properties.Settings.Default.EditViewPrograms.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string values = Properties.Settings.Default.EditViewPrograms;
+            string[] progs = values.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (progs.Any())
             {
                 mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(progs[0]), null, MenuViewEditClick) { Tag = progs[0], ShortcutKeys = Keys.Control | Keys.Shift | Keys.Enter });

@@ -51,7 +51,8 @@ namespace GitForce.Main.Right.Panels
             // Adjust the header columns
             foreach (ColumnHeader l in listRepos.Columns)
             {
-                int[] columns = Properties.Settings.Default.ReposColumnWidths.Split(',').Select(Int32.Parse).ToArray(); ;
+                string values = Properties.Settings.Default.ReposColumnWidths;
+                int[] columns = values.Split(',').Select(Int32.Parse).ToArray();
                 // Either set the column width from the user settings, or
                 // make columns auto-adjust to fit the width of the largest item
                 if (Properties.Settings.Default.ReposColumnWidths != null
@@ -75,9 +76,10 @@ namespace GitForce.Main.Right.Panels
             {
                 // WAR: We used to save this int[] type variable directly but in the settings it would embed "<?xml version..."
                 // text in the middle of a file which would break the Linux mono code
-                int[] columns = Properties.Settings.Default.ReposColumnWidths.Split(',').Select(Int32.Parse).ToArray();;
+                string values = Properties.Settings.Default.ReposColumnWidths;
+                int[] columns = values.Split(',').Select(Int32.Parse).ToArray();
                 columns[e.ColumnIndex] = listRepos.Columns[e.ColumnIndex].Width;
-                string values = String.Join(",", columns.Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray());
+                values = String.Join(",", columns.Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray());
                 Properties.Settings.Default.ReposColumnWidths = values;
             }
         }
@@ -529,7 +531,8 @@ namespace GitForce.Main.Right.Panels
             listRepos.BeginUpdate();
             foreach (ColumnHeader l in listRepos.Columns)
             {
-                int[] columns = Properties.Settings.Default.ReposColumnWidths.Split(',').Select(Int32.Parse).ToArray(); ;
+                string values = Properties.Settings.Default.ReposColumnWidths;
+                int[] columns = values.Split(',').Select(Int32.Parse).ToArray();
                 // Either set the column width from the user settings, or
                 // make columns auto-adjust to fit the width of the largest item
                 if (Properties.Settings.Default.ReposColumnWidths != null

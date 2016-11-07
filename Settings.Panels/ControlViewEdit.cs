@@ -48,7 +48,8 @@ namespace GitForce.Settings.Panels
         public void Init(string[] options)
         {
             // Load a list of programs from the application settings
-            string[] progs = Properties.Settings.Default.EditViewPrograms.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string values = Properties.Settings.Default.EditViewPrograms;
+            string[] progs = values.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (string s in progs)
                 listPrograms.Items.Add(s);
         }

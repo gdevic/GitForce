@@ -213,7 +213,8 @@ namespace GitForce
 
             ToolStripMenuItem mEditAssoc = new ToolStripMenuItem("Associated Editor", null, MenuViewEditClick);
             viewMenuItem.DropDownItems.Add(mEditAssoc);
-            string[] progs = Properties.Settings.Default.EditViewPrograms.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string values = Properties.Settings.Default.EditViewPrograms;
+            string[] progs = values.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (string s in progs)
                 viewMenuItem.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuViewEditClick) { Tag = s });
         }

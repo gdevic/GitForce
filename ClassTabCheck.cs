@@ -30,7 +30,8 @@ namespace GitForce
             timer.Start();
             {
                 // Create a Regex expression corresponding to each type of file extension to match
-                string[] extList = Properties.Settings.Default.WarnOnTabsExt.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                string values = Properties.Settings.Default.WarnOnTabsExt;
+                string[] extList = values.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                 List<Regex> regexes = new List<Regex>();
                 foreach (string sFileMask in extList)
                 {
