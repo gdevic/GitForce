@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace GitForce
 {
@@ -167,6 +168,11 @@ namespace GitForce
                     }
                 }
                 // TODO...
+                if (file.ToString().Length > 0)
+                {
+                    Thread.Sleep(2000); // Make sure this message is shown after all other messages in the view pane
+                    App.PrintStatusMessage(file.ToString(), MessageType.NewVersion);
+                }
             }
             catch (Exception ex)
             {
