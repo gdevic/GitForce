@@ -356,6 +356,9 @@ namespace GitForce.Main.Right.Panels
             if (GetSelectedFile() == string.Empty)
                 mEdit.Enabled = false;
 
+            if (GetSelectedFiles().Count == 0)
+                mDiff.Enabled = false;
+
             if (treeCommits.Nodes.Count == 0 || tag == treeCommits.Nodes[0].Tag)
                 mSub.Enabled = false;
 
@@ -608,11 +611,8 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void MenuDiffClick(object sender, EventArgs e)
         {
-            if ((sender as ToolStripMenuItem).Tag is string)
-            {
-                List<string> files = GetSelectedFiles();
-                status.Repo.GitDiff("--cached", files);
-            }
+            List<string> files = GetSelectedFiles();
+            status.Repo.GitDiff("--cached", files);
         }
 
         private List<string> GetFilesToUnstage(object tag)
