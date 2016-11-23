@@ -187,7 +187,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner)
         {
-            ToolStripMenuItem mDescribe = new ToolStripMenuItem("Describe Changelist", null, MenuDescribeClick);
+            ToolStripMenuItem mDescribe = new ToolStripMenuItem("Describe Changelist...", null, MenuDescribeClick);
             ToolStripMenuItem mReset = new ToolStripMenuItem("Reset", null, MenuResetClick);
             ToolStripMenuItem mCherry = new ToolStripMenuItem("Cherry pick", null, MenuCherryPickClick);
             ToolStripMenuItem mCopy = new ToolStripMenuItem("Copy SHA", null, MenuCopyShaClick);
