@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
@@ -276,15 +277,30 @@ namespace GitForce
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner)
         {
+            // Build the "View Using" submenus
+            // The default option is to open the file using the OS-associated editor,
+            // after which all the user-specified programs are listed
+            ToolStripMenuItem mViewAssoc = new ToolStripMenuItem("Associated Editor", null, MenuViewEditClick) { };
+            ToolStripMenuItem mView = new ToolStripMenuItem("View Using");
+            mView.DropDownItems.Add(mViewAssoc);
+            string values = Properties.Settings.Default.EditViewPrograms;
+            string[] progs = values.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            if (progs.Any())
+            {
+                mView.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(progs[0]), null, MenuViewEditClick) { Tag = progs[0] });
+                foreach (string s in progs.Skip(1))
+                    mView.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuViewEditClick) { Tag = s });
+            }
+
             ToolStripMenuItem mDescribe = new ToolStripMenuItem("Describe Changelist...", null, MenuDescribeClick);
             ToolStripMenuItem mCopy = new ToolStripMenuItem("Copy SHA", null, MenuCopyShaClick);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mDescribe, mCopy
+                mView, mDescribe, mCopy
             });
 
             if (listRev.SelectedIndices.Count != 1)
-                mDescribe.Enabled = mCopy.Enabled = false;
+                mView.Enabled = mDescribe.Enabled = mCopy.Enabled = false;
 
             return menu;
         }
