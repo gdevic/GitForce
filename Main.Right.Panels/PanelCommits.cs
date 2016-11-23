@@ -307,12 +307,27 @@ namespace GitForce.Main.Right.Panels
             // Make sure not to touch the 'status' if it's null
             bool isMergeState = status != null && status.IsMergeState();
 
+            // Build the "Edit Using" submenus
+            // The default option is to open the file using the OS-associated editor,
+            // after which all the user-specified programs are listed
+            ToolStripMenuItem mEditAssoc = new ToolStripMenuItem("Associated Editor", null, MenuEditClick) { ShortcutKeys = Keys.Control | Keys.Enter }; // Enter on it's own is better, but is not supported
+            ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit Using");
+            mEdit.DropDownItems.Add(mEditAssoc);
+            string values = Properties.Settings.Default.EditViewPrograms;
+            string[] progs = values.Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            if (progs.Any())
+            {
+                mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(progs[0]), null, MenuEditClick) { Tag = progs[0], ShortcutKeys = Keys.Control | Keys.Shift | Keys.Enter });
+                foreach (string s in progs.Skip(1))
+                    mEdit.DropDownItems.Add(new ToolStripMenuItem(Path.GetFileName(s), null, MenuEditClick) { Tag = s });
+            }
+
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick, Keys.Control | Keys.Z) { Tag = tag };
             ToolStripMenuItem mSub = isMergeState
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
                                          : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) { Tag = tag };
             ToolStripMenuItem mNew = new ToolStripMenuItem("New Changelist...", null, MenuNewCommitClick);
-            ToolStripMenuItem mEdit = isMergeState
+            ToolStripMenuItem mEditSpec = isMergeState
                                           ? new ToolStripMenuItem("Edit Merge Spec...", null, MenuEditCommitMergeClick)
                                           : new ToolStripMenuItem("Edit Spec...", null, MenuEditCommitClick) { Tag = tag };
             ToolStripMenuItem mDel = new ToolStripMenuItem("Delete Empty Changelist", null, MenuDeleteEmptyClick, Keys.Delete) { Tag = tag };
@@ -331,12 +346,15 @@ namespace GitForce.Main.Right.Panels
                 mAbort, mExitMerge });
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mDiff, mSub,
+                mEdit, mDiff, mSub,
                 new ToolStripSeparator(),
-                mNew, mEdit, mDel,
+                mNew, mEditSpec, mDel,
                 new ToolStripSeparator(),
                 mUnstage,
                 mResolve });
+
+            if (GetSelectedFile() == string.Empty)
+                mEdit.Enabled = false;
 
             if (treeCommits.Nodes.Count == 0 || tag == treeCommits.Nodes[0].Tag)
                 mSub.Enabled = false;
@@ -345,7 +363,7 @@ namespace GitForce.Main.Right.Panels
                 mDiff.Enabled = mNew.Enabled = mUnstage.Enabled = false;
 
             if (!(tag is ClassCommit))
-                mEdit.Enabled = false;
+                mEditSpec.Enabled = false;
 
             if (!(tag is ClassCommit && (tag as ClassCommit).Files.Count == 0 && !(tag as ClassCommit).IsDefault))
                 mDel.Enabled = false;
@@ -375,6 +393,31 @@ namespace GitForce.Main.Right.Panels
             }
 
             return menu;
+        }
+
+        /// <summary>
+        /// Edit selected file using either the default editor (native OS file association,
+        /// if the tag is null, or the editor program specified in the tag field.
+        /// This is a handler for both the context menu and the edit tool bar button.
+        /// </summary>
+        private void MenuEditClick(object sender, EventArgs e)
+        {
+            string file = GetSelectedFile();
+            if (file != string.Empty)
+            {
+                file = Path.Combine(App.Repos.Current.Root, file); // Commits tree stores file paths relative to the repo root
+                App.PrintStatusMessage("Editing " + file, MessageType.General);
+                ClassUtils.FileOpenFromMenu(sender, file);
+            }
+        }
+
+        /// <summary>
+        /// Returns the relative path of a single selected file, or empty if no file was selected
+        /// </summary>
+        private string GetSelectedFile()
+        {
+            List<string> files = GetSelectedFiles();
+            return files.Count == 1 ? files[0] : string.Empty;
         }
 
         /// <summary>
