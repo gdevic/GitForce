@@ -35,7 +35,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeCommits = new TreeViewEx();
+            this.treeCommits = new GitForce.TreeViewEx();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -92,13 +92,14 @@
             this.treeCommits.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeCommitsAfterLabelEdit);
             this.treeCommits.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterCollapse);
             this.treeCommits.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterExpand);
-            this.treeCommits.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterSelect);
-            this.treeCommits.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.TreeCommitsPreviewKeyDown);
-            this.treeCommits.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseUp);
-            this.treeCommits.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeCommitsDragDrop);
-            this.treeCommits.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseMove);
-            this.treeCommits.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeCommitsDragEnter);
             this.treeCommits.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeCommitsItemDrag);
+            this.treeCommits.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeCommitsAfterSelect);
+            this.treeCommits.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeCommitsDragDrop);
+            this.treeCommits.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeCommitsDragEnter);
+            this.treeCommits.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsDoubleClick);
+            this.treeCommits.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseMove);
+            this.treeCommits.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeCommitsMouseUp);
+            this.treeCommits.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.TreeCommitsPreviewKeyDown);
             // 
             // PanelCommits
             // 

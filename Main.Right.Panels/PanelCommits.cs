@@ -785,5 +785,21 @@ namespace GitForce.Main.Right.Panels
         {
             UpdateCommitCollapsed(e);
         }
+
+        /// <summary>
+        /// Handle double-clicking on a tree view
+        /// Depending on the saved options, we either do nothing ("0"), open a file
+        /// using a default Explorer file association ("1"), or open a file using a
+        /// specified application ("2")
+        /// </summary>
+        private void TreeCommitsDoubleClick(object sender, MouseEventArgs e)
+        {
+            string file = GetSelectedFile();
+            if (file != string.Empty)
+            {
+                file = Path.Combine(App.Repos.Current.Root, file); // Commits tree stores file paths relative to the repo root
+                ClassUtils.FileDoubleClick(file);
+            }
+        }
     }
 }
