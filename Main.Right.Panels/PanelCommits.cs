@@ -323,6 +323,8 @@ namespace GitForce.Main.Right.Panels
             }
 
             ToolStripMenuItem mDiff = new ToolStripMenuItem("Diff vs Repo HEAD", null, MenuDiffClick, Keys.Control | Keys.Z) { Tag = tag };
+            ToolStripMenuItem mRevHist = new ToolStripMenuItem("Revision History...", null, MenuEditRevHistClick) { };
+
             ToolStripMenuItem mSub = isMergeState
                                          ? new ToolStripMenuItem("Submit Merge...", null, MenuSubmitMergeClick, Keys.Control | Keys.S)
                                          : new ToolStripMenuItem("Submit...", null, MenuSubmitClick, Keys.Control | Keys.S) { Tag = tag };
@@ -346,7 +348,9 @@ namespace GitForce.Main.Right.Panels
                 mAbort, mExitMerge });
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mEdit, mDiff, mSub,
+                mEdit, mDiff, mRevHist,
+                new ToolStripSeparator(),
+                mSub,
                 new ToolStripSeparator(),
                 mNew, mEditSpec, mDel,
                 new ToolStripSeparator(),
@@ -354,7 +358,7 @@ namespace GitForce.Main.Right.Panels
                 mResolve });
 
             if (GetSelectedFile() == string.Empty)
-                mEdit.Enabled = false;
+                mEdit.Enabled = mRevHist.Enabled = false;
 
             if (GetSelectedFiles().Count == 0)
                 mDiff.Enabled = false;
@@ -421,6 +425,20 @@ namespace GitForce.Main.Right.Panels
         {
             List<string> files = GetSelectedFiles();
             return files.Count == 1 ? files[0] : string.Empty;
+        }
+
+        /// <summary>
+        /// Show the revision history dialog for a selected file.
+        /// This dialog is _not_ modal, so user can view multiple files.
+        /// </summary>
+        private void MenuEditRevHistClick(object sender, EventArgs e)
+        {
+            string file = GetSelectedFile();
+            if (file != string.Empty)
+            {
+                FormRevisionHistory formRevisionHistory = new FormRevisionHistory(file);
+                formRevisionHistory.Show();
+            }
         }
 
         /// <summary>
