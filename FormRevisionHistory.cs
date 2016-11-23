@@ -44,7 +44,11 @@ namespace GitForce
 
             file = targetFile;
             Sha = String.Empty;
-            Text = @"Revision History for //" + targetFile;
+            // Show complete path to the file being examined using the OS specific path separator
+            Text = @"Revision History for " + App.Repos.Current.Root.Replace('\\', Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar + targetFile.Replace('\\', Path.DirectorySeparatorChar);
+            // If the path specifies a folder (for example, user clicked on the root repo name on the view pane), add "..."
+            if (Text[Text.Length - 1] == Path.DirectorySeparatorChar)
+                Text = Text + "...";
         }
 
         /// <summary>
