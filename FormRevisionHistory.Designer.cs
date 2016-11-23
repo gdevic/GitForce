@@ -38,7 +38,7 @@
             this.diffVsClientFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listRev = new System.Windows.Forms.ListView();
+            this.listRev = new ListViewEx();
             this.colRev = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colHash = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -224,7 +224,6 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
-        private System.Windows.Forms.ListView listRev;
         private System.Windows.Forms.RichTextBox textDescription;
         private System.Windows.Forms.ColumnHeader colRev;
         private System.Windows.Forms.ColumnHeader colHash;
@@ -232,5 +231,6 @@
         private System.Windows.Forms.ColumnHeader colAuthor;
         private System.Windows.Forms.ColumnHeader colSubject;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private ListViewEx listRev;
     }
 }
