@@ -44,6 +44,7 @@ namespace GitForce
 
             file = targetFile;
             Sha = String.Empty;
+
             // Show complete path to the file being examined using the OS specific path separator
             Text = @"Revision History for " + App.Repos.Current.Root.Replace('\\', Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar + targetFile.Replace('\\', Path.DirectorySeparatorChar);
             // If the path specifies a folder (for example, user clicked on the root repo name on the view pane), add "..."
@@ -91,7 +92,7 @@ namespace GitForce
 
             ExecResult result = App.Repos.Current.Run(cmd.ToString());
             if(result.Success())
-                PanelRevlist.UpdateList(listRev, result.stdout);
+                PanelRevlist.UpdateList(listRev, result.stdout, true);
 
             // Activate the given SHA item or the first one if none given
             int index = listRev.Items.IndexOfKey(Sha);
@@ -115,13 +116,13 @@ namespace GitForce
 
             // Set up for 2 SHA checkins: the one in the [0] spot being the most recently selected
             if (listRev.SelectedIndices.Count == 1)
-                lruSha[0] = lruSha[1] = listRev.SelectedItems[0].Text;
+                lruSha[0] = lruSha[1] = listRev.SelectedItems[0].Name;
             if (listRev.SelectedIndices.Count > 1)
             {
                 if (listRev.SelectedItems[0].Text == lruSha[0])
-                    lruSha[1] = listRev.SelectedItems[1].Text;
+                    lruSha[1] = listRev.SelectedItems[1].Name;
                 else
-                    lruSha[1] = listRev.SelectedItems[0].Text;
+                    lruSha[1] = listRev.SelectedItems[0].Name;
             }
 
             if(listRev.SelectedIndices.Count==1)

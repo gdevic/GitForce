@@ -96,7 +96,7 @@ namespace GitForce.Main.Right.Panels
 
                 ExecResult result = App.Repos.Current.Run(cmd.ToString());
                 if(result.Success())
-                    UpdateList(listRev, result.stdout);
+                    UpdateList(listRev, result.stdout, false);
             }
         End:
             listRev.EndUpdate();
@@ -106,13 +106,14 @@ namespace GitForce.Main.Right.Panels
         /// Helper function that fills in the list of revisions.
         /// This is used from the code above and from the FormRevisionHistory.
         /// </summary>
-        public static void UpdateList(ListView listRev, string input)
+        public static void UpdateList(ListView listRev, string input, bool prefixRevId)
         {
             App.StatusBusy(true);
             string[] response = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             listRev.BeginUpdate();
             listRev.Items.Clear();
+            int id = response.Length;
 
             foreach (string s in response)
             {
@@ -131,6 +132,9 @@ namespace GitForce.Main.Right.Panels
                     cat[3] = cat[3].Substring(0, c1) + "...";
 
                 ListViewItem li = new ListViewItem(cat);
+                if (prefixRevId) // Prefix is used with file revision history dialog: a simple count-down index
+                    li.SubItems.Insert(0, new ListViewItem.ListViewSubItem() { Text = string.Format("{0,4}", id) });
+                id--;
                 li.Name = cat[0];           // Used to search for a key
                 li.Tag = cat[0];            // Tag contains the SHA1 of the commit
                 listRev.Items.Add(li);

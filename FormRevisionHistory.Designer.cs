@@ -38,10 +38,11 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listRev = new System.Windows.Forms.ListView();
-            this.colHash = new System.Windows.Forms.ColumnHeader();
-            this.colDate = new System.Windows.Forms.ColumnHeader();
-            this.colAuthor = new System.Windows.Forms.ColumnHeader();
-            this.colSubject = new System.Windows.Forms.ColumnHeader();
+            this.colRev = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHash = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSubject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textDescription = new System.Windows.Forms.RichTextBox();
             this.menuStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -131,6 +132,7 @@
             // listRev
             // 
             this.listRev.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colRev,
             this.colHash,
             this.colDate,
             this.colAuthor,
@@ -172,6 +174,10 @@
             this.textDescription.TabIndex = 0;
             this.textDescription.Text = "";
             // 
+            // colRev
+            // 
+            this.colRev.Text = "Revision";
+            // 
             // FormRevisionHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,10 +216,10 @@
         private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
         private System.Windows.Forms.ListView listRev;
         private System.Windows.Forms.RichTextBox textDescription;
+        private System.Windows.Forms.ColumnHeader colRev;
         private System.Windows.Forms.ColumnHeader colHash;
         private System.Windows.Forms.ColumnHeader colDate;
         private System.Windows.Forms.ColumnHeader colAuthor;
         private System.Windows.Forms.ColumnHeader colSubject;
-
     }
 }
