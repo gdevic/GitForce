@@ -107,9 +107,6 @@ namespace GitForce
         /// </summary>
         private void ListRevSelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listRev.SelectedIndices.Count==0)
-                return;
-
             // Set the menu enables according to the number of items selected
             viewMenuItem.Enabled = syncMenuItem.Enabled = diffVsClientFileMenuItem.Enabled = listRev.SelectedIndices.Count == 1;
             diffRevisionsMenuItem.Enabled = listRev.SelectedIndices.Count == 2;
@@ -119,12 +116,12 @@ namespace GitForce
                 lruSha[0] = lruSha[1] = listRev.SelectedItems[0].Name;
             if (listRev.SelectedIndices.Count > 1)
             {
-                if (listRev.SelectedItems[0].Text == lruSha[0])
+                if (listRev.SelectedItems[0].Name == lruSha[0])
                     lruSha[1] = listRev.SelectedItems[1].Name;
                 else
                     lruSha[1] = listRev.SelectedItems[0].Name;
             }
-
+            // Fill in the description of a selected checkin if a single one is selected
             if(listRev.SelectedIndices.Count==1)
             {
                 string sha = lruSha[1];
@@ -232,7 +229,7 @@ namespace GitForce
         private void MenuViewEditClick(object sender, EventArgs e)
         {
             // Create a temp file on the selected git file version
-            string temp = GetTempFile(file, listRev.SelectedItems[0].Text);
+            string temp = GetTempFile(file, listRev.SelectedItems[0].Name);
             if (!string.IsNullOrEmpty(temp))
                 ClassUtils.FileOpenFromMenu(sender, temp);
         }
@@ -248,7 +245,7 @@ namespace GitForce
             if (listRev.SelectedIndices.Count == 1)
             {
                 // Create a temp file and open the file
-                string temp = GetTempFile(file, listRev.SelectedItems[0].Text);
+                string temp = GetTempFile(file, listRev.SelectedItems[0].Name);
                 if (!string.IsNullOrEmpty(temp))
                     ClassUtils.FileDoubleClick(temp);
             }

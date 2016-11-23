@@ -139,6 +139,7 @@
             this.colSubject});
             this.listRev.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listRev.FullRowSelect = true;
+            this.listRev.HideSelection = false;
             this.listRev.Location = new System.Drawing.Point(0, 0);
             this.listRev.Name = "listRev";
             this.listRev.Size = new System.Drawing.Size(563, 184);
@@ -147,6 +148,10 @@
             this.listRev.View = System.Windows.Forms.View.Details;
             this.listRev.SelectedIndexChanged += new System.EventHandler(this.ListRevSelectedIndexChanged);
             this.listRev.DoubleClick += new System.EventHandler(this.ListRevDoubleClick);
+            // 
+            // colRev
+            // 
+            this.colRev.Text = "Revision";
             // 
             // colHash
             // 
@@ -173,10 +178,6 @@
             this.textDescription.Size = new System.Drawing.Size(563, 137);
             this.textDescription.TabIndex = 0;
             this.textDescription.Text = "";
-            // 
-            // colRev
-            // 
-            this.colRev.Text = "Revision";
             // 
             // FormRevisionHistory
             // 
