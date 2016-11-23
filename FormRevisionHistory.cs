@@ -257,6 +257,49 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Right-mouse button opens a popup with the context menu
+        /// </summary>
+        private void ListRevMouseUp(object sender, MouseEventArgs e)
+        {
+            // Clear the context menu first so it's only shown when we enter the condition below
+            contextMenu.Items.Clear();
+            if (e.Button == MouseButtons.Right && listRev.SelectedIndices.Count > 0)
+            {
+                // Build the context menu to be shown
+                contextMenu.Items.AddRange(GetContextMenu(contextMenu));
+            }
+        }
+
+        /// <summary>
+        /// Builds and returns a context menu for revision history list
+        /// </summary>
+        public ToolStripItemCollection GetContextMenu(ToolStrip owner)
+        {
+            ToolStripMenuItem mCopy = new ToolStripMenuItem("Copy SHA", null, MenuCopyShaClick);
+
+            ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
+                mCopy
+            });
+
+            if (listRev.SelectedIndices.Count != 1)
+                mCopy.Enabled = false;
+
+            return menu;
+        }
+
+        /// <summary>
+        /// Copy the selected SHA number into the clipboard
+        /// </summary>
+        private void MenuCopyShaClick(object sender, EventArgs e)
+        {
+            if (listRev.SelectedIndices.Count == 1)
+            {
+                string sha = listRev.SelectedItems[0].Name;
+                Clipboard.SetText(sha);
+            }
+        }
+
+        /// <summary>
         /// Create a git file of a specific version. Use a temp file since the file
         /// content needs to be created from the git history.
         /// </summary>

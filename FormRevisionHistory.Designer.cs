@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRevisionHistory));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +45,7 @@
             this.colAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSubject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textDescription = new System.Windows.Forms.RichTextBox();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -137,6 +139,7 @@
             this.colDate,
             this.colAuthor,
             this.colSubject});
+            this.listRev.ContextMenuStrip = this.contextMenu;
             this.listRev.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listRev.FullRowSelect = true;
             this.listRev.HideSelection = false;
@@ -148,6 +151,7 @@
             this.listRev.View = System.Windows.Forms.View.Details;
             this.listRev.SelectedIndexChanged += new System.EventHandler(this.ListRevSelectedIndexChanged);
             this.listRev.DoubleClick += new System.EventHandler(this.ListRevDoubleClick);
+            this.listRev.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ListRevMouseUp);
             // 
             // colRev
             // 
@@ -179,6 +183,11 @@
             this.textDescription.TabIndex = 0;
             this.textDescription.Text = "";
             // 
+            // contextMenu
+            // 
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(61, 4);
+            // 
             // FormRevisionHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,8 +202,8 @@
             this.Name = "FormRevisionHistory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Revision History";
-            this.Load += new System.EventHandler(this.FormRevisionHistoryLoad);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRevisionHistoryFormClosing);
+            this.Load += new System.EventHandler(this.FormRevisionHistoryLoad);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -222,5 +231,6 @@
         private System.Windows.Forms.ColumnHeader colDate;
         private System.Windows.Forms.ColumnHeader colAuthor;
         private System.Windows.Forms.ColumnHeader colSubject;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
     }
 }
