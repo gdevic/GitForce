@@ -38,6 +38,41 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Describe (view) selected changelist and drive up/down back propagation through the host list view
+        /// </summary>
+        static public void DriveChangelistFromListViewEx(ref ListViewEx listRev)
+        {
+            // Get the SHA associated with the selected item on the log list
+            ListView li = listRev;
+            if (li.SelectedIndices.Count != 1)
+                return;
+            bool multiSel = li.MultiSelect;
+            li.MultiSelect = false;
+            int index = li.SelectedIndices[0];
+
+            FormShowChangelist form = new FormShowChangelist();
+            DialogResult dlg;
+
+            do
+            {
+                li.Items[index].Selected = true;
+                string sha = li.Items[index].Tag.ToString();
+                form.LoadChangelist(sha);
+                dlg = form.ShowDialog();
+
+                // Using the "Yes" value to load a next commit
+                if (dlg == DialogResult.Yes && index > 0)
+                    index--;
+
+                // Using the "No" value to load a previous commit
+                if (dlg == DialogResult.No && index < li.Items.Count - 1)
+                    index++;
+
+            } while (dlg != DialogResult.Cancel);
+            li.MultiSelect = multiSel;
+        }
+
+        /// <summary>
         /// Given a Sha string, loads that commit into the form.
         /// </summary>
         public void LoadChangelist(string sha)
