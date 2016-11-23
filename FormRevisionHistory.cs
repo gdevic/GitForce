@@ -28,6 +28,11 @@ namespace GitForce
         private readonly string[] lruSha = new string[2];
 
         /// <summary>
+        /// Temp file counter number
+        /// </summary>
+        private int tmpFileCounter = 1;
+
+        /// <summary>
         /// Form constructor. Takes the git file name whose history is to be shown.
         /// </summary>
         public FormRevisionHistory(string targetFile)
@@ -264,15 +269,17 @@ namespace GitForce
             ExecResult result = App.Repos.Current.Run(cmd);
             if (result.Success() == false)
                 return string.Empty;
-
             string response = result.stdout;
 
-            // Create a temp file based on our file and write content to it
-            file = file.Replace(Path.DirectorySeparatorChar, '_');
-            string temp = Path.Combine(Path.GetTempPath(), sha) + "_" + file;
+            // Create a temp file based on a version of our file and write its content to it
+            string rev = listRev.Items.Find(sha, false)[0].Text.Trim();
+            file = Path.GetFileName(file);
+            file = string.Format("ReadOnly-{0}-Rev-{1}-{2}", tmpFileCounter, rev, file);
+            tmpFileCounter++;
+            string tempFile = Path.Combine(Path.GetTempPath(), file);
             try
             {
-                File.WriteAllText(temp, response);
+                File.WriteAllText(tempFile, response);
             }
             catch (Exception ex)
             {
@@ -280,8 +287,8 @@ namespace GitForce
             }
 
             // Add the temp file to the global list of temp files to be removed at the app exit time
-            ClassGlobals.TempFiles.Add(temp);
-            return temp;
+            ClassGlobals.TempFiles.Add(tempFile);
+            return tempFile;
         }
     }
 }
