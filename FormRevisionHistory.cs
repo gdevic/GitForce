@@ -202,8 +202,11 @@ namespace GitForce
             {
                 string cmd = string.Format("checkout {1} -- {0}", file, lruSha[0]);
                 ExecResult result = App.Repos.Current.RunCmd(cmd);
-                if(result.Success())
+                if (result.Success())
+                {
                     App.PrintStatusMessage("File checked out at a previous revision " + lruSha[0] + ": " + file, MessageType.General);
+                    App.DoRefresh();
+                }
                 else
                 {
                     App.PrintStatusMessage("Sync error: " + result.stderr, MessageType.Error);
