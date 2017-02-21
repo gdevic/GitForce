@@ -49,18 +49,13 @@ namespace GitForce.Main.Right.Panels
             }
 
             // Adjust the header columns
+            string values = Properties.Settings.Default.ReposColumnWidths;
+            int[] columns = {-2, -2, -2, 0}; // Auto-adjust by default
+            if (!string.IsNullOrEmpty(values)) // Otherwise, load widths from the settings
+                columns = values.Split(',').Select(Int32.Parse).ToArray();
             foreach (ColumnHeader l in listRepos.Columns)
-            {
-                string values = Properties.Settings.Default.ReposColumnWidths;
-                int[] columns = values.Split(',').Select(Int32.Parse).ToArray();
-                // Either set the column width from the user settings, or
-                // make columns auto-adjust to fit the width of the largest item
-                if (Properties.Settings.Default.ReposColumnWidths != null
-                   && columns[l.Index] > 0 )
-                    l.Width = columns[l.Index];
-                else
-                    l.Width = -2;
-            }
+                l.Width = columns[l.Index];
+
             listRepos.EndUpdate();
         }
 
@@ -527,20 +522,17 @@ namespace GitForce.Main.Right.Panels
         {
             if (!ClassUtils.IsMono()) return; // Linux/Mono fixup only
             if (!Visible) return; // Only on becoming visible
-            // Adjust the header columns
+
             listRepos.BeginUpdate();
+
+            // Adjust the header columns
+            string values = Properties.Settings.Default.ReposColumnWidths;
+            int[] columns = { -2, -2, -2, 0 }; // Auto-adjust by default
+            if (!string.IsNullOrEmpty(values)) // Otherwise, load widths from the settings
+                columns = values.Split(',').Select(Int32.Parse).ToArray();
             foreach (ColumnHeader l in listRepos.Columns)
-            {
-                string values = Properties.Settings.Default.ReposColumnWidths;
-                int[] columns = values.Split(',').Select(Int32.Parse).ToArray();
-                // Either set the column width from the user settings, or
-                // make columns auto-adjust to fit the width of the largest item
-                if (Properties.Settings.Default.ReposColumnWidths != null
-                   && columns[l.Index] > 0)
-                    l.Width = columns[l.Index];
-                else
-                    l.Width = -2;
-            }
+                l.Width = columns[l.Index];
+
             listRepos.EndUpdate();
         }
     }
