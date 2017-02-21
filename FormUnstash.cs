@@ -72,8 +72,7 @@ namespace GitForce
             string cmd = String.Format("stash {0} {1}",
                                        checkKeepStash.Checked ? "apply" : "pop",
                                        stash);
-
-            ExecResult result = App.Repos.Current.RunCmd(cmd);
+            App.Repos.Current.RunCmd(cmd);
         }
 
         /// <summary>
@@ -82,9 +81,7 @@ namespace GitForce
         private void BtRemoveClick(object sender, EventArgs e)
         {
             string cmd = "stash drop " + stash;
-
-            ExecResult result = App.Repos.Current.RunCmd(cmd);
-
+            App.Repos.Current.RunCmd(cmd);
             PopulateStashList();
         }
 

@@ -76,14 +76,11 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.rightTabControl = new GitForce.TabEx();
-            this.listStatus = new GitForce.ListBoxEx();
             this.menuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStatusCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStatusSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStatusClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmdBox = new GitForce.TextBoxEx();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btUpdate = new System.Windows.Forms.ToolStripButton();
@@ -112,11 +109,16 @@
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
             this.createWk = new System.Windows.Forms.SaveFileDialog();
             this.importWk = new System.Windows.Forms.OpenFileDialog();
+            this.rightTabControl = new GitForce.TabEx();
+            this.listStatus = new GitForce.ListBoxEx();
+            this.cmdBox = new GitForce.TextBoxEx();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.menuStatus.SuspendLayout();
@@ -526,33 +528,6 @@
             this.splitContainer2.SplitterDistance = 373;
             this.splitContainer2.TabIndex = 0;
             // 
-            // rightTabControl
-            // 
-            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
-            this.rightTabControl.Name = "rightTabControl";
-            this.rightTabControl.SelectedIndex = 0;
-            this.rightTabControl.ShowToolTips = true;
-            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
-            this.rightTabControl.TabIndex = 0;
-            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
-            // 
-            // listStatus
-            // 
-            this.listStatus.ContextMenuStrip = this.menuStatus;
-            this.listStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.listStatus.Font = new System.Drawing.Font("Bitstream Vera Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listStatus.FormattingEnabled = true;
-            this.listStatus.IntegralHeight = false;
-            this.listStatus.ItemHeight = 15;
-            this.listStatus.Location = new System.Drawing.Point(0, 0);
-            this.listStatus.Name = "listStatus";
-            this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listStatus.Size = new System.Drawing.Size(784, 165);
-            this.listStatus.TabIndex = 0;
-            this.listStatus.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListStatusDrawItem);
-            // 
             // menuStatus
             // 
             this.menuStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -588,18 +563,6 @@
             this.menuStatusClear.Size = new System.Drawing.Size(122, 22);
             this.menuStatusClear.Text = "Clear";
             this.menuStatusClear.Click += new System.EventHandler(this.MenuSelectClearClick);
-            // 
-            // cmdBox
-            // 
-            this.cmdBox.AcceptsReturn = true;
-            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
-            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdBox.Location = new System.Drawing.Point(0, 165);
-            this.cmdBox.Name = "cmdBox";
-            this.cmdBox.Size = new System.Drawing.Size(784, 23);
-            this.cmdBox.TabIndex = 1;
-            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
             // 
             // toolStrip
             // 
@@ -873,6 +836,45 @@
             this.importWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
             this.importWk.Title = "Import Workspace";
             // 
+            // rightTabControl
+            // 
+            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
+            this.rightTabControl.Name = "rightTabControl";
+            this.rightTabControl.SelectedIndex = 0;
+            this.rightTabControl.ShowToolTips = true;
+            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
+            this.rightTabControl.TabIndex = 0;
+            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
+            // 
+            // listStatus
+            // 
+            this.listStatus.ContextMenuStrip = this.menuStatus;
+            this.listStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listStatus.Font = new System.Drawing.Font("Bitstream Vera Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listStatus.FormattingEnabled = true;
+            this.listStatus.IntegralHeight = false;
+            this.listStatus.ItemHeight = 15;
+            this.listStatus.Location = new System.Drawing.Point(0, 0);
+            this.listStatus.Name = "listStatus";
+            this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listStatus.Size = new System.Drawing.Size(784, 165);
+            this.listStatus.TabIndex = 0;
+            this.listStatus.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListStatusDrawItem);
+            // 
+            // cmdBox
+            // 
+            this.cmdBox.AcceptsReturn = true;
+            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
+            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBox.Location = new System.Drawing.Point(0, 165);
+            this.cmdBox.Name = "cmdBox";
+            this.cmdBox.Size = new System.Drawing.Size(784, 23);
+            this.cmdBox.TabIndex = 1;
+            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -899,8 +901,10 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.menuStatus.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
