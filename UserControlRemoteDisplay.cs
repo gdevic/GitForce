@@ -126,6 +126,12 @@ namespace GitForce
         /// </summary>
         private void SomeTextChanged(object sender, EventArgs e)
         {
+            // Remove "git clone" substring from the input text which is commonly pasted from an online repo command
+            if (textUrlFetch.Text.Trim().StartsWith("git clone"))
+                textUrlFetch.Text = textUrlFetch.Text.Replace("git clone", "").Trim();
+            if (textUrlPush.Text.Trim().StartsWith("git clone"))
+                textUrlPush.Text = textUrlPush.Text.Replace("git clone", "").Trim();
+
             // Call the delegate and also reparse our fetch and push URLs
             AnyTextChanged(IsValid());
 
