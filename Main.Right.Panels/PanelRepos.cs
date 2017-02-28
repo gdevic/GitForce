@@ -191,7 +191,7 @@ namespace GitForce.Main.Right.Panels
         {
             // If we need to clone a repo, set the cloning parameters within the Step1 form
             ClassRepo repoToClone = ((ToolStripDropDownItem)sender).Tag as ClassRepo;
-            string root = NewRepoWizard(repoToClone, null);
+            string root = NewRepoWizard(repoToClone, null, null);
             if (!string.IsNullOrEmpty(root))
                 AddNewRepo(root, true);
         }
@@ -228,7 +228,7 @@ namespace GitForce.Main.Right.Panels
         /// If successful, returns the path to the new local repo
         /// If failed, returns null
         /// </summary>
-        public static string NewRepoWizard(ClassRepo repoToClone, ClassRepo repoRemote)
+        public static string NewRepoWizard(ClassRepo repoToClone, ClassRepo repoRemote, string folder)
         {
             FormNewRepoStep1 newRepoStep1 = new FormNewRepoStep1();
             FormNewRepoStep2 newRepoStep2 = new FormNewRepoStep2();
@@ -253,9 +253,12 @@ namespace GitForce.Main.Right.Panels
                 else
                     newRepoStep2.Destination = repoRemote.Root;
             }
+            // If the folder parameter was given, create a new local repo at that path
+            bool skipStep1 = !string.IsNullOrEmpty(folder); // In this case, we will skip step 1
+            newRepoStep2.Destination = folder ?? ""; // and assign the folder path to the step 2 dialog
 
         BackToStep1:
-            if (newRepoStep1.ShowDialog() == DialogResult.OK)
+            if (skipStep1 || newRepoStep1.ShowDialog() == DialogResult.OK)
             {
                 // Depending on the type of the source, establish that:
                 //  For clone operations:
@@ -303,6 +306,7 @@ namespace GitForce.Main.Right.Panels
                 DialogResult result = newRepoStep2.ShowDialog();
 
                 // Clicking on the <<Prev button will return "Retry" result, so we loop back to the first form...
+                skipStep1 = false;
                 if (result == DialogResult.Retry)
                     goto BackToStep1;
 
@@ -467,7 +471,20 @@ namespace GitForce.Main.Right.Panels
                     AddNewRepo(repo, repos.Count == 1);
                 }
             }
-            // The user is dropping another list view item; he is reordering the list
+            // User is dropping a single, non-git folder; create a new git repo within that folder
+            if (e.Effect == DragDropEffects.Link)
+            {
+                string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (data != null && data.Length == 1)
+                {
+                    string repo = data[0];
+                    App.PrintLogMessage("DropRepo: " + repo, MessageType.Debug);
+                    string root = NewRepoWizard(null, null, repo);
+                    if (!string.IsNullOrEmpty(root))
+                        AddNewRepo(root, true);
+                }
+            }
+            // User is dropping another list view item; he is reordering the list
             if (e.Effect == DragDropEffects.Move)
             {
                 // Form a list of names by reading them from the listview
@@ -490,9 +507,11 @@ namespace GitForce.Main.Right.Panels
                 string[] data = (string[]) e.Data.GetData(DataFormats.FileDrop);
                 if (ValidGitRepos(data).Count > 0)
                 {
-                    // We use Copy effect for outside drop (see TreeViewEx limitation)
+                    // Use Copy effect for outside drop of existing repo(s) (see TreeViewEx limitation)
                     e.Effect = DragDropEffects.Copy;
                 }
+                if (data != null && data.Length == 1 && ClassUtils.DirStat(data[0]) == ClassUtils.DirStatType.Nongit)
+                    e.Effect = DragDropEffects.Link; // Use Link effect for dropping a non-git folder to create a new repo
             }
         }
 
@@ -502,16 +521,16 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private List<string> ValidGitRepos(string[] data)
         {
-            List<string> repos = new List<string>();
+            List<string> repoList = new List<string>();
             if (data != null)
             {
                 for (int i = 0; i < data.Length; i++)
                 {
                     if (ClassUtils.DirStat(data[i]) == ClassUtils.DirStatType.Git)
-                        repos.Add(data[i]);
+                        repoList.Add(data[i]);
                 }
             }
-            return repos;
+            return repoList;
         }
 
         /// <summary>

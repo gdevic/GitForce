@@ -156,8 +156,8 @@ namespace GitForce
         {
             base.OnDragEnter(e);
             // GD: A special case when we are dropping an item from the outside the control
-            //     we use Copy effect to track that case
-            internalMove = e.Effect != DragDropEffects.Copy;
+            //     we use Copy and Link effects to track those cases
+            internalMove = (e.Effect != DragDropEffects.Copy) && (e.Effect != DragDropEffects.Link);
             if (!internalMove)
                 return;
             if (!this.AllowRowReorder)

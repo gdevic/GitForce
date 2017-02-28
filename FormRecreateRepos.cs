@@ -201,7 +201,7 @@ namespace GitForce
             // We are sure that one and only one repo will be selected
             ClassRepo repo = list.SelectedItems[0].Tag as ClassRepo;
 
-            string root = PanelRepos.NewRepoWizard(null, repo);
+            string root = PanelRepos.NewRepoWizard(null, repo, null);
             if (!string.IsNullOrEmpty(root))
             {
                 repo.Root = root;
