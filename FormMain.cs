@@ -458,6 +458,7 @@ namespace GitForce
             else
             {
                 // Add each line of the message individually
+                // For performance reasons, only up to 250 characters of text are added in one call.
                 foreach (string line in message.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
                 {
                     // Prepend the current time, if that option is requested, in either 12 or 24-hr format
@@ -466,7 +467,8 @@ namespace GitForce
                                    ? "HH:mm:ss"
                                    : "hh:mm:ss") + " "
                                    : "";
-                    listStatus.Items.Add(new StatusListBoxItem(stamp + line, type));
+                    int len = Math.Min(line.Length, 250);
+                    listStatus.Items.Add(new StatusListBoxItem(stamp + line.Substring(0, len), type));
                 }
                 listStatus.TopIndex = listStatus.Items.Count - 1;
 
