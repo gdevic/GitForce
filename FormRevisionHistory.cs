@@ -95,7 +95,7 @@ namespace GitForce
                 cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
             // Get the log of a single file only
-            cmd.Append(" -- " + file);
+            cmd.Append(" -- \"" + file + "\"");
 
             ExecResult result = App.Repos.Current.Run(cmd.ToString());
             if(result.Success())
@@ -200,7 +200,7 @@ namespace GitForce
             if( MessageBox.Show("This will sync file to a previous version. Continue?", "Revision Sync",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
-                string cmd = string.Format("checkout {1} -- {0}", file, lruSha[0]);
+                string cmd = string.Format("checkout {1} -- \"{0}\"", file, lruSha[0]);
                 ExecResult result = App.Repos.Current.RunCmd(cmd);
                 if (result.Success())
                 {
