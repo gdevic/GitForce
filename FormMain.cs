@@ -679,6 +679,7 @@ namespace GitForce
                 repos = new List<ClassRepo> { App.Repos.Current };
             foreach (var r in repos)
             {
+                if (r.Remotes.Current == "") continue;
                 string args = r.Remotes.Current + " " + r.Branches.Current;
                 PrintStatus("Fetch from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
                 if (!r.RunCmd("fetch " + args).Success())
@@ -697,9 +698,10 @@ namespace GitForce
         {
             List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
             if (repos.Count <= 1)   // Disregard selected repos and use the current one
-                repos = new List<ClassRepo> {App.Repos.Current};
+                repos = new List<ClassRepo> { App.Repos.Current };
             foreach (var r in repos)
             {
+                if (r.Remotes.Current == "") continue;
                 string args = r.Remotes.Current + " " + r.Branches.Current;
                 PrintStatus("Pull from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
                 if (!r.RunCmd("pull " + args).Success())
