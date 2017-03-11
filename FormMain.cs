@@ -677,15 +677,23 @@ namespace GitForce
             List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
             if (repos.Count <= 1)   // Disregard selected repos and use the current one
                 repos = new List<ClassRepo> { App.Repos.Current };
+            // By default, fetch command will fetch from a currently selected remote repo
+            // If the user holds down the Control key, it will fetch from all remote repos while trying to merge them
+            bool allRemotes = Control.ModifierKeys == Keys.Control;
             foreach (var r in repos)
             {
-                if (r.Remotes.Current == "") continue;
-                string args = r.Remotes.Current + " " + r.Branches.Current;
-                PrintStatus("Fetch from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
-                if (!r.RunCmd("fetch " + args).Success())
-                    break;
+                foreach (var remote in r.Remotes.GetListNames())
+                {
+                    if (allRemotes || remote == r.Remotes.Current)
+                    {
+                        string args = remote + " " + r.Branches.Current;
+                        PrintStatus("Fetch from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
+                        if (!r.RunCmd("fetch " + args).Success())
+                            goto Done;
+                    }
+                }
             }
-            App.DoRefresh();
+            Done: App.DoRefresh();
         }
 
         /// <summary>
@@ -699,15 +707,23 @@ namespace GitForce
             List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
             if (repos.Count <= 1)   // Disregard selected repos and use the current one
                 repos = new List<ClassRepo> { App.Repos.Current };
+            // By default, pull command will pull from a currently selected remote repo
+            // If the user holds down the Control key, it will pull from all remote repos while trying to merge them
+            bool allRemotes = Control.ModifierKeys == Keys.Control;
             foreach (var r in repos)
             {
-                if (r.Remotes.Current == "") continue;
-                string args = r.Remotes.Current + " " + r.Branches.Current;
-                PrintStatus("Pull from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
-                if (!r.RunCmd("pull " + args).Success())
-                    break;
+                foreach (var remote in r.Remotes.GetListNames())
+                {
+                    if (allRemotes || remote == r.Remotes.Current)
+                    {
+                        string args = remote + " " + r.Branches.Current;
+                        PrintStatus("Pull from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
+                        if (!r.RunCmd("pull " + args).Success())
+                            goto Done;
+                    }
+                }
             }
-            App.DoRefresh();
+            Done: App.DoRefresh();
         }
 
         /// <summary>
@@ -722,14 +738,23 @@ namespace GitForce
             List<ClassRepo> repos = PanelRepos.GetSelectedRepos();
             if (repos.Count <= 1)   // Disregard selected repos and use the current one
                 repos = new List<ClassRepo> { App.Repos.Current };
+            // By default, push command will push to a currently selected remote repo
+            // If the user holds down the Control key, it will push to all remote repos
+            bool allRemotes = Control.ModifierKeys == Keys.Control;
             foreach (var r in repos)
             {
-                string args = r.Remotes.GetPushCmd("");
-                if (String.IsNullOrEmpty(args))
-                    args = r.Remotes.Current + " " + r.Branches.Current;
-                PrintStatus("Push to a remote repo \"" + args + "\" from \"" + r.Root + "\"", MessageType.General);
-                if (!r.RunCmd("push " + args).Success())
-                    break;
+                foreach (var remote in r.Remotes.GetListNames())
+                {
+                    if (allRemotes || remote == r.Remotes.Current)
+                    {
+                        string args = r.Remotes.GetPushCmd(remote);
+                        if (String.IsNullOrEmpty(args))
+                            args = remote + " " + r.Branches.Current;
+                        PrintStatus("Push \"" + r.Root + "\" to a remote repo \"" + args + "\"", MessageType.General);
+                        if (!r.RunCmd("push " + args).Success())
+                            return;
+                    }
+                }
             }
         }
 

@@ -677,7 +677,7 @@
             this.btPull.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btPull.Name = "btPull";
             this.btPull.Size = new System.Drawing.Size(23, 22);
-            this.btPull.Text = "Pull from Remote Repo";
+            this.btPull.Text = "Pull from Remote Repo + Ctrl to All";
             this.btPull.Click += new System.EventHandler(this.MenuRepoPull);
             // 
             // btPush
@@ -688,7 +688,7 @@
             this.btPush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btPush.Name = "btPush";
             this.btPush.Size = new System.Drawing.Size(23, 22);
-            this.btPush.Text = "Push to Remote Repo";
+            this.btPush.Text = "Push to Remote Repo + Ctrl to All";
             this.btPush.Click += new System.EventHandler(this.MenuRepoPush);
             // 
             // toolStripSeparator7
