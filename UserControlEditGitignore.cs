@@ -64,7 +64,6 @@ namespace GitForce
                 using (StreamWriter sw = new StreamWriter(file))
                 {
                     // Write the content of the text box while trimming each line and ignoring empty ones
-                    // IMPORTANT: Write using the OS-specific newline! Required setting: core.autocrlf true
                     for (int i = 0; i < textBox.Lines.Length; i++)
                     {
                         if (textBox.Lines[i].Trim().Length > 0)

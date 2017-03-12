@@ -39,7 +39,8 @@ namespace GitForce.Settings.Panels
         /// </summary>
         public void ApplyChanges()
         {
-            string newCrlf = "true";    // default
+            // Default core.autocrlf setting is "true" on Windows and "false" on Linux
+            string newCrlf = ClassUtils.IsMono() ? "false" : "true";
             if (radio1.Checked) newCrlf = "true";
             if (radio2.Checked) newCrlf = "input";
             if (radio3.Checked) newCrlf = "false";
