@@ -144,7 +144,7 @@ namespace GitForce
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textName);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(1, 2);
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(422, 143);
             this.groupBox1.TabIndex = 0;
@@ -241,8 +241,7 @@ namespace GitForce
             // 
             // RemoteDisplay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.groupBox1);
             this.MinimumSize = new System.Drawing.Size(346, 146);
             this.Name = "RemoteDisplay";
