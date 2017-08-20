@@ -68,9 +68,7 @@
             this.labelHelp.Name = "labelHelp";
             this.labelHelp.Size = new System.Drawing.Size(474, 49);
             this.labelHelp.TabIndex = 0;
-            this.labelHelp.Text = "Some of the repos referenced to by the loaded workspace file could not be found o" +
-    "n the designated paths. Please select repos that are not valid, one by one, and " +
-    "take a desired action.";
+            this.labelHelp.Text = "Some of the repos referenced to by the loaded workspace file could not be found on the designated paths. Please select repos that are not valid and take a desired action.";
             // 
             // list
             // 
