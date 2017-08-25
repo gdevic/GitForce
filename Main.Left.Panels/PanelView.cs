@@ -41,6 +41,7 @@ namespace GitForce.Main.Left.Panels
         public void ViewSetByMenuItem(object sender, EventArgs e)
         {
             SetView(int.Parse((sender as ToolStripMenuItem).Tag.ToString()));
+            ViewRefresh();
         }
 
         /// <summary>
@@ -54,9 +55,7 @@ namespace GitForce.Main.Left.Panels
             foreach (var m in viewMenus)
                 m.Checked = false;
             viewMenus[mode].Checked = true;
-
             Properties.Settings.Default.viewMode = mode;
-            ViewRefresh();
         }
 
         /// <summary>
