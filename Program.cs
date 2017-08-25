@@ -209,14 +209,16 @@ namespace GitForce
                         Version = new ClassVersion();       // Start the new version check process
                         MainForm = new FormMain();          // Create the main form
                         MainForm.Show();                    // Show the main window so the handles get created
-                        MainForm.Initialize();              // Load repos, custom tools etc.
-                        DoRefresh();                        // Initial global refresh
-                        Application.Run(MainForm);          // Run the main form
+                        if (MainForm.Initialize())          // Load repos, custom tools etc.
+                        {
+                            DoRefresh();                    // Initial global refresh
+                            Application.Run(MainForm);      // Run the main form
 
-                        Properties.Settings.Default.Save();
+                            Properties.Settings.Default.Save();
 
-                        GC.KeepAlive(mAppMutex);
-                        return 0;
+                            GC.KeepAlive(mAppMutex);
+                            return 0;
+                        }
                     }
                 }
             }

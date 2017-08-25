@@ -143,10 +143,11 @@ namespace GitForce
         /// Main form initialization method performs operations that may need the main
         /// window to have already been shown since we may invoke its UI handlers
         /// </summary>
-        public void Initialize()
+        public bool Initialize()
         {
             // Load default set of repositories
-            ClassWorkspace.Load(null);
+            if (!ClassWorkspace.Load(null))
+                return false;
 
             // Load custom tools
             App.CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile);
@@ -167,6 +168,7 @@ namespace GitForce
             if (string.IsNullOrEmpty(ClassConfig.GetGlobal("user.name"))
                 && string.IsNullOrEmpty(ClassConfig.GetGlobal("user.email")))
                 MenuOptions(null, null);
+            return true;
         }
 
         /// <summary>
