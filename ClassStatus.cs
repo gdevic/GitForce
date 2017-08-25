@@ -39,19 +39,7 @@ namespace GitForce
         public ClassStatus(ClassRepo repo)
         {
             Repo = repo;
-        }
-
-        /// <summary>
-        /// Global status refresh function refreshes status of the current repo.
-        /// </summary>
-        public static void Refresh()
-        {
-            ClassRepo repo = App.Repos.Current;
-            if (repo != null)
-            {
-                repo.Status = new ClassStatus(repo);
-                repo.Status.Status();
-            }
+            Status();
         }
 
         /// <summary>

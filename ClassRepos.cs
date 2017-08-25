@@ -154,6 +154,16 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Global status refresh function refreshes status of the current repo.
+        /// </summary>
+        public static void Refresh()
+        {
+            ClassRepo repo = App.Repos.Current;
+            if (repo != null)
+                repo.Status = new ClassStatus(repo);
+        }
+
+        /// <summary>
         /// Add a new repository with the root at the given path. Create a directory if it does not exist.
         /// This function throws exceptions!
         /// </summary>

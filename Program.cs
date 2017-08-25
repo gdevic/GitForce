@@ -21,7 +21,7 @@ namespace GitForce
         /// in the order they are instantiated.
         /// </summary>
         public delegate void RefreshDelegate();
-        public static RefreshDelegate Refresh = ClassStatus.Refresh;
+        public static RefreshDelegate Refresh = ClassRepos.Refresh;
         private static bool inRefresh;
 
         /// <summary>

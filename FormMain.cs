@@ -615,7 +615,7 @@ namespace GitForce
         public void SelectiveRefresh(SelectveRefreshFlags flags)
         {
             // Always refresh the class status first
-            ClassStatus.Refresh();
+            ClassRepos.Refresh();
 
             if ((flags & SelectveRefreshFlags.View) == SelectveRefreshFlags.View)
                 PanelView.ViewRefresh();
