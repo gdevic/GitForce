@@ -16,11 +16,14 @@ namespace GitForce
         #region Application-wide delegates for various callbacks
 
         /// <summary>
-        /// Multicast delegate for application-wide data refresh
+        /// Multicast delegate for application-wide data refresh. It is initialized with the
+        /// first app-global refresh handler. Other forms append their own refresh functions
+        /// in the order they are instantiated.
         /// </summary>
         public delegate void RefreshDelegate();
-        public static RefreshDelegate Refresh;
+        public static RefreshDelegate Refresh = ClassStatus.Refresh;
         private static bool inRefresh;
+
         /// <summary>
         /// Protect Refresh chain with a simple exit mutex, so that the F5 key (update)
         /// does not start a re-entrant refresh chain. Although the main GUI app is

@@ -42,22 +42,12 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Constructor used only once at FormMain init to register
-        /// the repo status refresh before any other refresh in the chain.
-        /// </summary>
-        public ClassStatus()
-        {
-            App.Refresh += Refresh;
-        }
-
-        /// <summary>
-        /// Global status refresh function.
-        /// Refresh status of the current repo.
+        /// Global status refresh function refreshes status of the current repo.
         /// </summary>
         public static void Refresh()
         {
             ClassRepo repo = App.Repos.Current;
-            if(repo!=null)
+            if (repo != null)
             {
                 repo.Status = new ClassStatus(repo);
                 repo.Status.Status();
