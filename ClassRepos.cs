@@ -45,7 +45,6 @@ namespace GitForce
         /// </summary>
         public bool Load(string fileName, bool isImport)
         {
-            bool ret = false;
             // Wrap the opening of a repository database with an outer handler
             try
             {
@@ -92,7 +91,7 @@ namespace GitForce
                             Default = Repos.Find(r => r.Root == defaultRepo);
                             SetCurrent(Default);
                         }
-                        ret = true;
+                        return true;
                     }
                     catch (Exception ex)
                     {
@@ -104,7 +103,7 @@ namespace GitForce
             {
                 App.PrintLogMessage(ex.Message, MessageType.Error);
             }
-            return ret;
+            return false;
         }
 
         /// <summary>
@@ -113,7 +112,6 @@ namespace GitForce
         /// </summary>
         public bool Save(string fileName)
         {
-            bool ret = false;
             try
             {
                 using (FileStream file = new FileStream(fileName, FileMode.Create))
@@ -123,8 +121,7 @@ namespace GitForce
                         BinaryFormatter wr = new BinaryFormatter();
                         wr.Serialize(file, Repos);
                         wr.Serialize(file, Default == null ? "" : Default.Root);
-
-                        ret = true;
+                        return true;
                     }
                     catch (Exception ex)
                     {
@@ -136,7 +133,7 @@ namespace GitForce
             {
                 App.PrintLogMessage(ex.Message, MessageType.Error);
             }
-            return ret;
+            return false;
         }
 
         /// <summary>
