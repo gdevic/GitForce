@@ -190,6 +190,21 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Given the path to a local directory, return its "clean" version. At this time, that means:
+        /// - Make drive letter uppercased (on Windows)
+        /// - Strip multiple backslash characters (on Windows)
+        /// </summary>
+        public static string GetCleanPath(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return string.Empty;    // Check for empty string
+            if (IsMono()) return path;                              // Do nothing on Mono
+            var value = ((path.Length > 2) && (path[1] == ':')) ?
+                char.ToUpper(path[0]) + path.Substring(1) :         // Make drive letter uppercased
+                path;
+            return value.Replace(@"\\", @"\");                      // Trim possible double-slash
+        }
+
+        /// <summary>
         /// Retruns a path to the home directory.
         /// </summary>
         public static string GetHomePath()
