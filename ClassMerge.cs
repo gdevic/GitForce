@@ -32,6 +32,7 @@ namespace GitForce
                 new AppHelper( "Meld",           @"/usr/bin/meld",              "%1 %2 %3 %4" ),
                 new AppHelper( "xxdiff",         @"/usr/bin/xxdiff",            "%2 %3 -M %4" ),
                 new AppHelper( "Diffuse",        @"/usr/bin/diffuse",           "%1 %2 %3"    ),
+                new AppHelper( "BCompare",       @"/usr/bin/bcompare",          "%1 %2 %3"    ),
 
                 new AppHelper( "Emerge",         @"/usr/bin/emerge",            "%1 %2 %3 %4" ), // Not tested!
                 new AppHelper( "vimdiff",        @"/usr/bin/vimdiff",           "%1 %2 %3 %4" ), // Not tested!

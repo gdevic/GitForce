@@ -32,6 +32,7 @@ namespace GitForce
                 new AppHelper( "Meld",           @"/usr/bin/meld",     "%1 %2" ),
                 new AppHelper( "xxdiff",         @"/usr/bin/xxdiff",   "%1 %2" ),
                 new AppHelper( "Diffuse",        @"/usr/bin/diffuse",  "%1 %2" ),
+                new AppHelper( "BCompare",       @"/usr/bin/bcompare", "%1 %2" ),
         };
 
         private List<AppHelper> diff = new List<AppHelper>();
