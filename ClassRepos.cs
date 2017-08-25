@@ -161,8 +161,8 @@ namespace GitForce
         /// <returns>Newly created repository class or null if a repo already exists at that root directory</returns>
         public ClassRepo Add(string root)
         {
-            // Detect a repository with the same root path
-            if (Repos.Exists(r => r.Path == root))
+            // Detect a repository with the same root path (case insensitive directory name compare)
+            if (Repos.Exists(r => r.Path.Equals(root, StringComparison.CurrentCultureIgnoreCase) ))
                 throw new ClassException("Repository with the same name already exists!");
 
             Directory.CreateDirectory(root);
