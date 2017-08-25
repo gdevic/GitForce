@@ -140,7 +140,7 @@ namespace GitForce
         /// Loads username/email for all repos in this workspace.
         /// Removes repos that are not valid.
         /// </summary>
-        public void Refresh()
+        public void InitAll()
         {
             // Get the user name and email for each repo adding invalid ones to the list
             List<ClassRepo> invalidRepos = Repos.Where(r => r.Init() == false).ToList();

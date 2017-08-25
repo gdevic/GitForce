@@ -445,7 +445,7 @@ namespace GitForce.Main.Right.Panels
         {
             // Do a global repo refresh, this may be a heavy operation when the number of repos is large
             App.StatusBusy(true);
-            App.Repos.Refresh();
+            App.Repos.InitAll();
             App.StatusBusy(false);
             App.DoRefresh();
         }

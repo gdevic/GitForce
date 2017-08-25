@@ -121,7 +121,7 @@ namespace GitForce
         public static void Clear()
         {
             App.Repos.Repos.Clear();
-            App.Repos.Refresh();
+            App.Repos.InitAll();
             App.DoRefresh();
         }
     }
