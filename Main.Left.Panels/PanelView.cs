@@ -109,10 +109,10 @@ namespace GitForce.Main.Left.Panels
                         break;
 
                     case 3:     // Local file view: use local directory list
-                        files = GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Root);
+                        files = GitDirectoryInfo.GetFilesRecursive(App.Repos.Current.Path);
 
                         // Remove the repo root from the file paths
-                        int rootlen = App.Repos.Current.Root.Length;
+                        int rootlen = App.Repos.Current.Path.Length;
                         files = files.Select(file => file.Substring(rootlen + 1)).ToList();
                         break;
 
@@ -125,7 +125,7 @@ namespace GitForce.Main.Left.Panels
                 }
 
                 // Build the tree view (or a list view)
-                TreeNode node = new TreeNode(App.Repos.Current.Root) { Tag = String.Empty };
+                TreeNode node = new TreeNode(App.Repos.Current.Path) { Tag = String.Empty };
 
                 if (status.Repo.IsTreeView)
                     ClassView.BuildTree(node, files, status.Repo.SortBy);
@@ -212,7 +212,7 @@ namespace GitForce.Main.Left.Panels
         private string GetSelectedDir()
         {
             TreeNode selNode = treeView.SelectedNode ?? treeView.Nodes[0];
-            string sel = Path.Combine(App.Repos.Current.Root, selNode.Tag.ToString());
+            string sel = Path.Combine(App.Repos.Current.Path, selNode.Tag.ToString());
             return Directory.Exists(sel) ? sel : Path.GetDirectoryName(sel);
         }
 
@@ -520,7 +520,7 @@ namespace GitForce.Main.Left.Panels
             // These are files and directories, bundled together
             List<string> files = new List<string>();
             foreach (string s in sel.SelFiles)
-                files.Add(Path.Combine(App.Repos.Current.Root, s));
+                files.Add(Path.Combine(App.Repos.Current.Path, s));
 
             ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
             App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args), MessageType.Command);
@@ -656,7 +656,7 @@ namespace GitForce.Main.Left.Panels
 
             foreach (string s in sel.SelFiles)
             {
-                string fullPath = Path.Combine(App.Repos.Current.Root, s);
+                string fullPath = Path.Combine(App.Repos.Current.Path, s);
                 if (ClassUtils.DeleteFile(fullPath) == false)
                     App.PrintStatusMessage("Error removing " + fullPath, MessageType.Error);
             }

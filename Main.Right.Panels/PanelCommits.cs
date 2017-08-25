@@ -86,7 +86,7 @@ namespace GitForce.Main.Right.Panels
                     {
                         foreach (var file in files)
                         {
-                            string fullPath = Path.Combine(status.Repo.Root, file);
+                            string fullPath = Path.Combine(status.Repo.Path, file);
                             var watch = new FileSystemWatcher(Path.GetDirectoryName(fullPath))
                             {
                                 Filter = Path.GetFileName(fullPath),
@@ -166,7 +166,7 @@ namespace GitForce.Main.Right.Panels
             // Get the list of selected files, prepend the repo root path and send it as a drag/drop list of files
             string[] files = treeCommits.SelectedNodes
                                         .Where(s => s.Parent != null && !(s.Tag is ClassCommit))
-                                        .Select(s => Path.Combine(status.Repo.Root, s.Tag.ToString())).ToArray();
+                                        .Select(s => Path.Combine(status.Repo.Path, s.Tag.ToString())).ToArray();
             if (files.Length == 0) return;
             DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Copy);
         }
@@ -221,8 +221,8 @@ namespace GitForce.Main.Right.Panels
 
             // Files can come from anywhere. Prune those that are not from this repo.
             List<string> files = (from file in droppedFiles.ToList()
-                                  where file.StartsWith(status.Repo.Root)
-                                  select file.Substring(status.Repo.Root.Length + 1)).ToList();
+                                  where file.StartsWith(status.Repo.Path)
+                                  select file.Substring(status.Repo.Path.Length + 1)).ToList();
 
             DoDropFiles(status, files.ToList());
 
@@ -412,7 +412,7 @@ namespace GitForce.Main.Right.Panels
             string file = GetSelectedFile();
             if (file != string.Empty)
             {
-                file = Path.Combine(App.Repos.Current.Root, file); // Commits tree stores file paths relative to the repo root
+                file = Path.Combine(App.Repos.Current.Path, file); // Commits tree stores file paths relative to the repo root
                 App.PrintStatusMessage("Editing " + file, MessageType.General);
                 ClassUtils.FileOpenFromMenu(sender, file);
             }
@@ -711,7 +711,7 @@ namespace GitForce.Main.Right.Panels
             if (MessageBox.Show(@"Exiting the merge state will transform your merge commit into a regular commit. Proceed with the exit?",
                     "Exit Merge state", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes) return;
 
-            string pathToMergeHead = status.Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
+            string pathToMergeHead = status.Repo.Path + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
             ClassUtils.DeleteFile(pathToMergeHead);
             App.DoRefresh();
         }
@@ -815,7 +815,7 @@ namespace GitForce.Main.Right.Panels
             string file = GetSelectedFile();
             if (file != string.Empty)
             {
-                file = Path.Combine(App.Repos.Current.Root, file); // Commits tree stores file paths relative to the repo root
+                file = Path.Combine(App.Repos.Current.Path, file); // Commits tree stores file paths relative to the repo root
                 ClassUtils.FileDoubleClick(file);
             }
         }

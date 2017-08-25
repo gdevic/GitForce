@@ -689,7 +689,7 @@ namespace GitForce
                     if (allRemotes || remote == r.Remotes.Current)
                     {
                         string args = remote + " " + r.Branches.Current;
-                        PrintStatus("Fetch from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
+                        PrintStatus("Fetch from a remote repo \"" + args + "\" into \"" + r.Path + "\"", MessageType.General);
                         if (!r.RunCmd("fetch " + args).Success())
                             goto Done;
                     }
@@ -719,7 +719,7 @@ namespace GitForce
                     if (allRemotes || remote == r.Remotes.Current)
                     {
                         string args = remote + " " + r.Branches.Current;
-                        PrintStatus("Pull from a remote repo \"" + args + "\" into \"" + r.Root + "\"", MessageType.General);
+                        PrintStatus("Pull from a remote repo \"" + args + "\" into \"" + r.Path + "\"", MessageType.General);
                         if (!r.RunCmd("pull " + args).Success())
                             goto Done;
                     }
@@ -752,7 +752,7 @@ namespace GitForce
                         string args = r.Remotes.GetPushCmd(remote);
                         if (String.IsNullOrEmpty(args))
                             args = remote + " " + r.Branches.Current;
-                        PrintStatus("Push \"" + r.Root + "\" to a remote repo \"" + args + "\"", MessageType.General);
+                        PrintStatus("Push \"" + r.Path + "\" to a remote repo \"" + args + "\"", MessageType.General);
                         if (!r.RunCmd("push " + args).Success())
                             return;
                     }

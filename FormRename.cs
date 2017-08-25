@@ -116,7 +116,7 @@ namespace GitForce
         /// </summary>
         private bool IsValid()
         {
-            string path = Path.Combine(repo.Root, textNewName.Text);
+            string path = Path.Combine(repo.Path, textNewName.Text);
 
             // With a single file, check that the new file name is writable
             // With multiple files, check that the new path is accessible

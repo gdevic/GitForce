@@ -27,7 +27,7 @@ namespace GitForce.Main.Right.Panels
             listRepos.Items.Clear();
             foreach (ClassRepo r in App.Repos.Repos)
             {
-                ListViewItem li = new ListViewItem(r.Root);
+                ListViewItem li = new ListViewItem(r.Path);
                 li.SubItems.Add(new ListViewItem.ListViewSubItem(li, r.UserName));
                 li.SubItems.Add(new ListViewItem.ListViewSubItem(li, r.UserEmail));
 
@@ -251,7 +251,7 @@ namespace GitForce.Main.Right.Panels
                     newRepoStep1.SetRemote(remote);
                 }
                 else
-                    newRepoStep2.Destination = repoRemote.Root;
+                    newRepoStep2.Destination = repoRemote.Path;
             }
             // If the folder parameter was given, create a new local repo at that path
             bool skipStep1 = !string.IsNullOrEmpty(folder); // In this case, we will skip step 1
@@ -408,7 +408,7 @@ namespace GitForce.Main.Right.Panels
                 // Single selected repo offers more deletion choices...
                 ClassRepo repo = GetSelectedRepo();
                 // The actual file deletion is implemented in FormDeleteRepo form class:
-                FormDeleteRepo deleteRepo = new FormDeleteRepo(repo.Root);
+                FormDeleteRepo deleteRepo = new FormDeleteRepo(repo.Path);
                 if (deleteRepo.ShowDialog() == DialogResult.OK)
                 {
                     App.Repos.Delete(repo);
@@ -434,7 +434,7 @@ namespace GitForce.Main.Right.Panels
         private void MenuViewCommandClick(object sender, EventArgs e)
         {
             ClassRepo repo = GetSelectedRepo();
-            ClassUtils.CommandPromptHere(repo.Root);
+            ClassUtils.CommandPromptHere(repo.Path);
         }
 
         /// <summary>

@@ -62,7 +62,7 @@ namespace GitForce
                         bool allOK = true;
                         foreach (ClassRepo repo in newRepos)
                         {
-                            allOK &= ClassUtils.DirStat(repo.Root) == ClassUtils.DirStatType.Git;
+                            allOK &= ClassUtils.DirStat(repo.Path) == ClassUtils.DirStatType.Git;
                             repo.ExpansionReset(null);
                         }
 
@@ -88,7 +88,7 @@ namespace GitForce
                         {
                             Repos = newRepos;
                             // Upon load, set the current based on the default repo
-                            Default = Repos.Find(r => r.Root == defaultRepo);
+                            Default = Repos.Find(r => r.Path == defaultRepo);
                             SetCurrent(Default);
                         }
                         return true;
@@ -120,7 +120,7 @@ namespace GitForce
                     {
                         BinaryFormatter wr = new BinaryFormatter();
                         wr.Serialize(file, Repos);
-                        wr.Serialize(file, Default == null ? "" : Default.Root);
+                        wr.Serialize(file, Default == null ? "" : Default.Path);
                         return true;
                     }
                     catch (Exception ex)
@@ -162,7 +162,7 @@ namespace GitForce
         public ClassRepo Add(string root)
         {
             // Detect a repository with the same root path
-            if (Repos.Exists(r => r.Root == root))
+            if (Repos.Exists(r => r.Path == root))
                 throw new ClassException("Repository with the same name already exists!");
 
             Directory.CreateDirectory(root);

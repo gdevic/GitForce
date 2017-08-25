@@ -31,7 +31,7 @@ namespace GitForce
         /// Helper accessor to get the path to the MERGE_MSG file
         /// </summary>
         public string pathToMergeMsg {
-            get { return Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_MSG"; } }
+            get { return Repo.Path + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_MSG"; } }
 
         /// <summary>
         /// Class constructor
@@ -122,7 +122,7 @@ namespace GitForce
         /// </summary>
         public bool IsMergeState()
         {
-            string checkFile = Repo.Root + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
+            string checkFile = Repo.Path + Path.DirectorySeparatorChar + ".git" + Path.DirectorySeparatorChar + "MERGE_HEAD";
             return File.Exists(checkFile);
         }
 

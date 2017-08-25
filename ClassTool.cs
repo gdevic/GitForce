@@ -215,7 +215,7 @@ namespace GitForce
         private string DeMacroise(string s, List<string> files)
         {
             // Without the current repo, we cannot have reasonable macro expansions
-            s = s.Replace("%r", App.Repos.Current==null ? "" : App.Repos.Current.Root);
+            s = s.Replace("%r", App.Repos.Current==null ? "" : App.Repos.Current.Path);
             s = s.Replace("%u", App.Repos.Current==null ? "" : App.Repos.Current.UserName);
             s = s.Replace("%e", App.Repos.Current==null ? "" : App.Repos.Current.UserEmail);
             s = s.Replace("%b", App.Repos.Current==null ? "" : App.Repos.Current.Branches.Current);

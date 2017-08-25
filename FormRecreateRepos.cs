@@ -92,8 +92,8 @@ namespace GitForce
             foreach (ListViewItem item in list.Items)
             {
                 ClassRepo repo = item.Tag as ClassRepo;
-                item.Text = repo.Root;
-                ClassUtils.DirStatType stat = ClassUtils.DirStat(repo.Root);
+                item.Text = repo.Path;
+                ClassUtils.DirStatType stat = ClassUtils.DirStat(repo.Path);
                 switch (stat)
                 {
                     case ClassUtils.DirStatType.Invalid:
@@ -183,7 +183,7 @@ namespace GitForce
                 foreach (int index in list.SelectedIndices)
                 {
                     ClassRepo repo = list.Items[index].Tag as ClassRepo;
-                    repo.Root = folder.SelectedPath + repo.Root.Substring(textRootPath.Text.Length);
+                    repo.Path = folder.SelectedPath + repo.Path.Substring(textRootPath.Text.Length);
                     RefreshView();
                 }
                 // Disable Browse button so the user can't immediately repeat the operation since we
@@ -204,7 +204,7 @@ namespace GitForce
             string root = PanelRepos.NewRepoWizard(null, repo, null);
             if (!string.IsNullOrEmpty(root))
             {
-                repo.Root = root;
+                repo.Path = root;
                 FormRepoEdit repoEdit = new FormRepoEdit(repo);
                 repoEdit.ShowDialog();
 
@@ -227,7 +227,7 @@ namespace GitForce
             {
                 // We are sure that one and only one repo will be selected
                 ClassRepo repo = list.SelectedItems[0].Tag as ClassRepo;
-                repo.Root = folder.SelectedPath;
+                repo.Path = folder.SelectedPath;
                 RefreshView();
             }
         }

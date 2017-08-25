@@ -20,7 +20,7 @@ namespace GitForce.Repo.Edit.Panels
         /// </summary>
         public void Init(ClassRepo repo)
         {
-            configFile = repo.Root + Path.DirectorySeparatorChar +
+            configFile = repo.Path + Path.DirectorySeparatorChar +
                             ".git" + Path.DirectorySeparatorChar +
                             "config";
         }

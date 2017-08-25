@@ -16,7 +16,7 @@ namespace GitForce
         /// <summary>
         /// Root local directory of the repository
         /// </summary>
-        public string Root;
+        private string Root;
 
         /// <summary>
         /// User.name configuration setting for this repo
@@ -75,6 +75,16 @@ namespace GitForce
         public ClassRepo(string newRoot)
         {
             Root = newRoot;
+        }
+
+        /// <summary>
+        /// Returns or sets the directory path of the repo
+        /// </summary>
+        /// <returns>Path to the git repository</returns>
+        public string Path
+        {
+            get { return Root; }
+            set { Root = value; }
         }
 
         /// <summary>
@@ -349,7 +359,6 @@ namespace GitForce
             {
                 App.PrintLogMessage(ex.Message, MessageType.Error);
             }
-
             return output;
         }
     }
