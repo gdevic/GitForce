@@ -83,8 +83,8 @@ namespace GitForce
         /// <returns>Path to the git repository</returns>
         public string Path
         {
-            get { return Root; }
-            set { Root = value; }
+            get { return ClassUtils.GetCleanPath(Root); }
+            set { Root = ClassUtils.GetCleanPath(value); }
         }
 
         /// <summary>
