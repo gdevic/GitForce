@@ -65,7 +65,7 @@ namespace GitForce
         protected override void OnMouseDown(MouseEventArgs e)
         {
             TreeNode node = GetNodeAt(e.Location);
-            if( node!=null )
+            if (node!=null)
             {
                 BeginUpdate();
                 if (ModifierKeys == Keys.None)
@@ -77,19 +77,19 @@ namespace GitForce
                         SelectedNode = node;
                     }
                 }
-                if(ModifierKeys==Keys.Control)
+                if (ModifierKeys == Keys.Control)
                 {
                     SetSelectedDeep(node, !_selectedNodes.Contains(node));
                     SelectedNode = node;
                 }
-                if(ModifierKeys==Keys.Shift)
+                if (ModifierKeys == Keys.Shift)
                 {
                     // Select all nodes from the last selected one to the current one
                     // Under the same parent, recursively into their children nodes
-                    if(node.Parent!=null)
+                    if (node.Parent != null)
                     {
                         List<TreeNode> siblings = node.Parent.Nodes.Cast<TreeNode>().ToList();
-                        if(siblings.Contains(SelectedNode))
+                        if (siblings.Contains(SelectedNode))
                         {
                             int isel = siblings.IndexOf(SelectedNode);
                             int icur = siblings.IndexOf(node);
@@ -109,7 +109,7 @@ namespace GitForce
         protected override void OnMouseUp(MouseEventArgs e)
         {
             TreeNode node = GetNodeAt(e.Location);
-            if(node!=null)
+            if (node != null)
             {
                 BeginUpdate();
                 if (ModifierKeys == Keys.None && e.Button==MouseButtons.Left)
@@ -134,7 +134,7 @@ namespace GitForce
         protected override void OnItemDrag(ItemDragEventArgs e)
         {
             var node = e.Item as TreeNode;
-            if(node !=null)
+            if (node != null)
             {
                 if (!_selectedNodes.Contains(node))
                 {
@@ -151,7 +151,7 @@ namespace GitForce
         /// </summary>
         private void SetSelected(TreeNode node, bool bSelect)
         {
-            if( bSelect)
+            if (bSelect)
             {
                 if (!_selectedNodes.Contains(node))
                     _selectedNodes.Add(node);

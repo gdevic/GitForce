@@ -54,7 +54,7 @@ namespace GitForce
         /// </summary>
         private void BtBrowseClick(object sender, EventArgs e)
         {
-            if(openFile.ShowDialog()==DialogResult.OK)
+            if (openFile.ShowDialog() == DialogResult.OK)
             {
                 comboArgs.Text += openFile.FileName;
             }

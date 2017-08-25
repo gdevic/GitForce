@@ -25,7 +25,7 @@ namespace GitForce
         protected override void WndProc(ref Message m)
         {
             // In design mode, show the tabs
-            if(DesignMode)
+            if (DesignMode)
                 base.WndProc(ref m);
             else
             {

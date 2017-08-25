@@ -79,11 +79,11 @@ namespace GitForce
             Geometry g;
 
             // If this is first invocation (hash is empty), load the window hash set
-            if(wnd.Count==0)
+            if (wnd.Count == 0)
                 LoadGeometryDatabase();
 
             // Find the form in our cache and assign its location and size
-            if(wnd.TryGetValue(name, out g))
+            if (wnd.TryGetValue(name, out g))
             {
                 form.Location = g.Location;
                 form.Size = g.Size;

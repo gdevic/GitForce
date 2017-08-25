@@ -154,7 +154,7 @@ namespace GitForce
         /// </summary>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData==Keys.Escape && btCancel.Text=="Done")
+            if (keyData == Keys.Escape && btCancel.Text == "Done")
                 DialogResult = DialogResult.OK;
             return base.ProcessCmdKey(ref msg, keyData);
         }

@@ -36,7 +36,7 @@ namespace GitForce
         {
             listStashes.Items.Clear();
             ExecResult result = App.Repos.Current.Run("stash list");
-            if(result.Success())
+            if (result.Success())
             {
                 string[] response = result.stdout.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var stash in response)
@@ -98,12 +98,12 @@ namespace GitForce
 
                 // Walk the list of stashes up and down
                 result = formShowChangelist.ShowDialog();
-                if(result==DialogResult.No)
+                if (result == DialogResult.No)
                 {
                     if (listStashes.SelectedIndex < listStashes.Items.Count - 1)
                         listStashes.SelectedIndex++;
                 }
-                if(result==DialogResult.Yes)
+                if (result == DialogResult.Yes)
                 {
                     if (listStashes.SelectedIndex > 0)
                         listStashes.SelectedIndex--;

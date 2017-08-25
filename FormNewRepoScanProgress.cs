@@ -39,7 +39,7 @@ namespace GitForce
                 {
                     textDir.Text = d;
                     Application.DoEvents();
-                    if(enableScan==false)
+                    if (enableScan == false)
                         return;
 
                     if (d.EndsWith(Path.DirectorySeparatorChar + ".git"))

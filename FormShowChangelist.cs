@@ -191,7 +191,7 @@ namespace GitForce
         /// </summary>
         private void ComboShowSelectedIndexChanged(object sender, EventArgs e)
         {
-            if( Properties.Settings.Default.ShowFormatIndex != comboShow.SelectedIndex)
+            if (Properties.Settings.Default.ShowFormatIndex != comboShow.SelectedIndex)
             {
                 Properties.Settings.Default.ShowFormatIndex = comboShow.SelectedIndex;
                 LoadChangelist(Tag.ToString());

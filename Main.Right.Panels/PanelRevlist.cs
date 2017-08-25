@@ -75,7 +75,7 @@ namespace GitForce.Main.Right.Panels
                 // Add the branch name using only the first token in order to handle links (br -> br)
                 //string branchStr = logBranch;
                 //ExecResult result;
-                //if(logBranch!="(no branch)")
+                //if (logBranch != "(no branch)")
                 //{
                 //    branchStr = logBranch.Split(' ').First();
                 //    if (branchStr != "master")
@@ -95,7 +95,7 @@ namespace GitForce.Main.Right.Panels
                     cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
                 ExecResult result = App.Repos.Current.Run(cmd.ToString());
-                if(result.Success())
+                if (result.Success())
                     UpdateList(listRev, result.stdout, false);
             }
         End:
@@ -231,10 +231,10 @@ namespace GitForce.Main.Right.Panels
         private void MenuResetClick(object sender, EventArgs e)
         {
             string sha = GetSelectedSha();
-            if(sha!=null)
+            if (sha!=null)
             {
                 FormReset formReset = new FormReset();
-                if( formReset.ShowDialog()==DialogResult.OK)
+                if (formReset.ShowDialog() == DialogResult.OK)
                 {
                     string cmd = String.Format("reset {0} {1}", formReset.Cmd, sha);
                     App.Repos.Current.RunCmd(cmd);
@@ -279,7 +279,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void MenuSetFilterClick(object sender, EventArgs e)
         {
-            if(formFilter.ShowDialog()==DialogResult.OK)
+            if (formFilter.ShowDialog() == DialogResult.OK)
             {
                 // btClearFilter enable is keeping the flag if we are filtering or not
                 btClearFilter.Enabled = true;

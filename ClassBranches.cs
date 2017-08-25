@@ -36,7 +36,7 @@ namespace GitForce
             if (App.Repos.Current != null)
             {
                 ExecResult result = App.Repos.Current.RunCmd("branch -a");
-                if(result.Success())
+                if (result.Success())
                 {
                     string[] response = result.stdout.Split((Environment.NewLine).ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     foreach (string s in response)

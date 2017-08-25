@@ -44,7 +44,7 @@ namespace GitForce
             Path = appCombined;
             Args = string.Empty;
             string[] parts = appCombined.Split('\t');
-            if(parts.Length==3)
+            if (parts.Length == 3)
             {
                 Name = parts[0];
                 Path = parts[1];

@@ -106,7 +106,7 @@ namespace GitForce
         private void ListBoxKeysMouseDown(object sender, MouseEventArgs e)
         {
             int index = listBoxKeys.IndexFromPoint(e.Location);
-            if(index<0)
+            if (index < 0)
                 listBoxKeys.ClearSelected();
         }
 
@@ -141,7 +141,7 @@ namespace GitForce
         private void ListBoxPfMouseDown(object sender, MouseEventArgs e)
         {
             int index = listBoxPf.IndexFromPoint(e.Location);
-            if(index<0)
+            if (index < 0)
                 listBoxPf.ClearSelected();
         }
 

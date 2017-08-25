@@ -73,11 +73,11 @@ namespace GitForce
                     @"(?<file>Git-[1-2]+.[0-9]+.[0-9]+-\S+.exe)", "/download/");
 
                 // If the download succeeded, run the installer file
-                if(msysgit.ShowDialog()==DialogResult.OK)
+                if (msysgit.ShowDialog() == DialogResult.OK)
                 {
                     installerFile = msysgit.TargetFile;
                     ExecResult ret = Exec.Run(installerFile, String.Empty);
-                    if(ret.retcode==0)
+                    if (ret.retcode == 0)
                     {
                         // Check if the git executable is at the expected location now
                         if (File.Exists(gitPath))

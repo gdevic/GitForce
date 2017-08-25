@@ -29,7 +29,7 @@ namespace GitForce
         /// </summary>
         public static void Handler(string topic)
         {
-            if(Webhelp.ContainsKey(topic))
+            if (Webhelp.ContainsKey(topic))
             {
                 Process.Start(Webhelp[topic]);
             }

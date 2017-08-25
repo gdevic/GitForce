@@ -22,7 +22,7 @@ namespace GitForce.Settings.Panels
             checkBoxLeavePageant.CheckStateChanged += ControlDirtyHelper.ControlDirty;
 
             // Disable this tab on Linux
-            if(ClassUtils.IsMono())
+            if (ClassUtils.IsMono())
                 Enabled = false;
         }
 

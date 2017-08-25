@@ -32,10 +32,8 @@ namespace GitForce.Settings.Panels
             // When this tab gets the focus, rebuild the fonts.
             // This implementation will still take a time but only when the
             // user clicks on the font tab. It is also heavily cached.
-            if(focused)
-            {
+            if (focused)
                 CollectAndShowFonts();
-            }
         }
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace GitForce.Settings.Panels
             LoadGlobalFonts();
 
             // If we already have fonts in the listbox, return
-            if(listFonts.Items.Count > 0)
+            if (listFonts.Items.Count > 0)
                 return;
 
             // Add fonts to the fonts listbox

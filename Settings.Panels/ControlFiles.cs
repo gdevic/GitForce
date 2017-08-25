@@ -63,7 +63,7 @@ namespace GitForce.Settings.Panels
             Properties.Settings.Default.WarnOnTabsExt = textBoxScanExt.Text;
 
             // If the auto-refresh settings were changed, run the commits refresh to (de)arm the code
-            if(checkBoxRefreshOnChange.Tag != null || checkBoxReaddOnChange.Tag != null)
+            if (checkBoxRefreshOnChange.Tag != null || checkBoxReaddOnChange.Tag != null)
             {
                 App.MainForm.SelectiveRefresh(FormMain.SelectveRefreshFlags.Commits);
                 checkBoxRefreshOnChange.Tag = checkBoxReaddOnChange.Tag = null;

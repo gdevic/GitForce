@@ -11,7 +11,7 @@ namespace GitForce
         {
             InitializeComponent();
 
-            if(!ClassUtils.IsMono())
+            if (!ClassUtils.IsMono())
             {
                 // Disabling the auto-download of KDiff3 for now until I figure out
                 // how to pick up a file from that SF site...
@@ -57,7 +57,7 @@ namespace GitForce
                     Process procInstaller = Process.Start(installerFile);
                     procInstaller.WaitForExit();
 
-                    if(procInstaller.ExitCode==0)
+                    if (procInstaller.ExitCode == 0)
                         DialogResult = DialogResult.OK;
                 }
             }

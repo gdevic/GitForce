@@ -98,7 +98,7 @@ namespace GitForce
             cmd.Append(" -- \"" + file + "\"");
 
             ExecResult result = App.Repos.Current.Run(cmd.ToString());
-            if(result.Success())
+            if (result.Success())
                 PanelRevlist.UpdateList(listRev, result.stdout, true);
 
             // Activate the given SHA item or the first one if none given
@@ -129,7 +129,7 @@ namespace GitForce
                     lruSha[1] = listRev.SelectedItems[0].Name;
             }
             // Fill in the description of a selected checkin if a single one is selected
-            if(listRev.SelectedIndices.Count==1)
+            if (listRev.SelectedIndices.Count == 1)
             {
                 string sha = lruSha[1];
                 string cmd = string.Format("show -s {0}", sha);
@@ -197,7 +197,7 @@ namespace GitForce
         /// </summary>
         private void SyncMenuItemClick(object sender, EventArgs e)
         {
-            if( MessageBox.Show("This will sync file to a previous version. Continue?", "Revision Sync",
+            if (MessageBox.Show("This will sync file to a previous version. Continue?", "Revision Sync",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
                 string cmd = string.Format("checkout {1} -- \"{0}\"", file, lruSha[0]);

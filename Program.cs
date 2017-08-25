@@ -193,7 +193,7 @@ namespace GitForce
             {
                 // Initialize external diff program
                 Diff = new ClassDiff();
-                if( Diff.Initialize())
+                if (Diff.Initialize())
                 {
                     Merge = new ClassMerge();
                     // Initialize external Merge program

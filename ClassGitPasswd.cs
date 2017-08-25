@@ -21,7 +21,7 @@ namespace GitForce
         public ClassGitPasswd()
         {
             // WAR: Do a different kind of shell script dependent on the OS)
-            if( ClassUtils.IsMono())
+            if (ClassUtils.IsMono())
             {
                 // Mono: Use the Shell script
                 pathPasswordBatchHelper = Path.Combine(App.AppHome, "passwd.sh");

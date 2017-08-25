@@ -392,7 +392,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void MenuDeleteRepoClick(object sender, EventArgs e)
         {
-            if( listRepos.SelectedItems.Count>1)
+            if (listRepos.SelectedItems.Count > 1)
             {
                 // Remove every selected repo from the list
                 foreach (int index in listRepos.SelectedIndices)

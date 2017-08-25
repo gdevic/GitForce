@@ -118,7 +118,7 @@ namespace GitForce
         /// </summary>
         private void BtRemoveClick(object sender, EventArgs e)
         {
-            if(MessageBox.Show("This will permanently remove selected tool(s). Proceed?", "Remove tool",
+            if (MessageBox.Show("This will permanently remove selected tool(s). Proceed?", "Remove tool",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.Yes)
             {
                 int sel = listTools.SelectedIndex;

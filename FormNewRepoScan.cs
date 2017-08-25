@@ -94,10 +94,8 @@ namespace GitForce
         /// </summary>
         private void ListReposItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if(e.NewValue==CheckState.Checked)
-            {
+            if (e.NewValue == CheckState.Checked)
                 btAdd.Enabled = true;
-            }
         }
     }
 }

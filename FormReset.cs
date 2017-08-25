@@ -30,7 +30,7 @@ namespace GitForce
         private void RadioButtonCheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            if(rb.Checked)
+            if (rb.Checked)
             {
                 switch (rb.Tag.ToString())
                 {

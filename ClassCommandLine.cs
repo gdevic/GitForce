@@ -21,7 +21,7 @@ namespace GitForce
         public static bool Execute(Arguments commandLine)
         {
             // WAR: On Windows, re-attach the console so we can print. Mono does not need that to use Console class.
-            if(!ClassUtils.IsMono())
+            if (!ClassUtils.IsMono())
             {
                 NativeMethods.AttachConsole();
                 Console.WriteLine(Environment.NewLine);
@@ -63,10 +63,10 @@ namespace GitForce
                 List<string> toWhack = new List<string>();
 
                 // This is very much dependent on the platform, load a list of directories to whack appropriately
-                if(ClassUtils.IsMono())
+                if (ClassUtils.IsMono())
                 {
                     string home = Environment.GetEnvironmentVariable("HOME");
-                    if(!string.IsNullOrEmpty(home))
+                    if (!string.IsNullOrEmpty(home))
                     {
                         toWhack.Add(Path.Combine(home, ".config/GitForce"));
                         toWhack.Add(Path.Combine(home, ".local/share/GitForce"));

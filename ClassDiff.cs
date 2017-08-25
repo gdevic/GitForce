@@ -74,7 +74,7 @@ namespace GitForce
         public static void Configure(AppHelper app)
         {
             // Configure application only if it is valid
-            if (app.Name!=string.Empty)
+            if (app.Name != string.Empty)
             {
                 string path = app.Path.Replace('\\', '/');
                 string usr = app.Args.

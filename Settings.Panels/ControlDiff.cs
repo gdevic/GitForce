@@ -70,7 +70,7 @@ namespace GitForce.Settings.Panels
         /// </summary>
         private void BtBrowseClick(object sender, EventArgs e)
         {
-            if(openApp.ShowDialog()==DialogResult.OK)
+            if (openApp.ShowDialog() == DialogResult.OK)
             {
                 comboBoxPath.Text = openApp.FileName;
                 textArgs.Text = "%1 %2";

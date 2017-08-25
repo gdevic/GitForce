@@ -44,7 +44,7 @@ namespace GitForce
             worker.DoWork += delegate
             {
                 string webName;
-                if(GetTargetFile(out webName))
+                if (GetTargetFile(out webName))
                 {
                     UIThread(() => labelInfo.Text = "Downloading file " + webName);
                     UIThread(() => btCancel.Enabled = true);
@@ -78,7 +78,7 @@ namespace GitForce
         void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Remove temporary file if we did not complete the download
-            if(!isCompleted)
+            if (!isCompleted)
             {
                 if (!String.IsNullOrEmpty(TargetFile))
                     File.Delete(TargetFile);

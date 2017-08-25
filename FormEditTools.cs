@@ -34,7 +34,7 @@ namespace GitForce
             checkBrowse.Checked = tool.IsAddBrowse;
 
             // TODO: Running a command line tool does not work on Linux at the moment
-            if(ClassUtils.IsMono())
+            if (ClassUtils.IsMono())
             {
                 checkConsoleApp.Enabled = checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = false;
                 checkConsoleApp.Checked = checkWriteToStatus.Checked = checkCloseUponExit.Checked = false;
@@ -123,7 +123,7 @@ namespace GitForce
         /// </summary>
         private void BtBrowseClick(object sender, EventArgs e)
         {
-            if(openFile.ShowDialog()==DialogResult.OK)
+            if (openFile.ShowDialog() == DialogResult.OK)
                 textCmd.Text = openFile.FileName;
         }
 
@@ -132,7 +132,7 @@ namespace GitForce
         /// </summary>
         private void BtBrowseDirClick(object sender, EventArgs e)
         {
-            if(folderBrowser.ShowDialog()==DialogResult.OK)
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
                 textDir.Text = folderBrowser.SelectedPath;
         }
 
@@ -155,7 +155,7 @@ namespace GitForce
         {
             // If this is a console app, we can have control over the stdout redirection
             // and closing the command upon exit, otherwise these options do not make sense
-            if(checkConsoleApp.Checked==false)
+            if (checkConsoleApp.Checked == false)
                 checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = false;
             else
                 checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = true;

@@ -59,7 +59,7 @@ namespace GitForce
                 ret = ClassUtils.DeleteFolder(dirInfo, false, false);    // Remove .git, remove root folder (.git)
             }
 
-            if(radioSelection == 3)
+            if (radioSelection == 3)
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(dir);
                 ret = ClassUtils.DeleteFolder(dirInfo, false, false);   // Remove .git, remove root folder
