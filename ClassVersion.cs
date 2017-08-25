@@ -6,7 +6,6 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace GitForce
 {
