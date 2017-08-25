@@ -388,16 +388,6 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Switch the view mode to Local File View and Local Pending Changelists.
-        /// Needed to be reset that way after creating a new repo.
-        /// </summary>
-        public void ResetViews()
-        {
-            PanelView.SetView(3);
-            ChangeRightPanel("Commits");
-        }
-
-        /// <summary>
         /// Programmatically change the right panel and all related controls
         /// </summary>
         private void ChangeRightPanel(string panelName)
