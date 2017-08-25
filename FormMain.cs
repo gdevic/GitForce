@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using GitForce.Main.Left.Panels;
 using GitForce.Main.Right.Panels;
+using GitForce.Properties;
 
 namespace GitForce
 {
@@ -255,7 +256,12 @@ namespace GitForce
             // Fill in the last recently used workspace list of items
             List<string> lru = ClassWorkspace.GetLRU();
             foreach (var file in lru)
-                mWkLru.DropDownItems.Add(new ToolStripMenuItem(file, null, WorkspaceLoadLruMenuItem) { Tag = file });
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(file, null, WorkspaceLoadLruMenuItem) {Tag = file};
+                if (!File.Exists(file)) // If the workspace file does not exist, attach "file missing" icon next to it
+                    item.Image = Resources.FileMissing;
+                mWkLru.DropDownItems.Add(item);
+            }
             mWkLru.Enabled = lru.Count > 0;
             mWkSave.Enabled = App.Repos.Current != null;
 
