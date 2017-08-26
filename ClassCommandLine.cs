@@ -27,7 +27,7 @@ namespace GitForce
                 Console.WriteLine(Environment.NewLine);
             }
 
-            if (commandLine["help"] == "true")
+            if (commandLine["help"] == "true" || commandLine["?"] == "true")
             {
                 Console.WriteLine(Environment.NewLine +
                                   "GitForce optional arguments:" + Environment.NewLine +
@@ -47,14 +47,14 @@ namespace GitForce
                 runGitForce = false;
             }
 
-            // --reset-windows  Reset the stored locations and sizes of all internal dialogs and forms
-            //                 At this time we dont reset the main window and the log window
+            // --reset-windows  Reset stored locations and sizes of all windows and dialogs
             if (commandLine["reset-windows"] == "true")
             {
                 Properties.Settings.Default.WindowsGeometries = new StringCollection();
-                Console.WriteLine("Windows' geometries have been reset.");
+                Properties.Settings.Default.Save();
+                Console.WriteLine("GitForce windows and dialogs geometries have been reset.");
                 ReturnCode = 0;
-                runGitForce = false;
+                runGitForce = true;
             }
 
             // --reset-config   Reset stored configuration items (repos, settings)
