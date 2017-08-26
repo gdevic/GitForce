@@ -47,16 +47,9 @@ namespace GitForce.Main.Right.Panels
 
                 listRepos.Items.Add(li);
             }
-
-            // Adjust the header columns
-            string values = Properties.Settings.Default.ReposColumnWidths;
-            int[] columns = {-2, -2, -2, 0}; // Auto-adjust by default
-            if (!string.IsNullOrEmpty(values)) // Otherwise, load widths from the settings
-                columns = values.Split(',').Select(Int32.Parse).ToArray();
-            foreach (ColumnHeader l in listRepos.Columns)
-                l.Width = columns[l.Index];
-
             listRepos.EndUpdate();
+
+            AdjustHeaderColumnWidths();
         }
 
         /// <summary>
@@ -69,12 +62,10 @@ namespace GitForce.Main.Right.Panels
             // the code from storing initial loaded columns when the form is created
             if (listRepos.Items.Count > 0)
             {
-                // WAR: We used to save this int[] type variable directly but in the settings it would embed "<?xml version..."
-                // text in the middle of a file which would break the Linux mono code
-                string values = Properties.Settings.Default.ReposColumnWidths;
-                int[] columns = values.Split(',').Select(Int32.Parse).ToArray();
-                columns[e.ColumnIndex] = listRepos.Columns[e.ColumnIndex].Width;
-                values = String.Join(",", columns.Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray());
+                var columns = new int[4];
+                foreach (ColumnHeader l in listRepos.Columns)
+                    columns[l.Index] = l.Width;
+                string values = String.Join(",", columns.Select(i => i.ToString()).ToArray());
                 Properties.Settings.Default.ReposColumnWidths = values;
             }
         }
@@ -541,7 +532,14 @@ namespace GitForce.Main.Right.Panels
         {
             if (!ClassUtils.IsMono()) return; // Linux/Mono fixup only
             if (!Visible) return; // Only on becoming visible
+            AdjustHeaderColumnWidths();
+        }
 
+        /// <summary>
+        /// Adjust header column widths based on the propertiy setting value
+        /// </summary>
+        private void AdjustHeaderColumnWidths()
+        {
             listRepos.BeginUpdate();
 
             // Adjust the header columns
