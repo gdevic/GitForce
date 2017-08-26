@@ -72,19 +72,10 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Load workspace given the file name.
-        /// If the file name is null, load default workspace.
+        /// Load workspace given the workspace file name.
         /// </summary>
         public static bool Load(string name)
         {
-            // If this is the first time run, initialize the default workspace file name
-            if (string.IsNullOrEmpty(Properties.Settings.Default.WorkspaceFile))
-                Properties.Settings.Default.WorkspaceFile = Path.Combine(App.AppHome, "repos.giw");
-
-            // If the caller wanted us to load a "default" workspace, load its file name
-            if (name == null)
-                name = Properties.Settings.Default.WorkspaceFile;
-
             App.PrintStatusMessage("Loading workspace: " + name, MessageType.General);
             if (App.Repos.Load(name, false))    // Load operation (not merge)
             {

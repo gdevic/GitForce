@@ -142,8 +142,13 @@ namespace GitForce
         public bool Initialize()
         {
             // Load default set of repositories
-            if (!ClassWorkspace.Load(null))
-                return false;
+            // If this is the first time run, initialize the default workspace file name
+            if (string.IsNullOrEmpty(Properties.Settings.Default.WorkspaceFile))
+                Properties.Settings.Default.WorkspaceFile = Path.Combine(App.AppHome, "repos.giw");
+            string name = Properties.Settings.Default.WorkspaceFile;
+            if (File.Exists(name))              // Even if the workspace does not exist at this point
+                if (!ClassWorkspace.Load(name)) // still use it's name and continue running since it
+                    return false;               // will be saved on a program exit
 
             // Load custom tools
             App.CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile);
