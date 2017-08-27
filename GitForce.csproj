@@ -819,6 +819,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="git.ico" />
+    <None Include="Resources\App\world.png" />
+    <None Include="Resources\App\pulldown.png" />
     <None Include="Resources\App\file_missing.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

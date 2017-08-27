@@ -131,6 +131,16 @@ namespace GitForce.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap pulldown {
+            get {
+                object obj = ResourceManager.GetObject("pulldown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] puttygen {
@@ -257,6 +267,16 @@ namespace GitForce.Properties {
             get {
                 object obj = ResourceManager.GetObject("TreeIconX", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap world {
+            get {
+                object obj = ResourceManager.GetObject("world", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

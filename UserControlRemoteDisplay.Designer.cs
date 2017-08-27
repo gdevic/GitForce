@@ -30,7 +30,6 @@ namespace GitForce
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemoteDisplay));
             this.btSsh = new System.Windows.Forms.Button();
             this.textPushCmd = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,14 +38,14 @@ namespace GitForce
             this.textUrlPush = new System.Windows.Forms.TextBox();
             this.textUrlFetch = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btListPush = new System.Windows.Forms.Button();
-            this.btListFetch = new System.Windows.Forms.Button();
-            this.btWWW2 = new System.Windows.Forms.Button();
-            this.btWWW1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btListPush = new System.Windows.Forms.Button();
+            this.btListFetch = new System.Windows.Forms.Button();
+            this.btWWW2 = new System.Windows.Forms.Button();
+            this.btWWW1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -150,58 +149,6 @@ namespace GitForce
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // btListPush
-            // 
-            this.btListPush.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btListPush.Image = ((System.Drawing.Image)(resources.GetObject("btListPush.Image")));
-            this.btListPush.Location = new System.Drawing.Point(353, 63);
-            this.btListPush.Name = "btListPush";
-            this.btListPush.Size = new System.Drawing.Size(27, 23);
-            this.btListPush.TabIndex = 14;
-            this.btListPush.Text = ".";
-            this.btListPush.UseVisualStyleBackColor = true;
-            this.btListPush.Click += new System.EventHandler(this.BtPushClicked);
-            // 
-            // btListFetch
-            // 
-            this.btListFetch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btListFetch.Image = ((System.Drawing.Image)(resources.GetObject("btListFetch.Image")));
-            this.btListFetch.Location = new System.Drawing.Point(353, 37);
-            this.btListFetch.Name = "btListFetch";
-            this.btListFetch.Size = new System.Drawing.Size(27, 23);
-            this.btListFetch.TabIndex = 13;
-            this.btListFetch.Text = ".";
-            this.btListFetch.UseVisualStyleBackColor = true;
-            this.btListFetch.Click += new System.EventHandler(this.BtFetchClicked);
-            // 
-            // btWWW2
-            // 
-            this.btWWW2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btWWW2.Enabled = false;
-            this.btWWW2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btWWW2.Location = new System.Drawing.Point(386, 63);
-            this.btWWW2.Name = "btWWW2";
-            this.btWWW2.Size = new System.Drawing.Size(30, 23);
-            this.btWWW2.TabIndex = 7;
-            this.btWWW2.Tag = "Push";
-            this.btWWW2.Text = "->";
-            this.btWWW2.UseVisualStyleBackColor = true;
-            this.btWWW2.Click += new System.EventHandler(this.BtWwwClick);
-            // 
-            // btWWW1
-            // 
-            this.btWWW1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btWWW1.Enabled = false;
-            this.btWWW1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btWWW1.Location = new System.Drawing.Point(386, 37);
-            this.btWWW1.Name = "btWWW1";
-            this.btWWW1.Size = new System.Drawing.Size(30, 23);
-            this.btWWW1.TabIndex = 4;
-            this.btWWW1.Tag = "Fetch";
-            this.btWWW1.Text = "->";
-            this.btWWW1.UseVisualStyleBackColor = true;
-            this.btWWW1.Click += new System.EventHandler(this.BtWwwClick);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -238,6 +185,54 @@ namespace GitForce
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Name:";
+            // 
+            // btListPush
+            // 
+            this.btListPush.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btListPush.Image = global::GitForce.Properties.Resources.pulldown;
+            this.btListPush.Location = new System.Drawing.Point(353, 63);
+            this.btListPush.Name = "btListPush";
+            this.btListPush.Size = new System.Drawing.Size(27, 23);
+            this.btListPush.TabIndex = 14;
+            this.btListPush.UseVisualStyleBackColor = true;
+            this.btListPush.Click += new System.EventHandler(this.BtPushClicked);
+            // 
+            // btListFetch
+            // 
+            this.btListFetch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btListFetch.Image = global::GitForce.Properties.Resources.pulldown;
+            this.btListFetch.Location = new System.Drawing.Point(353, 37);
+            this.btListFetch.Name = "btListFetch";
+            this.btListFetch.Size = new System.Drawing.Size(27, 23);
+            this.btListFetch.TabIndex = 13;
+            this.btListFetch.UseVisualStyleBackColor = true;
+            this.btListFetch.Click += new System.EventHandler(this.BtFetchClicked);
+            // 
+            // btWWW2
+            // 
+            this.btWWW2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btWWW2.Enabled = false;
+            this.btWWW2.Image = global::GitForce.Properties.Resources.world;
+            this.btWWW2.Location = new System.Drawing.Point(386, 63);
+            this.btWWW2.Name = "btWWW2";
+            this.btWWW2.Size = new System.Drawing.Size(30, 23);
+            this.btWWW2.TabIndex = 7;
+            this.btWWW2.Tag = "Push";
+            this.btWWW2.UseVisualStyleBackColor = true;
+            this.btWWW2.Click += new System.EventHandler(this.BtWwwClick);
+            // 
+            // btWWW1
+            // 
+            this.btWWW1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btWWW1.Enabled = false;
+            this.btWWW1.Image = global::GitForce.Properties.Resources.world;
+            this.btWWW1.Location = new System.Drawing.Point(386, 37);
+            this.btWWW1.Name = "btWWW1";
+            this.btWWW1.Size = new System.Drawing.Size(30, 23);
+            this.btWWW1.TabIndex = 4;
+            this.btWWW1.Tag = "Fetch";
+            this.btWWW1.UseVisualStyleBackColor = true;
+            this.btWWW1.Click += new System.EventHandler(this.BtWwwClick);
             // 
             // RemoteDisplay
             // 
