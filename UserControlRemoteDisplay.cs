@@ -14,6 +14,11 @@ namespace GitForce
         private ClassUrl.Url _pushUrl;
 
         /// <summary>
+        /// Flag that we are in editing mode
+        /// </summary>
+        private bool _isEditing = false;
+
+        /// <summary>
         /// Context menus used by the convenience buttons that list all existing fetch and push URLs
         /// </summary>
         private readonly ContextMenuStrip _menuFetch = new ContextMenuStrip();
@@ -31,6 +36,9 @@ namespace GitForce
         {
             InitializeComponent();
 
+            // WAR: Permanently disable SSH button if not on Windows OS
+            btSsh.Enabled = !ClassUtils.IsMono();
+
             // Add button click handlers that will expand the list of existing fetch and push URLs
             _menuFetch.ItemClicked += MenuFetchItemClicked;
             _menuPush.ItemClicked += MenuPushItemClicked;
@@ -43,6 +51,7 @@ namespace GitForce
         /// <param name="all">Enable or disable all other fields except the name</param>
         public void Enable(bool name, bool all)
         {
+            _isEditing = all; // When all fields are enabled, we are in editing mode
             textName.ReadOnly = !name;
             textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = !all;
             btListFetch.Enabled = btListPush.Enabled = textPassword.Enabled = btHttpsAuth.Enabled = all;
@@ -135,18 +144,19 @@ namespace GitForce
             // Call the delegate and also reparse our fetch and push URLs
             AnyTextChanged(IsValid());
 
-            // Enable SSH button if one of the URLs uses SSH connection
-            btSsh.Enabled = false;
-            if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
-            if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
-            btWWW1.Enabled = _fetchUrl.Ok;
-            btWWW2.Enabled = _pushUrl.Ok;
+            // Change enable properties only if we are in editing mode, otherwise controls are grayed out
+            if (_isEditing)
+            {
+                // Enable SSH button if one of the URLs uses SSH connection
+                btSsh.Enabled = false;
+                if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+                if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+                btWWW1.Enabled = _fetchUrl.Ok;
+                btWWW2.Enabled = _pushUrl.Ok;
 
-            textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
-            btHttpsAuth.Enabled = !textPassword.ReadOnly;
-
-            // WAR: Permanently disable SSH button if not on Windows OS
-            btSsh.Enabled = !ClassUtils.IsMono();
+                textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
+                btHttpsAuth.Enabled = !textPassword.ReadOnly;
+            }
         }
 
         /// <summary>
