@@ -109,13 +109,23 @@ namespace GitForce
                 }
                 else
                 {
-                    DialogResult response = MessageBox.Show(@"The remote server RSA key was not added to the list of known hosts." + Environment.NewLine + @"Would you like to open the Manage SSH Keys dialog to add the host in the Remote Keys tab?", @"Host Key error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    DialogResult response = MessageBox.Show(@"The remote server RSA key was not added to the list of known hosts." + Environment.NewLine +
+                        @"Would you like to open the Manage SSH Keys dialog to add the host in the Remote Keys tab?", @"Host Key error",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     if (response == DialogResult.Yes)
                     {
                         FormSSH formSsh = new FormSSH();
                         formSsh.ShowDialog();
                     }
                 }
+            }
+
+            // This hack recognizes a common HTTPS authentication error message
+            if (message.Contains(@"fatal: Authentication failed for 'https:"))
+            {
+                MessageBox.Show(@"The remote server refused to authenticate you." + Environment.NewLine +
+                    @"You need to set your full HTTPS credentials (user name and password) to access this repo.",
+                    @"HTTPS Authentication error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             // Append the stderr stream message to a log window
