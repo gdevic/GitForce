@@ -311,6 +311,7 @@ namespace GitForce.Main.Right.Panels
                     try
                     {
                         string init = "";
+                        ClassUtils.AddEnvar("PASSWORD", ""); // Clear the HTTPS password
                         switch (type)
                         {
                             case "empty":
