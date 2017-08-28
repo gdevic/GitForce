@@ -41,10 +41,6 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
-            if (ClassUtils.IsMono())
-                statusStrip.SizingGrip = false;
-
             // Apply the same font we use for description of changes
             textDescription.Font = Properties.Settings.Default.commitFont;
 

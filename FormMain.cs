@@ -65,10 +65,6 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
-            if (ClassUtils.IsMono())
-                statusStrip.SizingGrip = false;
-
             // Initialize panels
             // Left panel:
             splitContainer2.Panel1.Controls.Add(PanelView);

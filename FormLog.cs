@@ -19,10 +19,6 @@ namespace GitForce
             // Add our main print function callback delegate
             App.PrintLogMessage += Print;
 
-            // WAR: On Linux, remove status bar resizing grip (since it does not work under X)
-            if (ClassUtils.IsMono())
-                statusStrip.SizingGrip = false;
-
             if (App.AppLog != null)
                 Print("Logging: " + App.AppLog, MessageType.General);
 
