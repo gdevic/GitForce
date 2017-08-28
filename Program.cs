@@ -98,7 +98,7 @@ namespace GitForce
         /// <summary>
         /// Static class managing Git HTTPS password helper file
         /// </summary>
-        public static ClassGitPasswd GitPasswd;
+        public static ClassHttpsPasswd HttpsPasswd;
 
         /// <summary>
         /// Static class containing custom tools
@@ -201,7 +201,7 @@ namespace GitForce
                         else
                             Putty = new ClassPutty();       // Instantiate PuTTY support only on Windows
 
-                        GitPasswd = new ClassGitPasswd();   // Create HTTPS password helper file
+                        HttpsPasswd = new ClassHttpsPasswd();// Create HTTPS password helper file
                         Repos = new ClassRepos();           // Create repository canvas
                         Version = new ClassVersion();       // Start the new version check process
                         MainForm = new FormMain();          // Create the main form

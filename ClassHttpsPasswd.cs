@@ -6,21 +6,17 @@ namespace GitForce
     /// <summary>
     /// Manages git HTTPS password helper file
     /// </summary>
-    public class ClassGitPasswd
+    public class ClassHttpsPasswd
     {
-        /// <summary>
-        /// A file that provides password for HTTPS operations
-        /// </summary>
-        private readonly string pathPasswordBatchHelper;
-
         /// <summary>
         /// Constructor creates a shell executable file that echoes the PASSWORD
         /// environment variable when called. When GIT_ASKPASS is present, Git
         /// obtains a password for its HTTPS operations by calling it.
         /// </summary>
-        public ClassGitPasswd()
+        public ClassHttpsPasswd()
         {
             // WAR: Do a different kind of shell script dependent on the OS)
+            string pathPasswordBatchHelper;
             if (ClassUtils.IsMono())
             {
                 // Mono: Use the Shell script
@@ -29,7 +25,7 @@ namespace GitForce
 
                 // Set the execute bit
                 if (Exec.Run("chmod", "+x " + pathPasswordBatchHelper).Success() == false)
-                    App.PrintLogMessage("ClassGitPasswd: Unable to chmod +x on " + pathPasswordBatchHelper, MessageType.Error);
+                    App.PrintLogMessage("ClassHttpsPasswd: Unable to chmod +x on " + pathPasswordBatchHelper, MessageType.Error);
             }
             else
             {

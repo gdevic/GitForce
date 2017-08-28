@@ -63,7 +63,7 @@
     <Compile Include="ClassExecute.cs" />
     <Compile Include="ClassGit.cs" />
     <Compile Include="ClassGitDirectory.cs" />
-    <Compile Include="ClassGitPasswd.cs" />
+    <Compile Include="ClassHttpsPasswd.cs" />
     <Compile Include="ClassGlobals.cs" />
     <Compile Include="ClassHelp.cs" />
     <Compile Include="ClassMerge.cs" />
