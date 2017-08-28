@@ -88,12 +88,26 @@ namespace GitForce
                 foreach (var envar in Env)
                     proc.StartInfo.EnvironmentVariables.Add(envar.Key, envar.Value);
 
-                // WAR: Opening a command window/terminal is platform-specific
                 if (IsMono())
                 {
-                    // TODO: This may not work on a non-Ubuntu system?
-                    proc.StartInfo.FileName = @"/usr/bin/gnome-terminal";
-                    proc.StartInfo.Arguments = "--working-directory=" + where;
+                    // Opening an command terminal is platform-specific and depends on the desktop environment which you use,
+                    // and which terminal application is installed
+                    if (File.Exists(@"/usr/bin/gnome-terminal"))
+                    {
+                        proc.StartInfo.FileName = @"/usr/bin/gnome-terminal";
+                        proc.StartInfo.Arguments = "--working-directory=" + where;
+                    }
+                    else if (File.Exists(@"/usr/bin/konsole"))
+                    {
+                        proc.StartInfo.FileName = @"/usr/bin/konsole";
+                        proc.StartInfo.Arguments = "--workdir " + where;
+                    }
+                    else if (File.Exists(@"/usr/bin/xterm"))
+                    {
+                        proc.StartInfo.FileName = @"/usr/bin/xterm";
+                        proc.StartInfo.Arguments = "-e \"cd " + where + "; bash\"";
+                    }
+                    else throw new Exception("Unable to identify a terminal shell program for this distro. Please report this issue - thank you!");
                 }
                 else
                 {
