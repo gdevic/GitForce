@@ -115,12 +115,21 @@ namespace GitForce
             try
             {
                 App.PrintStatusMessage("Opening a file browser at " + where, MessageType.General);
-
-                // WAR: Opening an "Explorer" is platform-specific
                 if (IsMono())
                 {
-                    // TODO: Start a Linux (Ubuntu?) file explorer in a more flexible way
-                    Process.Start(@"/usr/bin/nautilus", "--browser " + where);
+                    // Opening an "Explorer" is platform-specific and depends on the desktop environment which you use,
+                    // each desktop environment comes with its own default file- manager.
+                    //   Ubuntu: nautilus
+                    //   Cinnamon: nemo
+                    //   Mate: caja
+                    //   xfce: thunar
+                    //   KDE: dolphin
+                    if (File.Exists(@"/usr/bin/nautilus")) Process.Start(@"/usr/bin/nautilus", "--browser " + where);
+                    else if (File.Exists(@"/usr/bin/nemo")) Process.Start(@"/usr/bin/nemo", where);
+                    else if (File.Exists(@"/usr/bin/caja")) Process.Start(@"/usr/bin/caja", where);
+                    else if (File.Exists(@"/usr/bin/thunar")) Process.Start(@"/usr/bin/thunar", where);
+                    else if (File.Exists(@"/usr/bin/dolphin")) Process.Start(@"/usr/bin/dolphin", where);
+                    else throw new Exception("Unable to identify a file browser program for this distro. Please report this issue - thank you!");
                 }
                 else
                 {
