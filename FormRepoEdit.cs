@@ -50,12 +50,6 @@ namespace GitForce
             ClassWinGeometry.Restore(this);
             repo = targetRepo;
 
-            // Get all local configuration strings and assign various panel controls.
-            // This is placed first, before initializing the user panels, so that the
-            // strings are accessible to individual panels should they need to use them.
-            // TODO: This is not needed for now
-            //string[] config = _repo.Run("config --local --list -z").Split('\0');
-
             // Add all user panels to the base repo edit panel; call their init
             foreach (KeyValuePair<string, UserControl> key in panels)
             {
