@@ -43,5 +43,23 @@ namespace GitForce
 
             App.PrintLogMessage("Created HTTP password helper file: " + pathPasswordBatchHelper, MessageType.General);
         }
+
+        /// <summary>
+        /// Change remote URL of a repo to embed HTTPS password, if needed (only for HTTPS types of sites).
+        /// URL is assumed to be a canonical and well formatted. If the password contains two fields, it represents
+        /// a required HTTPS user / password pair and the user name portion in the URL is substituted with user:password.
+        /// TODO: This currently results in HTTPS passwords to be visible in several places
+        /// </summary>
+        public static string ChangeHttpsUrl(string url, string pass)
+        {
+            ClassUrl.Url host = ClassUrl.Parse(url);
+            if (!string.IsNullOrEmpty(pass) && (host.Type == ClassUrl.UrlType.Https))
+            {
+                string[] combo = pass.Trim().Split('\t');
+                if (combo.Length == 2)
+                    url = "https://" + combo[0] + ":" + combo[1] + url.Substring(url.IndexOf('@'));
+            }
+            return url;
+        }
     }
 }

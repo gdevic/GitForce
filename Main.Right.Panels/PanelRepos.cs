@@ -324,7 +324,7 @@ namespace GitForce.Main.Right.Panels
 
                             case "remote":
                                 ClassRemotes.Remote r = newRepoStep1.Remote;
-                                init = "clone --progress -v --origin " + r.Name + " " + r.UrlFetch + " \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone --progress -v --origin " + r.Name + " " + ClassHttpsPasswd.ChangeHttpsUrl(r.UrlFetch, r.Password) + " \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
 
                                 // Add HTTPS password for the next execute of a clone operation
                                 ClassUtils.AddEnvar("PASSWORD", r.Password);
