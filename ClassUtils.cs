@@ -29,6 +29,14 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Returns the value of a specific environment variable or empty string if it's not defined
+        /// </summary>
+        public static string GetEnvar(string name)
+        {
+            return Env.ContainsKey(name) ? Env[name] : string.Empty;
+        }
+
+        /// <summary>
         /// Returns a set of environment variables registered for this execution environment
         /// </summary>
         public static Dictionary<string, string> GetEnvars()
