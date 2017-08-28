@@ -121,7 +121,6 @@ namespace GitForce.Settings.Panels
                 {
                     if (fontFamily.IsStyleAvailable(FontStyle.Regular))
                     {
-                        // TODO: Is there a better way in C# to extract the fixed-width fonts?
                         Font font = new Font(fontFamily, 10, FontStyle.Regular);
                         SizeF w1 = gr.MeasureString("iiii||||....", font);
                         SizeF w2 = gr.MeasureString("XXXX____ZZZZ", font);
