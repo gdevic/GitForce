@@ -149,6 +149,12 @@
     <Compile Include="FormGitRun.Designer.cs">
       <DependentUpon>FormGitRun.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHttpsAuth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHttpsAuth.Designer.cs">
+      <DependentUpon>FormHttpsAuth.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -532,6 +538,9 @@
       <DependentUpon>FormGitRun.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormHttpsAuth.resx">
+      <DependentUpon>FormHttpsAuth.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLog.resx">
       <DependentUpon>FormLog.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -819,6 +828,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="git.ico" />
+    <None Include="Resources\App\key.png" />
     <None Include="Resources\App\world.png" />
     <None Include="Resources\App\pulldown.png" />
     <None Include="Resources\App\file_missing.png" />

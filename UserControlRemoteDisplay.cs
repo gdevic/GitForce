@@ -45,7 +45,7 @@ namespace GitForce
         {
             textName.ReadOnly = !name;
             textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = !all;
-            btListFetch.Enabled = btListPush.Enabled = all;
+            btListFetch.Enabled = btListPush.Enabled = textPassword.Enabled = btHttpsAuth.Enabled = all;
             SomeTextChanged(null, null);
         }
 
@@ -61,7 +61,7 @@ namespace GitForce
             textPassword.Text = "";
             btWWW1.Enabled = false;
             btWWW2.Enabled = false;
-            btListFetch.Enabled = btListPush.Enabled = false;
+            btListFetch.Enabled = btListPush.Enabled = btHttpsAuth.Enabled = false;
             textPassword.ReadOnly = true;
         }
 
@@ -143,6 +143,7 @@ namespace GitForce
             btWWW2.Enabled = _pushUrl.Ok;
 
             textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
+            btHttpsAuth.Enabled = !textPassword.ReadOnly;
 
             // WAR: Permanently disable SSH button if not on Windows OS
             btSsh.Enabled = !ClassUtils.IsMono();
@@ -168,7 +169,7 @@ namespace GitForce
         }
 
         /// <summary>
-        /// User clicked on the "->" button to the left of the git repo address.
+        /// User clicked on the "web" button to the left of the git repo address.
         /// Find the canonical web site and open it
         /// </summary>
         private void BtWwwClick(object sender, EventArgs e)
@@ -234,6 +235,17 @@ namespace GitForce
         void MenuPushItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             textUrlPush.Text = e.ClickedItem.Text;
+        }
+
+        /// <summary>
+        /// User clicked on the HTTPS authentication button, open a dialog to enter HTTPS credentials
+        /// </summary>
+        private void BtHttpsAuthClicked(object sender, EventArgs e)
+        {
+            FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
+            formHttpsAuth.PassCombo = textPassword.Text;
+            if (formHttpsAuth.ShowDialog() == DialogResult.OK)
+                textPassword.Text = formHttpsAuth.PassCombo;
         }
     }
 }
