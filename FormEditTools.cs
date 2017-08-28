@@ -33,11 +33,12 @@ namespace GitForce
             checkPrompt.Checked = tool.IsPromptForArgs;
             checkBrowse.Checked = tool.IsAddBrowse;
 
-            // TODO: Running a command line tool does not work on Linux at the moment
+            // TODO: Running a command line tool largely does not work on Linux at the moment
             if (ClassUtils.IsMono())
             {
-                checkConsoleApp.Enabled = checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = false;
-                checkConsoleApp.Checked = checkWriteToStatus.Checked = checkCloseUponExit.Checked = false;
+                checkWriteToStatus.Enabled = checkCloseUponExit.Enabled = false;
+                checkWriteToStatus.Checked = checkCloseUponExit.Checked = false;
+                checkConsoleApp.Checked = true; // FIXME: Some success when this is checked
             }
 
             // Adjust the enables (in this order)
