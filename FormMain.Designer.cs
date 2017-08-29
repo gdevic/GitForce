@@ -55,6 +55,7 @@
             this.menuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainManageKeys = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainManageHttps = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMainSwitchRemoteRepo = new System.Windows.Forms.ToolStripMenuItem();
             this.xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,11 +77,14 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.rightTabControl = new GitForce.TabEx();
+            this.listStatus = new GitForce.ListBoxEx();
             this.menuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStatusCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStatusSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStatusClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdBox = new GitForce.TextBoxEx();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btUpdate = new System.Windows.Forms.ToolStripButton();
@@ -102,6 +106,7 @@
             this.btOptions = new System.Windows.Forms.ToolStripButton();
             this.btSsh = new System.Windows.Forms.ToolStripButton();
             this.btNewVersion = new System.Windows.Forms.ToolStripButton();
+            this.btHttps = new System.Windows.Forms.ToolStripButton();
             this.timerBusy = new System.Windows.Forms.Timer(this.components);
             this.loadWk = new System.Windows.Forms.OpenFileDialog();
             this.saveWk = new System.Windows.Forms.SaveFileDialog();
@@ -109,9 +114,6 @@
             this.saveTools = new System.Windows.Forms.SaveFileDialog();
             this.createWk = new System.Windows.Forms.SaveFileDialog();
             this.importWk = new System.Windows.Forms.OpenFileDialog();
-            this.rightTabControl = new GitForce.TabEx();
-            this.listStatus = new GitForce.ListBoxEx();
-            this.cmdBox = new GitForce.TextBoxEx();
             this.menuMain.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -331,6 +333,7 @@
             this.menuMainSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuMainOptions,
             this.menuMainManageKeys,
+            this.menuMainManageHttps,
             this.toolStripSeparator5,
             this.menuMainSwitchRemoteRepo,
             this.menuMainEditRemoteRepo,
@@ -355,6 +358,13 @@
             this.menuMainManageKeys.Size = new System.Drawing.Size(192, 22);
             this.menuMainManageKeys.Text = "Manage SSH Keys...";
             this.menuMainManageKeys.Click += new System.EventHandler(this.MenuMainManageKeysClick);
+            // 
+            // menuMainManageHttps
+            // 
+            this.menuMainManageHttps.Name = "menuMainManageHttps";
+            this.menuMainManageHttps.Size = new System.Drawing.Size(192, 22);
+            this.menuMainManageHttps.Text = "Manage HTTPS Pass...";
+            this.menuMainManageHttps.Click += new System.EventHandler(this.MenuMainManageHttpsClick);
             // 
             // toolStripSeparator5
             // 
@@ -528,6 +538,33 @@
             this.splitContainer2.SplitterDistance = 373;
             this.splitContainer2.TabIndex = 0;
             // 
+            // rightTabControl
+            // 
+            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
+            this.rightTabControl.Name = "rightTabControl";
+            this.rightTabControl.SelectedIndex = 0;
+            this.rightTabControl.ShowToolTips = true;
+            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
+            this.rightTabControl.TabIndex = 0;
+            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
+            // 
+            // listStatus
+            // 
+            this.listStatus.ContextMenuStrip = this.menuStatus;
+            this.listStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listStatus.Font = new System.Drawing.Font("Bitstream Vera Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listStatus.FormattingEnabled = true;
+            this.listStatus.IntegralHeight = false;
+            this.listStatus.ItemHeight = 15;
+            this.listStatus.Location = new System.Drawing.Point(0, 0);
+            this.listStatus.Name = "listStatus";
+            this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listStatus.Size = new System.Drawing.Size(784, 165);
+            this.listStatus.TabIndex = 0;
+            this.listStatus.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListStatusDrawItem);
+            // 
             // menuStatus
             // 
             this.menuStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -564,6 +601,18 @@
             this.menuStatusClear.Text = "Clear";
             this.menuStatusClear.Click += new System.EventHandler(this.MenuSelectClearClick);
             // 
+            // cmdBox
+            // 
+            this.cmdBox.AcceptsReturn = true;
+            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
+            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBox.Location = new System.Drawing.Point(0, 165);
+            this.cmdBox.Name = "cmdBox";
+            this.cmdBox.Size = new System.Drawing.Size(784, 23);
+            this.cmdBox.TabIndex = 1;
+            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
+            // 
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -586,7 +635,8 @@
             this.btCancelOperation,
             this.btOptions,
             this.btSsh,
-            this.btNewVersion});
+            this.btNewVersion,
+            this.btHttps});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -795,6 +845,16 @@
             this.btNewVersion.Visible = false;
             this.btNewVersion.Click += new System.EventHandler(this.NewVersionButtonClick);
             // 
+            // btHttps
+            // 
+            this.btHttps.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btHttps.Image = ((System.Drawing.Image)(resources.GetObject("btHttps.Image")));
+            this.btHttps.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btHttps.Name = "btHttps";
+            this.btHttps.Size = new System.Drawing.Size(23, 22);
+            this.btHttps.ToolTipText = "Manage HTTPS Passwords";
+            this.btHttps.Click += new System.EventHandler(this.MenuMainManageHttpsClick);
+            // 
             // timerBusy
             // 
             this.timerBusy.Interval = 200;
@@ -835,45 +895,6 @@
             this.importWk.DefaultExt = "*.giw";
             this.importWk.Filter = "Workspace files (*.giw)|*.giw|All files (*.*)|*.*";
             this.importWk.Title = "Import Workspace";
-            // 
-            // rightTabControl
-            // 
-            this.rightTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightTabControl.Location = new System.Drawing.Point(0, 0);
-            this.rightTabControl.Name = "rightTabControl";
-            this.rightTabControl.SelectedIndex = 0;
-            this.rightTabControl.ShowToolTips = true;
-            this.rightTabControl.Size = new System.Drawing.Size(407, 239);
-            this.rightTabControl.TabIndex = 0;
-            this.rightTabControl.SelectedIndexChanged += new System.EventHandler(this.RightPanelSelectionEvent);
-            // 
-            // listStatus
-            // 
-            this.listStatus.ContextMenuStrip = this.menuStatus;
-            this.listStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listStatus.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.listStatus.Font = new System.Drawing.Font("Bitstream Vera Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listStatus.FormattingEnabled = true;
-            this.listStatus.IntegralHeight = false;
-            this.listStatus.ItemHeight = 15;
-            this.listStatus.Location = new System.Drawing.Point(0, 0);
-            this.listStatus.Name = "listStatus";
-            this.listStatus.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listStatus.Size = new System.Drawing.Size(784, 165);
-            this.listStatus.TabIndex = 0;
-            this.listStatus.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListStatusDrawItem);
-            // 
-            // cmdBox
-            // 
-            this.cmdBox.AcceptsReturn = true;
-            this.cmdBox.BackColor = System.Drawing.SystemColors.Info;
-            this.cmdBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdBox.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdBox.Location = new System.Drawing.Point(0, 165);
-            this.cmdBox.Name = "cmdBox";
-            this.cmdBox.Size = new System.Drawing.Size(784, 23);
-            this.cmdBox.TabIndex = 1;
-            this.cmdBox.TextReady += new GitForce.TextBoxEx.TextReadyEventHandler(this.CmdBoxTextReady);
             // 
             // FormMain
             // 
@@ -943,6 +964,7 @@
         private System.Windows.Forms.ToolStripButton btCancelOperation;
         private System.Windows.Forms.ToolStripButton btOptions;
         private System.Windows.Forms.ToolStripButton btSsh;
+        private System.Windows.Forms.ToolStripButton btHttps;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuMainSelectAll;
         private System.Windows.Forms.ToolStripMenuItem menuMainPendingChanges;
@@ -998,6 +1020,7 @@
         private System.Windows.Forms.SaveFileDialog createWk;
         private ListBoxEx listStatus;
         private System.Windows.Forms.OpenFileDialog importWk;
+        private System.Windows.Forms.ToolStripMenuItem menuMainManageHttps;
     }
 }
 

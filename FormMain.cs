@@ -886,6 +886,14 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Manage HTTPS Passwords
+        /// </summary>
+        private void MenuMainManageHttpsClick(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
         /// User clicked on a Website menu item, open the website
         /// </summary>
         private void WebsiteClick(object sender, EventArgs e)
