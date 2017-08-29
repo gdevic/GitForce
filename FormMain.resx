@@ -316,20 +316,14 @@
   </data>
   <data name="btOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABIAAAAQCAYAAAAbBi9cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALbSURBVDhPzdJ/TMxxHMfxhk2EMVYc1owNYYuO3FXUqU6X
-        zolr7k6TVHe6wqFSEWpXt9IPnV+R6tS4FNvF/CyLtTGarc1MfsyPzWWYNpZZv56+bf75jj/94bV9/nw/
-        Pq993h+Pf57iLAUFexVUZIdTLhzrrkgaStK4e6WI644sqq0aqg4pqS+O4WJJBE2la/k9Kk5ptgJHSTSt
-        TgsNZTrOFkXR05UBNPL8XgpW8wKajuu5fyEFl309VXmKPyFHoQL7AQU3HSnCYAdDA3X092bw/ulO7tSF
-        4n4aCd+NDA+egp8l3Kw1YIhZxpRJE8WYozCKk6UbOGlbR3t9oICV8rC9gEyLhfqGZp69bOfLmzL4kE/X
-        nRCOWsOxmDZh0q8XQ64TZhiupP9HOZ96DtP/1UbTaQ17dmXgbLrNrdtPeNCSQ1/XNnilZ/DlJno7U4mP
-        U4mh1mqh9odserqt9PU2Co1qGegr5tEtM3l7V3HpXBw/3UIj924eujby+Eosl+3+qGOixFDtETVvWyS4
-        Tizj8+t8Bocacb84yPePeTCQS79bePR3OXx7ouXiMQVZqRHYc70x6KPFUPG+GFpr/IRNBfGtO5l7N7aT
-        m76Yx1d18CJNuEBJh1NKW+0iOpulbNWFsyNRhn6LVgylJ6hJT1LiyAnAVemHMXENxiRf7p6X0+lcQ36m
-        iroqb1rOzsZum06cNgi5XIo23iiGdLEqNqrDaczyF/7HHCIig9mim0tb3QquVQZgMSoozPOhzTGL4zYf
-        VNErkS71Z/7iQDFUY0vDfigRm2me0ExCsDyYlct9uX5aSkvlfEwJYexP01BWEEZmpozNcWFoVSGM8xwr
-        hkZyptCMyaAkUhlERFgISxbOwFm+iIoDs9BogjHEKtmRoGJ1qIzkeDVBAQv/REZypsiMRiVn5kwJnp6e
-        eI0fg6MiGvXaUGQyGRKfqXhPm8yECV5Ipk9j9KhRf4f+k3h4/AIXmszkKxIKngAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFqSURBVDhPjZJbSwJRFIXnV/Ybeox6qaeKHoykKEqIAY0M
+        y4bCGiNSSu2iSTJhFwOjG1FQLz30B3Z+p5nRYS664eCZ7d5r7bX20aLCOG2Jbl6K/TlYbFXu3YZUoekB
+        WDTO+4PRlKs9qXPS/JTDxpvo+YYk9uoSHwTArLbl5v1XrNcfqbW/5eLhS4FEyoGV0YvWi2rml+JYpiSx
+        1L66bx5fi1G+VZOQH5vf7oIVrx7VyLByn1k7kmSu5BZkO800mtWWOgBsHJx5p4EF9jCdlbsPSeZrsl6w
+        ZDZd9LKb9WfXtPHlnUAAAnAAHGlLRlk0EjSjG8OmdDMUYCFbcQEmVnZlZC7drcVlANBqp3zhAEwmsv4a
+        pmBtSApaF7rJAwC7nf4PXhiPhX0zBXJYGQ2smP85mAgQAMPTq/4paEIKjgOiDO48LPIA0KyMiwqHzRnX
+        YcV1j2lhgcMwc+8dlYc1NBrvD9AbsAZqdUPT/gAKdpIWWaXqCwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="btSsh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
