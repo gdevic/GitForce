@@ -43,7 +43,7 @@
             this.label2.Location = new System.Drawing.Point(12, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 13);
-            this.label2.TabIndex = 14;
+            this.label2.TabIndex = 0;
             this.label2.Text = "User name:";
             // 
             // label3
@@ -52,7 +52,7 @@
             this.label3.Location = new System.Drawing.Point(12, 41);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
-            this.label3.TabIndex = 15;
+            this.label3.TabIndex = 2;
             this.label3.Text = "Password:";
             // 
             // textUsername
@@ -62,8 +62,8 @@
             this.textUsername.Location = new System.Drawing.Point(96, 12);
             this.textUsername.Name = "textUsername";
             this.textUsername.Size = new System.Drawing.Size(227, 20);
-            this.textUsername.TabIndex = 16;
-            this.textUsername.TextChanged += new System.EventHandler(this.TextUsernameTextChanged);
+            this.textUsername.TabIndex = 1;
+            this.textUsername.TextChanged += new System.EventHandler(this.ValidateOk);
             // 
             // textPassword
             // 
@@ -72,9 +72,9 @@
             this.textPassword.Location = new System.Drawing.Point(96, 38);
             this.textPassword.Name = "textPassword";
             this.textPassword.Size = new System.Drawing.Size(227, 20);
-            this.textPassword.TabIndex = 17;
+            this.textPassword.TabIndex = 3;
             this.textPassword.UseSystemPasswordChar = true;
-            this.textPassword.TextChanged += new System.EventHandler(this.TextPasswordTextChanged);
+            this.textPassword.TextChanged += new System.EventHandler(this.ValidateOk);
             // 
             // btOK
             // 
@@ -84,7 +84,7 @@
             this.btOK.Location = new System.Drawing.Point(167, 68);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 18;
+            this.btOK.TabIndex = 5;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
             // 
@@ -95,7 +95,7 @@
             this.btCancel.Location = new System.Drawing.Point(248, 68);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancel.TabIndex = 19;
+            this.btCancel.TabIndex = 6;
             this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
             // 
@@ -105,13 +105,14 @@
             this.checkShow.Location = new System.Drawing.Point(15, 72);
             this.checkShow.Name = "checkShow";
             this.checkShow.Size = new System.Drawing.Size(104, 24);
-            this.checkShow.TabIndex = 20;
+            this.checkShow.TabIndex = 4;
             this.checkShow.Text = "Show password";
             this.checkShow.UseVisualStyleBackColor = true;
             this.checkShow.CheckedChanged += new System.EventHandler(this.CheckShowCheckedChanged);
             // 
             // FormHttpsAuth
             // 
+            this.AcceptButton = this.btOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(335, 103);

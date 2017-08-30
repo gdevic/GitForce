@@ -58,22 +58,19 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Validator for the user name field: must start with a letter and ...
+        /// Enables or disables OK button based on validity of the user name and password fields
         /// </summary>
-        private void TextUsernameTextChanged(object sender, System.EventArgs e)
+        private void ValidateOk(object sender, System.EventArgs e)
         {
-            string s = textUsername.Text.Trim();
-
+            // Validator for the user name field: must start with a letter and ...
+            string username = textUsername.Text.Trim();
             Regex r = new Regex("^[a-zA-Z][a-zA-Z0-9_]*$");
-            btOK.Enabled = r.IsMatch(s);
-        }
 
-        // This is a really lame validator for the password field
-        // We simply want to avoid some 'dangerous' characters, including spaces
-        private void TextPasswordTextChanged(object sender, System.EventArgs e)
-        {
-            string s = textPassword.Text.Trim();
-            btOK.Enabled = (s.Length > 0) && s.IndexOfAny(@" \/".ToCharArray()) == -1;
+            // This is a really lame validator for the password field
+            // We simply want to avoid some 'dangerous' characters, including spaces
+            string password = textPassword.Text.Trim();
+
+            btOK.Enabled = r.IsMatch(username) && (password.Length > 0) && password.IndexOfAny(@" \/".ToCharArray()) == -1;
         }
     }
 }
