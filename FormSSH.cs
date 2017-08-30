@@ -347,7 +347,7 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Item menu handler for the push help button
+        /// User clicked on one of the hosts we listed in the pull down popup menu
         /// </summary>
         private void MenuHostsItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
