@@ -250,12 +250,11 @@ namespace GitForce
         /// <summary>
         /// User clicked on the HTTPS authentication button, open a dialog to enter HTTPS credentials
         /// </summary>
-        private void BtHttpsAuthClicked(object sender, EventArgs e)
+        private void BtHttpsClicked(object sender, EventArgs e)
         {
-            FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
-            formHttpsAuth.PassCombo = textPassword.Text;
-            if (formHttpsAuth.ShowDialog() == DialogResult.OK)
-                textPassword.Text = formHttpsAuth.PassCombo;
+            FormHttps formHttps = new FormHttps();
+            if (formHttps.ShowDialog() == DialogResult.OK)
+                textPassword.Text = formHttps.PassCombo;
         }
     }
 }

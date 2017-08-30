@@ -159,7 +159,7 @@ namespace GitForce
             this.btHttpsAuth.Size = new System.Drawing.Size(27, 23);
             this.btHttpsAuth.TabIndex = 14;
             this.btHttpsAuth.UseVisualStyleBackColor = true;
-            this.btHttpsAuth.Click += new System.EventHandler(this.BtHttpsAuthClicked);
+            this.btHttpsAuth.Click += new System.EventHandler(this.BtHttpsClicked);
             // 
             // btListPush
             // 
