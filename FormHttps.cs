@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace GitForce
 {
     public partial class FormHttps : Form
     {
-        private readonly string netrcfilename;
+        /// <summary>
+        /// Contains the user name / password combo string when editing the embedded password
+        /// </summary>
+        public string PassCombo = ""; // TODO: Implement this tab
 
         /// <summary>
         /// Form constructor
@@ -28,9 +29,12 @@ namespace GitForce
             netrcfilename = Path.Combine(user, ClassUtils.IsMono() ? ".netrc" : "_netrc");
             App.PrintStatusMessage("Using file " + netrcfilename, MessageType.Debug);
 
-            LoadNetrc(netrcfilename);
-            PopulateNetrcView();
-            SaveNetrc(netrcfilename);
+            // Load the .netrc file if it exists, ignore if it does not (we will create it on save)
+            if (File.Exists(netrcfilename))
+            {
+                LoadNetrc(netrcfilename);
+                PopulateNetrcView();
+            }
         }
 
         /// <summary>
@@ -39,14 +43,18 @@ namespace GitForce
         private void FormHttpsFormClosing(object sender, FormClosingEventArgs e)
         {
             ClassWinGeometry.Save(this);
+
+            // Write back the modified content of the .netrc file
+            if (netrcDirty)
+                SaveNetrc(netrcfilename);
         }
 
-        /// <summary>
-        /// Context menu used by the convenience button that list all existing remote host URLs
-        /// </summary>
-        private readonly ContextMenuStrip _menuHosts = new ContextMenuStrip();
+        #region Management of .netrc file
 
+        private readonly ContextMenuStrip _menuHosts = new ContextMenuStrip();
+        private readonly string netrcfilename;
         private Dictionary<string, Tuple<string, string>> netrc = new Dictionary<string, Tuple<string, string>>();
+        private bool netrcDirty;
 
         /// <summary>
         /// Load .netrc file into internal data structure
@@ -55,7 +63,6 @@ namespace GitForce
         {
             try
             {
-                string machine = null, login = null;
                 using (StreamReader file = new StreamReader(filename))
                 {
                     do
@@ -68,25 +75,10 @@ namespace GitForce
                             continue;
 
                         List<string> keys = line.Split((" ").ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                        if (keys.Count() != 2)
+                        if ((keys.Count() != 6) || (keys[0] != "machine") || (keys[2] != "login") || (keys[4] != "password"))
                             throw new Exception("Bad entry: " + line);
 
-                        if (keys[0] == "machine") machine = keys[1].Trim();
-                        else if (keys[0] == "login") login = keys[1].Trim();
-                        else if (keys[0] == "password")
-                        {
-                            string password = keys[1].Trim();
-                            if (string.IsNullOrEmpty(machine) || string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-                                throw new Exception("Bad entry " + line);
-
-                            if (netrc.ContainsKey(machine)) // Detect duplicate entries but continue
-                                App.PrintStatusMessage("Duplicate machine entry " + machine, MessageType.Error);
-                            else
-                                netrc[machine] = new Tuple<string, string>(login, password);
-
-                            machine = login = null;
-                        }
-                        else throw new Exception("Bad entry: " + keys[0]);
+                        netrc[keys[1]] = new Tuple<string, string>(keys[3], keys[5]); // [machine] = (login, password)
 
                     } while (true);
                 }
@@ -108,11 +100,7 @@ namespace GitForce
                 using (StreamWriter file = new StreamWriter(filename))
                 {
                     foreach (var machine in netrc)
-                    {
-                        file.WriteLine("machine " + machine.Key);
-                        file.WriteLine("login " + machine.Value.Item1);
-                        file.WriteLine("password " + machine.Value.Item2);
-                    }
+                        file.WriteLine(string.Format("machine {0} login {1} password {2}", machine.Key, machine.Value.Item1, machine.Value.Item2));
                 }
             }
             catch (Exception ex)
@@ -122,8 +110,12 @@ namespace GitForce
             }
         }
 
+        /// <summary>
+        /// Rebuilds the listview from the data stored in the internal machine dictionary
+        /// </summary>
         private void PopulateNetrcView()
         {
+            listHosts.BeginUpdate();
             listHosts.Items.Clear();
             foreach (var machine in netrc)
             {
@@ -132,6 +124,8 @@ namespace GitForce
                 item.SubItems.Add(new ListViewItem.ListViewSubItem(item, "*****"));
                 listHosts.Items.Add(item);
             }
+            listHosts.EndUpdate();
+            ListHostsItemSelectionChanged(null, null);
         }
 
         private void BtListHostsClick(object sender, EventArgs e)
@@ -151,5 +145,76 @@ namespace GitForce
         {
             textBoxHost.Text = e.ClickedItem.Text;
         }
+
+        /// <summary>
+        /// Text in the input box has changed. Validate it and if it's a valid HTTPS URL, enable the "Add" button
+        /// </summary>
+        private void TextBoxHostTextChanged(object sender, EventArgs e)
+        {
+            ClassUrl.Url host = ClassUrl.Parse(textBoxHost.Text);
+            btAddHost.Enabled = host.Type == ClassUrl.UrlType.Https;
+        }
+
+        /// <summary>
+        /// User clicked on the Add host button, prompt for user name and password and then add it
+        /// </summary>
+        private void BtAddHostClick(object sender, EventArgs e)
+        {
+            // We assume the URL in the text box is a well formatted HTTPS string since Add button would not be enabled otherwise
+            ClassUrl.Url host = ClassUrl.Parse(textBoxHost.Text.Trim());
+            AddEdit(host.Host); // Use only the host part of the address
+        }
+
+        /// <summary>
+        /// User clicked on the Edit button after selecting a single item, open the dialog to edit user name and password
+        /// </summary>
+        private void BtEditClick(object sender, EventArgs e)
+        {
+            // We assume a single item is selected since Edit button would not be enabled otherwise
+            AddEdit(listHosts.SelectedItems[0].Text);
+        }
+
+        /// <summary>
+        /// Given a machine URL, let the user edit its user name and password, update internal data store and the view
+        /// </summary>
+        private void AddEdit(string machine)
+        {
+            FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
+            if (netrc.ContainsKey(machine))
+                formHttpsAuth.PassCombo = netrc[machine].Item1 + "\t" + netrc[machine].Item2;
+            if (formHttpsAuth.ShowDialog() == DialogResult.OK)
+            {
+                //if (netrc.ContainsKey(machine))
+                //    netrc.Remove("machine");
+                netrc[machine] = new Tuple<string, string>(formHttpsAuth.Username, formHttpsAuth.Password);
+
+                netrcDirty = true;
+                PopulateNetrcView();
+                textBoxHost.Text = "";
+            }
+        }
+
+        /// <summary>
+        /// User selected (or deselected) one or more items in the view, enable or disable Remove and Edit buttons
+        /// </summary>
+        private void ListHostsItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            btRemoveHost.Enabled = listHosts.SelectedIndices.Count > 0; // Remove is enabled when a nonzero items are selected
+            btEdit.Enabled = listHosts.SelectedIndices.Count == 1; // Edit is enabled when only one item is selected
+        }
+
+        /// <summary>
+        /// User clicked on the Remove button, delete selected items
+        /// </summary>
+        private void BtRemoveHostClick(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listHosts.SelectedItems)
+                netrc.Remove(item.Text);
+
+            netrcDirty = true;
+            PopulateNetrcView();
+        }
+
+        #endregion
     }
 }

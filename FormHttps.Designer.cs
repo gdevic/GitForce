@@ -35,6 +35,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabNetrc = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btEdit = new System.Windows.Forms.Button();
             this.listHosts = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -107,6 +108,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.btEdit);
             this.groupBox1.Controls.Add(this.listHosts);
             this.groupBox1.Controls.Add(this.btAddHost);
             this.groupBox1.Controls.Add(this.btListHosts);
@@ -120,6 +122,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Hosts";
             // 
+            // btEdit
+            // 
+            this.btEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btEdit.Enabled = false;
+            this.btEdit.Location = new System.Drawing.Point(414, 48);
+            this.btEdit.Name = "btEdit";
+            this.btEdit.Size = new System.Drawing.Size(75, 23);
+            this.btEdit.TabIndex = 9;
+            this.btEdit.Text = "Edit";
+            this.btEdit.UseVisualStyleBackColor = true;
+            this.btEdit.Click += new System.EventHandler(this.BtEditClick);
+            // 
             // listHosts
             // 
             this.listHosts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -130,12 +144,14 @@
             this.columnHeader2,
             this.columnHeader3});
             this.listHosts.FullRowSelect = true;
+            this.listHosts.HideSelection = false;
             this.listHosts.Location = new System.Drawing.Point(6, 19);
             this.listHosts.Name = "listHosts";
             this.listHosts.Size = new System.Drawing.Size(402, 239);
             this.listHosts.TabIndex = 7;
             this.listHosts.UseCompatibleStateImageBehavior = false;
             this.listHosts.View = System.Windows.Forms.View.Details;
+            this.listHosts.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListHostsItemSelectionChanged);
             // 
             // columnHeader1
             // 
@@ -162,6 +178,7 @@
             this.btAddHost.TabIndex = 6;
             this.btAddHost.Text = "Add Host";
             this.btAddHost.UseVisualStyleBackColor = true;
+            this.btAddHost.Click += new System.EventHandler(this.BtAddHostClick);
             // 
             // btListHosts
             // 
@@ -183,6 +200,7 @@
             this.textBoxHost.Name = "textBoxHost";
             this.textBoxHost.Size = new System.Drawing.Size(369, 20);
             this.textBoxHost.TabIndex = 4;
+            this.textBoxHost.TextChanged += new System.EventHandler(this.TextBoxHostTextChanged);
             // 
             // btRemoveHost
             // 
@@ -194,6 +212,7 @@
             this.btRemoveHost.TabIndex = 2;
             this.btRemoveHost.Text = "Remove";
             this.btRemoveHost.UseVisualStyleBackColor = true;
+            this.btRemoveHost.Click += new System.EventHandler(this.BtRemoveHostClick);
             // 
             // tabEmbedded
             // 
@@ -247,5 +266,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.Button btEdit;
     }
 }
