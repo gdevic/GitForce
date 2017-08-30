@@ -45,9 +45,14 @@
             this.textBoxHost = new System.Windows.Forms.TextBox();
             this.btRemoveHost = new System.Windows.Forms.Button();
             this.tabEmbedded = new System.Windows.Forms.TabPage();
+            this.labelSet = new System.Windows.Forms.Label();
+            this.btClear = new System.Windows.Forms.Button();
+            this.btSet = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabNetrc.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabEmbedded.SuspendLayout();
             this.SuspendLayout();
             // 
             // btHelp
@@ -216,13 +221,58 @@
             // 
             // tabEmbedded
             // 
+            this.tabEmbedded.BackColor = System.Drawing.SystemColors.Control;
+            this.tabEmbedded.Controls.Add(this.labelSet);
+            this.tabEmbedded.Controls.Add(this.btClear);
+            this.tabEmbedded.Controls.Add(this.btSet);
+            this.tabEmbedded.Controls.Add(this.label2);
             this.tabEmbedded.Location = new System.Drawing.Point(4, 22);
             this.tabEmbedded.Name = "tabEmbedded";
             this.tabEmbedded.Padding = new System.Windows.Forms.Padding(3);
             this.tabEmbedded.Size = new System.Drawing.Size(495, 292);
             this.tabEmbedded.TabIndex = 2;
             this.tabEmbedded.Text = "embedded";
-            this.tabEmbedded.UseVisualStyleBackColor = true;
+            // 
+            // labelSet
+            // 
+            this.labelSet.AutoSize = true;
+            this.labelSet.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSet.Location = new System.Drawing.Point(6, 59);
+            this.labelSet.Name = "labelSet";
+            this.labelSet.Size = new System.Drawing.Size(84, 14);
+            this.labelSet.TabIndex = 3;
+            this.labelSet.Text = "https://...";
+            // 
+            // btClear
+            // 
+            this.btClear.Location = new System.Drawing.Point(90, 91);
+            this.btClear.Name = "btClear";
+            this.btClear.Size = new System.Drawing.Size(75, 23);
+            this.btClear.TabIndex = 2;
+            this.btClear.Text = "Clear";
+            this.btClear.UseVisualStyleBackColor = true;
+            this.btClear.Click += new System.EventHandler(this.BtClearClick);
+            // 
+            // btSet
+            // 
+            this.btSet.Location = new System.Drawing.Point(9, 91);
+            this.btSet.Name = "btSet";
+            this.btSet.Size = new System.Drawing.Size(75, 23);
+            this.btSet.TabIndex = 1;
+            this.btSet.Text = "Set";
+            this.btSet.UseVisualStyleBackColor = true;
+            this.btSet.Click += new System.EventHandler(this.BtSetClick);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Location = new System.Drawing.Point(6, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(486, 47);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "If you set these fields, your remote will have user name and password added to th" +
+    "e URL and will look like \'https://username:password@server.com/path\'";
             // 
             // FormHttps
             // 
@@ -245,6 +295,8 @@
             this.tabNetrc.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabEmbedded.ResumeLayout(false);
+            this.tabEmbedded.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -267,5 +319,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.Button btEdit;
+        private System.Windows.Forms.Button btClear;
+        private System.Windows.Forms.Button btSet;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelSet;
     }
 }

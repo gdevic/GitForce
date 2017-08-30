@@ -12,7 +12,28 @@ namespace GitForce
         /// <summary>
         /// Contains the user name / password combo string when editing the embedded password
         /// </summary>
-        public string PassCombo = ""; // TODO: Implement this tab
+        public string PassCombo
+        {
+            get { return textUsername + "\t" + textPassword; }
+            set
+            {
+                textUsername = "";
+                textPassword = "";
+                string[] combo = value.Trim().Split('\t');
+                if (combo.Length == 1)
+                    textPassword = combo[0];
+                else if (combo.Length == 2)
+                {
+                    textUsername = combo[0];
+                    textPassword = combo[1];
+                }
+
+                if (combo.Length == 1)
+                    labelSet.Text = string.Format(@"https://{0}...", textUsername);
+                else
+                    labelSet.Text = string.Format(@"https://{0}:<password>@...", textUsername);
+            }
+        }
 
         /// <summary>
         /// Form constructor
@@ -35,6 +56,7 @@ namespace GitForce
                 LoadNetrc(netrcfilename);
                 PopulateNetrcView();
             }
+            labelSet.Text = @"https://" + PassCombo;
         }
 
         /// <summary>
@@ -151,6 +173,9 @@ namespace GitForce
         /// </summary>
         private void TextBoxHostTextChanged(object sender, EventArgs e)
         {
+            // First, a simple test that allows users to paste a clone command
+            textBoxHost.Text = textBoxHost.Text.Replace("git clone ", "");
+
             ClassUrl.Url host = ClassUrl.Parse(textBoxHost.Text);
             btAddHost.Enabled = host.Type == ClassUrl.UrlType.Https;
         }
@@ -213,6 +238,32 @@ namespace GitForce
 
             netrcDirty = true;
             PopulateNetrcView();
+        }
+
+        #endregion
+
+        #region Management of embedded option tab
+
+        private string textUsername;
+        private string textPassword;
+
+        /// <summary>
+        /// User clicked on the Set button, open the dialog to enter the user name and password
+        /// </summary>
+        private void BtSetClick(object sender, EventArgs e)
+        {
+            FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
+            formHttpsAuth.PassCombo = PassCombo;
+            if (formHttpsAuth.ShowDialog() == DialogResult.OK)
+                PassCombo = formHttpsAuth.PassCombo;
+        }
+
+        /// <summary>
+        /// User clicked on the Clear button, clear the user name and password
+        /// </summary>
+        private void BtClearClick(object sender, EventArgs e)
+        {
+            PassCombo = "";
         }
 
         #endregion
