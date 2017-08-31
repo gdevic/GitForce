@@ -285,6 +285,7 @@
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(465, 294);
             this.Name = "FormHttps";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
