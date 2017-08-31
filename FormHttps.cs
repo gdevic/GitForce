@@ -177,7 +177,10 @@ namespace GitForce
         {
             FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
             if (netrc.ContainsKey(machine))
-                formHttpsAuth.PassCombo = netrc[machine].Item1 + "\t" + netrc[machine].Item2;
+            {
+                formHttpsAuth.Username = netrc[machine].Item1;
+                formHttpsAuth.Password = netrc[machine].Item2;
+            }
             if (formHttpsAuth.ShowDialog() == DialogResult.OK)
             {
                 //if (netrc.ContainsKey(machine))
