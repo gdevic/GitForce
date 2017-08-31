@@ -1,6 +1,6 @@
 ﻿namespace GitForce
 {
-    partial class RemoteEdit
+    partial class RemotesEdit
     {
         /// <summary> 
         /// Required designer variable.
@@ -123,12 +123,12 @@
             this.btEdit.UseVisualStyleBackColor = true;
             this.btEdit.Click += new System.EventHandler(this.BtEditClick);
             // 
-            // RemoteEdit
+            // RemotesEdit
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.groupBox2);
             this.MinimumSize = new System.Drawing.Size(493, 197);
-            this.Name = "RemoteEdit";
+            this.Name = "RemotesEdit";
             this.Size = new System.Drawing.Size(544, 197);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);

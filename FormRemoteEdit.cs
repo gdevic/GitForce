@@ -9,7 +9,7 @@ namespace GitForce
             InitializeComponent();
             ClassWinGeometry.Restore(this);
 
-            userControlRemoteEdit.SetRepo(repo);
+            userControlRemotesEdit.SetRepo(repo);
         }
 
         /// <summary>

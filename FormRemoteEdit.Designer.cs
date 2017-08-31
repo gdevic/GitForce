@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userControlRemoteEdit = new GitForce.RemoteEdit();
+            this.userControlRemotesEdit = new GitForce.RemotesEdit();
             this.btDone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // userControlRemoteEdit
+            // _userControlRemotesEdit
             // 
-            this.userControlRemoteEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.userControlRemotesEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.userControlRemoteEdit.Location = new System.Drawing.Point(12, 12);
-            this.userControlRemoteEdit.MinimumSize = new System.Drawing.Size(320, 165);
-            this.userControlRemoteEdit.Name = "userControlRemoteEdit";
-            this.userControlRemoteEdit.Size = new System.Drawing.Size(542, 197);
-            this.userControlRemoteEdit.TabIndex = 0;
+            this.userControlRemotesEdit.Location = new System.Drawing.Point(12, 12);
+            this.userControlRemotesEdit.MinimumSize = new System.Drawing.Size(320, 165);
+            this.userControlRemotesEdit.Name = "userControlRemotesEdit";
+            this.userControlRemotesEdit.Size = new System.Drawing.Size(542, 197);
+            this.userControlRemotesEdit.TabIndex = 0;
             // 
             // btDone
             // 
@@ -61,7 +61,7 @@
             this.CancelButton = this.btDone;
             this.ClientSize = new System.Drawing.Size(566, 247);
             this.Controls.Add(this.btDone);
-            this.Controls.Add(this.userControlRemoteEdit);
+            this.Controls.Add(this.userControlRemotesEdit);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(533, 285);
@@ -77,7 +77,7 @@
 
         #endregion
 
-        private RemoteEdit userControlRemoteEdit;
+        private RemotesEdit userControlRemotesEdit;
         private System.Windows.Forms.Button btDone;
 
     }

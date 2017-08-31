@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace GitForce
 {
-    public partial class RemoteEdit : UserControl
+    public partial class RemotesEdit : UserControl
     {
         /// <summary>
         /// Local cache of the repo that we are editing
@@ -15,7 +15,7 @@ namespace GitForce
         /// </summary>
         private ClassRemotes.Remote _current;
 
-        public RemoteEdit()
+        public RemotesEdit()
         {
             InitializeComponent();
         }
