@@ -38,7 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btBrowse = new System.Windows.Forms.Button();
             this.folder = new System.Windows.Forms.FolderBrowserDialog();
-            this.remoteDisplay = new GitForce.RemoteDisplay();
+            this.remoteEdit = new GitForce.RemoteEdit();
             this.SuspendLayout();
             // 
             // btCancel
@@ -148,15 +148,15 @@
             // 
             this.folder.ShowNewFolderButton = false;
             // 
-            // remoteDisplay
+            // RemoteEdit
             // 
-            this.remoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.remoteEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.remoteDisplay.Location = new System.Drawing.Point(32, 153);
-            this.remoteDisplay.MinimumSize = new System.Drawing.Size(309, 119);
-            this.remoteDisplay.Name = "remoteDisplay";
-            this.remoteDisplay.Size = new System.Drawing.Size(412, 148);
-            this.remoteDisplay.TabIndex = 7;
+            this.remoteEdit.Location = new System.Drawing.Point(32, 153);
+            this.remoteEdit.MinimumSize = new System.Drawing.Size(309, 119);
+            this.remoteEdit.Name = "remoteEdit";
+            this.remoteEdit.Size = new System.Drawing.Size(412, 148);
+            this.remoteEdit.TabIndex = 7;
             // 
             // FormNewRepoStep1
             // 
@@ -164,7 +164,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(456, 343);
-            this.Controls.Add(this.remoteDisplay);
+            this.Controls.Add(this.remoteEdit);
             this.Controls.Add(this.btBrowse);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxLocal);
@@ -199,7 +199,7 @@
         private System.Windows.Forms.TextBox textBoxLocal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btBrowse;
-        private RemoteDisplay remoteDisplay;
+        private RemoteEdit remoteEdit;
         private System.Windows.Forms.FolderBrowserDialog folder;
 
     }

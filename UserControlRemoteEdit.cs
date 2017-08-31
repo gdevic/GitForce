@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace GitForce
 {
-    public partial class RemoteDisplay : UserControl
+    public partial class RemoteEdit : UserControl
     {
         /// <summary>
         /// Current parsing information of the URL strings
@@ -32,7 +32,7 @@ namespace GitForce
         public AnyTextChangedDelegate AnyTextChanged = VoidAnyTextChanged;
         private static void VoidAnyTextChanged(bool valid) { }
 
-        public RemoteDisplay()
+        public RemoteEdit()
         {
             InitializeComponent();
 

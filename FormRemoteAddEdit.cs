@@ -25,8 +25,8 @@ namespace GitForce
 
         public void Prepare(Function fn, ClassRemotes.Remote remote)
         {
-            remoteDisplay.Clear();
-            remoteDisplay.AnyTextChanged += SomeTextChanged;
+            remoteEdit.Clear();
+            remoteEdit.AnyTextChanged += SomeTextChanged;
 
             // Do things differently basen on whether we are using this
             // form to add a new remote repo, rename it or we are editing
@@ -35,22 +35,22 @@ namespace GitForce
             switch (fn)
             {
                 case Function.Add:
-                    remoteDisplay.Enable(true, true);
+                    remoteEdit.Enable(true, true);
                     remote.Name = "origin";
                     remote.PushCmd = "";
-                    remoteDisplay.Set(remote);
+                    remoteEdit.Set(remote);
                     Text = "Add a new remote repository";
                     btOK.Enabled = false;
                     break;
                 case Function.Edit:
                     Text = "Edit remote repository '" + remote.Name + "'";
-                    remoteDisplay.Enable(false, true);
-                    remoteDisplay.Set(remote);
+                    remoteEdit.Enable(false, true);
+                    remoteEdit.Set(remote);
                     break;
                 case Function.Rename:
                     Text = "Rename remote repository '" + remote.Name + "'";
-                    remoteDisplay.Enable(true, false);
-                    remoteDisplay.Set(remote);
+                    remoteEdit.Enable(true, false);
+                    remoteEdit.Set(remote);
                     break;
             }
         }
@@ -61,7 +61,7 @@ namespace GitForce
         /// <returns>Remote repo values</returns>
         public ClassRemotes.Remote Get()
         {
-            return remoteDisplay.Get();
+            return remoteEdit.Get();
         }
 
         /// <summary>

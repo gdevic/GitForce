@@ -35,7 +35,7 @@ namespace GitForce
         public void SetRemote(ClassRemotes.Remote remote)
         {
             Remote = remote;
-            remoteDisplay.Set(Remote);
+            remoteEdit.Set(Remote);
         }
 
         public FormNewRepoStep1()
@@ -49,8 +49,8 @@ namespace GitForce
             // Set the default remote name
             Remote.Name = "origin";
             Remote.PushCmd = "";
-            remoteDisplay.Set(Remote);
-            remoteDisplay.AnyTextChanged += SomeTextChanged;
+            remoteEdit.Set(Remote);
+            remoteEdit.AnyTextChanged += SomeTextChanged;
         }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace GitForce
             if (rb.Checked)
             {
                 textBoxLocal.ReadOnly = true;
-                btNext.Enabled = btBrowse.Enabled = remoteDisplay.Enabled = false;
-                remoteDisplay.Enable(false, false);
+                btNext.Enabled = btBrowse.Enabled = remoteEdit.Enabled = false;
+                remoteEdit.Enable(false, false);
 
                 switch (Type = rb.Tag.ToString())
                 {
@@ -94,9 +94,9 @@ namespace GitForce
                         btNext.Enabled = ClassUtils.DirStat(Local) == ClassUtils.DirStatType.Git;
                         break;
                     case "remote":
-                        remoteDisplay.Enabled = true;
-                        remoteDisplay.Enable(true, true);
-                        btNext.Enabled = remoteDisplay.IsValid();
+                        remoteEdit.Enabled = true;
+                        remoteEdit.Enable(true, true);
+                        btNext.Enabled = remoteEdit.IsValid();
                         break;
                 }
             }
@@ -116,7 +116,7 @@ namespace GitForce
         private void SomeTextChanged(bool valid)
         {
             btNext.Enabled = valid;
-            Remote = remoteDisplay.Get();
+            Remote = remoteEdit.Get();
         }
     }
 }

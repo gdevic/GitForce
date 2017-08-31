@@ -493,11 +493,11 @@
     <Compile Include="UserControlEditGitignore.Designer.cs">
       <DependentUpon>UserControlEditGitignore.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControlRemoteDisplay.cs">
+    <Compile Include="UserControlRemoteEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControlRemoteDisplay.Designer.cs">
-      <DependentUpon>UserControlRemoteDisplay.cs</DependentUpon>
+    <Compile Include="UserControlRemoteEdit.Designer.cs">
+      <DependentUpon>UserControlRemoteEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControlRemotesEdit.cs">
       <SubType>UserControl</SubType>
@@ -756,8 +756,8 @@
       <DependentUpon>UserControlEditGitignore.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControlRemoteDisplay.resx">
-      <DependentUpon>UserControlRemoteDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="UserControlRemoteEdit.resx">
+      <DependentUpon>UserControlRemoteEdit.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlRemotesEdit.resx">

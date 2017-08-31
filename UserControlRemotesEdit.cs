@@ -35,7 +35,7 @@ namespace GitForce
             _repo.Remotes.Refresh(_repo);
 
             // Populate the list box
-            userControlRemoteDisplay.Clear();
+            userControlRemoteEdit.Clear();
             listRemotes.BeginUpdate();
             listRemotes.Items.Clear();
 
@@ -52,7 +52,7 @@ namespace GitForce
             {
                 string name = listRemotes.SelectedItem.ToString();
                 _current = _repo.Remotes.Get(name);
-                userControlRemoteDisplay.Set(_current);
+                userControlRemoteEdit.Set(_current);
 
                 btEdit.Enabled = btRename.Enabled = btDelete.Enabled = true;
             }

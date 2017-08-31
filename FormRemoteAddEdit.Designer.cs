@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.remoteDisplay = new RemoteDisplay();
+            this.remoteEdit = new RemoteEdit();
             this.btOK = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // remoteDisplay
+            // RemoteEdit
             // 
-            this.remoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.remoteEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.remoteDisplay.Location = new System.Drawing.Point(12, 12);
-            this.remoteDisplay.MinimumSize = new System.Drawing.Size(346, 146);
-            this.remoteDisplay.Name = "remoteDisplay";
-            this.remoteDisplay.Size = new System.Drawing.Size(422, 146);
-            this.remoteDisplay.TabIndex = 0;
+            this.remoteEdit.Location = new System.Drawing.Point(12, 12);
+            this.remoteEdit.MinimumSize = new System.Drawing.Size(346, 146);
+            this.remoteEdit.Name = "remoteEdit";
+            this.remoteEdit.Size = new System.Drawing.Size(422, 146);
+            this.remoteEdit.TabIndex = 0;
             // 
             // btOK
             // 
@@ -72,7 +72,7 @@
             this.ClientSize = new System.Drawing.Size(446, 194);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancel);
-            this.Controls.Add(this.remoteDisplay);
+            this.Controls.Add(this.remoteEdit);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(379, 232);
@@ -88,7 +88,7 @@
 
         #endregion
 
-        private RemoteDisplay remoteDisplay;
+        private RemoteEdit remoteEdit;
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.Button btCancel;
 

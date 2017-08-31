@@ -30,7 +30,7 @@
         {
             this.btRename = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.userControlRemoteDisplay = new RemoteDisplay();
+            this.userControlRemoteEdit = new RemoteEdit();
             this.listRemotes = new System.Windows.Forms.ListBox();
             this.btDelete = new System.Windows.Forms.Button();
             this.btAdd = new System.Windows.Forms.Button();
@@ -52,7 +52,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.userControlRemoteDisplay);
+            this.groupBox2.Controls.Add(this.userControlRemoteEdit);
             this.groupBox2.Controls.Add(this.btRename);
             this.groupBox2.Controls.Add(this.listRemotes);
             this.groupBox2.Controls.Add(this.btDelete);
@@ -66,15 +66,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Remote repositories registered with a current repo";
             // 
-            // userControlRemoteDisplay
+            // _userControlRemoteEdit
             // 
-            this.userControlRemoteDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.userControlRemoteEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.userControlRemoteDisplay.Location = new System.Drawing.Point(140, 19);
-            this.userControlRemoteDisplay.MinimumSize = new System.Drawing.Size(309, 119);
-            this.userControlRemoteDisplay.Name = "userControlRemoteDisplay";
-            this.userControlRemoteDisplay.Size = new System.Drawing.Size(398, 146);
-            this.userControlRemoteDisplay.TabIndex = 5;
+            this.userControlRemoteEdit.Location = new System.Drawing.Point(140, 19);
+            this.userControlRemoteEdit.MinimumSize = new System.Drawing.Size(309, 119);
+            this.userControlRemoteEdit.Name = "userControlRemoteEdit";
+            this.userControlRemoteEdit.Size = new System.Drawing.Size(398, 146);
+            this.userControlRemoteEdit.TabIndex = 5;
             // 
             // listRemotes
             // 
@@ -143,6 +143,6 @@
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.Button btAdd;
         private System.Windows.Forms.Button btEdit;
-        private RemoteDisplay userControlRemoteDisplay;
+        private RemoteEdit userControlRemoteEdit;
     }
 }

@@ -237,7 +237,7 @@ namespace GitForce
 
         /// <summary>
         /// Return a unique list of all remote repos' URLs that are used with the Fetch and Push commands
-        /// This is a convenience method that is used by the RemoteDisplay form to populate new Remote pull
+        /// This is a convenience method that is used by the RemoteEdit form to populate new Remote pull
         /// down listbox so the user can easily pick from the existing URLs.
         /// </summary>
         public List<string> GetRemoteUrls()

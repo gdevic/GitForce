@@ -2,7 +2,7 @@
 
 namespace GitForce
 {
-    partial class RemoteDisplay
+    partial class RemoteEdit
     {
         /// <summary> 
         /// Required designer variable.
@@ -270,12 +270,12 @@ namespace GitForce
             this.checkReveal.UseVisualStyleBackColor = true;
             this.checkReveal.CheckedChanged += new System.EventHandler(this.CheckRevealCheckedChanged);
             // 
-            // RemoteDisplay
+            // RemoteEdit
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.groupBox1);
             this.MinimumSize = new System.Drawing.Size(346, 146);
-            this.Name = "RemoteDisplay";
+            this.Name = "RemoteEdit";
             this.Size = new System.Drawing.Size(425, 146);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
