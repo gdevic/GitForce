@@ -38,7 +38,7 @@ namespace GitForce
             this.textUrlPush = new System.Windows.Forms.TextBox();
             this.textUrlFetch = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btHttpsAuth = new System.Windows.Forms.Button();
+            this.btHttps = new System.Windows.Forms.Button();
             this.btListPush = new System.Windows.Forms.Button();
             this.btListFetch = new System.Windows.Forms.Button();
             this.btWWW2 = new System.Windows.Forms.Button();
@@ -132,7 +132,7 @@ namespace GitForce
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.btHttpsAuth);
+            this.groupBox1.Controls.Add(this.btHttps);
             this.groupBox1.Controls.Add(this.btListPush);
             this.groupBox1.Controls.Add(this.btListFetch);
             this.groupBox1.Controls.Add(this.btWWW2);
@@ -154,17 +154,17 @@ namespace GitForce
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // btHttpsAuth
+            // btHttps
             // 
-            this.btHttpsAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btHttpsAuth.Enabled = false;
-            this.btHttpsAuth.Location = new System.Drawing.Point(260, 115);
-            this.btHttpsAuth.Name = "btHttpsAuth";
-            this.btHttpsAuth.Size = new System.Drawing.Size(75, 23);
-            this.btHttpsAuth.TabIndex = 14;
-            this.btHttpsAuth.Text = "HTTPS...";
-            this.btHttpsAuth.UseVisualStyleBackColor = true;
-            this.btHttpsAuth.Click += new System.EventHandler(this.BtHttpsClicked);
+            this.btHttps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btHttps.Enabled = false;
+            this.btHttps.Location = new System.Drawing.Point(260, 115);
+            this.btHttps.Name = "btHttps";
+            this.btHttps.Size = new System.Drawing.Size(75, 23);
+            this.btHttps.TabIndex = 14;
+            this.btHttps.Text = "HTTPS...";
+            this.btHttps.UseVisualStyleBackColor = true;
+            this.btHttps.Click += new System.EventHandler(this.BtHttpsClicked);
             // 
             // btListPush
             // 
@@ -281,6 +281,6 @@ namespace GitForce
         private System.Windows.Forms.Button btWWW1;
         private System.Windows.Forms.Button btListFetch;
         private System.Windows.Forms.Button btListPush;
-        private System.Windows.Forms.Button btHttpsAuth;
+        private System.Windows.Forms.Button btHttps;
     }
 }

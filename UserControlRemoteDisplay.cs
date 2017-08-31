@@ -51,7 +51,7 @@ namespace GitForce
             _isEditing = all; // When all fields are enabled, we are in editing mode
             textName.ReadOnly = !name;
             textUrlPush.ReadOnly = textUrlFetch.ReadOnly = textPushCmd.ReadOnly = !all;
-            btListFetch.Enabled = btListPush.Enabled = textPassword.Enabled = btHttpsAuth.Enabled = all;
+            btListFetch.Enabled = btListPush.Enabled = textPassword.Enabled = btHttps.Enabled = all;
             SomeTextChanged(null, null);
         }
 
@@ -67,7 +67,7 @@ namespace GitForce
             textPassword.Text = "";
             btWWW1.Enabled = false;
             btWWW2.Enabled = false;
-            btListFetch.Enabled = btListPush.Enabled = btHttpsAuth.Enabled = false;
+            btListFetch.Enabled = btListPush.Enabled = btHttps.Enabled = false;
             textPassword.ReadOnly = true;
         }
 
@@ -152,9 +152,9 @@ namespace GitForce
                     if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
                 }
                 // Enable HTTPS button if one of the URLs uses HTTPS connection
-                btHttpsAuth.Enabled = false;
-                if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Https) btHttpsAuth.Enabled = true;
-                if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Https) btHttpsAuth.Enabled = true;
+                btHttps.Enabled = false;
+                if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Https) btHttps.Enabled = true;
+                if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Https) btHttps.Enabled = true;
 
                 btWWW1.Enabled = _fetchUrl.Ok;
                 btWWW2.Enabled = _pushUrl.Ok;
