@@ -37,8 +37,10 @@ namespace GitForce
 
         /// <summary>
         /// Form constructor
+        /// The caller can remove "embedded" tab since that one is not applicable unless
+        /// editing an actual HTTPS remote repo
         /// </summary>
-        public FormHttps()
+        public FormHttps(bool removeEmbedded)
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
@@ -56,7 +58,9 @@ namespace GitForce
                 LoadNetrc(netrcfilename);
                 PopulateNetrcView();
             }
-            labelSet.Text = @"https://" + PassCombo;
+
+            if (removeEmbedded)
+                tabControl.TabPages.RemoveByKey("tabEmbedded");
         }
 
         /// <summary>
