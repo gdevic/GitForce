@@ -19,10 +19,16 @@ namespace GitForce
             string pathPasswordBatchHelper;
             if (ClassUtils.IsMono())
             {
-                // Mono: Use the Shell script
+                // Mono: Use the Shell script which tests if $PASSWORD is defined and echoes it,
+                // and if not defined, it calls GitForce application with a special argument that opens
+                // only password dialog
                 pathPasswordBatchHelper = Path.Combine(App.AppHome, "passwd.sh");
-                File.WriteAllText(pathPasswordBatchHelper, "echo $PASSWORD" + Environment.NewLine);
-
+                File.WriteAllText(pathPasswordBatchHelper, "#!/bin/sh" + Environment.NewLine +
+                    "if [ \"$PASSWORD\" = \"\" ]; then" + Environment.NewLine +
+                    App.AppPath + " --passwd" + Environment.NewLine +
+                    "else" + Environment.NewLine +
+                    "echo $PASSWORD" + Environment.NewLine +
+                    "fi" );
                 // Set the execute bit
                 if (Exec.Run("chmod", "+x " + pathPasswordBatchHelper).Success() == false)
                     App.PrintLogMessage("ClassHttpsPasswd: Unable to chmod +x on " + pathPasswordBatchHelper, MessageType.Error);

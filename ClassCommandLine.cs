@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Windows.Forms;
 
 namespace GitForce
 {
@@ -95,6 +96,19 @@ namespace GitForce
                 App.AppLog = Path.Combine(App.AppHome, "gitforce.log");
                 File.WriteAllText(App.AppLog, "Log created on " + DateTime.Now.ToShortDateString() + Environment.NewLine);
                 Console.WriteLine("Logging: " + App.AppLog);
+            }
+
+            // --passwd  This is not a user option. It is used when the app is called to provide password echoed on a command line.
+            if (commandLine["passwd"] == "true")
+            {
+                ReturnCode = -1;
+                FormHttpsAuth httpsAuth = new FormHttpsAuth(false);
+                if (httpsAuth.ShowDialog() == DialogResult.OK)
+                {
+                    Console.WriteLine(httpsAuth.Password);
+                    ReturnCode = 0;
+                }
+                runGitForce = false;
             }
 
             // WAR: On Windows, detach the console when we are done. Mono does not need that to use Console class.

@@ -22,10 +22,12 @@ namespace GitForce
         /// <summary>
         /// Form constructor
         /// </summary>
-        public FormHttpsAuth()
+        public FormHttpsAuth(bool enableUsername)
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
+
+            textUsername.Enabled = enableUsername;
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace GitForce
             // We simply want to avoid some 'dangerous' characters, including spaces
             string password = textPassword.Text.Trim();
 
-            btOK.Enabled = r.IsMatch(username) && (password.Length > 0) && password.IndexOfAny(@" \/".ToCharArray()) == -1;
+            btOK.Enabled = (!textUsername.Enabled || r.IsMatch(username)) && (password.Length > 0) && password.IndexOfAny(@" \/".ToCharArray()) == -1;
         }
     }
 }

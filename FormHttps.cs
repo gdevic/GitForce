@@ -175,7 +175,7 @@ namespace GitForce
         /// </summary>
         private void AddEdit(string machine)
         {
-            FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
+            FormHttpsAuth formHttpsAuth = new FormHttpsAuth(true);
             if (netrc.ContainsKey(machine))
             {
                 formHttpsAuth.Username = netrc[machine].Item1;
