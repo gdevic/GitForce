@@ -36,9 +36,6 @@ namespace GitForce
         {
             InitializeComponent();
 
-            // WAR: Permanently disable SSH button if not on Windows OS
-            btSsh.Enabled = !ClassUtils.IsMono();
-
             // Add button click handlers that will expand the list of existing fetch and push URLs
             _menuFetch.ItemClicked += MenuFetchItemClicked;
             _menuPush.ItemClicked += MenuPushItemClicked;
@@ -149,13 +146,20 @@ namespace GitForce
             {
                 // Enable SSH button if one of the URLs uses SSH connection
                 btSsh.Enabled = false;
-                if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
-                if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+                if (!ClassUtils.IsMono()) // Permanently disable SSH button if not on Windows OS
+                {
+                    if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+                    if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
+                }
+                // Enable HTTPS button if one of the URLs uses HTTPS connection
+                btHttpsAuth.Enabled = false;
+                if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Https) btHttpsAuth.Enabled = true;
+                if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Https) btHttpsAuth.Enabled = true;
+
                 btWWW1.Enabled = _fetchUrl.Ok;
                 btWWW2.Enabled = _pushUrl.Ok;
 
                 textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
-                btHttpsAuth.Enabled = !textPassword.ReadOnly;
             }
         }
 

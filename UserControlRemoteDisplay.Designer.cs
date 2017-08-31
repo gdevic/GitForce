@@ -30,7 +30,6 @@ namespace GitForce
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemoteDisplay));
             this.btSsh = new System.Windows.Forms.Button();
             this.textPushCmd = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -54,6 +53,7 @@ namespace GitForce
             // btSsh
             // 
             this.btSsh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSsh.Enabled = false;
             this.btSsh.Location = new System.Drawing.Point(341, 115);
             this.btSsh.Name = "btSsh";
             this.btSsh.Size = new System.Drawing.Size(75, 23);
@@ -83,11 +83,13 @@ namespace GitForce
             // 
             // textPassword
             // 
+            this.textPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textPassword.Location = new System.Drawing.Point(82, 117);
             this.textPassword.MaxLength = 32;
             this.textPassword.Name = "textPassword";
             this.textPassword.ReadOnly = true;
-            this.textPassword.Size = new System.Drawing.Size(111, 20);
+            this.textPassword.Size = new System.Drawing.Size(172, 20);
             this.textPassword.TabIndex = 13;
             this.textPassword.UseSystemPasswordChar = true;
             this.textPassword.TextChanged += new System.EventHandler(this.SomeTextChanged);
@@ -154,12 +156,13 @@ namespace GitForce
             // 
             // btHttpsAuth
             // 
+            this.btHttpsAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btHttpsAuth.Enabled = false;
-            this.btHttpsAuth.Image = ((System.Drawing.Image)(resources.GetObject("btHttpsAuth.Image")));
-            this.btHttpsAuth.Location = new System.Drawing.Point(199, 115);
+            this.btHttpsAuth.Location = new System.Drawing.Point(260, 115);
             this.btHttpsAuth.Name = "btHttpsAuth";
-            this.btHttpsAuth.Size = new System.Drawing.Size(27, 23);
+            this.btHttpsAuth.Size = new System.Drawing.Size(75, 23);
             this.btHttpsAuth.TabIndex = 14;
+            this.btHttpsAuth.Text = "HTTPS...";
             this.btHttpsAuth.UseVisualStyleBackColor = true;
             this.btHttpsAuth.Click += new System.EventHandler(this.BtHttpsClicked);
             // 
