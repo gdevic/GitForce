@@ -54,7 +54,7 @@ namespace GitForce
         /// </summary>
         private void CheckShowCheckedChanged(object sender, System.EventArgs e)
         {
-            textPassword.UseSystemPasswordChar = !checkShow.Checked;
+            textPassword.UseSystemPasswordChar = !checkReveal.Checked;
         }
 
         /// <summary>

@@ -34,7 +34,7 @@
             this.textPassword = new System.Windows.Forms.TextBox();
             this.btOK = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
-            this.checkShow = new System.Windows.Forms.CheckBox();
+            this.checkReveal = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label2
@@ -71,7 +71,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textPassword.Location = new System.Drawing.Point(96, 38);
             this.textPassword.Name = "textPassword";
-            this.textPassword.Size = new System.Drawing.Size(227, 20);
+            this.textPassword.Size = new System.Drawing.Size(195, 20);
             this.textPassword.TabIndex = 3;
             this.textPassword.UseSystemPasswordChar = true;
             this.textPassword.TextChanged += new System.EventHandler(this.ValidateOk);
@@ -99,16 +99,20 @@
             this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
             // 
-            // checkShow
+            // checkReveal
             // 
-            this.checkShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkShow.Location = new System.Drawing.Point(15, 72);
-            this.checkShow.Name = "checkShow";
-            this.checkShow.Size = new System.Drawing.Size(104, 24);
-            this.checkShow.TabIndex = 4;
-            this.checkShow.Text = "Show password";
-            this.checkShow.UseVisualStyleBackColor = true;
-            this.checkShow.CheckedChanged += new System.EventHandler(this.CheckShowCheckedChanged);
+            this.checkReveal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkReveal.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkReveal.AutoSize = true;
+            this.checkReveal.BackgroundImage = global::GitForce.Properties.Resources.eye;
+            this.checkReveal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.checkReveal.Location = new System.Drawing.Point(297, 36);
+            this.checkReveal.Name = "checkReveal";
+            this.checkReveal.Size = new System.Drawing.Size(26, 23);
+            this.checkReveal.TabIndex = 4;
+            this.checkReveal.Text = "   ";
+            this.checkReveal.UseVisualStyleBackColor = true;
+            this.checkReveal.CheckedChanged += new System.EventHandler(this.CheckShowCheckedChanged);
             // 
             // FormHttpsAuth
             // 
@@ -116,7 +120,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(335, 103);
-            this.Controls.Add(this.checkShow);
+            this.Controls.Add(this.checkReveal);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.textPassword);
@@ -144,6 +148,6 @@
         private System.Windows.Forms.TextBox textPassword;
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.CheckBox checkShow;
+        private System.Windows.Forms.CheckBox checkReveal;
     }
 }
