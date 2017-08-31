@@ -57,6 +57,7 @@
             this.btHelp.TabIndex = 15;
             this.btHelp.Text = "Help";
             this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.BtHelpClick);
             // 
             // btOK
             // 

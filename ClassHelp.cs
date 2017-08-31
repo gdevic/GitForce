@@ -16,6 +16,7 @@ namespace GitForce
             {"Home", "https://sites.google.com/site/gitforcetool"},
             {"Getting Started", "https://sites.google.com/site/gitforcetool/getting-started"},
             {"Edit Tools", "https://sites.google.com/site/gitforcetool/help/custom-tools"},
+            {"HTTPS Authentication", "https://confluence.atlassian.com/fisheye/permanent-authentication-for-git-repositories-over-http-s-298977121.html"},
             {"SSH Windows", "https://sites.google.com/site/gitforcetool/help/ssh"},
             {"Workspace", "https://sites.google.com/site/gitforcetool/help/workspaces"},
             {"Update Check", "http://sourceforge.net/projects/gitforce"},

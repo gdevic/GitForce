@@ -210,5 +210,13 @@ namespace GitForce
             netrcDirty = true;
             PopulateNetrcView();
         }
+
+        /// <summary>
+        /// Open the context help
+        /// </summary>
+        private void BtHelpClick(object sender, EventArgs e)
+        {
+            ClassHelp.Handler("HTTPS Authentication");
+        }
     }
 }
