@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Authenticate HTTPS protocols for remote repos: modify .netrc file that contains credentials (plaintext!), or use target git’s site embedded URL password (plaintext in .git/config!), or GIT_ASKPASS query.</value>
-  </data>
 </root>

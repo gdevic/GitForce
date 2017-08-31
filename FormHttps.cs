@@ -9,38 +9,15 @@ namespace GitForce
 {
     public partial class FormHttps : Form
     {
-        /// <summary>
-        /// Contains the user name / password combo string when editing the embedded password
-        /// </summary>
-        public string PassCombo
-        {
-            get { return textUsername + "\t" + textPassword; }
-            set
-            {
-                textUsername = "";
-                textPassword = "";
-                string[] combo = value.Trim().Split('\t');
-                if (combo.Length == 1)
-                    textPassword = combo[0];
-                else if (combo.Length == 2)
-                {
-                    textUsername = combo[0];
-                    textPassword = combo[1];
-                }
-
-                if (combo.Length == 1)
-                    labelSet.Text = string.Format(@"https://{0}...", textUsername);
-                else
-                    labelSet.Text = string.Format(@"https://{0}:<password>@...", textUsername);
-            }
-        }
+        private readonly ContextMenuStrip _menuHosts = new ContextMenuStrip();
+        private readonly string netrcfilename;
+        private Dictionary<string, Tuple<string, string>> netrc = new Dictionary<string, Tuple<string, string>>();
+        private bool netrcDirty;
 
         /// <summary>
         /// Form constructor
-        /// The caller can remove "embedded" tab since that one is not applicable unless
-        /// editing an actual HTTPS remote repo
         /// </summary>
-        public FormHttps(bool removeEmbedded)
+        public FormHttps()
         {
             InitializeComponent();
             ClassWinGeometry.Restore(this);
@@ -58,9 +35,6 @@ namespace GitForce
                 LoadNetrc(netrcfilename);
                 PopulateNetrcView();
             }
-
-            if (removeEmbedded)
-                tabControl.TabPages.RemoveByKey("tabEmbedded");
         }
 
         /// <summary>
@@ -74,13 +48,6 @@ namespace GitForce
             if (netrcDirty)
                 SaveNetrc(netrcfilename);
         }
-
-        #region Management of .netrc file
-
-        private readonly ContextMenuStrip _menuHosts = new ContextMenuStrip();
-        private readonly string netrcfilename;
-        private Dictionary<string, Tuple<string, string>> netrc = new Dictionary<string, Tuple<string, string>>();
-        private bool netrcDirty;
 
         /// <summary>
         /// Load .netrc file into internal data structure
@@ -243,33 +210,5 @@ namespace GitForce
             netrcDirty = true;
             PopulateNetrcView();
         }
-
-        #endregion
-
-        #region Management of embedded option tab
-
-        private string textUsername;
-        private string textPassword;
-
-        /// <summary>
-        /// User clicked on the Set button, open the dialog to enter the user name and password
-        /// </summary>
-        private void BtSetClick(object sender, EventArgs e)
-        {
-            FormHttpsAuth formHttpsAuth = new FormHttpsAuth();
-            formHttpsAuth.PassCombo = PassCombo;
-            if (formHttpsAuth.ShowDialog() == DialogResult.OK)
-                PassCombo = formHttpsAuth.PassCombo;
-        }
-
-        /// <summary>
-        /// User clicked on the Clear button, clear the user name and password
-        /// </summary>
-        private void BtClearClick(object sender, EventArgs e)
-        {
-            PassCombo = "";
-        }
-
-        #endregion
     }
 }

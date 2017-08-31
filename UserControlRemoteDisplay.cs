@@ -252,9 +252,8 @@ namespace GitForce
         /// </summary>
         private void BtHttpsClicked(object sender, EventArgs e)
         {
-            FormHttps formHttps = new FormHttps(false);
-            if (formHttps.ShowDialog() == DialogResult.OK)
-                textPassword.Text = formHttps.PassCombo;
+            FormHttps formHttps = new FormHttps();
+            formHttps.ShowDialog();
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHttps));
             this.btHelp = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,15 +43,9 @@
             this.btListHosts = new System.Windows.Forms.Button();
             this.textBoxHost = new System.Windows.Forms.TextBox();
             this.btRemoveHost = new System.Windows.Forms.Button();
-            this.tabEmbedded = new System.Windows.Forms.TabPage();
-            this.labelSet = new System.Windows.Forms.Label();
-            this.btClear = new System.Windows.Forms.Button();
-            this.btSet = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabNetrc.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tabEmbedded.SuspendLayout();
             this.SuspendLayout();
             // 
             // btHelp
@@ -83,9 +76,10 @@
             this.label1.BackColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(506, 53);
+            this.label1.Size = new System.Drawing.Size(506, 33);
             this.label1.TabIndex = 17;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.label1.Text = "Authenticate HTTPS protocols for remote repos: modify .netrc file that contains c" +
+    "redentials (plaintext!).";
             // 
             // tabControl
             // 
@@ -93,11 +87,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabNetrc);
-            this.tabControl.Controls.Add(this.tabEmbedded);
-            this.tabControl.Location = new System.Drawing.Point(15, 65);
+            this.tabControl.Location = new System.Drawing.Point(12, 45);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(503, 318);
+            this.tabControl.Size = new System.Drawing.Size(506, 338);
             this.tabControl.TabIndex = 18;
             // 
             // tabNetrc
@@ -106,7 +99,7 @@
             this.tabNetrc.Controls.Add(this.groupBox1);
             this.tabNetrc.Location = new System.Drawing.Point(4, 22);
             this.tabNetrc.Name = "tabNetrc";
-            this.tabNetrc.Size = new System.Drawing.Size(495, 292);
+            this.tabNetrc.Size = new System.Drawing.Size(498, 312);
             this.tabNetrc.TabIndex = 1;
             this.tabNetrc.Text = ".netrc";
             // 
@@ -122,7 +115,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(495, 292);
+            this.groupBox1.Size = new System.Drawing.Size(498, 312);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Hosts";
@@ -131,7 +124,7 @@
             // 
             this.btEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btEdit.Enabled = false;
-            this.btEdit.Location = new System.Drawing.Point(414, 48);
+            this.btEdit.Location = new System.Drawing.Point(417, 48);
             this.btEdit.Name = "btEdit";
             this.btEdit.Size = new System.Drawing.Size(75, 23);
             this.btEdit.TabIndex = 9;
@@ -152,7 +145,7 @@
             this.listHosts.HideSelection = false;
             this.listHosts.Location = new System.Drawing.Point(6, 19);
             this.listHosts.Name = "listHosts";
-            this.listHosts.Size = new System.Drawing.Size(402, 239);
+            this.listHosts.Size = new System.Drawing.Size(405, 259);
             this.listHosts.TabIndex = 7;
             this.listHosts.UseCompatibleStateImageBehavior = false;
             this.listHosts.View = System.Windows.Forms.View.Details;
@@ -177,7 +170,7 @@
             // 
             this.btAddHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btAddHost.Enabled = false;
-            this.btAddHost.Location = new System.Drawing.Point(414, 263);
+            this.btAddHost.Location = new System.Drawing.Point(417, 283);
             this.btAddHost.Name = "btAddHost";
             this.btAddHost.Size = new System.Drawing.Size(75, 23);
             this.btAddHost.TabIndex = 6;
@@ -189,7 +182,7 @@
             // 
             this.btListHosts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btListHosts.Image = global::GitForce.Properties.Resources.pulldown;
-            this.btListHosts.Location = new System.Drawing.Point(381, 264);
+            this.btListHosts.Location = new System.Drawing.Point(384, 284);
             this.btListHosts.Name = "btListHosts";
             this.btListHosts.Size = new System.Drawing.Size(27, 23);
             this.btListHosts.TabIndex = 5;
@@ -201,9 +194,9 @@
             // 
             this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxHost.Location = new System.Drawing.Point(6, 266);
+            this.textBoxHost.Location = new System.Drawing.Point(6, 286);
             this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.Size = new System.Drawing.Size(369, 20);
+            this.textBoxHost.Size = new System.Drawing.Size(372, 20);
             this.textBoxHost.TabIndex = 4;
             this.textBoxHost.TextChanged += new System.EventHandler(this.TextBoxHostTextChanged);
             // 
@@ -211,68 +204,13 @@
             // 
             this.btRemoveHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btRemoveHost.Enabled = false;
-            this.btRemoveHost.Location = new System.Drawing.Point(414, 19);
+            this.btRemoveHost.Location = new System.Drawing.Point(417, 19);
             this.btRemoveHost.Name = "btRemoveHost";
             this.btRemoveHost.Size = new System.Drawing.Size(75, 23);
             this.btRemoveHost.TabIndex = 2;
             this.btRemoveHost.Text = "Remove";
             this.btRemoveHost.UseVisualStyleBackColor = true;
             this.btRemoveHost.Click += new System.EventHandler(this.BtRemoveHostClick);
-            // 
-            // tabEmbedded
-            // 
-            this.tabEmbedded.BackColor = System.Drawing.SystemColors.Control;
-            this.tabEmbedded.Controls.Add(this.labelSet);
-            this.tabEmbedded.Controls.Add(this.btClear);
-            this.tabEmbedded.Controls.Add(this.btSet);
-            this.tabEmbedded.Controls.Add(this.label2);
-            this.tabEmbedded.Location = new System.Drawing.Point(4, 22);
-            this.tabEmbedded.Name = "tabEmbedded";
-            this.tabEmbedded.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEmbedded.Size = new System.Drawing.Size(495, 292);
-            this.tabEmbedded.TabIndex = 2;
-            this.tabEmbedded.Text = "embedded";
-            // 
-            // labelSet
-            // 
-            this.labelSet.AutoSize = true;
-            this.labelSet.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSet.Location = new System.Drawing.Point(6, 59);
-            this.labelSet.Name = "labelSet";
-            this.labelSet.Size = new System.Drawing.Size(84, 14);
-            this.labelSet.TabIndex = 3;
-            this.labelSet.Text = "https://...";
-            // 
-            // btClear
-            // 
-            this.btClear.Location = new System.Drawing.Point(90, 91);
-            this.btClear.Name = "btClear";
-            this.btClear.Size = new System.Drawing.Size(75, 23);
-            this.btClear.TabIndex = 2;
-            this.btClear.Text = "Clear";
-            this.btClear.UseVisualStyleBackColor = true;
-            this.btClear.Click += new System.EventHandler(this.BtClearClick);
-            // 
-            // btSet
-            // 
-            this.btSet.Location = new System.Drawing.Point(9, 91);
-            this.btSet.Name = "btSet";
-            this.btSet.Size = new System.Drawing.Size(75, 23);
-            this.btSet.TabIndex = 1;
-            this.btSet.Text = "Set";
-            this.btSet.UseVisualStyleBackColor = true;
-            this.btSet.Click += new System.EventHandler(this.BtSetClick);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(6, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(486, 47);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "If you set these fields, your remote will have user name and password added to th" +
-    "e URL and will look like \'https://username:password@server.com/path\'";
             // 
             // FormHttps
             // 
@@ -296,8 +234,6 @@
             this.tabNetrc.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tabEmbedded.ResumeLayout(false);
-            this.tabEmbedded.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -309,7 +245,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabNetrc;
-        private System.Windows.Forms.TabPage tabEmbedded;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btRemoveHost;
         private System.Windows.Forms.TextBox textBoxHost;
@@ -320,9 +255,5 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.Button btEdit;
-        private System.Windows.Forms.Button btClear;
-        private System.Windows.Forms.Button btSet;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label labelSet;
     }
 }

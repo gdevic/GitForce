@@ -890,7 +890,7 @@ namespace GitForce
         /// </summary>
         private void MenuMainManageHttpsClick(object sender, EventArgs e)
         {
-            FormHttps formHttps = new FormHttps(true);
+            FormHttps formHttps = new FormHttps();
             formHttps.ShowDialog();
         }
 
