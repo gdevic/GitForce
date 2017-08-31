@@ -837,6 +837,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="git.ico" />
+    <None Include="Resources\App\eye.png" />
     <None Include="Resources\App\key.png" />
     <None Include="Resources\App\world.png" />
     <None Include="Resources\App\pulldown.png" />

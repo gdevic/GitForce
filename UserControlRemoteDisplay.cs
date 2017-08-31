@@ -144,22 +144,17 @@ namespace GitForce
             // Change enable properties only if we are in editing mode, otherwise controls are grayed out
             if (_isEditing)
             {
-                // Enable SSH button if one of the URLs uses SSH connection
-                btSsh.Enabled = false;
-                if (!ClassUtils.IsMono()) // Permanently disable SSH button if not on Windows OS
-                {
-                    if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
-                    if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Ssh) btSsh.Enabled = true;
-                }
-                // Enable HTTPS button if one of the URLs uses HTTPS connection
-                btHttps.Enabled = false;
-                if (_fetchUrl.Ok && _fetchUrl.Type == ClassUrl.UrlType.Https) btHttps.Enabled = true;
-                if (_pushUrl.Ok && _pushUrl.Type == ClassUrl.UrlType.Https) btHttps.Enabled = true;
+                // Enable SSH button if one of the URLs uses SSH connection but only on Windows OS
+                btSsh.Enabled = !ClassUtils.IsMono() &
+                                ((_fetchUrl.Type == ClassUrl.UrlType.Ssh) || (_pushUrl.Type == ClassUrl.UrlType.Ssh));
+                // Enable HTTPS password edit, reveal and manage buttons if one of the URLs use HTTPS connection
+                btHttps.Enabled = (_fetchUrl.Type == ClassUrl.UrlType.Https) || (_pushUrl.Type == ClassUrl.UrlType.Https);
+                checkReveal.Enabled = btHttps.Enabled;
+                textPassword.ReadOnly = !btHttps.Enabled;
 
                 btWWW1.Enabled = _fetchUrl.Ok;
                 btWWW2.Enabled = _pushUrl.Ok;
 
-                textPassword.ReadOnly = !(_fetchUrl.Type == ClassUrl.UrlType.Https || _pushUrl.Type == ClassUrl.UrlType.Https);
             }
         }
 
@@ -249,6 +244,14 @@ namespace GitForce
         void MenuPushItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             textUrlPush.Text = e.ClickedItem.Text;
+        }
+
+        /// <summary>
+        /// Checked state of reveal button changed, show or hide password
+        /// </summary>
+        private void CheckRevealCheckedChanged(object sender, EventArgs e)
+        {
+            textPassword.UseSystemPasswordChar = !checkReveal.Checked;
         }
 
         /// <summary>

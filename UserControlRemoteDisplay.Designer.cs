@@ -39,14 +39,15 @@ namespace GitForce
             this.textUrlFetch = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btHttps = new System.Windows.Forms.Button();
-            this.btListPush = new System.Windows.Forms.Button();
-            this.btListFetch = new System.Windows.Forms.Button();
-            this.btWWW2 = new System.Windows.Forms.Button();
-            this.btWWW1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btListPush = new System.Windows.Forms.Button();
+            this.btListFetch = new System.Windows.Forms.Button();
+            this.btWWW2 = new System.Windows.Forms.Button();
+            this.btWWW1 = new System.Windows.Forms.Button();
+            this.checkReveal = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@ namespace GitForce
             this.btSsh.Location = new System.Drawing.Point(341, 115);
             this.btSsh.Name = "btSsh";
             this.btSsh.Size = new System.Drawing.Size(75, 23);
-            this.btSsh.TabIndex = 15;
+            this.btSsh.TabIndex = 16;
             this.btSsh.Text = "SSH...";
             this.btSsh.UseVisualStyleBackColor = true;
             this.btSsh.Click += new System.EventHandler(this.BtSshClick);
@@ -85,11 +86,12 @@ namespace GitForce
             // 
             this.textPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textPassword.Enabled = false;
             this.textPassword.Location = new System.Drawing.Point(82, 117);
             this.textPassword.MaxLength = 32;
             this.textPassword.Name = "textPassword";
             this.textPassword.ReadOnly = true;
-            this.textPassword.Size = new System.Drawing.Size(172, 20);
+            this.textPassword.Size = new System.Drawing.Size(140, 20);
             this.textPassword.TabIndex = 13;
             this.textPassword.UseSystemPasswordChar = true;
             this.textPassword.TextChanged += new System.EventHandler(this.SomeTextChanged);
@@ -132,6 +134,7 @@ namespace GitForce
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.checkReveal);
             this.groupBox1.Controls.Add(this.btHttps);
             this.groupBox1.Controls.Add(this.btListPush);
             this.groupBox1.Controls.Add(this.btListFetch);
@@ -161,10 +164,47 @@ namespace GitForce
             this.btHttps.Location = new System.Drawing.Point(260, 115);
             this.btHttps.Name = "btHttps";
             this.btHttps.Size = new System.Drawing.Size(75, 23);
-            this.btHttps.TabIndex = 14;
+            this.btHttps.TabIndex = 15;
             this.btHttps.Text = "HTTPS...";
             this.btHttps.UseVisualStyleBackColor = true;
             this.btHttps.Click += new System.EventHandler(this.BtHttpsClicked);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Push URL:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 42);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Fetch URL:";
+            // 
+            // textName
+            // 
+            this.textName.Location = new System.Drawing.Point(82, 13);
+            this.textName.MaxLength = 32;
+            this.textName.Name = "textName";
+            this.textName.ReadOnly = true;
+            this.textName.Size = new System.Drawing.Size(111, 20);
+            this.textName.TabIndex = 1;
+            this.textName.TextChanged += new System.EventHandler(this.SomeTextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Name:";
             // 
             // btListPush
             // 
@@ -214,42 +254,21 @@ namespace GitForce
             this.btWWW1.UseVisualStyleBackColor = true;
             this.btWWW1.Click += new System.EventHandler(this.BtWwwClick);
             // 
-            // label4
+            // checkReveal
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Push URL:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 42);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Fetch URL:";
-            // 
-            // textName
-            // 
-            this.textName.Location = new System.Drawing.Point(82, 13);
-            this.textName.MaxLength = 32;
-            this.textName.Name = "textName";
-            this.textName.ReadOnly = true;
-            this.textName.Size = new System.Drawing.Size(111, 20);
-            this.textName.TabIndex = 1;
-            this.textName.TextChanged += new System.EventHandler(this.SomeTextChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Name:";
+            this.checkReveal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkReveal.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkReveal.AutoSize = true;
+            this.checkReveal.BackgroundImage = global::GitForce.Properties.Resources.eye;
+            this.checkReveal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.checkReveal.Enabled = false;
+            this.checkReveal.Location = new System.Drawing.Point(228, 115);
+            this.checkReveal.Name = "checkReveal";
+            this.checkReveal.Size = new System.Drawing.Size(26, 23);
+            this.checkReveal.TabIndex = 14;
+            this.checkReveal.Text = "   ";
+            this.checkReveal.UseVisualStyleBackColor = true;
+            this.checkReveal.CheckedChanged += new System.EventHandler(this.CheckRevealCheckedChanged);
             // 
             // RemoteDisplay
             // 
@@ -282,5 +301,6 @@ namespace GitForce
         private System.Windows.Forms.Button btListFetch;
         private System.Windows.Forms.Button btListPush;
         private System.Windows.Forms.Button btHttps;
+        private CheckBox checkReveal;
     }
 }
