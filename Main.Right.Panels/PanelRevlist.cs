@@ -46,9 +46,9 @@ namespace GitForce.Main.Right.Panels
                 // TODO: history for arbitrary branch is broken. For now, we will only show the current branch
                 logBranch = branches.Current;
 
-                // If the repo does not have a branch at all (new repo that was just initialized), exit
+                // Preset branch name if the repo does not have a branch at all (new repo that was just initialized)
                 if (string.IsNullOrEmpty(logBranch))
-                    goto End;
+                    logBranch = "master";
 
                 if (logBranch != branches.Current)
                     labelLogBranch.Text = String.Format(" (Branch: \"{0}\")", logBranch);
@@ -98,7 +98,6 @@ namespace GitForce.Main.Right.Panels
                 if (result.Success())
                     UpdateList(listRev, result.stdout, false);
             }
-        End:
             listRev.EndUpdate();
         }
 

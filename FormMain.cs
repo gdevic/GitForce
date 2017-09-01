@@ -21,8 +21,8 @@ namespace GitForce
         // Right panels
         private static readonly PanelRepos PanelRepos = new PanelRepos();
         private static readonly PanelCommits PanelCommits = new PanelCommits();
-        private static readonly PanelRevlist PanelRevlist = new PanelRevlist();
         private static readonly PanelBranches PanelBranches = new PanelBranches();
+        private static readonly PanelRevlist PanelRevlist = new PanelRevlist(); // Needs to be initialized after PanelBranches
 
         private static readonly Dictionary<string, UserControl> PanelsR = new Dictionary<string, UserControl> {
             { "Commits", PanelCommits },
