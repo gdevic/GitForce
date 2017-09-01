@@ -96,7 +96,10 @@ namespace GitForce.Main.Right.Panels
 
                 ExecResult result = App.Repos.Current.Run(cmd.ToString());
                 if (result.Success())
-                    UpdateList(listRev, result.stdout, false);
+                {
+                    string filterSha = btClearFilter.Enabled ? formFilter.filterSha : string.Empty;
+                    UpdateList(listRev, result.stdout, false, filterSha);
+                }
             }
             listRev.EndUpdate();
         }
@@ -105,7 +108,7 @@ namespace GitForce.Main.Right.Panels
         /// Helper function that fills in the list of revisions.
         /// This is used from the code above and from the FormRevisionHistory.
         /// </summary>
-        public static void UpdateList(ListView listRev, string input, bool prefixRevId)
+        public static void UpdateList(ListView listRev, string input, bool prefixRevId, string filterSha)
         {
             App.StatusBusy(true);
             string[] response = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -118,6 +121,9 @@ namespace GitForce.Main.Right.Panels
             {
                 string[] cat = s.Split('\t');
                 if (s.Length < 2) continue; // Handle empty results (single empty string) correctly
+
+                if ((filterSha.Length > 0) && (!cat[0].StartsWith(filterSha) && !filterSha.StartsWith(cat[0])))
+                    continue;
 
                 // Convert the date/time from UNIX second based to C# date structure
                 DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(cat[1])).ToLocalTime();

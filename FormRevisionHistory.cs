@@ -94,7 +94,7 @@ namespace GitForce
 
             ExecResult result = App.Repos.Current.Run(cmd.ToString());
             if (result.Success())
-                PanelRevlist.UpdateList(listRev, result.stdout, true);
+                PanelRevlist.UpdateList(listRev, result.stdout, true, string.Empty);
 
             // Activate the given SHA item or the first one if none given
             int index = listRev.Items.IndexOfKey(Sha);

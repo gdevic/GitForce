@@ -10,6 +10,11 @@ namespace GitForce
         /// </summary>
         public string gitFilter = "";
 
+        /// <summary>
+        /// Specifies only the SHA1 filter string
+        /// </summary>
+        public string filterSha => checkBoxSha.Checked ? textBoxSha.Text.Trim() : "";
+
         public FormChangelistFilter()
         {
             InitializeComponent();
