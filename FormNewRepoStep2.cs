@@ -11,7 +11,7 @@ namespace GitForce
         /// </summary>
         public string Destination
         {
-            get { return Path.Combine(textBoxRepoPath.Text.Trim(), textBoxProjectName.Text.Trim()); }
+            get { return ClassUtils.GetCombinedPath(textBoxRepoPath.Text.Trim(), textBoxProjectName.Text.Trim()); }
             set { textBoxRepoPath.Text = value; }
         }
 

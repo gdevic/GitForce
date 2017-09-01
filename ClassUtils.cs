@@ -236,6 +236,18 @@ namespace GitForce
         }
 
         /// <summary>
+        /// This function is similar to Path.Combine, but it adds separator after drive letter which
+        /// is needed for some git operations on Windows (clone, for example). Strange things happen without it.
+        /// </summary>
+        public static string GetCombinedPath(string s1, string s2)
+        {
+            if (string.IsNullOrWhiteSpace(s1)) return s2;
+            if (string.IsNullOrWhiteSpace(s2)) return s1;
+            s1 = s1.TrimEnd('/').TrimEnd(Path.DirectorySeparatorChar);
+            return s1 + Path.DirectorySeparatorChar + s2;
+        }
+
+        /// <summary>
         /// Retruns a path to the home directory.
         /// </summary>
         public static string GetHomePath()
