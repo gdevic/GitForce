@@ -517,8 +517,8 @@ namespace GitForce.Main.Right.Panels
                     File.WriteAllText(tempFile, commitForm.GetDescription());
 
                     // If the current repo has only one commit bundle, we don't need to specify each file
-                    // but we can simply commit all files in index
-                    if (status.Repo.Commits.Bundle.Count() == 1)
+                    // but we can simply commit all files in index unless the user checked off some of them
+                    if ((status.Repo.Commits.Bundle.Count() == 1) && (status.Repo.Commits.Bundle[0].Files.Count == final.Count))
                         final = new List<string>();
 
                     // Form the final command with the description file and an optional amend
