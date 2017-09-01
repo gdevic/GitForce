@@ -244,9 +244,17 @@ namespace GitForce
             return RunCmd("reset " + head + " -- " + list).Success();
         }
 
+        /// <summary>
+        /// Run the external diff command on a given file or a list of files
+        /// </summary>
         public void GitDiff(string tag, List<string> files)
         {
-            string list = QuoteAndFlattenPaths(files);
+            string list = QuoteAndFlattenPaths(files);            
+            if (list == "\"\"") // For now, we don't want to match all paths but only diff selected files
+            {
+                App.PrintStatusMessage("Diffing: No files selected and we don't want to match all paths.", MessageType.General);
+                return;
+            }
             App.PrintStatusMessage("Diffing " + list, MessageType.General);
             RunCmd("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + list, true);
         }
