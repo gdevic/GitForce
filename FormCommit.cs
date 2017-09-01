@@ -43,7 +43,7 @@ namespace GitForce
             if (result.Success())
             {
                 amendText = result.stdout;
-                // BUG: We are losing newlines with App.Repos.Current.Run. At least insert one after the subject line.
+                // TODO: We are losing newlines with App.Repos.Current.Run. At least insert one after the subject line.
                 if (amendText.IndexOf(Environment.NewLine) > 0)
                     amendText = amendText.Insert(amendText.IndexOf(Environment.NewLine), Environment.NewLine);
             }
