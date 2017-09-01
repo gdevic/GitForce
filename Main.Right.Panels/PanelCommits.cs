@@ -211,17 +211,18 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
-        /// Handler for the drop portion of drag and drop. User dropped one or more files to the commit pane.
-        /// The files may originate from the left pane, or from an external application like explorer.
+        /// Handler for the drop portion of drag and drop. User dropped one or more names to the commit pane.
+        /// The names may be files originating from the left pane, or from an external application like explorer.
+        /// Those even don't have to be files but simply names of git objects (like _deleted_ files to be staged)
         /// </summary>
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] droppedList = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             // Files can come from anywhere. Prune those that are not from this repo.
-            List<string> files = (from file in droppedFiles.ToList()
-                                  where file.StartsWith(status.Repo.Path)
+            List<string> files = (from file in droppedList.ToList()
+                                  where (file.Length > status.Repo.Path.Length) && file.StartsWith(status.Repo.Path)
                                   select file.Substring(status.Repo.Path.Length + 1)).ToList();
 
             DoDropFiles(status, files.ToList());
