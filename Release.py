@@ -21,7 +21,7 @@ def IncrementVersion(file, change):
     fout = open(file, "wt")
     # Find version and build date and update them
     for line in fin:
-        
+
         if line.find("AssemblyFileVersion")>0:
             p = re.compile(r'\W+')
             ver = p.split(line)
@@ -33,7 +33,7 @@ def IncrementVersion(file, change):
 
         if line.find("AssemblyProduct")>0:
             now = datetime.datetime.now()
-            format = "%Y/%m/%d, %H:%M:%S"
+            format = "%Y/%m/%d"
             built = now.strftime(format)
             print('Setting the Build date = ', built)
             line = "[assembly: AssemblyProduct(\"GitForce built on " + built + "\")]\n"
