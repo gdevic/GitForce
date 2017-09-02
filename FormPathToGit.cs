@@ -21,8 +21,7 @@ namespace GitForce
             gitPath = suggestPathToGit;
 
             labelInfo.Text = "GitForce is a GUI front-end to the command line git. " +
-            "That means you have to have git already installed. You can download git for Windows from the link below " +
-            "(msysgit version is recomended), or you can click on the 'Install' button and I will do it for you.";
+            "That means you have to have git already installed. You can download git for Windows from the link below.";
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Open the web browser with a link to msysgit
+        /// Open the web browser with a link to Git for Windows
         /// </summary>
         private void GitLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -55,14 +54,13 @@ namespace GitForce
             PathToGit = textBoxPath.Text;
             btOK.Enabled = File.Exists(PathToGit) && PathToGit.EndsWith("git.exe");
         }
-
+#if false
         /// <summary>
-        /// User clicked on the Install button.. We need to find the latest msysgit build,
-        /// download it and run it
+        /// User clicked on the Install button.. We need to find the latest build, download it and run it
         /// </summary>
         private void BtInstallClick(object sender, EventArgs e)
         {
-            string installerFile = Path.GetTempFileName(); // Junk name so we can safely call 'Delete'
+            string installerFile = Path.GetTempFileName();
             try
             {
                 // msysgit is hosted at https://github.com/msysgit/msysgit/releases
@@ -96,5 +94,6 @@ namespace GitForce
                 File.Delete(installerFile);
             }
         }
+#endif
     }
 }
