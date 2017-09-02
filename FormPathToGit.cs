@@ -11,14 +11,11 @@ namespace GitForce
         /// </summary>
         public string PathToGit;
 
-        private string gitPath;
-
         public FormPathToGit(string programFiles, string suggestPathToGit)
         {
             InitializeComponent();
 
             textBoxPath.Text = programFiles;
-            gitPath = suggestPathToGit;
 
             labelInfo.Text = "GitForce is a GUI front-end to the command line git. " +
             "That means you have to have git already installed. You can download git for Windows from the link below.";
@@ -54,46 +51,5 @@ namespace GitForce
             PathToGit = textBoxPath.Text;
             btOK.Enabled = File.Exists(PathToGit) && PathToGit.EndsWith("git.exe");
         }
-#if false
-        /// <summary>
-        /// User clicked on the Install button.. We need to find the latest build, download it and run it
-        /// </summary>
-        private void BtInstallClick(object sender, EventArgs e)
-        {
-            string installerFile = Path.GetTempFileName();
-            try
-            {
-                // msysgit is hosted at https://github.com/msysgit/msysgit/releases
-                // and the files can be downloaded at the subfolder 'download':
-
-                FormDownload msysgit = new FormDownload("Download msysgit",
-                    @"https://github.com/msysgit/msysgit/releases",
-                    @"(?<file>Git-[1-2]+.[0-9]+.[0-9]+-\S+.exe)", "/download/");
-
-                // If the download succeeded, run the installer file
-                if (msysgit.ShowDialog() == DialogResult.OK)
-                {
-                    installerFile = msysgit.TargetFile;
-                    ExecResult ret = Exec.Run(installerFile, String.Empty);
-                    if (ret.retcode == 0)
-                    {
-                        // Check if the git executable is at the expected location now
-                        if (File.Exists(gitPath))
-                            PathToGit = textBoxPath.Text = gitPath;
-                    }
-                    DialogResult = DialogResult.OK;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error");
-            }
-            finally
-            {
-                // Make sure we don't leave temporary files around
-                File.Delete(installerFile);
-            }
-        }
-#endif
     }
 }
