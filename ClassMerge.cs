@@ -21,10 +21,15 @@ namespace GitForce
                 // Windows OS (x32):
                 new AppHelper( "p4merge",        Path.Combine(ProgramFilesX86,@"Perforce\P4Merge.exe"),       "%1 %2 %3 %4" ),
                 new AppHelper( "WinMerge",       Path.Combine(ProgramFilesX86,@"WinMerge\WinMergeU.exe"),     "/e /x /u %2 %3 %4" ),
-                new AppHelper( "bc3",            Path.Combine(ProgramFilesX86,@"Beyond Compare 3\BComp.exe"), "%2 %3 %1 %4" ),
+                new AppHelper( "BC3",            Path.Combine(ProgramFilesX86,@"Beyond Compare 3\BComp.exe"), "%2 %3 %1 %4" ),
+                new AppHelper( "BC4",            Path.Combine(ProgramFilesX86,@"Beyond Compare 4\BComp.exe"), "%2 %3 %1 %4" ),
                 new AppHelper( "KDiff3",         Path.Combine(ProgramFilesX86,@"KDiff3\kdiff3.exe"),          "%1 %2 %3 -o %4" ),
                 // Windows OS (x64):
-                new AppHelper( "bc4",            Path.Combine(ProgramFilesX64,@"Beyond Compare 4\BComp.exe"), "%2 %3 %1 %4" ),
+                new AppHelper( "p4merge",        Path.Combine(ProgramFilesX64,@"Perforce\P4Merge.exe"),       "%1 %2 %3 %4" ),
+                new AppHelper( "WinMerge",       Path.Combine(ProgramFilesX64,@"WinMerge\WinMergeU.exe"),     "/e /x /u %2 %3 %4" ),
+                new AppHelper( "BC3",            Path.Combine(ProgramFilesX64,@"Beyond Compare 3\BComp.exe"), "%2 %3 %1 %4" ),
+                new AppHelper( "BC4",            Path.Combine(ProgramFilesX64,@"Beyond Compare 4\BComp.exe"), "%2 %3 %1 %4" ),
+                new AppHelper( "KDiff3",         Path.Combine(ProgramFilesX64,@"KDiff3\kdiff3.exe"),          "%1 %2 %3 -o %4" ),
 
                 // Linux OS:
                 new AppHelper( "KDiff3",         @"/usr/bin/kdiff3",            "%1 %2 %3 %4" ),
