@@ -43,6 +43,11 @@ namespace GitForce
             ClassHelp.Handler("GPL");
         }
 
+        private void LinkBaltazarStudiosLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ClassHelp.Handler("BaltazarStudios");
+        }
+
         /// <summary>
         /// User clicked on the "Copy Email" button
         /// Copy the email address to clipboard.

@@ -41,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelNewVersionAvailable = new System.Windows.Forms.Label();
             this.btDownload = new System.Windows.Forms.Button();
+            this.linkBaltazarStudios = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,6 +123,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.linkBaltazarStudios);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btCopyEmail);
             this.groupBox1.Controls.Add(this.label2);
@@ -186,6 +188,18 @@
             this.btDownload.UseVisualStyleBackColor = true;
             this.btDownload.Click += new System.EventHandler(this.DownloadClick);
             // 
+            // linkBaltazarStudios
+            // 
+            this.linkBaltazarStudios.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkBaltazarStudios.AutoSize = true;
+            this.linkBaltazarStudios.Location = new System.Drawing.Point(289, 20);
+            this.linkBaltazarStudios.Name = "linkBaltazarStudios";
+            this.linkBaltazarStudios.Size = new System.Drawing.Size(127, 13);
+            this.linkBaltazarStudios.TabIndex = 13;
+            this.linkBaltazarStudios.TabStop = true;
+            this.linkBaltazarStudios.Text = "www.baltazarstudios.com";
+            this.linkBaltazarStudios.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkBaltazarStudiosLinkClicked);
+            // 
             // FormAbout
             // 
             this.AcceptButton = this.btOK;
@@ -233,5 +247,6 @@
         private System.Windows.Forms.Button btDownload;
         private System.Windows.Forms.Label labelNewVersionAvailable;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.LinkLabel linkBaltazarStudios;
     }
 }

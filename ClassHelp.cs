@@ -22,7 +22,8 @@ namespace GitForce
             {"Update Check", @"http://sourceforge.net/projects/gitforce"},
             {"Download", @"http://sourceforge.net/projects/gitforce"},
             {"Discussion", @"https://sourceforge.net/p/gitforce/discussion"},
-            {"GPL", @"http://www.gnu.org/licenses/gpl.html"}
+            {"GPL", @"http://www.gnu.org/licenses/gpl.html"},
+            {"BaltazarStudios", @"http://www.baltazarstudios.com" }
         };
 
         /// <summary>
