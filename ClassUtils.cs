@@ -3,6 +3,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace GitForce
@@ -70,6 +71,20 @@ namespace GitForce
         public static bool IsMono()
         {
             return Type.GetType("Mono.Runtime") != null;
+        }
+
+        /// <summary>
+        /// Returns true is the application is run at the elevated privilege level
+        /// </summary>
+        public static bool IsAdmin()
+        {
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            return isElevated;
         }
 
         /// <summary>
