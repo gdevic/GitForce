@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>gitforce</id>
+    <version>1.0.49</version>
+    <packageSourceUrl>https://github.com/gdevic/GitForce</packageSourceUrl>
+    <owners>Goran Devic</owners>
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <title>GitForce</title>
+    <authors>Goran Devic</authors>
+    <projectUrl>https://sites.google.com/site/gitforcetool</projectUrl>
+    <iconUrl>https://cdn.rawgit.com/gdevic/GitForce/75f333e0/Resources/Artwork/png/GitForceLogo.png</iconUrl>
+    <copyright>2017</copyright>
+    <licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/gdevic/GitForce</projectSourceUrl>
+    <docsUrl>https://sites.google.com/site/gitforcetool/home</docsUrl>
+    <tags>gitforce revision control</tags>
+    <summary>A visual front-end to git</summary>
+    <description>GitForce is a visual front-end for the git command line tool and runs on both Windows and Linux. It is designed to be easy and intuitive to use and yet powerful enough so you don't need to use a command line git.</description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
