@@ -3,7 +3,7 @@
 #
 # * Runs MSBuild to compile GitForce release version
 # * Increments the version number and sets the build date
-#   in AssemblyInfo.cs file
+#   in AssemblyInfo.cs file and chocolatey package file
 # * Gets the log of changes since last release and formats
 #   changes.txt to be used as a release commit text
 #
@@ -43,11 +43,32 @@ def IncrementVersion(file, change):
     fout.close()
     fch.write("### Release " + release + " (" + built + ")\n")
     fch.close();
+    return release
+
+def IncrementVersionXml(file, version):
+    # Save the original file before modifying it
+    file_backup = file+"~"
+    if(os.path.exists(file_backup)):
+        os.remove(file_backup)
+    os.rename(file, file_backup)
+    fin = open(file_backup)
+    fout = open(file, "wt")
+    # Find version and build date and update them
+    for line in fin:
+        pos = line.find("<version>")
+        if pos > 0:
+            line = " " * pos
+            line = line + "<version>" + version + "</version>\n"
+        fout.write(line)
+    fin.close()
+    fout.close()
 
 version_file = "Properties/AssemblyInfo.cs"
+version_xml_file = "Misc/gitforce.nuspec"
 changelist_file = "change.txt"
 
-IncrementVersion(version_file, changelist_file)
+version = IncrementVersion(version_file, changelist_file)
+IncrementVersionXml(version_xml_file, version)
 print('Building:')
 subprocess.Popen(["MSBuild.exe", "/t:Rebuild", "/p:Configuration=Release"], shell=True).wait()
 
