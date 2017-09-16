@@ -7,7 +7,7 @@
 # * Gets the log of changes since last release and formats
 #   changes.txt to be used as a release commit text
 #
-import sys, time, datetime, os, subprocess, re
+import sys, time, datetime, os, subprocess, re, shutil
 
 def IncrementVersion(file, change):
     # Open the changelist file to write
@@ -71,6 +71,10 @@ version = IncrementVersion(version_file, changelist_file)
 IncrementVersionXml(version_xml_file, version)
 print('Building:')
 subprocess.Popen(["MSBuild.exe", "/t:Rebuild", "/p:Configuration=Release"], shell=True).wait()
+
+# Copy released executable
+shutil.copy2("obj/x86/Release/GitForce.exe", "./") # Here, to the root of the project
+shutil.copy2("obj/x86/Release/GitForce.exe", "Misc/Tools/") # To the chocolatey's package folder
 
 # Get the summary of changes and append to the subject
 proc = subprocess.Popen(["git", "log", "--format=%B"], stdout=subprocess.PIPE)
