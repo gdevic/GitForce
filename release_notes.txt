@@ -1,0 +1,7 @@
+### Release 1.0.51 (2017/09/17)
+-------------------------------------------
+Add readme for chocolatey packager
+Release script, copy exe to few places
+Updating release script to increment version for chocolatey package
+Adding chocolatey package files
+Check if the app is run as Admin/Root
