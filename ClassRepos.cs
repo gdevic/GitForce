@@ -228,8 +228,8 @@ namespace GitForce
             // That delegate simply returns desired compare based on our input list of names
             Repos.Sort(
                 delegate(ClassRepo a, ClassRepo b) {
-                    int ia = order.FindIndex(x => x.Equals(a.ToString()));
-                    int ib = order.FindIndex(x => x.Equals(b.ToString()));
+                    int ia = order.IndexOf(a.Path.ToString());
+                    int ib = order.IndexOf(b.Path.ToString());
                     return ia.CompareTo(ib);
                 }
             );
