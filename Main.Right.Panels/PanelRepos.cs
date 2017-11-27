@@ -64,7 +64,11 @@ namespace GitForce.Main.Right.Panels
             {
                 var columns = new int[4];
                 foreach (ColumnHeader l in listRepos.Columns)
+                {
+                    if (l.Width <= 0) // Additional safeguard against storing invalid column widths
+                        return;
                     columns[l.Index] = l.Width;
+                }
                 string values = String.Join(",", columns.Select(i => i.ToString()).ToArray());
                 Properties.Settings.Default.ReposColumnWidths = values;
             }
