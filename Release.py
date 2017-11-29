@@ -82,7 +82,7 @@ stdout = proc.communicate()[0].decode('windows-1252')
 stdout = stdout[0:stdout.find("###")]
 
 h = open(changelist_file, "a")
-h.write("\n-------------------------------------------\n")
+h.write("-------------------------------------------\n")
 h.write("SUMMARY OF CHANGES:\n\n")
 h.write(stdout)
 h.close()
