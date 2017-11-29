@@ -553,7 +553,7 @@ namespace GitForce.Main.Right.Panels
             if (!string.IsNullOrEmpty(values)) // Otherwise, load widths from the settings
                 columns = values.Split(',').Select(Int32.Parse).ToArray();
             foreach (ColumnHeader l in listRepos.Columns)
-                l.Width = columns[l.Index];
+                l.Width = (columns[l.Index] <= 0) ? -1 : columns[l.Index]; // Additional safeguard against storing invalid column widths
 
             listRepos.EndUpdate();
         }
