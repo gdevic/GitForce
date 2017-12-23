@@ -51,7 +51,7 @@ namespace GitForce.Main.Left.Panels
         {
             // Set the menu bullet to the current view
             List<ToolStripMenuItem> viewMenus = new List<ToolStripMenuItem> {
-                menuView0, menuView1, menuView2, menuView3, menuView4 };
+                menuView0, menuView1, menuView2, menuView3, menuView4, menuView5 };
             foreach (var m in viewMenus)
                 m.Checked = false;
             viewMenus[mode].Checked = true;
@@ -120,6 +120,18 @@ namespace GitForce.Main.Left.Panels
 
                         // Leave only untracked files
                         files = files.Where(s => status.Xcode(s) == '?').ToList();
+                        break;
+
+                    case 5:     // Git view local files not in .gitignore
+                        ExecResult result2 = App.Repos.Current.Run("ls-files -z --abbrev --exclude-from=.gitignore -o -c -d -m");
+                        if (result2.Success())
+                        {
+                            string[] response2 = result2.stdout
+                                .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
+                                .Split(("\0")
+                                .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            files.AddRange(response2.Select(s => s.Split('\t').Last()).Distinct());
+                        }
                         break;
                 }
 
