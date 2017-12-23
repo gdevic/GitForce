@@ -2,12 +2,12 @@
 {
     partial class PanelView
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -22,8 +22,8 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -38,6 +38,7 @@
             this.menuView2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuView3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuView4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuView5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuSortFilesByExtension = new System.Windows.Forms.ToolStripMenuItem();
             this.btRefresh = new System.Windows.Forms.ToolStripButton();
@@ -48,9 +49,9 @@
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // toolStrip1
-            // 
+            //
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewLabel,
             this.dropViewMode,
@@ -60,15 +61,15 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
             this.toolStrip1.TabIndex = 0;
-            // 
+            //
             // viewLabel
-            // 
+            //
             this.viewLabel.Name = "viewLabel";
             this.viewLabel.Size = new System.Drawing.Size(59, 22);
             this.viewLabel.Text = "viewLabel";
-            // 
+            //
             // dropViewMode
-            // 
+            //
             this.dropViewMode.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.dropViewMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.dropViewMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -77,6 +78,7 @@
             this.menuView2,
             this.menuView3,
             this.menuView4,
+            this.menuView5,
             this.toolStripSeparator1,
             this.menuSortFilesByExtension});
             this.dropViewMode.Image = ((System.Drawing.Image)(resources.GetObject("dropViewMode.Image")));
@@ -85,62 +87,70 @@
             this.dropViewMode.Name = "dropViewMode";
             this.dropViewMode.Size = new System.Drawing.Size(29, 22);
             this.dropViewMode.Text = "View";
-            // 
+            //
             // menuView0
-            // 
+            //
             this.menuView0.Name = "menuView0";
             this.menuView0.Size = new System.Drawing.Size(194, 22);
             this.menuView0.Tag = "0";
             this.menuView0.Text = "Git Status of All Files";
             this.menuView0.Click += new System.EventHandler(this.ViewSetByMenuItem);
-            // 
+            //
             // menuView1
-            // 
+            //
             this.menuView1.Name = "menuView1";
             this.menuView1.Size = new System.Drawing.Size(194, 22);
             this.menuView1.Tag = "1";
             this.menuView1.Text = "Git Status";
             this.menuView1.Click += new System.EventHandler(this.ViewSetByMenuItem);
-            // 
+            //
             // menuView2
-            // 
+            //
             this.menuView2.Name = "menuView2";
             this.menuView2.Size = new System.Drawing.Size(194, 22);
             this.menuView2.Tag = "2";
             this.menuView2.Text = "Git View of Repo";
             this.menuView2.Click += new System.EventHandler(this.ViewSetByMenuItem);
-            // 
+            //
             // menuView3
-            // 
+            //
             this.menuView3.Name = "menuView3";
             this.menuView3.Size = new System.Drawing.Size(194, 22);
             this.menuView3.Tag = "3";
             this.menuView3.Text = "Local File View";
             this.menuView3.Click += new System.EventHandler(this.ViewSetByMenuItem);
-            // 
+            //
             // menuView4
-            // 
+            //
             this.menuView4.Name = "menuView4";
             this.menuView4.Size = new System.Drawing.Size(194, 22);
             this.menuView4.Tag = "4";
             this.menuView4.Text = "Local Files Not in Repo";
             this.menuView4.Click += new System.EventHandler(this.ViewSetByMenuItem);
-            // 
+            //
+            // menuView5
+            //
+            this.menuView5.Name = "menuView5";
+            this.menuView5.Size = new System.Drawing.Size(194, 22);
+            this.menuView5.Tag = "5";
+            this.menuView5.Text = "Local Files Not in .gitignore";
+            this.menuView5.Click += new System.EventHandler(this.ViewSetByMenuItem);
+            //
             // toolStripSeparator1
-            // 
+            //
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(191, 6);
-            // 
+            //
             // menuSortFilesByExtension
-            // 
+            //
             this.menuSortFilesByExtension.CheckOnClick = true;
             this.menuSortFilesByExtension.Name = "menuSortFilesByExtension";
             this.menuSortFilesByExtension.Size = new System.Drawing.Size(194, 22);
             this.menuSortFilesByExtension.Text = "Sort Files by Extension";
             this.menuSortFilesByExtension.Click += new System.EventHandler(this.MenuSortFilesByExtensionClick);
-            // 
+            //
             // btRefresh
-            // 
+            //
             this.btRefresh.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btRefresh.Image")));
@@ -150,9 +160,9 @@
             this.btRefresh.Size = new System.Drawing.Size(23, 22);
             this.btRefresh.Text = "Refresh Git Status view";
             this.btRefresh.Click += new System.EventHandler(this.MenuRefresh);
-            // 
+            //
             // btListView
-            // 
+            //
             this.btListView.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btListView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btListView.Image = ((System.Drawing.Image)(resources.GetObject("btListView.Image")));
@@ -161,22 +171,22 @@
             this.btListView.Size = new System.Drawing.Size(23, 22);
             this.btListView.Text = "Toggle between list or tree views";
             this.btListView.Click += new System.EventHandler(this.BtListViewClick);
-            // 
+            //
             // contextMenu
-            // 
+            //
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dummyItem});
             this.contextMenu.Name = "contextMenu";
             this.contextMenu.Size = new System.Drawing.Size(150, 26);
-            // 
+            //
             // dummyItem
-            // 
+            //
             this.dummyItem.Name = "dummyItem";
             this.dummyItem.Size = new System.Drawing.Size(149, 22);
             this.dummyItem.Text = "No Repository";
-            // 
+            //
             // treeView
-            // 
+            //
             this.treeView.AllowDrop = true;
             this.treeView.ContextMenuStrip = this.contextMenu;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -196,9 +206,9 @@
             this.treeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeViewDragEnter);
             this.treeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewAfterExpand);
             this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeViewItemDrag);
-            // 
+            //
             // PanelView
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.treeView);
@@ -225,6 +235,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuView2;
         private System.Windows.Forms.ToolStripMenuItem menuView3;
         private System.Windows.Forms.ToolStripMenuItem menuView4;
+        private System.Windows.Forms.ToolStripMenuItem menuView5;
         private System.Windows.Forms.ToolStripButton btListView;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem menuSortFilesByExtension;
