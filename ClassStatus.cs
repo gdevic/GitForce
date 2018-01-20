@@ -121,6 +121,27 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Returns true if any of the files in any of the subfolders (any descendant)
+        /// has any modification (addition, update, delete, rename, unmerged, ...)
+        /// </summary>
+        public bool HasModifiedDescendants(string key)
+        {
+            bool modified = false;
+            foreach(KeyValuePair<string, string> entry in XY)
+            {
+                // skip non-descendants
+                if (!entry.Key.StartsWith (key))
+                    continue;
+
+                if (entry.Value[0] != ' ' || entry.Value[1] != ' ') {
+                    modified = true;
+                }
+            }
+
+            return modified;
+        }
+
+        /// <summary>
         /// Returns the alternate file name associated with the given file
         /// </summary>
         public string GetAltFile(string key)
@@ -142,7 +163,8 @@ namespace GitForce
             { 'R', "Renamed" },
             { 'C', "Copied" },
             { 'U', "Unmerged" },
-            { '?', "Untracked" } };
+            { '?', "Untracked" },
+            { '!', "Ignored" } };
 
             string status = "";
             if (tn != null)

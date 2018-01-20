@@ -76,6 +76,7 @@ namespace GitForce.Main.Right.Panels
 
                 // Assign the icons to the nodes of tree view
                 ClassView.ViewAssignIcon(status, node, true);
+                ClassView.ViewUpdateToolTips(node);
 
                 // Always keep the root node expanded by default
                 node.Expand();
@@ -120,6 +121,7 @@ namespace GitForce.Main.Right.Panels
                         App.PrintStatusMessage(ex.Message, MessageType.Error);
                     }
             }
+            treeCommits.ShowNodeToolTips = true;
             treeCommits.EndUpdate();
         }
 
