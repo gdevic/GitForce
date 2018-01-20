@@ -95,13 +95,15 @@ namespace GitForce
             ExecResult result = App.Repos.Current.Run(cmd.ToString());
             if (result.Success())
                 PanelRevlist.UpdateList(listRev, result.stdout, true, string.Empty);
-
-            // Activate the given SHA item or the first one if none given
-            int index = listRev.Items.IndexOfKey(Sha);
-            if (index < 0)
-                index = 0;
-            listRev.SelectedIndices.Add(index);
-            listRev.Items[index].EnsureVisible();
+            if (listRev.Items.Count > 0)
+            {
+                // Activate the given SHA item or the first one if none given
+                int index = listRev.Items.IndexOfKey(Sha);
+                if (index < 0)
+                    index = 0;
+                listRev.SelectedIndices.Add(index);
+                listRev.Items[index].EnsureVisible();
+            }
         }
 
         /// <summary>

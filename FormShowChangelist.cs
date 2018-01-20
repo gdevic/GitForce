@@ -105,30 +105,32 @@ namespace GitForce
             {
                 // Parse the file name indicator following this template:
                 // :100644 000000 ed81075... 0000000... D  file0
-                // [attributes]   [prev]     [next]        [file]           (meaning)
-                // 0       1      2          3          4  5                (chunk)
+                // [attributes]   [prev]     [next]        [file]
+                // 0       1      2          3          4                   (preamble[])
                 // Starting with git 2.10, new output is added for copy-edit and rename-edit (https://git-scm.com/docs/git-diff-tree)
                 // :100644 000000 ed81075... 0000000... C68 file1 file2     (copy-edit with a similarity "score")
+                //                                         ^tab  ^tab
 
-                string[] parts = s.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] parts = s.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] preamble = parts[0].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if ((parts.Length > 5) && parts[0].StartsWith(":"))
+                if ((parts.Length == 2 || parts.Length == 3) && preamble.Length == 5)
                 {
                     // In the tag of the link, we will send file name and related SHA keys (stripped of ".")
-                    string tag = string.Format("{0}#{1}#{2}", parts[5], parts[2].Replace(".", ""), parts[3].Replace(".", ""));
+                    string tag = string.Format("{0}#{1}#{2}", parts[1], preamble[2].Replace(".", ""), preamble[3].Replace(".", ""));
                     textChangelist.AppendText(s[37] + "\t");
 
-                    if (parts.Length == 7) // Two files are listed
+                    if (parts.Length == 3) // Two files are listed
                     {
-                        textChangelist.AppendText(parts[5] + " -> ");
-                        textChangelist.InsertLink(parts[6], tag);
+                        textChangelist.AppendText(parts[1] + " -> ");
+                        textChangelist.InsertLink(parts[2], tag);
                     }
                     else
-                        textChangelist.InsertLink(parts[5], tag);
-                    textChangelist.AppendText(cr);
+                        textChangelist.InsertLink(parts[1], tag);
                 }
                 else
-                    textChangelist.AppendText(s + cr);
+                    textChangelist.AppendText(s);
+                textChangelist.AppendText(cr);
             }
 
             // Now optionally run the detailed show command, but if the number of files is large,
