@@ -148,6 +148,7 @@ namespace GitForce.Main.Left.Panels
 
                 // Assign the icons to the nodes of tree view
                 ClassView.ViewAssignIcon(status, node, false);
+                ClassView.ViewUpdateToolTips(node);
 
                 // Set the first node (root) image according to the view mode
                 node.ImageIndex = mode == 2
@@ -160,6 +161,7 @@ namespace GitForce.Main.Left.Panels
                 // Finally, expand the rest of the tree to its previous expand state
                 ViewExpand(node);
             }
+            treeView.ShowNodeToolTips = true;
             treeView.EndUpdate();
         }
 
@@ -258,7 +260,7 @@ namespace GitForce.Main.Left.Panels
                         Opclass[status.Ycode(s)] = new List<string> { s };
                 }
             }
-        };
+        }
 
         /// <summary>
         /// Handle double-clicking on a tree view
