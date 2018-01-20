@@ -812,10 +812,16 @@
     <None Include="Resources\Tree\TreeIconFC.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Tree\TreeIconFCM.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\Tree\TreeIconFF.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Tree\TreeIconFO.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tree\TreeIconFOM.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Tree\TreeIconM.ico" />
@@ -844,7 +850,7 @@
     <None Include="Resources\App\file_missing.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

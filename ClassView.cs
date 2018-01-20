@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -33,27 +34,31 @@ namespace GitForce
             DatabaseOpened,
             ChangelistRoot,
             Changelist,
+            FolderClosedModified,
+            FolderOpenedModified,
         }
 
         /// <summary>
         /// Describes a mapping from image number into the resource icon
         /// </summary>
         private static readonly Dictionary<Img, Icon> Res = new Dictionary<Img, Icon> {
-            { Img.FileUnmodified,   Resources.TreeIconU },
-            { Img.FileModified,     Resources.TreeIconM },
-            { Img.FileAdded,        Resources.TreeIconA },
-            { Img.FileDeleted,      Resources.TreeIconD },
-            { Img.FileRenamed,      Resources.TreeIconR },
-            { Img.FileCopied,       Resources.TreeIconC },
-            { Img.FileUnmerged,     Resources.TreeIconX },
-            { Img.FileUntracked,    Resources.TreeIconQ },
+            { Img.FileUnmodified,       Resources.TreeIconU },
+            { Img.FileModified,         Resources.TreeIconM },
+            { Img.FileAdded,            Resources.TreeIconA },
+            { Img.FileDeleted,          Resources.TreeIconD },
+            { Img.FileRenamed,          Resources.TreeIconR },
+            { Img.FileCopied,           Resources.TreeIconC },
+            { Img.FileUnmerged,         Resources.TreeIconX },
+            { Img.FileUntracked,        Resources.TreeIconQ },
 
-            { Img.FolderClosed,     Resources.TreeIconFC },
-            { Img.FolderOpened,     Resources.TreeIconFO },
-            { Img.DatabaseClosed,   Resources.TreeIconDB },
-            { Img.DatabaseOpened,   Resources.TreeIconDB },
-            { Img.ChangelistRoot,   Resources.Change0 },
-            { Img.Changelist,       Resources.Change1 },
+            { Img.FolderClosed,         Resources.TreeIconFC },
+            { Img.FolderOpened,         Resources.TreeIconFO },
+            { Img.DatabaseClosed,       Resources.TreeIconDB },
+            { Img.DatabaseOpened,       Resources.TreeIconDB },
+            { Img.ChangelistRoot,       Resources.Change0 },
+            { Img.Changelist,           Resources.Change1 },
+            { Img.FolderClosedModified, Resources.TreeIconFCM },
+            { Img.FolderOpenedModified, Resources.TreeIconFOM },
         };
 
         /// <summary>
@@ -95,6 +100,7 @@ namespace GitForce
             TreeNodeCollection nodes = rootNode.Nodes;
             foreach (TreeNode tn in nodes)
             {
+
                 if (tn.Tag is ClassCommit)
                     tn.ImageIndex = (int)Img.Changelist;
                 else
@@ -105,11 +111,52 @@ namespace GitForce
                         char icon = isIndex ? status.Xcode(name) : status.Ycode(name);
                         tn.ImageIndex = (int)Staticons[icon];
                     }
-                    else
-                        tn.ImageIndex = (int)Img.FolderClosed;
+                    else {
+                        tn.ImageIndex = status.HasModifiedDescendants (name)
+                           ? (int)Img.FolderClosedModified
+                           : (int)Img.FolderClosed;
+                    }
                 }
                 ViewAssignIcon(status, tn, isIndex);
             }
+        }
+
+        public static void ViewUpdateToolTips (TreeNode rootNode) {
+            TreeNodeCollection nodes = rootNode.Nodes;
+            foreach (TreeNode tn in nodes)
+            {
+                switch ((Img)tn.ImageIndex) {
+                    case Img.FileUnmodified: /* no tooltip for unmodified files */ break;
+                    case Img.FileModified:   tn.ToolTipText = "Modified"; break;
+                    case Img.FileAdded:      tn.ToolTipText = "Added"; break;
+                    case Img.FileDeleted:    tn.ToolTipText = "Deleted"; break;
+                    case Img.FileRenamed:    tn.ToolTipText = "Renamed"; break;
+                    case Img.FileCopied:     tn.ToolTipText = "Copied"; break;
+                    case Img.FileUnmerged:   tn.ToolTipText = "Unmerged"; break;
+                    case Img.FileUntracked:  tn.ToolTipText = "Untracked"; break;
+
+                    case Img.FolderClosed:
+                    case Img.FolderOpened:   /* no tooltip for unmodified folders */ break;
+
+                    case Img.DatabaseClosed:
+                    case Img.DatabaseOpened: tn.ToolTipText = "Repository"; break;
+
+                    case Img.ChangelistRoot:
+                    case Img.Changelist:     tn.ToolTipText = "Changelist"; break;
+
+                    case Img.FolderClosedModified:
+                    case Img.FolderOpenedModified:
+                        tn.ToolTipText = "Folder contains changes";
+                        break;
+
+                    default:
+                        // tn.ToolTipText = "Unknown...";
+                        break;
+                }
+
+                ViewUpdateToolTips (tn);
+            }
+
         }
 
         /// <summary>
