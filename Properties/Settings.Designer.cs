@@ -546,5 +546,17 @@ namespace GitForce.Properties {
                 this["ReposColumnWidths"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WarnIfAdmin {
+            get {
+                return ((bool)(this["WarnIfAdmin"]));
+            }
+            set {
+                this["WarnIfAdmin"] = value;
+            }
+        }
     }
 }

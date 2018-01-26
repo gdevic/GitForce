@@ -119,5 +119,8 @@
     <Setting Name="ReposColumnWidths" Type="System.String" Scope="User">
       <Value Profile="(Default)">-2,-2,-2,0</Value>
     </Setting>
+    <Setting Name="WarnIfAdmin" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

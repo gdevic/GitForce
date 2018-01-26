@@ -177,7 +177,7 @@ namespace GitForce
             }
 
             // Check if the application has been run as Admin/root
-            if (ClassUtils.IsAdmin())
+            if (Properties.Settings.Default.WarnIfAdmin && ClassUtils.IsAdmin())
             {
                 if (MessageBox.Show("GitForce has been run with elevated privileges which is not a recomended way to run it.\n\nDo you still want to continue?", "Warning",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.No)

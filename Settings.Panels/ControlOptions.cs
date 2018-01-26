@@ -17,6 +17,7 @@ namespace GitForce.Settings.Panels
         {
             checkBoxTabs.Checked = Properties.Settings.Default.ShowTabsOnRightPane;
             checkBoxWarnMultipleInstances.Checked = Properties.Settings.Default.WarnMultipleInstances;
+            checkBoxWarnIfAdmin.Checked = Properties.Settings.Default.WarnIfAdmin;
             checkBoxAutoCloseGitOnSuccess.Checked = Properties.Settings.Default.AutoCloseGitOnSuccess;
 
             // Add the dirty (modified) value changed helper
@@ -37,6 +38,7 @@ namespace GitForce.Settings.Panels
         {
             Properties.Settings.Default.ShowTabsOnRightPane = checkBoxTabs.Checked;
             Properties.Settings.Default.WarnMultipleInstances = checkBoxWarnMultipleInstances.Checked;
+            Properties.Settings.Default.WarnIfAdmin = checkBoxWarnIfAdmin.Checked;
             Properties.Settings.Default.AutoCloseGitOnSuccess = checkBoxAutoCloseGitOnSuccess.Checked;
 
             if (checkBoxTabs.Tag != null)
