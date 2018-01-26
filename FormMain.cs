@@ -372,7 +372,7 @@ namespace GitForce
 
             // Set the correct bullet
             List<ToolStripMenuItem> viewMenus = new List<ToolStripMenuItem> {
-                menuView0, menuView1, menuView2, menuView3, menuView4 };
+                menuView0, menuView1, menuView2, menuView3, menuView4, menuView5 };
             foreach (var m in viewMenus)
                 m.Checked = false;
             viewMenus[mode].Checked = true;
