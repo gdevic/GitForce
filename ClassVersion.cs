@@ -60,7 +60,7 @@ namespace GitForce
 #if !DEBUG
             // Create a web request object
             ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol |= (SecurityProtocolType)0x00000C00; // SecurityProtocolType.Tls12;
             request = WebRequest.Create("https://sourceforge.net/projects/gitforce/files/");
             request.Timeout = 5000;
 
