@@ -98,12 +98,12 @@ namespace GitForce
             // A lot of things can go wrong here...
             try
             {
-                StringBuilder file = new StringBuilder();
+                StringBuilder answer = new StringBuilder();
                 using (WebResponse response = request.GetResponse())
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        file.Append(reader.ReadToEnd());
+                        answer.Append(reader.ReadToEnd());
                     }
                 }
 
@@ -111,12 +111,12 @@ namespace GitForce
                 // [assembly: AssemblyFileVersion(&quot;1.0.11&quot;)]
                 string sPattern = @"GitForce-(?<major>\d+).(?<minor>\d+).(?<build>\d+).exe";
                 Regex r = new Regex(sPattern, RegexOptions.Compiled);
-                if (r.IsMatch(file.ToString()))
+                if (r.IsMatch(answer.ToString()))
                 {
                     // Get the version numbers from the latest version checked in github
-                    string major = r.Match(file.ToString()).Result("${major}");
-                    string minor = r.Match(file.ToString()).Result("${minor}");
-                    string build = r.Match(file.ToString()).Result("${build}");
+                    string major = r.Match(answer.ToString()).Result("${major}");
+                    string minor = r.Match(answer.ToString()).Result("${minor}");
+                    string build = r.Match(answer.ToString()).Result("${build}");
                     int webMajor = Convert.ToInt32(major);
                     int webMinor = Convert.ToInt32(minor);
                     int webBuild = Convert.ToInt32(build);
@@ -160,19 +160,19 @@ namespace GitForce
             // A lot of things can go wrong here...
             try
             {
-                StringBuilder file = new StringBuilder();
+                StringBuilder answer = new StringBuilder();
                 using (WebResponse response = altRequest.GetResponse())
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        file.Append(reader.ReadToEnd());
+                        answer.Append(reader.ReadToEnd());
                     }
                 }
                 // TODO...
-                if (file.ToString().Length > 0)
+                if (answer.ToString().Length > 0)
                 {
                     Thread.Sleep(2000); // Make sure this message is shown after all other messages in the view pane
-                    App.PrintStatusMessage(file.ToString(), MessageType.NewVersion);
+                    App.PrintStatusMessage(answer.ToString(), MessageType.NewVersion);
                 }
             }
             catch (Exception ex)
