@@ -58,7 +58,7 @@ namespace GitForce
         {
 #if !DEBUG
             // Create a web request object
-            request = WebRequest.Create("http://sourceforge.net/projects/gitforce/");
+            request = WebRequest.Create("https://sourceforge.net/projects/gitforce/files/");
             request.Timeout = 5000;
 
             string query = "?v=" + GetVersion() + (ClassUtils.IsMono() ? "&r=Mono" : "&r=.NET") + "&u=" + Environment.UserName;
