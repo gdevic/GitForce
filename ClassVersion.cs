@@ -49,8 +49,10 @@ namespace GitForce
         /// <summary>
         /// Web request object that tries to fetch text from a target website
         /// </summary>
+#if !DEBUG
         private readonly WebRequest request = null;
         private readonly WebRequest altRequest = null;
+#endif
 
         /// <summary>
         /// Class constructor starts a new version check thread.
