@@ -118,7 +118,7 @@ namespace GitForce
                 {
                     // In the tag of the link, we will send file name and related SHA keys (stripped of ".")
                     string tag = string.Format("{0}#{1}#{2}", parts[1], preamble[2].Replace(".", ""), preamble[3].Replace(".", ""));
-                    textChangelist.AppendText(s[37] + "\t");
+                    textChangelist.AppendText(preamble[4] + "\t");
 
                     if (parts.Length == 3) // Two files are listed
                     {
