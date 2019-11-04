@@ -246,7 +246,7 @@ namespace GitForce
             ToolStripMenuItem mWkImport = new ToolStripMenuItem("Import Workspace...", null, WorkspaceImportMenuItem);
             ToolStripMenuItem mWkLoad = new ToolStripMenuItem("Load Workspace...", null, WorkspaceLoadMenuItem);
             ToolStripMenuItem mWkSave = new ToolStripMenuItem("Save Workspace As...", null, WorkspaceSaveMenuItem);
-            ToolStripMenuItem mWkLru = new ToolStripMenuItem("Recent Workspaces", null, WorkspaceLoadLruMenuItem);
+            ToolStripMenuItem mWkLru = new ToolStripMenuItem("Recent Workspaces", null);
             ToolStripMenuItem mExit = new ToolStripMenuItem("Exit", null, MenuExit, Keys.Alt | Keys.F4);
 
             // Fill in the last recently used workspace list of items
@@ -343,7 +343,8 @@ namespace GitForce
                     App.DoRefresh();
                 else
                 {
-                    if (MessageBox.Show("The specified workspace file cannot be loaded, or the loading was cancelled." + Environment.NewLine + "Do you want to remove it from the list of recently used workspaces?",
+                    String msg = (name != null) ? name + Environment.NewLine + Environment.NewLine : String.Empty;
+                    if (MessageBox.Show(msg + "The specified workspace file cannot be loaded, or the loading was cancelled." + Environment.NewLine + "Do you want to remove it from the list of recently used workspaces?",
                             "Load Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes) return;
                     // Remove the workspace file from the LRU list
                     var lru = ClassWorkspace.GetLRU();
