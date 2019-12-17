@@ -12,6 +12,7 @@ namespace GitForce
     static class ClassCommandLine
     {
         public static int ReturnCode = -1;
+        public static string initRepo = null;
         private static bool runGitForce = true;
 
         /// <summary>
@@ -35,6 +36,7 @@ namespace GitForce
                                   "  --version             Show the application version number." + Environment.NewLine +
                                   "  --reset-windows       Reset stored locations of windows and dialogs." + Environment.NewLine +
                                   "  --reset-config        Reset program configuration (repos etc.)." + Environment.NewLine +
+                                  "  --repo=\"<path>\"       Open a specified existing git repo upon start." + Environment.NewLine +
                                   "  --log                 Logs debug output to file." + Environment.NewLine);
                 ReturnCode = 0;
                 runGitForce = false;
@@ -109,6 +111,31 @@ namespace GitForce
                     ReturnCode = 0;
                 }
                 runGitForce = false;
+            }
+
+            // --repo="<path>"  Open an existing git repo at the specified path
+            if (commandLine["repo"] == "true") // --repo requires an additional argument
+            {
+                Console.WriteLine("Malformed arguments");
+                ReturnCode = -1;
+                runGitForce = false;
+            }
+            else if (commandLine["repo"] != null)
+            {
+                initRepo = commandLine["repo"];
+                // Substitute home folder for the token ~/
+                if (initRepo.StartsWith("~/"))
+                    initRepo = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), initRepo.Substring(2));
+                initRepo = Path.GetFullPath(initRepo.TrimEnd(new[] { '/', '\\' })); // Further correct the path formatting if needed
+                string initGitRepo = Path.Combine(initRepo, ".git");
+                if (Directory.Exists(initGitRepo))
+                    Console.WriteLine("Open git repo " + initRepo);
+                else
+                {
+                    Console.WriteLine("The specified folder does not contain a valid git repo: " + initRepo);
+                    ReturnCode = -1;
+                    runGitForce = false;
+                }
             }
 
             // WAR: On Windows, detach the console when we are done. Mono does not need that to use Console class.

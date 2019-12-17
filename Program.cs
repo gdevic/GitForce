@@ -205,19 +205,19 @@ namespace GitForce
                         Settings.Panels.ControlViewEdit.AddKnownEditors();
 
                         if (ClassUtils.IsMono())
-                            Ssh = new ClassSSH();           // Instantiate SSH support only on Linux (Mono)
+                            Ssh = new ClassSSH(); // Instantiate SSH support only on Linux (Mono)
                         else
-                            Putty = new ClassPutty();       // Instantiate PuTTY support only on Windows
+                            Putty = new ClassPutty(); // Instantiate PuTTY support only on Windows
 
-                        HttpsPasswd = new ClassHttpsPasswd();// Create HTTPS password helper file
-                        Repos = new ClassRepos();           // Create repository canvas
-                        Version = new ClassVersion();       // Start the new version check process
-                        MainForm = new FormMain();          // Create the main form
-                        MainForm.Show();                    // Show the main window so the handles get created
-                        if (MainForm.Initialize())          // Load repos, custom tools etc.
-                        {
-                            DoRefresh();                    // Initial global refresh
-                            Application.Run(MainForm);      // Run the main form
+                        HttpsPasswd = new ClassHttpsPasswd();
+                        Repos = new ClassRepos();
+                        Version = new ClassVersion();
+                        MainForm = new FormMain();
+                        MainForm.Show();
+                        if (MainForm.Initialize(ClassCommandLine.initRepo)) // Load repos, custom tools etc.
+                        {                            
+                            DoRefresh();
+                            Application.Run(MainForm);
 
                             Properties.Settings.Default.Save();
 

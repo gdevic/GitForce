@@ -20,6 +20,15 @@ namespace GitForce
         public List<ClassRepo> Repos = new List<ClassRepo>();
 
         /// <summary>
+        /// Returns an existing repo with the root on the given path; otherwise returns null
+        /// </summary>
+        public ClassRepo Find(string path)
+        {
+            path = Path.GetFullPath(path);
+            return Repos.Find(r => r.Path.Equals(path, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        /// <summary>
         /// Pointer to the default repo to switch to upon start
         /// </summary>
         public ClassRepo Default { get; set; }
@@ -172,7 +181,7 @@ namespace GitForce
         public ClassRepo Add(string root)
         {
             // Detect a repository with the same root path (case insensitive directory name compare)
-            if (Repos.Exists(r => r.Path.Equals(root, StringComparison.CurrentCultureIgnoreCase) ))
+            if (Find(root) != null)
                 throw new ClassException("Repository with the same name already exists!");
 
             Directory.CreateDirectory(root);

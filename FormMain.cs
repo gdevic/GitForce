@@ -134,8 +134,9 @@ namespace GitForce
         /// <summary>
         /// Main form initialization method performs operations that may need the main
         /// window to have already been shown since we may invoke its UI handlers
+        /// Optionally, open an existing git repo at the path given in the initRepo argument
         /// </summary>
-        public bool Initialize()
+        public bool Initialize(string initRepo)
         {
             // Load default set of repositories
             // If this is the first time run, initialize the default workspace file name
@@ -159,12 +160,32 @@ namespace GitForce
                 "Repos" :
                 Properties.Settings.Default.viewRightPanel);
 
+            // The user requested to open a specific repo with the --repo command line argument
+            if (initRepo != null)
+            {
+                try
+                {
+                    ClassRepo repo = App.Repos.Find(initRepo);
+                    if (repo == null)
+                         repo = App.Repos.Add(ClassCommandLine.initRepo);
+                    App.Repos.SetCurrent(repo);
+                    ChangeRightPanel("Revisions"); // Set the right pane to "Revisions" tab
+                    App.PrintStatusMessage("Opening repo " + repo, MessageType.General);
+                }
+                catch (Exception ex)
+                {
+                    App.PrintLogMessage("Unable to open repo: " + ex.Message, MessageType.Error);
+                    App.PrintStatusMessage(ex.Message, MessageType.Error);
+                }
+            }
+
             // Usability improvement: When starting the app, check if the global user name
             // and email are defined and if not, open the settings dialog. This helps when
             // starting the app for the first time.
             if (string.IsNullOrEmpty(ClassConfig.GetGlobal("user.name"))
                 && string.IsNullOrEmpty(ClassConfig.GetGlobal("user.email")))
                 MenuOptions(null, null);
+
             return true;
         }
 
