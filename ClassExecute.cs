@@ -105,7 +105,7 @@ namespace GitForce
             App.StatusBusy(true);
             Exec job = new Exec(cmd, args);
             job.Thread = new Thread(job.ThreadedRun);
-            job.Thread.Start(10000);
+            job.Thread.Start(1000 * 60); // Give the job 60 sec to cleanly finish
             job.Thread.Join();
             // There are known problems with async output not being flushed as the
             // thread exits. Releasing a time-slice using DoEvents seems to fix
@@ -125,7 +125,7 @@ namespace GitForce
             FComplete = pcomplete;
 
             Thread = new Thread(ThreadedRun);
-            Thread.Start(0);
+            Thread.Start(1000 * 60); // Give the job 60 sec to cleanly finish
         }
 
         /// <summary>
