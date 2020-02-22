@@ -228,7 +228,7 @@ namespace GitForce.Main.Right.Panels
             FormNewRepoStep1 newRepoStep1 = new FormNewRepoStep1();
             FormNewRepoStep2 newRepoStep2 = new FormNewRepoStep2();
 
-            // If the repo to clone parameter was given, build the close repo information
+            // If the repo to clone parameter was given, build the clone repo information
             if (repoToClone != null)
             {
                 newRepoStep1.Type = "local";

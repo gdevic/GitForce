@@ -77,6 +77,10 @@ namespace GitForce
         /// </summary>
         private void PStderr(String message)
         {
+            // Remove CSI [ or ESC [ + single character sequence
+            if (message.StartsWith("\u001b["))
+                message = message.Remove(0,3);
+
             // This is a workaround for Linux Mono:
             // On Windows, when we clone a remote repo, we receive each status line as a separate message
             // On Linux, it is all clumped together without any newlines (or 0A), so we inject them
