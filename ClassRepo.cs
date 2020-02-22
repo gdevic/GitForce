@@ -249,7 +249,7 @@ namespace GitForce
         /// </summary>
         public void GitDiff(string tag, List<string> files)
         {
-            string list = QuoteAndFlattenPaths(files);            
+            string list = QuoteAndFlattenPaths(files);
             if (list == "\"\"") // For now, we don't want to match all paths but only diff selected files
             {
                 App.PrintStatusMessage("Diffing: No files selected and we don't want to match all paths.", MessageType.General);

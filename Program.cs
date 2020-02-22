@@ -215,7 +215,7 @@ namespace GitForce
                         MainForm = new FormMain();
                         MainForm.Show();
                         if (MainForm.Initialize(ClassCommandLine.initRepo)) // Load repos, custom tools etc.
-                        {                            
+                        {
                             DoRefresh();
                             Application.Run(MainForm);
 
