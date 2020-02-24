@@ -54,7 +54,7 @@ namespace GitForce
         /// </summary>
         private void BtCopyEmailClick(object sender, EventArgs e)
         {
-            Clipboard.SetText("GitForce.Project@gmail.com");
+            Clipboard.SetText("BaltazarStudios@gmail.com");
         }
 
         /// <summary>

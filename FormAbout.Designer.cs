@@ -36,12 +36,12 @@
             this.linkGPL = new System.Windows.Forms.LinkLabel();
             this.labelBuild = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkBaltazarStudios = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.btCopyEmail = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.labelNewVersionAvailable = new System.Windows.Forms.Label();
             this.btDownload = new System.Windows.Forms.Button();
-            this.linkBaltazarStudios = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -135,15 +135,27 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contact information";
             // 
+            // linkBaltazarStudios
+            // 
+            this.linkBaltazarStudios.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkBaltazarStudios.AutoSize = true;
+            this.linkBaltazarStudios.Location = new System.Drawing.Point(289, 20);
+            this.linkBaltazarStudios.Name = "linkBaltazarStudios";
+            this.linkBaltazarStudios.Size = new System.Drawing.Size(127, 13);
+            this.linkBaltazarStudios.TabIndex = 13;
+            this.linkBaltazarStudios.TabStop = true;
+            this.linkBaltazarStudios.Text = "www.baltazarstudios.com";
+            this.linkBaltazarStudios.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkBaltazarStudiosLinkClicked);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Bitstream Vera Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(6, 72);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(189, 13);
+            this.label5.Size = new System.Drawing.Size(182, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "GitForce.Project@gmail.com";
+            this.label5.Text = "BaltazarStudios@gmail.com";
             // 
             // btCopyEmail
             // 
@@ -187,18 +199,6 @@
             this.btDownload.Text = "Download";
             this.btDownload.UseVisualStyleBackColor = true;
             this.btDownload.Click += new System.EventHandler(this.DownloadClick);
-            // 
-            // linkBaltazarStudios
-            // 
-            this.linkBaltazarStudios.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkBaltazarStudios.AutoSize = true;
-            this.linkBaltazarStudios.Location = new System.Drawing.Point(289, 20);
-            this.linkBaltazarStudios.Name = "linkBaltazarStudios";
-            this.linkBaltazarStudios.Size = new System.Drawing.Size(127, 13);
-            this.linkBaltazarStudios.TabIndex = 13;
-            this.linkBaltazarStudios.TabStop = true;
-            this.linkBaltazarStudios.Text = "www.baltazarstudios.com";
-            this.linkBaltazarStudios.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkBaltazarStudiosLinkClicked);
             // 
             // FormAbout
             // 
