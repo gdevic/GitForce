@@ -508,6 +508,7 @@
             //
             // statusStrip
             //
+            this.statusStrip.AutoSize = false;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusInfoLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 480);
