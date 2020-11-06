@@ -415,10 +415,12 @@ namespace GitForce
                     object opt = (sender as ToolStripMenuItem).Tag;
                     if (opt != null)
                     {
+                        App.PrintLogMessage("Exec: " + opt.ToString() + " " + file, MessageType.General);
                         Process.Start(opt.ToString(), file);
                         return;
                     }
                 }
+                App.PrintLogMessage("Exec: " + file, MessageType.General);
                 Process.Start(file);
             }
             catch (Exception ex)
