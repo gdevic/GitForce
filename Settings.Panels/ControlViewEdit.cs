@@ -27,9 +27,9 @@ namespace GitForce.Settings.Panels
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"notepad.exe"),
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Windows NT\Accessories\wordpad.exe"),
 
-                    // Linux OS common editors:
+                    // Linux OS common GUI editors:
                     @"/usr/bin/gedit",
-                    @"/usr/bin/nano",
+                    @"/usr/bin/emacs",
                 };
 
                 // Add to the list all editors that can be accessed
