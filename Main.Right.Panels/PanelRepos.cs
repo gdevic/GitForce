@@ -309,6 +309,8 @@ namespace GitForce.Main.Right.Panels
                 {
                     string type = newRepoStep1.Type;
                     string root = newRepoStep2.Destination;
+                    string branch = newRepoStep2.InitBranchName;
+                    bool isBranch = !string.IsNullOrEmpty(branch);
                     string extra = newRepoStep2.Extra;
                     bool isBare = newRepoStep2.IsBare;
 
@@ -319,7 +321,7 @@ namespace GitForce.Main.Right.Panels
                         switch (type)
                         {
                             case "empty":
-                                init = "init \"" + root + "\"" + (isBare ? " --bare --shared=all " : " ") + extra;
+                                init = "init \"" + root + "\"" + (isBranch ? " -b " + branch : "" ) + (isBare ? " --bare --shared=all " : " ") + extra;
                                 break;
 
                             case "local":

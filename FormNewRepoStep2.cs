@@ -24,6 +24,12 @@ namespace GitForce
             set { textBoxProjectName.Text = value; }
         }
 
+        public string InitBranchName
+        {
+            get { return textBoxInitBranchName.Text.Trim(); }
+            set { textBoxInitBranchName.Text = value; }
+        }
+
         /// <summary>
         /// Optional extra parameters which can be set by the user
         /// </summary>

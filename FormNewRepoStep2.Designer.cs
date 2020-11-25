@@ -40,6 +40,8 @@
             this.checkBoxBare = new System.Windows.Forms.CheckBox();
             this.labelCloneOperation = new System.Windows.Forms.Label();
             this.textBoxProjectName = new System.Windows.Forms.TextBox();
+            this.textBoxInitBranchName = new System.Windows.Forms.TextBox();
+            this.labelInitBranchName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btCancel
@@ -112,7 +114,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 136);
+            this.label2.Location = new System.Drawing.Point(12, 166);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(304, 13);
             this.label2.TabIndex = 6;
@@ -122,7 +124,7 @@
             // 
             this.textBoxExtraArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxExtraArgs.Location = new System.Drawing.Point(12, 152);
+            this.textBoxExtraArgs.Location = new System.Drawing.Point(12, 182);
             this.textBoxExtraArgs.Name = "textBoxExtraArgs";
             this.textBoxExtraArgs.Size = new System.Drawing.Size(351, 20);
             this.textBoxExtraArgs.TabIndex = 4;
@@ -130,7 +132,7 @@
             // checkBoxBare
             // 
             this.checkBoxBare.AutoSize = true;
-            this.checkBoxBare.Location = new System.Drawing.Point(12, 116);
+            this.checkBoxBare.Location = new System.Drawing.Point(12, 146);
             this.checkBoxBare.Name = "checkBoxBare";
             this.checkBoxBare.Size = new System.Drawing.Size(312, 17);
             this.checkBoxBare.TabIndex = 3;
@@ -155,12 +157,30 @@
             this.textBoxProjectName.TabIndex = 2;
             this.textBoxProjectName.TextChanged += new System.EventHandler(this.TextBoxRepoPathTextChanged);
             // 
+            // textBoxInitBranchName
+            // 
+            this.textBoxInitBranchName.Location = new System.Drawing.Point(12, 101);
+            this.textBoxInitBranchName.Name = "textBoxInitBranchName";
+            this.textBoxInitBranchName.Size = new System.Drawing.Size(133, 20);
+            this.textBoxInitBranchName.TabIndex = 10;
+            // 
+            // labelInitBranchName
+            // 
+            this.labelInitBranchName.AutoSize = true;
+            this.labelInitBranchName.Location = new System.Drawing.Point(151, 104);
+            this.labelInitBranchName.Name = "labelInitBranchName";
+            this.labelInitBranchName.Size = new System.Drawing.Size(138, 13);
+            this.labelInitBranchName.TabIndex = 11;
+            this.labelInitBranchName.Text = "Override initial branch name";
+            // 
             // FormNewRepoStep2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btPrev;
             this.ClientSize = new System.Drawing.Size(456, 343);
+            this.Controls.Add(this.labelInitBranchName);
+            this.Controls.Add(this.textBoxInitBranchName);
             this.Controls.Add(this.textBoxProjectName);
             this.Controls.Add(this.labelCloneOperation);
             this.Controls.Add(this.checkBoxBare);
@@ -174,7 +194,7 @@
             this.Controls.Add(this.btCancel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(369, 251);
+            this.MinimumSize = new System.Drawing.Size(369, 291);
             this.Name = "FormNewRepoStep2";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -200,5 +220,7 @@
         private System.Windows.Forms.CheckBox checkBoxBare;
         private System.Windows.Forms.Label labelCloneOperation;
         private System.Windows.Forms.TextBox textBoxProjectName;
+        private System.Windows.Forms.TextBox textBoxInitBranchName;
+        private System.Windows.Forms.Label labelInitBranchName;
     }
 }
