@@ -109,7 +109,10 @@ namespace GitForce
                     if (status.IsMarked(name) || tn.Nodes.Count == 0)
                     {
                         char icon = isIndex ? status.Xcode(name) : status.Ycode(name);
-                        tn.ImageIndex = (int)Staticons[icon];
+                        if (Staticons.ContainsKey(icon))
+                            tn.ImageIndex = (int)Staticons[icon];
+                        else
+                            tn.ImageIndex = 0;
                     }
                     else {
                         tn.ImageIndex = status.HasModifiedDescendants (name)
