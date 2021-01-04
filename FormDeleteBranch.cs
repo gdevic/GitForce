@@ -65,7 +65,10 @@ namespace GitForce
                 // Remote branch
                 string repoName = selectedBranch.Split('/')[0];
                 string branchName = selectedBranch.Split('/')[1];
-                cmd = String.Format("push {0} :{1}", repoName, branchName);
+                if (checkTracking.Checked)
+                    cmd = String.Format("branch -rd {0}", branchName); // Remove a reference to a remote branch
+                else
+                    cmd = String.Format("push {0} :{1}", repoName, branchName);
             }
 
             // Execute the final branch command and if fail, show the dialog box asking to retry
@@ -90,10 +93,14 @@ namespace GitForce
                     case "Local":
                         foreach (var branch in branches.Local)
                             listBranches.Items.Add(branch);
+                        checkForce.Enabled = true;
+                        checkTracking.Enabled = false;
                         break;
                     case "Remote":
                         foreach (var branch in branches.Remote)
                             listBranches.Items.Add(branch);
+                        checkForce.Enabled = false;
+                        checkTracking.Enabled = true;
                         break;
                 }
                 // Select the default branch if it is present on this list
