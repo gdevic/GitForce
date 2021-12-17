@@ -69,6 +69,7 @@ namespace GitForce
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
+                    StandardOutputEncoding = System.Text.Encoding.UTF8,
                     WorkingDirectory = Directory.GetCurrentDirectory()
                 }};
 
