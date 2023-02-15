@@ -33,7 +33,10 @@ namespace GitForce
         {
             if (Webhelp.ContainsKey(topic))
             {
-                Process.Start(Webhelp[topic]);
+                if (ClassUtils.IsMono())
+                    Process.Start("xdg-open", Webhelp[topic]);
+                else
+                    Process.Start(Webhelp[topic]);
             }
             else
             {
