@@ -1,7 +1,0 @@
-﻿From: http://www.gnu.org/licenses/gpl.html
-
-LICENSE
-
-GNU GENERAL PUBLIC LICENSE
-
-Version 3, 29 June 2007
