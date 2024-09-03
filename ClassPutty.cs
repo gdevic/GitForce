@@ -56,7 +56,7 @@ namespace GitForce
                         if (!procPageant.HasExited)
                         {
                             // Send a notification to Pageant to close
-                            IntPtr winHandle = NativeMethods.FindWindow("Pageant", null);
+                            IntPtr winHandle = NativeMethods.FindWindow("PageantSysTray", null);
                             NativeMethods.SendMessage(winHandle, NativeMethods.WM_COMMAND, NativeMethods.WM_CLOSE, 0);
                         }
                         //File.Delete(_pathPageant);
