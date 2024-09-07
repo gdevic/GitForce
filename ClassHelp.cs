@@ -19,11 +19,11 @@ namespace GitForce
             {"HTTPS Authentication", @"https://confluence.atlassian.com/fisheye/permanent-authentication-for-git-repositories-over-http-s-298977121.html"},
             {"SSH Windows", @"https://sites.google.com/site/gitforcetool/help/ssh"},
             {"Workspace", @"https://sites.google.com/site/gitforcetool/help/workspaces"},
-            {"Update Check", @"http://sourceforge.net/projects/gitforce"},
-            {"Download", @"http://sourceforge.net/projects/gitforce"},
+            {"Update Check", @"https://github.com/gdevic/GitForce/releases"},
+            {"Download", @"https://github.com/gdevic/GitForce/releases"},
             {"Discussion", @"https://sourceforge.net/p/gitforce/discussion"},
             {"GPL", @"http://www.gnu.org/licenses/gpl.html"},
-            {"BaltazarStudios", @"http://www.baltazarstudios.com" }
+            {"BaltazarStudios", @"https://www.baltazarstudios.com" }
         };
 
         /// <summary>
