@@ -29,6 +29,7 @@ namespace GitForce
                 new AppHelper( "WinMerge",       Path.Combine(ProgramFilesX64,@"WinMerge\WinMergeU.exe"),     "/e /x /u %2 %3 %4" ),
                 new AppHelper( "BC3",            Path.Combine(ProgramFilesX64,@"Beyond Compare 3\BComp.exe"), "%2 %3 %1 %4" ),
                 new AppHelper( "BC4",            Path.Combine(ProgramFilesX64,@"Beyond Compare 4\BComp.exe"), "%2 %3 %1 %4" ),
+                new AppHelper( "BC5",            Path.Combine(ProgramFilesX64,@"Beyond Compare 5\BComp.exe"), "%2 %3 %1 %4" ),
                 new AppHelper( "KDiff3",         Path.Combine(ProgramFilesX64,@"KDiff3\kdiff3.exe"),          "%1 %2 %3 -o %4" ),
 
                 // Linux OS:
