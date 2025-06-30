@@ -123,8 +123,8 @@
             this.linkLabel.Size = new System.Drawing.Size(150, 13);
             this.linkLabel.TabIndex = 6;
             this.linkLabel.TabStop = true;
-            this.linkLabel.Tag = "https://git-scm.com/download/";
-            this.linkLabel.Text = "https://git-scm.com/download";
+            this.linkLabel.Tag = "https://git-scm.com/downloads";
+            this.linkLabel.Text = "https://git-scm.com/downloads";
             this.linkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GitLinkClicked);
             // 
