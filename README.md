@@ -4,20 +4,26 @@ GitForce is a GUI front-ends for the git command line tool. GitForce runs on bot
 
 ## Features
 
-* Single executable file with no need for installation, portable by design
-* Intuitive GUI with efficient drag and drop for most operations
-* Runs on Windows and Linux (using Mono) and on other OS-es with Mono support
-* Easy way to manage multiple git repos
-* Multiple sets of repos (workspaces)
-* Custom tools, menus and extensions tailoring it to your specific needs
-* Easy managing of SSH keys and remotes
-* Integrated git command line interface
-* Users familiar with Perforce will find this UI very familiar!
+* Intuitive GUI with drag and drop
+* Single executable file and no need for installation
+* Runs on Windows and Linux (using Mono) and perhaps on other OS-es with Mono support
+* Create and manage multiple git repos
+* Easy scan for local repos
+* Supports multiple remote repos
+* Multiple workspaces which are sets of repos
+* Multiple sets of changes independent of a single “index” mandated by the git design
+* Add custom tools to context menus to customize it to your specific needs
+* Easy manage SSH keys and remotes
+* See files’ revision history, stash, unstash etc.
+* Manage local and remote branches
+* Integrated git command line interface if you still want to use it
+* Users familiar with Perforce will find this UI very familiar
+* Simple, intuitive and light git wrapper for all normal tasks and workflows
 
 ## Links
 
-* Documentation [link](https://sites.google.com/site/gitforcetool/home)
-* Forum [link](https://sourceforge.net/p/gitforce/discussion)
+* Documentation [link](https://baltazarstudios.com/software/gitforce)
+* Issues [link](https://github.com/gdevic/GitForce/issues)
 
 ## Running GitForce.exe on Linux (and other Mono) environments
 
@@ -28,7 +34,7 @@ $ sudo apt-get install mono-complete git meld
 
 ## Building from sources
 
-On Windows OS, install MSVC 2015 (other versions may also work) and open GitForce.sln.
+On Windows OS, install MSVC 2022 (other versions may also work) with C# support and open GitForce.sln.
 
 On Linux, use xbuild (part of mono-complete):
 ```
