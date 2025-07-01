@@ -13,12 +13,12 @@ namespace GitForce
         /// </summary>
         private static readonly Dictionary<string, string> Webhelp = new Dictionary<string, string>
         {
-            {"Home", @"https://sites.google.com/site/gitforcetool"},
-            {"Getting Started", @"https://sites.google.com/site/gitforcetool/getting-started"},
-            {"Edit Tools", @"https://sites.google.com/site/gitforcetool/help/custom-tools"},
+            {"Home", @"https://baltazarstudios.com/software/gitforce/"},
+            {"Getting Started", @"https://baltazarstudios.com/software/gitforce#getting-started"},
+            {"Edit Tools", @"https://baltazarstudios.com/software/gitforce-tools"},
             {"HTTPS Authentication", @"https://confluence.atlassian.com/fisheye/permanent-authentication-for-git-repositories-over-http-s-298977121.html"},
-            {"SSH Windows", @"https://sites.google.com/site/gitforcetool/help/ssh"},
-            {"Workspace", @"https://sites.google.com/site/gitforcetool/help/workspaces"},
+            {"SSH Windows", @"https://baltazarstudios.com/software/gitforce-ssh"},
+            {"Workspace", @"https://baltazarstudios.com/software/gitforce-workspaces"},
             {"Update Check", @"https://github.com/gdevic/GitForce/releases"},
             {"Download", @"https://github.com/gdevic/GitForce/releases"},
             {"Discussion", @"https://sourceforge.net/p/gitforce/discussion"},
