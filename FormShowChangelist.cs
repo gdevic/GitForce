@@ -80,8 +80,9 @@ namespace GitForce
             Tag = sha;      // Store the SHA of a current commit in the Tag field of this form
 
             // Issuing "show" command can take _very_ long time with a commit full of files
-            // Run a much faster 'whatchanged' command first to get the list of files
-            string cmd = "whatchanged " + sha + " -n 1 --format=medium";
+            // Run a much faster 'log' command first to get the list of files
+            string cmd = "log " + sha + " -n 1 --raw --format=medium";
+
             ExecResult result = App.Repos.Current.Run(cmd);
             string[] response = new[] { string.Empty };
             if (result.Success())
