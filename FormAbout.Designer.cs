@@ -62,7 +62,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 16);
+            this.label1.Size = new System.Drawing.Size(136, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "A GIT Visual Client";
             // 
@@ -102,11 +102,11 @@
             this.linkGPL.AutoSize = true;
             this.linkGPL.Location = new System.Drawing.Point(406, 12);
             this.linkGPL.Name = "linkGPL";
-            this.linkGPL.Size = new System.Drawing.Size(28, 13);
+            this.linkGPL.Size = new System.Drawing.Size(40, 13);
             this.linkGPL.TabIndex = 6;
             this.linkGPL.TabStop = true;
             this.linkGPL.Tag = "";
-            this.linkGPL.Text = "GPL";
+            this.linkGPL.Text = "GPLv3";
             this.linkGPL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkGplClicked);
             // 
             // labelBuild

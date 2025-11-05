@@ -40,7 +40,7 @@ namespace GitForce
         /// </summary>
         private void LinkGplClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ClassHelp.Handler("GPL");
+            ClassHelp.Handler("GPLv3");
         }
 
         private void LinkBaltazarStudiosLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

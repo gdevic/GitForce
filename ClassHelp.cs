@@ -22,7 +22,7 @@ namespace GitForce
             {"Update Check", @"https://github.com/gdevic/GitForce/releases"},
             {"Download", @"https://github.com/gdevic/GitForce/releases"},
             {"Discussion", @"https://sourceforge.net/p/gitforce/discussion"},
-            {"GPL", @"http://www.gnu.org/licenses/gpl.html"},
+            {"GPLv3", @"https://www.gnu.org/licenses/gpl-3.0.en.html"},
             {"BaltazarStudios", @"https://www.baltazarstudios.com" }
         };
 

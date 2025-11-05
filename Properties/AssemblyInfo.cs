@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GitForce")]
 [assembly: AssemblyProduct("GitForce built on 2025/08/31")]
-[assembly: AssemblyCopyright("Written by Goran Devic, released under GPL")]
+[assembly: AssemblyCopyright("Written by Goran Devic, released under GPLv3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
