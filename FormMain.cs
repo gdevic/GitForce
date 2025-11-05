@@ -134,6 +134,7 @@ namespace GitForce
         /// <summary>
         /// Main form initialization method performs operations that may need the main
         /// window to have already been shown since we may invoke its UI handlers
+        /// XXX: This is not true any more, but watch!
         /// Optionally, open an existing git repo at the path given in the initRepo argument
         /// </summary>
         public bool Initialize(string initRepo)
