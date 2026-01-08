@@ -15,6 +15,14 @@ namespace GitForce
         /// </summary>
         public readonly List<string> Gits = new List<string>();
 
+        /// <summary>
+        /// Known system directory names to skip during scanning
+        /// </summary>
+        private static readonly HashSet<string> SystemDirNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "lost+found"
+        };
+
         private readonly string dir;
         private readonly bool deepScan;
         private bool enableScan;
@@ -24,6 +32,36 @@ namespace GitForce
             InitializeComponent();
             dir = directory;
             deepScan = fDeepScan;
+        }
+
+        /// <summary>
+        /// Check if a directory should be skipped during scanning.
+        /// Skips system directories, hidden directories (starting with .), and known system folder names.
+        /// </summary>
+        private bool ShouldSkipDirectory(string path)
+        {
+            try
+            {
+                string name = Path.GetFileName(path);
+
+                // Skip directories starting with "." (hidden on Linux/macOS), except .git
+                if (name.StartsWith(".") && name != ".git")
+                    return true;
+
+                // Skip known system directory names
+                if (SystemDirNames.Contains(name))
+                    return true;
+
+                // Skip directories with System attribute (Windows system folders)
+                DirectoryInfo dirInfo = new DirectoryInfo(path);
+                if ((dirInfo.Attributes & FileAttributes.System) != 0)
+                    return true;
+            }
+            catch
+            {
+                // If we can't check attributes, don't skip
+            }
+            return false;
         }
 
         /// <summary>
@@ -52,7 +90,7 @@ namespace GitForce
                         if (deepScan == false)
                             break;
                     }
-                    else
+                    else if (!ShouldSkipDirectory(d))
                         SearchGit(d);
                 }
             }
