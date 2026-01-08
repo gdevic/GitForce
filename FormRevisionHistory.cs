@@ -14,9 +14,19 @@ namespace GitForce
     public partial class FormRevisionHistory : Form
     {
         /// <summary>
-        /// The file name whose log this form shows
+        /// The file name whose log this form shows (relative to repo or submodule root)
         /// </summary>
         private readonly string file;
+
+        /// <summary>
+        /// The working directory for git commands (repo root or submodule path)
+        /// </summary>
+        private readonly string workingDir;
+
+        /// <summary>
+        /// True if the file is inside a submodule
+        /// </summary>
+        private readonly bool isInSubmodule;
 
         /// <summary>
         /// The current SHA string to initialize the list
@@ -44,8 +54,24 @@ namespace GitForce
             // Apply the same font we use for description of changes
             textDescription.Font = Properties.Settings.Default.commitFont;
 
-            file = targetFile;
             Sha = String.Empty;
+
+            // Check if the file is inside a submodule
+            workingDir = App.Repos.Current.Path;
+            isInSubmodule = false;
+            file = targetFile;
+
+            if (App.Repos.Current.Submodules != null)
+            {
+                ClassSubmodules.Submodule sm;
+                string relativePath;
+                if (App.Repos.Current.Submodules.GetContainingSubmodule(targetFile, out sm, out relativePath))
+                {
+                    workingDir = sm.Path;
+                    file = relativePath;
+                    isInSubmodule = true;
+                }
+            }
 
             // Show complete path to the file being examined using the OS specific path separator
             Text = @"Revision History for " + App.Repos.Current.Path.Replace('\\', Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar + targetFile.Replace('\\', Path.DirectorySeparatorChar);
@@ -72,6 +98,14 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Run a git command in the appropriate directory (repo root or submodule).
+        /// </summary>
+        private ExecResult RunGit(string args)
+        {
+            return App.Repos.Current.Run(args, false, isInSubmodule ? workingDir : null);
+        }
+
+        /// <summary>
         /// The form is loading. Get the file log information and fill it in.
         /// </summary>
         private void FormRevisionHistoryLoad(object sender, EventArgs e)
@@ -92,7 +126,7 @@ namespace GitForce
             // Get the log of a single file only
             cmd.Append(" -- \"" + file + "\"");
 
-            ExecResult result = App.Repos.Current.Run(cmd.ToString());
+            ExecResult result = RunGit(cmd.ToString());
             if (result.Success())
                 PanelRevlist.UpdateList(listRev, result.stdout, true, string.Empty);
             if (listRev.Items.Count > 0)
@@ -130,7 +164,7 @@ namespace GitForce
             {
                 string sha = lruSha[1];
                 string cmd = string.Format("show -s {0}", sha);
-                ExecResult result = App.Repos.Current.Run(cmd);
+                ExecResult result = RunGit(cmd);
                 textDescription.Text = result.Success() ? result.stdout : result.stderr;
             }
         }
@@ -176,7 +210,7 @@ namespace GitForce
                     {
                         FileName = Properties.Settings.Default.GitPath,
                         Arguments = cmd,
-                        WorkingDirectory = App.Repos.Current.Path,
+                        WorkingDirectory = workingDir,
                         UseShellExecute = false,
                         CreateNoWindow = true
                     }
@@ -198,7 +232,7 @@ namespace GitForce
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
                 string cmd = string.Format("checkout {1} -- \"{0}\"", file, lruSha[0]);
-                ExecResult result = App.Repos.Current.RunCmd(cmd);
+                ExecResult result = App.Repos.Current.RunCmd(cmd, false, isInSubmodule ? workingDir : null);
                 if (result.Success())
                 {
                     App.PrintStatusMessage("File checked out at a previous revision " + lruSha[0] + ": " + file, MessageType.General);
@@ -335,7 +369,7 @@ namespace GitForce
             string gitpath = file.Replace(Path.DirectorySeparatorChar, '/');
             string cmd = string.Format("show {1}:\"{0}\"", gitpath, sha);
 
-            ExecResult result = App.Repos.Current.Run(cmd);
+            ExecResult result = RunGit(cmd);
             if (result.Success() == false)
                 return string.Empty;
             string response = result.stdout;

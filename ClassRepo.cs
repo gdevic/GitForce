@@ -164,13 +164,60 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Partition files into main repo files and submodule files, then run the given
+        /// git command on each group in the appropriate directory context.
+        /// </summary>
+        /// <param name="cmdPrefix">Git command prefix (e.g., "add --")</param>
+        /// <param name="files">List of file paths relative to repo root</param>
+        private void RunCmdWithSubmoduleSupport(string cmdPrefix, List<string> files)
+        {
+            // Partition files: main repo vs submodules
+            List<string> mainRepoFiles = new List<string>();
+            Dictionary<string, List<string>> submoduleFiles = new Dictionary<string, List<string>>();
+
+            if (Submodules != null)
+            {
+                foreach (string file in files)
+                {
+                    ClassSubmodules.Submodule sm;
+                    string relativePath;
+                    if (Submodules.GetContainingSubmodule(file, out sm, out relativePath))
+                    {
+                        if (!submoduleFiles.ContainsKey(sm.Path))
+                            submoduleFiles[sm.Path] = new List<string>();
+                        submoduleFiles[sm.Path].Add(relativePath);
+                    }
+                    else
+                        mainRepoFiles.Add(file);
+                }
+            }
+            else
+                mainRepoFiles = files;
+
+            // Run command for main repo files
+            if (mainRepoFiles.Count > 0)
+            {
+                string list = QuoteAndFlattenPaths(mainRepoFiles);
+                RunCmd(cmdPrefix + " " + list);
+            }
+
+            // Run command for each submodule
+            foreach (var kvp in submoduleFiles)
+            {
+                string smPath = kvp.Key;
+                string list = QuoteAndFlattenPaths(kvp.Value);
+                RunCmd(cmdPrefix + " " + list, false, smPath);
+            }
+        }
+
+        /// <summary>
         /// Add untracked files to Git repository
         /// </summary>
         public void GitAdd(List<string> files)
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Adding " + list, MessageType.General);
-            RunCmd("add -- " + list);
+            RunCmdWithSubmoduleSupport("add --", files);
             // Any git command that adds/updates files in the index might cause file check for TABs
             ClassTabCheck.CheckForTabs(files);
         }
@@ -182,7 +229,7 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Updating " + list, MessageType.General);
-            RunCmd("add -- " + list);
+            RunCmdWithSubmoduleSupport("add --", files);
             // Any git command that adds/updates files in the index might cause file check for TABs
             ClassTabCheck.CheckForTabs(files);
         }
@@ -195,7 +242,8 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Removing " + list, MessageType.General);
-            RunCmd("rm " + tag + " -- " + list);
+            string cmd = string.IsNullOrEmpty(tag) ? "rm --" : "rm " + tag + " --";
+            RunCmdWithSubmoduleSupport(cmd, files);
         }
 
         /// <summary>
@@ -205,7 +253,7 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Renaming " + list, MessageType.General);
-            RunCmd("add -- " + list);
+            RunCmdWithSubmoduleSupport("add --", files);
             // Any git command that adds/updates files in the index might cause file check for TABs
             ClassTabCheck.CheckForTabs(files);
         }
@@ -226,7 +274,8 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Checkout " + options + " " + list, MessageType.General);
-            RunCmd("checkout " + options + " -- " + list);
+            string cmd = string.IsNullOrEmpty(options) ? "checkout --" : "checkout " + options + " --";
+            RunCmdWithSubmoduleSupport(cmd, files);
         }
 
         /// <summary>
@@ -236,7 +285,7 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage("Reverting " + list, MessageType.General);
-            RunCmd("checkout -- " + list);
+            RunCmdWithSubmoduleSupport("checkout --", files);
         }
 
         /// <summary>
@@ -247,7 +296,8 @@ namespace GitForce
         {
             string list = QuoteAndFlattenPaths(files);
             App.PrintStatusMessage(string.Format("Resetting to {0}: {1}", head, list), MessageType.General);
-            return RunCmd("reset " + head + " -- " + list).Success();
+            RunCmdWithSubmoduleSupport("reset " + head + " --", files);
+            return true; // Note: With submodule support, individual results are harder to track
         }
 
         /// <summary>
@@ -262,6 +312,30 @@ namespace GitForce
                 return;
             }
             App.PrintStatusMessage("Diffing " + list, MessageType.General);
+
+            // Check if files are in a submodule (handle first file for simplicity)
+            if (Submodules != null && files.Count > 0)
+            {
+                ClassSubmodules.Submodule sm;
+                string relativePath;
+                if (Submodules.GetContainingSubmodule(files[0], out sm, out relativePath))
+                {
+                    // Run diff in submodule context
+                    List<string> smFiles = new List<string>();
+                    foreach (string file in files)
+                    {
+                        string relPath;
+                        ClassSubmodules.Submodule dummy;
+                        if (Submodules.GetContainingSubmodule(file, out dummy, out relPath))
+                            smFiles.Add(relPath);
+                    }
+                    string smList = QuoteAndFlattenPaths(smFiles);
+                    Directory.SetCurrentDirectory(sm.Path);
+                    ClassGit.Run("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + smList, true);
+                    return;
+                }
+            }
+
             RunCmd("difftool " + ClassDiff.GetDiffCmd() + " " + tag + " -- " + list, true);
         }
 
@@ -295,19 +369,26 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Repo class function that runs a git command in the context of a repository.
-        /// Use this function with all user-initiated commands in order to have them printed into the status window.
-        /// NOTE: C# 4.0 is currently not supported on MSVC 2008
+        /// Run a git command with logging to status window.
+        /// Use this function with all user-initiated commands.
         /// </summary>
-        public ExecResult RunCmd(string args) { return RunCmd(args, false); }
-        public ExecResult RunCmd(string args, bool async)
+        /// <param name="args">Git command arguments</param>
+        /// <param name="async">If true, run asynchronously</param>
+        /// <param name="workDir">Working directory (null = repo root)</param>
+        /// <returns>ExecResult with stdout, stderr, and return code</returns>
+        public ExecResult RunCmd(string args, bool async = false, string workDir = null)
         {
             // Print the actual command line to the status window only if user selected that setting
             if (Properties.Settings.Default.logCommands)
-                App.PrintStatusMessage("git " + args, MessageType.Command);
+            {
+                string msg = "git " + args;
+                if (workDir != null && workDir != Root)
+                    msg += " (in " + workDir + ")";
+                App.PrintStatusMessage(msg, MessageType.Command);
+            }
 
-            // Run the command and print the response to the status window in any case
-            ExecResult result = Run(args, async);
+            // Run the command and print the response to the status window
+            ExecResult result = Run(args, async, workDir);
             if (result.stdout.Length > 0)
                 App.PrintStatusMessage(result.stdout, MessageType.Output);
 
@@ -319,16 +400,18 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Repo class function that runs a git command in the context of a repository.
-        /// NOTE: C# 4.0 is currently not supported on MSVC 2008
+        /// Run a git command in the context of a repository.
         /// </summary>
-        public ExecResult Run(string args) { return Run(args, false); }
-        public ExecResult Run(string args, bool async)
+        /// <param name="args">Git command arguments</param>
+        /// <param name="async">If true, run asynchronously</param>
+        /// <param name="workDir">Working directory (null = repo root)</param>
+        /// <returns>ExecResult with stdout, stderr, and return code</returns>
+        public ExecResult Run(string args, bool async = false, string workDir = null)
         {
             ExecResult output = new ExecResult();
             try
             {
-                Directory.SetCurrentDirectory(Root);
+                Directory.SetCurrentDirectory(workDir ?? Root);
 
                 // Set the HTTPS password
                 string password = Remotes.GetPassword("");

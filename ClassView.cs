@@ -116,33 +116,34 @@ namespace GitForce
                 else
                 {
                     string name = isIndex ? tn.Text : tn.Tag.ToString();
-                    if (status.IsMarked(name) || tn.Nodes.Count == 0)
+                    string pathToCheck = name.TrimEnd(Path.DirectorySeparatorChar);
+
+                    // First check if this is a submodule (works for both leaf nodes and folders)
+                    if (App.Repos.Current != null && App.Repos.Current.Submodules != null && App.Repos.Current.Submodules.IsSubmodule(pathToCheck))
                     {
+                        var sm = App.Repos.Current.Submodules.Get(pathToCheck);
+                        if (!sm.IsInitialized)
+                            tn.ImageIndex = (int)Img.SubmoduleUninitialized;
+                        else if (sm.StatusCode == '+')
+                            tn.ImageIndex = (int)Img.SubmoduleModified;
+                        else
+                            tn.ImageIndex = tn.IsExpanded ? (int)Img.SubmoduleOpened : (int)Img.SubmoduleClosed;
+                    }
+                    else if (status.IsMarked(name) || tn.Nodes.Count == 0)
+                    {
+                        // File node - assign status icon
                         char icon = isIndex ? status.Xcode(name) : status.Ycode(name);
                         if (Staticons.ContainsKey(icon))
                             tn.ImageIndex = (int)Staticons[icon];
                         else
                             tn.ImageIndex = 0;
                     }
-                    else {
-                        // Check if this folder is a submodule
-                        string folderPath = name.TrimEnd(Path.DirectorySeparatorChar);
-                        if (App.Repos.Current != null && App.Repos.Current.Submodules != null && App.Repos.Current.Submodules.IsSubmodule(folderPath))
-                        {
-                            var sm = App.Repos.Current.Submodules.Get(folderPath);
-                            if (!sm.IsInitialized)
-                                tn.ImageIndex = (int)Img.SubmoduleUninitialized;
-                            else if (sm.StatusCode == '+')
-                                tn.ImageIndex = (int)Img.SubmoduleModified;
-                            else
-                                tn.ImageIndex = tn.IsExpanded ? (int)Img.SubmoduleOpened : (int)Img.SubmoduleClosed;
-                        }
-                        else
-                        {
-                            tn.ImageIndex = status.HasModifiedDescendants(name)
-                               ? (int)Img.FolderClosedModified
-                               : (int)Img.FolderClosed;
-                        }
+                    else
+                    {
+                        // Folder node - check for modified descendants
+                        tn.ImageIndex = status.HasModifiedDescendants(name)
+                           ? (int)Img.FolderClosedModified
+                           : (int)Img.FolderClosed;
                     }
                 }
                 ViewAssignIcon(status, tn, isIndex);

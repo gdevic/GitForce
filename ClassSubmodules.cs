@@ -87,6 +87,33 @@ namespace GitForce
         public int Count => submodules.Count;
 
         /// <summary>
+        /// Check if a file path is inside any submodule and return the submodule info.
+        /// </summary>
+        /// <param name="filePath">Relative file path to check</param>
+        /// <param name="submodule">Output: the containing submodule if found</param>
+        /// <param name="relativePath">Output: the file path relative to the submodule root</param>
+        /// <returns>True if the file is inside a submodule</returns>
+        public bool GetContainingSubmodule(string filePath, out Submodule submodule, out string relativePath)
+        {
+            submodule = new Submodule();
+            relativePath = filePath;
+
+            foreach (var kvp in submodules)
+            {
+                string smPath = kvp.Key;
+                // Check if filePath starts with submodule path (with separator)
+                string prefix = smPath + System.IO.Path.DirectorySeparatorChar;
+                if (filePath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    submodule = kvp.Value;
+                    relativePath = filePath.Substring(prefix.Length);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Refresh the list of submodules for the given repo.
         /// Parses both .gitmodules config and git submodule status output.
         /// </summary>

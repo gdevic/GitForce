@@ -103,7 +103,38 @@ namespace GitForce.Main.Left.Panels
                                 .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
                                 .Split(("\0")
                                 .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                            files.AddRange(response.Select(s => s.Split('\t').Last()));
+                            // Filter out submodule entries (they show as "commit" type in ls-tree)
+                            foreach (string entry in response)
+                            {
+                                string fileName = entry.Split('\t').Last();
+                                // Skip if this is a submodule path
+                                if (App.Repos.Current.Submodules == null || !App.Repos.Current.Submodules.IsSubmodule(fileName))
+                                    files.Add(fileName);
+                            }
+                        }
+                        // Also fetch files from initialized submodules
+                        if (App.Repos.Current.Submodules != null)
+                        {
+                            foreach (string smPath in App.Repos.Current.Submodules.GetPaths())
+                            {
+                                var sm = App.Repos.Current.Submodules.Get(smPath);
+                                if (sm.IsInitialized)
+                                {
+                                    ExecResult smResult = App.Repos.Current.Run("ls-tree --abbrev -r -z HEAD", false, sm.Path);
+                                    if (smResult.Success())
+                                    {
+                                        string[] smResponse = smResult.stdout
+                                            .Replace('/', Path.DirectorySeparatorChar)
+                                            .Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                                        // Prefix each file with submodule path
+                                        foreach (string entry in smResponse)
+                                        {
+                                            string fileName = entry.Split('\t').Last();
+                                            files.Add(smPath + Path.DirectorySeparatorChar + fileName);
+                                        }
+                                    }
+                                }
+                            }
                         }
                         break;
 
@@ -130,7 +161,37 @@ namespace GitForce.Main.Left.Panels
                                 .Replace('/', Path.DirectorySeparatorChar)  // Correct the path slash on Windows
                                 .Split(("\0")
                                 .ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                            files.AddRange(response2.Select(s => s.Split('\t').Last()).Distinct());
+                            // Filter out submodule entries
+                            foreach (string entry in response2)
+                            {
+                                string fileName = entry.Split('\t').Last();
+                                if (App.Repos.Current.Submodules == null || !App.Repos.Current.Submodules.IsSubmodule(fileName))
+                                    files.Add(fileName);
+                            }
+                        }
+                        // Also fetch files from initialized submodules
+                        if (App.Repos.Current.Submodules != null)
+                        {
+                            foreach (string smPath in App.Repos.Current.Submodules.GetPaths())
+                            {
+                                var sm = App.Repos.Current.Submodules.Get(smPath);
+                                if (sm.IsInitialized)
+                                {
+                                    ExecResult smResult = App.Repos.Current.Run("ls-files -z --abbrev --exclude-from=.gitignore -o -c -d -m", false, sm.Path);
+                                    if (smResult.Success())
+                                    {
+                                        string[] smResponse = smResult.stdout
+                                            .Replace('/', Path.DirectorySeparatorChar)
+                                            .Split(("\0").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                                        // Prefix each file with submodule path
+                                        foreach (string entry in smResponse)
+                                        {
+                                            string fileName = entry.Split('\t').Last();
+                                            files.Add(smPath + Path.DirectorySeparatorChar + fileName);
+                                        }
+                                    }
+                                }
+                            }
                         }
                         break;
                 }
@@ -254,10 +315,21 @@ namespace GitForce.Main.Left.Panels
                 // Move files into different buckets based on what function needs to be done on them
                 foreach (var s in SelFiles)
                 {
-                    if (Opclass.ContainsKey(status.Ycode(s)))
-                        Opclass[status.Ycode(s)].Add(s);
+                    char code = status.Ycode(s);
+
+                    // For files inside submodules, treat as tracked unmodified (' ') if not in main status
+                    if (code == '\0' && App.Repos.Current != null && App.Repos.Current.Submodules != null)
+                    {
+                        ClassSubmodules.Submodule sm;
+                        string relativePath;
+                        if (App.Repos.Current.Submodules.GetContainingSubmodule(s, out sm, out relativePath))
+                            code = ' '; // Treat submodule files as tracked
+                    }
+
+                    if (Opclass.ContainsKey(code))
+                        Opclass[code].Add(s);
                     else
-                        Opclass[status.Ycode(s)] = new List<string> { s };
+                        Opclass[code] = new List<string> { s };
                 }
             }
         }
