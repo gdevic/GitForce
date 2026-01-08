@@ -28,7 +28,8 @@ namespace GitForce
 
         /// <summary>
         /// Recursively search folders starting at the given directory and
-        /// add all paths that end with .git to the list of potential candidates
+        /// add all paths that end with .git to the list of potential candidates.
+        /// Also detects submodules by parsing .gitmodules files.
         /// </summary>
         private void SearchGit(string dir)
         {
@@ -44,12 +45,45 @@ namespace GitForce
 
                     if (d.EndsWith(Path.DirectorySeparatorChar + ".git"))
                     {
-                        Gits.Add(d.Substring(0, d.Length - 5));
+                        string repoPath = d.Substring(0, d.Length - 5);
+                        Gits.Add(repoPath);
+                        // Check for submodules in this repo
+                        AddSubmodules(repoPath);
                         if (deepScan == false)
                             break;
                     }
                     else
                         SearchGit(d);
+                }
+            }
+            catch (Exception) {}
+        }
+
+        /// <summary>
+        /// Parse .gitmodules file and add any submodule paths to the list
+        /// </summary>
+        private void AddSubmodules(string repoPath)
+        {
+            string gitmodulesPath = Path.Combine(repoPath, ".gitmodules");
+            if (!File.Exists(gitmodulesPath))
+                return;
+
+            try
+            {
+                string[] lines = File.ReadAllLines(gitmodulesPath);
+                foreach (string line in lines)
+                {
+                    string trimmed = line.Trim();
+                    if (trimmed.StartsWith("path = ") || trimmed.StartsWith("path="))
+                    {
+                        int eqIndex = trimmed.IndexOf('=');
+                        string submodulePath = trimmed.Substring(eqIndex + 1).Trim();
+                        string fullPath = Path.Combine(repoPath, submodulePath);
+                        // Only add initialized submodules (have a .git file with gitdir reference)
+                        string gitFile = Path.Combine(fullPath, ".git");
+                        if (File.Exists(gitFile) && !Gits.Contains(fullPath))
+                            Gits.Add(fullPath);
+                    }
                 }
             }
             catch (Exception) {}

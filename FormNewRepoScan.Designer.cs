@@ -118,7 +118,7 @@
             this.checkBoxDeepScan.Name = "checkBoxDeepScan";
             this.checkBoxDeepScan.Size = new System.Drawing.Size(279, 17);
             this.checkBoxDeepScan.TabIndex = 6;
-            this.checkBoxDeepScan.Text = "Do a deep scanning (slower but can find submodules)";
+            this.checkBoxDeepScan.Text = "Find all nested repositories";
             this.checkBoxDeepScan.UseVisualStyleBackColor = true;
             // 
             // btSelectAll

@@ -112,7 +112,7 @@ namespace GitForce.Main.Left.Panels
                                     files.Add(fileName);
                             }
                         }
-                        // Also fetch files from initialized submodules
+                        // Also add submodules (initialized or not, so user can see and initialize them)
                         if (App.Repos.Current.Submodules != null)
                         {
                             foreach (string smPath in App.Repos.Current.Submodules.GetPaths())
@@ -120,6 +120,7 @@ namespace GitForce.Main.Left.Panels
                                 var sm = App.Repos.Current.Submodules.Get(smPath);
                                 if (sm.IsInitialized)
                                 {
+                                    // For initialized submodules, add their contents (folder structure created automatically)
                                     ExecResult smResult = App.Repos.Current.Run("ls-tree --abbrev -r -z HEAD", false, sm.Path);
                                     if (smResult.Success())
                                     {
@@ -133,6 +134,12 @@ namespace GitForce.Main.Left.Panels
                                             files.Add(smPath + Path.DirectorySeparatorChar + fileName);
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    // For uninitialized submodules, add the path itself so user can see and init it
+                                    if (!files.Contains(smPath))
+                                        files.Add(smPath);
                                 }
                             }
                         }
@@ -169,7 +176,7 @@ namespace GitForce.Main.Left.Panels
                                     files.Add(fileName);
                             }
                         }
-                        // Also fetch files from initialized submodules
+                        // Also add submodules (initialized or not, so user can see and initialize them)
                         if (App.Repos.Current.Submodules != null)
                         {
                             foreach (string smPath in App.Repos.Current.Submodules.GetPaths())
@@ -177,6 +184,7 @@ namespace GitForce.Main.Left.Panels
                                 var sm = App.Repos.Current.Submodules.Get(smPath);
                                 if (sm.IsInitialized)
                                 {
+                                    // For initialized submodules, add their contents (folder structure created automatically)
                                     ExecResult smResult = App.Repos.Current.Run("ls-files -z --abbrev --exclude-from=.gitignore -o -c -d -m", false, sm.Path);
                                     if (smResult.Success())
                                     {
@@ -190,6 +198,12 @@ namespace GitForce.Main.Left.Panels
                                             files.Add(smPath + Path.DirectorySeparatorChar + fileName);
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    // For uninitialized submodules, add the path itself so user can see and init it
+                                    if (!files.Contains(smPath))
+                                        files.Add(smPath);
                                 }
                             }
                         }
@@ -868,7 +882,7 @@ namespace GitForce.Main.Left.Panels
         {
             string path = (sender as ToolStripMenuItem).Tag.ToString();
             App.PrintStatusMessage("Initializing and cloning submodule: " + path, MessageType.General);
-            status.Repo.RunCmd("submodule update --init \"" + path + "\"", true);
+            status.Repo.RunCmd("submodule update --init --force \"" + path + "\"");
             App.DoRefresh();
         }
 
