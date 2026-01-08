@@ -301,10 +301,32 @@ namespace GitForce
             // Second check if the directory is completely empty (no files of subdirectories within it)
             if ((Directory.GetFiles(path).Length == 0) && (Directory.GetDirectories(path).Length == 0))
                 return DirStatType.Empty;
-            // Lastly, check if there is a subdirectory ".git" with a representative file ("config") which
+            // Check if there is a subdirectory ".git" with a representative file ("config") which
             // would make very likely that a given path is the root to a valid git folder structure
             string testFile = Path.Combine(path, Path.Combine(".git", "config"));
-            return File.Exists(testFile) ? DirStatType.Git : DirStatType.Nongit;
+            if (File.Exists(testFile))
+                return DirStatType.Git;
+            // Also check for submodule-style .git file (contains "gitdir:" reference)
+            string gitPath = Path.Combine(path, ".git");
+            if (File.Exists(gitPath))
+            {
+                try
+                {
+                    string content = File.ReadAllText(gitPath).Trim();
+                    if (content.StartsWith("gitdir:"))
+                    {
+                        string gitdir = content.Substring(7).Trim();
+                        // Resolve relative path if needed
+                        if (!Path.IsPathRooted(gitdir))
+                            gitdir = Path.GetFullPath(Path.Combine(path, gitdir));
+                        // Check if the referenced gitdir has a config file
+                        if (File.Exists(Path.Combine(gitdir, "config")))
+                            return DirStatType.Git;
+                    }
+                }
+                catch { }
+            }
+            return DirStatType.Nongit;
         }
 
         /// <summary>

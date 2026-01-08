@@ -916,32 +916,9 @@ namespace GitForce.Main.Left.Panels
             string path = (sender as ToolStripMenuItem).Tag.ToString();
             var sm = App.Repos.Current.Submodules.Get(path);
 
-            string statusText;
-            switch (sm.StatusCode)
-            {
-                case '-': statusText = "Not initialized"; break;
-                case '+': statusText = "Modified (different commit)"; break;
-                case 'U': statusText = "Merge conflict"; break;
-                default: statusText = "OK"; break;
-            }
-
-            string info = string.Format(
-                "Submodule: {0}\n\n" +
-                "Path: {1}\n" +
-                "URL: {2}\n" +
-                "Commit: {3}\n" +
-                "Status: {4}\n" +
-                "Initialized: {5}",
-                sm.Name,
-                sm.Path,
-                sm.Url ?? "(unknown)",
-                sm.Sha ?? "(unknown)",
-                statusText,
-                sm.IsInitialized ? "Yes" : "No"
-            );
-
-            MessageBox.Show(info, "Submodule Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormSubmoduleInfo formSubmoduleInfo = new FormSubmoduleInfo();
+            formSubmoduleInfo.LoadSubmodule(sm);
+            formSubmoduleInfo.ShowDialog();
         }
 
         #endregion Submodule handlers

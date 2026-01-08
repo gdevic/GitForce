@@ -300,6 +300,12 @@
     <Compile Include="FormStash.Designer.cs">
       <DependentUpon>FormStash.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSubmoduleInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSubmoduleInfo.Designer.cs">
+      <DependentUpon>FormSubmoduleInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSwitchToBranch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -638,6 +644,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStash.resx">
       <DependentUpon>FormStash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSubmoduleInfo.resx">
+      <DependentUpon>FormSubmoduleInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSwitchToBranch.resx">
       <DependentUpon>FormSwitchToBranch.cs</DependentUpon>
