@@ -169,7 +169,11 @@ namespace GitForce
         {
             ClassRepo repo = App.Repos.Current;
             if (repo != null)
+            {
                 repo.Status = new ClassStatus(repo);
+                repo.Submodules = new ClassSubmodules();
+                repo.Submodules.Refresh(repo);
+            }
         }
 
         /// <summary>

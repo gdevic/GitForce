@@ -475,7 +475,36 @@ namespace GitForce.Main.Left.Panels
             ToolStripMenuItem mExplore = new ToolStripMenuItem("Explore...", null, MenuViewExploreClick);
             ToolStripMenuItem mCommand = new ToolStripMenuItem("Command Prompt...", null, MenuViewCommandClick);
 
-            ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
+            // Build the "Submodule" submenu (only populated if selection is a submodule)
+            ToolStripMenuItem mSubmodule = null;
+            if (treeView.SelectedNodes.Count == 1 && App.Repos.Current != null && App.Repos.Current.Submodules != null)
+            {
+                string selectedPath = treeView.SelectedNodes[0].Tag.ToString().TrimEnd(Path.DirectorySeparatorChar);
+                if (App.Repos.Current.Submodules.IsSubmodule(selectedPath))
+                {
+                    var sm = App.Repos.Current.Submodules.Get(selectedPath);
+
+                    mSubmodule = new ToolStripMenuItem("Submodule");
+
+                    ToolStripMenuItem mSmInit = new ToolStripMenuItem("Initialize && Clone", null, MenuSubmoduleInit)
+                        { Tag = selectedPath, Enabled = !sm.IsInitialized };
+                    ToolStripMenuItem mSmUpdate = new ToolStripMenuItem("Update", null, MenuSubmoduleUpdate)
+                        { Tag = selectedPath, Enabled = sm.IsInitialized };
+                    ToolStripMenuItem mSmSync = new ToolStripMenuItem("Sync URL", null, MenuSubmoduleSync)
+                        { Tag = selectedPath };
+                    ToolStripMenuItem mSmInfo = new ToolStripMenuItem("Show Info...", null, MenuSubmoduleInfo)
+                        { Tag = selectedPath };
+
+                    mSubmodule.DropDownItems.AddRange(new ToolStripItem[] {
+                        mSmInit, mSmUpdate, mSmSync,
+                        new ToolStripSeparator(),
+                        mSmInfo
+                    });
+                }
+            }
+
+            // Build the base menu items list
+            List<ToolStripItem> menuItems = new List<ToolStripItem> {
                 mUpdate,
                 mRevert,
                 mDiff,
@@ -484,10 +513,21 @@ namespace GitForce.Main.Left.Panels
                 new ToolStripSeparator(),
                 mRename,
                 mDelete,
-                mRemove,
-                new ToolStripSeparator(),
-                mExplore, mCommand
-            });
+                mRemove
+            };
+
+            // Insert submodule menu if applicable
+            if (mSubmodule != null)
+            {
+                menuItems.Add(new ToolStripSeparator());
+                menuItems.Add(mSubmodule);
+            }
+
+            menuItems.Add(new ToolStripSeparator());
+            menuItems.Add(mExplore);
+            menuItems.Add(mCommand);
+
+            ToolStripItemCollection menu = new ToolStripItemCollection(owner, menuItems.ToArray());
 
             // Enable only menu items which match the selected file conditions
             // This is a translation dictionary for our menu items
@@ -746,5 +786,78 @@ namespace GitForce.Main.Left.Panels
         }
 
         #endregion Handlers for file actions related to Git
+
+        #region Submodule handlers
+
+        /// <summary>
+        /// Initialize and clone a submodule
+        /// </summary>
+        private void MenuSubmoduleInit(object sender, EventArgs e)
+        {
+            string path = (sender as ToolStripMenuItem).Tag.ToString();
+            App.PrintStatusMessage("Initializing and cloning submodule: " + path, MessageType.General);
+            status.Repo.RunCmd("submodule update --init \"" + path + "\"", true);
+            App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Update a submodule to the recorded commit
+        /// </summary>
+        private void MenuSubmoduleUpdate(object sender, EventArgs e)
+        {
+            string path = (sender as ToolStripMenuItem).Tag.ToString();
+            App.PrintStatusMessage("Updating submodule: " + path, MessageType.General);
+            status.Repo.RunCmd("submodule update \"" + path + "\"");
+            App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Sync submodule URL from .gitmodules
+        /// </summary>
+        private void MenuSubmoduleSync(object sender, EventArgs e)
+        {
+            string path = (sender as ToolStripMenuItem).Tag.ToString();
+            App.PrintStatusMessage("Syncing submodule URL: " + path, MessageType.General);
+            status.Repo.RunCmd("submodule sync \"" + path + "\"");
+            App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Show submodule information dialog
+        /// </summary>
+        private void MenuSubmoduleInfo(object sender, EventArgs e)
+        {
+            string path = (sender as ToolStripMenuItem).Tag.ToString();
+            var sm = App.Repos.Current.Submodules.Get(path);
+
+            string statusText;
+            switch (sm.StatusCode)
+            {
+                case '-': statusText = "Not initialized"; break;
+                case '+': statusText = "Modified (different commit)"; break;
+                case 'U': statusText = "Merge conflict"; break;
+                default: statusText = "OK"; break;
+            }
+
+            string info = string.Format(
+                "Submodule: {0}\n\n" +
+                "Path: {1}\n" +
+                "URL: {2}\n" +
+                "Commit: {3}\n" +
+                "Status: {4}\n" +
+                "Initialized: {5}",
+                sm.Name,
+                sm.Path,
+                sm.Url ?? "(unknown)",
+                sm.Sha ?? "(unknown)",
+                statusText,
+                sm.IsInitialized ? "Yes" : "No"
+            );
+
+            MessageBox.Show(info, "Submodule Information",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        #endregion Submodule handlers
     }
 }

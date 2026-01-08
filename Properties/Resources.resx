@@ -178,6 +178,18 @@
   <data name="TreeIconX" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tree\TreeIconX.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TreeIconSM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconSM.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconSMO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconSMO.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconSMM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconSMM.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeIconSMU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tree\TreeIconSMU.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="git_ssh_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SSH\git-ssh-helper.sh;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -76,6 +76,7 @@
     <Compile Include="ClassRepo.cs" />
     <Compile Include="ClassRepos.cs" />
     <Compile Include="ClassStatus.cs" />
+    <Compile Include="ClassSubmodules.cs" />
     <Compile Include="ClassTool.cs" />
     <Compile Include="ClassURL.cs" />
     <Compile Include="ClassUtils.cs" />

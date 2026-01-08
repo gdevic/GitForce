@@ -36,6 +36,11 @@ namespace GitForce
             Changelist,
             FolderClosedModified,
             FolderOpenedModified,
+
+            SubmoduleClosed,
+            SubmoduleOpened,
+            SubmoduleModified,
+            SubmoduleUninitialized,
         }
 
         /// <summary>
@@ -59,6 +64,11 @@ namespace GitForce
             { Img.Changelist,           Resources.Change1 },
             { Img.FolderClosedModified, Resources.TreeIconFCM },
             { Img.FolderOpenedModified, Resources.TreeIconFOM },
+
+            { Img.SubmoduleClosed,       Resources.TreeIconSM },
+            { Img.SubmoduleOpened,       Resources.TreeIconSMO },
+            { Img.SubmoduleModified,     Resources.TreeIconSMM },
+            { Img.SubmoduleUninitialized, Resources.TreeIconSMU },
         };
 
         /// <summary>
@@ -115,9 +125,24 @@ namespace GitForce
                             tn.ImageIndex = 0;
                     }
                     else {
-                        tn.ImageIndex = status.HasModifiedDescendants (name)
-                           ? (int)Img.FolderClosedModified
-                           : (int)Img.FolderClosed;
+                        // Check if this folder is a submodule
+                        string folderPath = name.TrimEnd(Path.DirectorySeparatorChar);
+                        if (App.Repos.Current != null && App.Repos.Current.Submodules != null && App.Repos.Current.Submodules.IsSubmodule(folderPath))
+                        {
+                            var sm = App.Repos.Current.Submodules.Get(folderPath);
+                            if (!sm.IsInitialized)
+                                tn.ImageIndex = (int)Img.SubmoduleUninitialized;
+                            else if (sm.StatusCode == '+')
+                                tn.ImageIndex = (int)Img.SubmoduleModified;
+                            else
+                                tn.ImageIndex = tn.IsExpanded ? (int)Img.SubmoduleOpened : (int)Img.SubmoduleClosed;
+                        }
+                        else
+                        {
+                            tn.ImageIndex = status.HasModifiedDescendants(name)
+                               ? (int)Img.FolderClosedModified
+                               : (int)Img.FolderClosed;
+                        }
                     }
                 }
                 ViewAssignIcon(status, tn, isIndex);
@@ -150,6 +175,17 @@ namespace GitForce
                     case Img.FolderClosedModified:
                     case Img.FolderOpenedModified:
                         tn.ToolTipText = "Folder contains changes";
+                        break;
+
+                    case Img.SubmoduleClosed:
+                    case Img.SubmoduleOpened:
+                        tn.ToolTipText = "Submodule";
+                        break;
+                    case Img.SubmoduleModified:
+                        tn.ToolTipText = "Submodule (modified - different commit)";
+                        break;
+                    case Img.SubmoduleUninitialized:
+                        tn.ToolTipText = "Submodule (not initialized)";
                         break;
 
                     default:

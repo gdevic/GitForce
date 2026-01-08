@@ -43,6 +43,13 @@ namespace GitForce
         public readonly ClassBranches Branches = new ClassBranches();
 
         /// <summary>
+        /// Set of submodules for the current repo. This is refreshed
+        /// on every App global refresh, so it does not need to be preserved across sessions.
+        /// </summary>
+        [NonSerialized]
+        public ClassSubmodules Submodules;
+
+        /// <summary>
         /// Current format can be tree view or list view
         /// </summary>
         public bool IsTreeView = true;
@@ -54,8 +61,7 @@ namespace GitForce
 
         /// <summary>
         /// Stores a set of paths that are expanded in the left pane view.
-        /// Although used only by the view, keeping it here saves it across
-        /// the sessions.
+        /// Although used only by the view, keeping it here saves it across the sessions.
         /// WAR: This is marked as Non-Serialized since Mono 2.6.7 does not support serialization of HashSet.
         /// </summary>
         [NonSerialized]
