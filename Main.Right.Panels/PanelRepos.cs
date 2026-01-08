@@ -275,23 +275,42 @@ namespace GitForce.Main.Right.Panels
                         break;
                     case "remote":
                         ClassRemotes.Remote r = newRepoStep1.Remote;
-                        string remoteProjectName = r.UrlFetch;
-                        // Extract the project name from the remote Url specification
-                        parts = remoteProjectName.Split(new char[] { '.', '\\', '/', ':' });
-                        if (parts.Length > 1 && parts[parts.Length - 1] == "git")
-                            newRepoStep2.ProjectName = parts[parts.Length - 2];
+                        string remoteUrl = r.UrlFetch ?? "";
 
-                        // If the project name is equal to the last part of the path, use it for the project name instead
-                        // and trim the path. This is done to (1) propagate possible upper-cased letters in the
-                        // path and (2) to fix the cases where we have given repoRemote with a full path which included
-                        // a redundant project name.
+                        // Validate the remote URL using the URL parser
+                        ClassUrl.Url parsedUrl = ClassUrl.Parse(remoteUrl);
+                        if (!parsedUrl.Ok)
+                        {
+                            MessageBox.Show("The remote URL specification is invalid:\n\n" + remoteUrl +
+                                "\n\nPlease enter a valid git remote URL.",
+                                "Invalid Remote URL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            goto BackToStep1;
+                        }
+
+                        // Use the parsed project name from the URL
+                        newRepoStep2.ProjectName = parsedUrl.Name;
+
+                        // If the project name is equal to the last part of the destination path, use it for the
+                        // project name instead and trim the path. This is done to (1) propagate possible upper-cased
+                        // letters in the path and (2) to fix the cases where we have given repoRemote with a full
+                        // path which included a redundant project name.
                         // Example: root:         c:\Projects\Arduino    =>   c:\Projects
                         //          project name: arduino                =>   Arduino
-                        parts = newRepoStep2.Destination.Split(new char[] { '\\', '/' });
-                        if (parts.Length > 1 && String.Compare(parts[parts.Length - 1], newRepoStep2.ProjectName, StringComparison.OrdinalIgnoreCase) == 0)
+                        string dest = newRepoStep2.Destination ?? "";
+                        if (!string.IsNullOrEmpty(dest) && !string.IsNullOrEmpty(newRepoStep2.ProjectName))
                         {
-                            newRepoStep2.ProjectName = parts[parts.Length - 1];
-                            newRepoStep2.Destination = Directory.GetParent(newRepoStep2.Destination).FullName;
+                            parts = dest.Split(new char[] { '\\', '/' });
+                            if (parts.Length > 1 && String.Compare(parts[parts.Length - 1], newRepoStep2.ProjectName, StringComparison.OrdinalIgnoreCase) == 0)
+                            {
+                                newRepoStep2.ProjectName = parts[parts.Length - 1];
+                                try
+                                {
+                                    DirectoryInfo parent = Directory.GetParent(dest);
+                                    if (parent != null)
+                                        newRepoStep2.Destination = parent.FullName;
+                                }
+                                catch (Exception) { }
+                            }
                         }
                         newRepoStep2.CheckTargetDirEmpty = true;
                         break;

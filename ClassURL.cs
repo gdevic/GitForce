@@ -41,7 +41,38 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Parse given URL and return the type structure
+        /// Parse given URL and return the type structure.
+        ///
+        /// Formats that parse correctly (Ok = true):
+        ///
+        ///   URL Format                                   Type    Host            Path                    Name
+        ///   -----------------------------------------    -----   -------------   ---------------------   ----
+        ///   https://github.com/user/repo.git             Https   github.com      user/repo.git           repo
+        ///   https://github.com/user/repo                 Https   github.com      user/repo               repo
+        ///   https://gitlab.com/group/sub/repo.git        Https   gitlab.com      group/sub/repo.git      repo
+        ///   https://dev.azure.com/org/proj/_git/repo     Https   dev.azure.com   org/proj/_git/repo      repo
+        ///   http://host.xz/path/repo.git                 Http    host.xz         path/repo.git           repo
+        ///   ssh://git@github.com/user/repo.git           Ssh     github.com      user/repo.git           repo
+        ///   ssh://git@host.xz:22/path/repo.git           Ssh     host.xz         path/repo.git           repo
+        ///   ssh://host.xz/path/repo.git                  Ssh     host.xz         path/repo.git           repo
+        ///   git://github.com/user/repo.git               Git     github.com      user/repo.git           repo
+        ///   git://host.xz:9418/path/repo.git             Git     host.xz         path/repo.git           repo
+        ///   git@github.com:user/repo.git                 Ssh     github.com      user/repo.git           repo
+        ///   git@gitlab.com:group/repo.git                Ssh     gitlab.com      group/repo.git          repo
+        ///   user@host.xz:path/to/repo.git                Ssh     host.xz         path/to/repo.git        repo
+        ///   host.xz:path/to/repo.git                     Ssh     host.xz         path/to/repo.git        repo
+        ///   ssh://git@host/~user/repo.git                Ssh     host            repo.git                repo
+        ///   ftp://host.xz/path/repo.git                  Ftp     host.xz         path/repo.git           repo
+        ///   rsync://host.xz/path/repo.git                Rsync   host.xz         path/repo.git           repo
+        ///
+        /// Formats that fail (Ok = false):
+        ///   github.com/user/repo.git                     No host extracted (no ':' before '/')
+        ///   https://github.com                           No path
+        ///   /local/path/to/repo                          No host
+        ///   file:///path/to/repo.git                     Protocol not recognized, no host
+        ///   C:\Projects\repo                             No host
+        ///   repo with spaces                             Contains spaces
+        ///
         /// </summary>
         public static Url Parse(string URL)
         {
