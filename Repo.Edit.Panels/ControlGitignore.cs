@@ -20,10 +20,17 @@ namespace GitForce.Repo.Edit.Panels
         /// </summary>
         public void Init(ClassRepo repo)
         {
-            excludesFile = repo.Path + Path.DirectorySeparatorChar +
-                            ".git" + Path.DirectorySeparatorChar +
-                            "info" + Path.DirectorySeparatorChar +
-                            "exclude";
+            // Use git rev-parse to get the actual git directory (handles submodules correctly)
+            ExecResult result = repo.Run("rev-parse --git-dir");
+            string gitDir = result.Success()
+                ? result.stdout.Trim()
+                : Path.Combine(repo.Path, ".git");
+
+            // If the path is relative, make it absolute
+            if (!Path.IsPathRooted(gitDir))
+                gitDir = Path.Combine(repo.Path, gitDir);
+
+            excludesFile = Path.Combine(gitDir, "info", "exclude");
             userControlEditGitignore.LoadGitIgnore(excludesFile);
         }
 

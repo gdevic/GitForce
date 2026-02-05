@@ -574,13 +574,15 @@ namespace GitForce.Main.Left.Panels
 
                     ToolStripMenuItem mSmInit = new ToolStripMenuItem("Initialize && Clone", null, MenuSubmoduleInit)
                         { Tag = selectedPath, Enabled = !sm.IsInitialized };
+                    ToolStripMenuItem mSmAddToRepos = new ToolStripMenuItem("Add to Repos", null, MenuSubmoduleAddToRepos)
+                        { Tag = selectedPath, Enabled = sm.IsInitialized && App.Repos.Find(sm.Path) == null };
                     ToolStripMenuItem mSmUpdate = new ToolStripMenuItem("Update", null, MenuSubmoduleUpdate)
                         { Tag = selectedPath, Enabled = sm.IsInitialized };
                     ToolStripMenuItem mSmInfo = new ToolStripMenuItem("Show Info...", null, MenuSubmoduleInfo)
                         { Tag = selectedPath };
 
                     mSubmodule.DropDownItems.AddRange(new ToolStripItem[] {
-                        mSmInit, mSmUpdate,
+                        mSmInit, mSmAddToRepos, mSmUpdate,
                         new ToolStripSeparator(),
                         mSmInfo
                     });
@@ -882,6 +884,31 @@ namespace GitForce.Main.Left.Panels
             App.PrintStatusMessage("Initializing and cloning submodule: " + path, MessageType.General);
             status.Repo.RunCmd("submodule update --init --force \"" + path + "\"");
             App.DoRefresh();
+        }
+
+        /// <summary>
+        /// Add submodule to GitForce repos list
+        /// </summary>
+        private void MenuSubmoduleAddToRepos(object sender, EventArgs e)
+        {
+            string relativePath = (sender as ToolStripMenuItem).Tag.ToString();
+            var sm = App.Repos.Current.Submodules.Get(relativePath);
+            try
+            {
+                ClassRepo repo = App.Repos.Add(sm.Path);
+                App.Repos.SetCurrent(repo);
+                App.DoRefresh();
+
+                // Open the Edit Repo dialog so user can configure settings
+                FormRepoEdit repoEdit = new FormRepoEdit(repo);
+                if (repoEdit.ShowDialog() == DialogResult.OK)
+                    App.DoRefresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error adding repository",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

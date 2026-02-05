@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace GitForce
@@ -39,42 +38,6 @@ namespace GitForce
             if (!sm.IsInitialized)
                 statusText += " (not initialized)";
             textStatus.Text = statusText;
-
-            // Check if submodule is already tracked in GitForce
-            UpdateAddToReposButton();
-        }
-
-        /// <summary>
-        /// Check if submodule path is already tracked in GitForce repos list
-        /// </summary>
-        private bool IsAlreadyTracked()
-        {
-            if (string.IsNullOrEmpty(submodule.Path))
-                return false;
-            string normalizedPath = Path.GetFullPath(submodule.Path);
-            foreach (var repo in App.Repos.Repos)
-            {
-                string repoPath = Path.GetFullPath(repo.Path);
-                if (repoPath.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase))
-                    return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Update the Add to Repos button state based on whether the submodule is already tracked
-        /// </summary>
-        private void UpdateAddToReposButton()
-        {
-            bool alreadyTracked = IsAlreadyTracked();
-            btAddToRepos.Enabled = !alreadyTracked && submodule.IsInitialized;
-
-            if (alreadyTracked)
-                toolTip.SetToolTip(btAddToRepos, "This submodule is already tracked in GitForce");
-            else if (!submodule.IsInitialized)
-                toolTip.SetToolTip(btAddToRepos, "Submodule must be initialized first");
-            else
-                toolTip.SetToolTip(btAddToRepos, "Add this submodule as a tracked repository in GitForce");
         }
 
         /// <summary>
@@ -110,26 +73,6 @@ namespace GitForce
         {
             if (!string.IsNullOrEmpty(submodule.Sha))
                 Clipboard.SetText(submodule.Sha);
-        }
-
-        /// <summary>
-        /// Add submodule to GitForce repos list
-        /// </summary>
-        private void BtAddToReposClick(object sender, EventArgs e)
-        {
-            try
-            {
-                App.Repos.Add(submodule.Path);
-                App.DoRefresh();
-                UpdateAddToReposButton();
-                MessageBox.Show("Submodule added to repository list.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error adding repository",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
     }
 }

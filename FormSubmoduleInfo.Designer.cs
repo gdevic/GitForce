@@ -28,7 +28,6 @@ namespace GitForce
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.labelName = new System.Windows.Forms.Label();
             this.labelPath = new System.Windows.Forms.Label();
             this.labelUrl = new System.Windows.Forms.Label();
@@ -42,9 +41,7 @@ namespace GitForce
             this.btCopyUrl = new System.Windows.Forms.Button();
             this.btCopyPath = new System.Windows.Forms.Button();
             this.btCopySha = new System.Windows.Forms.Button();
-            this.btAddToRepos = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // labelName
@@ -163,9 +160,9 @@ namespace GitForce
             this.btCopyPath.Text = "Copy";
             this.btCopyPath.UseVisualStyleBackColor = true;
             this.btCopyPath.Click += new System.EventHandler(this.BtCopyPathClick);
-            // 
+            //
             // btCopySha
-            // 
+            //
             this.btCopySha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btCopySha.Location = new System.Drawing.Point(328, 88);
             this.btCopySha.Name = "btCopySha";
@@ -174,18 +171,7 @@ namespace GitForce
             this.btCopySha.Text = "Copy";
             this.btCopySha.UseVisualStyleBackColor = true;
             this.btCopySha.Click += new System.EventHandler(this.BtCopyShaClick);
-            // 
-            // btAddToRepos
-            // 
-            this.btAddToRepos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btAddToRepos.Location = new System.Drawing.Point(12, 151);
-            this.btAddToRepos.Name = "btAddToRepos";
-            this.btAddToRepos.Size = new System.Drawing.Size(100, 23);
-            this.btAddToRepos.TabIndex = 13;
-            this.btAddToRepos.Text = "Add to Repos";
-            this.btAddToRepos.UseVisualStyleBackColor = true;
-            this.btAddToRepos.Click += new System.EventHandler(this.BtAddToReposClick);
-            // 
+            //
             // btClose
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -205,7 +191,6 @@ namespace GitForce
             this.CancelButton = this.btClose;
             this.ClientSize = new System.Drawing.Size(384, 186);
             this.Controls.Add(this.btClose);
-            this.Controls.Add(this.btAddToRepos);
             this.Controls.Add(this.btCopySha);
             this.Controls.Add(this.btCopyUrl);
             this.Controls.Add(this.btCopyPath);
@@ -248,8 +233,6 @@ namespace GitForce
         private System.Windows.Forms.Button btCopyUrl;
         private System.Windows.Forms.Button btCopyPath;
         private System.Windows.Forms.Button btCopySha;
-        private System.Windows.Forms.Button btAddToRepos;
         private System.Windows.Forms.Button btClose;
-        private System.Windows.Forms.ToolTip toolTip;
     }
 }
