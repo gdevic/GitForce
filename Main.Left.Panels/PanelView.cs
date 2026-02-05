@@ -576,13 +576,11 @@ namespace GitForce.Main.Left.Panels
                         { Tag = selectedPath, Enabled = !sm.IsInitialized };
                     ToolStripMenuItem mSmUpdate = new ToolStripMenuItem("Update", null, MenuSubmoduleUpdate)
                         { Tag = selectedPath, Enabled = sm.IsInitialized };
-                    ToolStripMenuItem mSmSync = new ToolStripMenuItem("Sync URL", null, MenuSubmoduleSync)
-                        { Tag = selectedPath };
                     ToolStripMenuItem mSmInfo = new ToolStripMenuItem("Show Info...", null, MenuSubmoduleInfo)
                         { Tag = selectedPath };
 
                     mSubmodule.DropDownItems.AddRange(new ToolStripItem[] {
-                        mSmInit, mSmUpdate, mSmSync,
+                        mSmInit, mSmUpdate,
                         new ToolStripSeparator(),
                         mSmInfo
                     });
@@ -894,17 +892,6 @@ namespace GitForce.Main.Left.Panels
             string path = (sender as ToolStripMenuItem).Tag.ToString();
             App.PrintStatusMessage("Updating submodule: " + path, MessageType.General);
             status.Repo.RunCmd("submodule update \"" + path + "\"");
-            App.DoRefresh();
-        }
-
-        /// <summary>
-        /// Sync submodule URL from .gitmodules
-        /// </summary>
-        private void MenuSubmoduleSync(object sender, EventArgs e)
-        {
-            string path = (sender as ToolStripMenuItem).Tag.ToString();
-            App.PrintStatusMessage("Syncing submodule URL: " + path, MessageType.General);
-            status.Repo.RunCmd("submodule sync \"" + path + "\"");
             App.DoRefresh();
         }
 
