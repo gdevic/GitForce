@@ -324,7 +324,10 @@ namespace GitForce.Main.Left.Panels
 
             public Selection(TreeViewEx treeView, ClassStatus status)
             {
-                SelFiles = treeView.SelectedNodes.Select(s => s.Tag.ToString()).ToArray();
+                // Trim trailing separators to match status dictionary keys
+                SelFiles = treeView.SelectedNodes
+                    .Select(s => s.Tag.ToString().TrimEnd(Path.DirectorySeparatorChar))
+                    .ToArray();
 
                 // Move files into different buckets based on what function needs to be done on them
                 foreach (var s in SelFiles)
