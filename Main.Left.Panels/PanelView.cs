@@ -579,13 +579,13 @@ namespace GitForce.Main.Left.Panels
                         { Tag = selectedPath, Enabled = !sm.IsInitialized };
                     ToolStripMenuItem mSmAddToRepos = new ToolStripMenuItem("Add to Repos", null, MenuSubmoduleAddToRepos)
                         { Tag = selectedPath, Enabled = sm.IsInitialized && App.Repos.Find(sm.Path) == null };
-                    ToolStripMenuItem mSmUpdate = new ToolStripMenuItem("Update", null, MenuSubmoduleUpdate)
-                        { Tag = selectedPath, Enabled = sm.IsInitialized };
+                    ToolStripMenuItem mSmReset = new ToolStripMenuItem("Reset", null, MenuSubmoduleReset)
+                        { Tag = selectedPath, Enabled = sm.IsInitialized && (sm.StatusCode == '+' || sm.StatusCode == 'U') };
                     ToolStripMenuItem mSmInfo = new ToolStripMenuItem("Show Info...", null, MenuSubmoduleInfo)
                         { Tag = selectedPath };
 
                     mSubmodule.DropDownItems.AddRange(new ToolStripItem[] {
-                        mSmInit, mSmAddToRepos, mSmUpdate,
+                        mSmInit, mSmAddToRepos, mSmReset,
                         new ToolStripSeparator(),
                         mSmInfo
                     });
@@ -915,12 +915,12 @@ namespace GitForce.Main.Left.Panels
         }
 
         /// <summary>
-        /// Update a submodule to the recorded commit
+        /// Reset a submodule to the commit recorded in the parent repo
         /// </summary>
-        private void MenuSubmoduleUpdate(object sender, EventArgs e)
+        private void MenuSubmoduleReset(object sender, EventArgs e)
         {
             string path = (sender as ToolStripMenuItem).Tag.ToString();
-            App.PrintStatusMessage("Updating submodule: " + path, MessageType.General);
+            App.PrintStatusMessage("Resetting submodule: " + path, MessageType.General);
             status.Repo.RunCmd("submodule update \"" + path + "\"");
             App.DoRefresh();
         }

@@ -16,7 +16,7 @@ GitForce is a GUI front-ends for the git command line tool. GitForce runs on bot
 * Easy manage SSH keys and remotes
 * See files’ revision history, stash, unstash etc.
 * Manage local and remote branches
-* Submodule support: detect, initialize, and update submodules
+* Submodule support: detect, initialize, reset, and add submodules to repos list
 * Integrated git command line interface if you still want to use it
 * Users familiar with Perforce will find this UI very familiar
 * Simple, intuitive and light git wrapper for all normal tasks and workflows
