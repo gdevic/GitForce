@@ -169,10 +169,10 @@ namespace GitForce
             string status = "";
             if (tn != null)
             {
-                string name = tn.Tag.ToString();
-#if DEBUG
-                status = String.Format("{0} Tag:'{1}': ", tn.Tag.GetType(), name);
-#endif
+                // Trim trailing separator to match status dictionary keys
+                string name = tn.Tag.ToString().TrimEnd(Path.DirectorySeparatorChar);
+                status = name;
+
                 if (IsMarked(name))
                 {
                     char xcode = Xcode(name);
@@ -181,8 +181,9 @@ namespace GitForce
                     if (ycode != ' ')
                         y = desc[ycode];
                     if (xcode != ' ' && xcode != '?')
-                        x = ((ycode!=' ')? ", " : "") + desc[xcode] + " in index";
-                    status += name + ((x.Length>0 || y.Length>0) ? " ... <" + y + x + ">" : "");
+                        x = ((ycode != ' ') ? ", " : "") + desc[xcode] + " in index";
+                    if (x.Length > 0 || y.Length > 0)
+                        status += "   (" + y + x + ")";
                 }
             }
             App.MainForm.SetStatusText(status);
