@@ -32,6 +32,7 @@
             this.checkBoxWarnMultipleInstances = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoCloseGitOnSuccess = new System.Windows.Forms.CheckBox();
             this.checkBoxWarnIfAdmin = new System.Windows.Forms.CheckBox();
+            this.checkBoxWarnOnDetachedHead = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // checkBoxTabs
@@ -63,9 +64,9 @@
             this.checkBoxAutoCloseGitOnSuccess.TabIndex = 3;
             this.checkBoxAutoCloseGitOnSuccess.Text = "&Close git command window on success";
             this.checkBoxAutoCloseGitOnSuccess.UseVisualStyleBackColor = true;
-            // 
+            //
             // checkBoxWarnIfAdmin
-            // 
+            //
             this.checkBoxWarnIfAdmin.AutoSize = true;
             this.checkBoxWarnIfAdmin.Location = new System.Drawing.Point(3, 49);
             this.checkBoxWarnIfAdmin.Name = "checkBoxWarnIfAdmin";
@@ -73,11 +74,22 @@
             this.checkBoxWarnIfAdmin.TabIndex = 2;
             this.checkBoxWarnIfAdmin.Text = "Warn if starting as &Admin";
             this.checkBoxWarnIfAdmin.UseVisualStyleBackColor = true;
-            // 
+            //
+            // checkBoxWarnOnDetachedHead
+            //
+            this.checkBoxWarnOnDetachedHead.AutoSize = true;
+            this.checkBoxWarnOnDetachedHead.Location = new System.Drawing.Point(3, 95);
+            this.checkBoxWarnOnDetachedHead.Name = "checkBoxWarnOnDetachedHead";
+            this.checkBoxWarnOnDetachedHead.Size = new System.Drawing.Size(277, 17);
+            this.checkBoxWarnOnDetachedHead.TabIndex = 4;
+            this.checkBoxWarnOnDetachedHead.Text = "Warn when switching to a &detached HEAD repository";
+            this.checkBoxWarnOnDetachedHead.UseVisualStyleBackColor = true;
+            //
             // ControlOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBoxWarnOnDetachedHead);
             this.Controls.Add(this.checkBoxWarnIfAdmin);
             this.Controls.Add(this.checkBoxAutoCloseGitOnSuccess);
             this.Controls.Add(this.checkBoxTabs);
@@ -96,5 +108,6 @@
         private System.Windows.Forms.CheckBox checkBoxWarnMultipleInstances;
         private System.Windows.Forms.CheckBox checkBoxAutoCloseGitOnSuccess;
         private System.Windows.Forms.CheckBox checkBoxWarnIfAdmin;
+        private System.Windows.Forms.CheckBox checkBoxWarnOnDetachedHead;
     }
 }

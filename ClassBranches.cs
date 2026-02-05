@@ -15,6 +15,14 @@ namespace GitForce
         public string Current;
 
         /// <summary>
+        /// Returns true if the repository is in detached HEAD state
+        /// </summary>
+        public bool IsDetached()
+        {
+            return !string.IsNullOrEmpty(Current) && Current.StartsWith("(HEAD detached");
+        }
+
+        /// <summary>
         /// List of local branches by their name
         /// </summary>
         public readonly List<string> Local = new List<string>();

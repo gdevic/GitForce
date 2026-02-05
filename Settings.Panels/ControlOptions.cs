@@ -19,6 +19,7 @@ namespace GitForce.Settings.Panels
             checkBoxWarnMultipleInstances.Checked = Properties.Settings.Default.WarnMultipleInstances;
             checkBoxWarnIfAdmin.Checked = Properties.Settings.Default.WarnIfAdmin;
             checkBoxAutoCloseGitOnSuccess.Checked = Properties.Settings.Default.AutoCloseGitOnSuccess;
+            checkBoxWarnOnDetachedHead.Checked = Properties.Settings.Default.WarnOnDetachedHead;
 
             // Add the dirty (modified) value changed helper
             checkBoxTabs.CheckStateChanged += ControlDirtyHelper.ControlDirty;
@@ -40,6 +41,7 @@ namespace GitForce.Settings.Panels
             Properties.Settings.Default.WarnMultipleInstances = checkBoxWarnMultipleInstances.Checked;
             Properties.Settings.Default.WarnIfAdmin = checkBoxWarnIfAdmin.Checked;
             Properties.Settings.Default.AutoCloseGitOnSuccess = checkBoxAutoCloseGitOnSuccess.Checked;
+            Properties.Settings.Default.WarnOnDetachedHead = checkBoxWarnOnDetachedHead.Checked;
 
             if (checkBoxTabs.Tag != null)
                 App.MainForm.UpdateRightPaneTabsShowState();

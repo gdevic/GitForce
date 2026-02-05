@@ -558,5 +558,17 @@ namespace GitForce.Properties {
                 this["WarnIfAdmin"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WarnOnDetachedHead {
+            get {
+                return ((bool)(this["WarnOnDetachedHead"]));
+            }
+            set {
+                this["WarnOnDetachedHead"] = value;
+            }
+        }
     }
 }

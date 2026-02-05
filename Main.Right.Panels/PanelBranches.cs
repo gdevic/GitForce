@@ -7,6 +7,11 @@ namespace GitForce.Main.Right.Panels
     {
         enum BranchIcons { Branch, BranchIdle, BranchSelected };
 
+        /// <summary>
+        /// Tracks the last repo for which we showed the detached HEAD warning
+        /// </summary>
+        private static string _lastDetachedWarningRepo;
+
         public PanelBranches()
         {
             InitializeComponent();
@@ -27,6 +32,28 @@ namespace GitForce.Main.Right.Panels
             {
                 ClassBranches branches = App.Repos.Current.Branches;
                 branches.Refresh();
+
+                // Warn user if switching to a repository in detached HEAD state
+                if (Properties.Settings.Default.WarnOnDetachedHead && branches.IsDetached())
+                {
+                    string repoPath = App.Repos.Current.Path;
+                    if (_lastDetachedWarningRepo != repoPath)
+                    {
+                        _lastDetachedWarningRepo = repoPath;
+                        MessageBox.Show(
+                            "This repository is in DETACHED HEAD state.\n\n" +
+                            "You are not on a branch. Push and pull operations will not work.\n\n" +
+                            "To resume normal work, switch to a branch using the Branches panel.",
+                            "Detached HEAD",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    // Reset tracking when switching to a non-detached repo
+                    _lastDetachedWarningRepo = null;
+                }
 
                 // Add all local branches to the tree
                 foreach (string s in branches.Local)
