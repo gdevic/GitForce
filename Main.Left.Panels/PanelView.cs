@@ -86,6 +86,11 @@ namespace GitForce.Main.Left.Panels
                 {
                     case 0:     // Git status of all files: status + untracked
                         files = status.GetFiles();
+                        // Show uninitialized submodules so the user can discover and initialize them
+                        if (App.Repos.Current.Submodules != null)
+                            foreach (string smPath in App.Repos.Current.Submodules.GetPaths())
+                                if (!App.Repos.Current.Submodules.Get(smPath).IsInitialized && !files.Contains(smPath))
+                                    files.Add(smPath);
                         break;
 
                     case 1:     // Git status of files: status - untracked
@@ -93,6 +98,11 @@ namespace GitForce.Main.Left.Panels
 
                         // Remove all untracked files
                         files = files.Where(s => status.Xcode(s) != '?').ToList();
+                        // Show uninitialized submodules so the user can discover and initialize them
+                        if (App.Repos.Current.Submodules != null)
+                            foreach (string smPath in App.Repos.Current.Submodules.GetPaths())
+                                if (!App.Repos.Current.Submodules.Get(smPath).IsInitialized && !files.Contains(smPath))
+                                    files.Add(smPath);
                         break;
 
                     case 2:     // Git view of repo: ls-tree
