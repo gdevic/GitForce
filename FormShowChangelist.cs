@@ -27,6 +27,7 @@ namespace GitForce
 
             textChangelist.Font = Properties.Settings.Default.commitFont;
             comboShow.SelectedIndex = Properties.Settings.Default.ShowFormatIndex;
+            ActiveControl = textChangelist;
         }
 
         /// <summary>
@@ -90,6 +91,7 @@ namespace GitForce
 
             // Go over the resulting list and add to our text box
             textChangelist.Text = "";       // Clear the rich text box
+            textChangelist.ClearMonoLinks();
 
             // Get the list of lines that describe individual files vs the rest (checkin comment)
             List<string> files = response.Where(s => s.StartsWith(":")).ToList();
@@ -207,6 +209,7 @@ namespace GitForce
                 Properties.Settings.Default.ShowFormatIndex = comboShow.SelectedIndex;
                 LoadChangelist(Tag.ToString());
             }
+            textChangelist.Focus();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -157,6 +158,10 @@ namespace GitForce
 
             // Make sure the application data folder directory exists
             Directory.CreateDirectory(AppHome);
+
+            // On Mono/Linux, override the commit font with the platform's default monospace font that looks better
+            if (ClassUtils.IsMono())
+                Properties.Settings.Default.commitFont = new Font(FontFamily.GenericMonospace, 10f, FontStyle.Regular);
 
             // Get and process command line arguments
             Arguments commandLine = new Arguments(args);

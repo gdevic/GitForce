@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -110,11 +112,66 @@ namespace GitForce
 
         #endregion
 
+        private const int WM_PAINT = 0x000F;
+
+        /// <summary>
+        /// On Mono, we track link regions manually since Win32 CFE_LINK is unavailable
+        /// and SelectionColor/SelectionFont have no effect on Mono's RichTextBox.
+        /// Underlines are drawn via custom painting in WndProc after WM_PAINT.
+        /// </summary>
+        private struct MonoLinkInfo
+        {
+            public int Start;
+            public int Length;
+            public string LinkText;
+        }
+
+        private readonly List<MonoLinkInfo> _monoLinks = new List<MonoLinkInfo>();
+        private bool _lastOverLink;
+
         public RichTextBoxEx()
         {
             // Otherwise, non-standard links get lost when user starts typing
             // next to a non-standard link
             DetectUrls = false;
+
+            if (ClassUtils.IsMono())
+            {
+                MouseClick += MonoHandleMouseClick;
+                MouseMove += MonoHandleMouseMove;
+            }
+        }
+
+        /// <summary>
+        /// On Mono, draw blue underlines beneath link regions after the base WM_PAINT.
+        /// On Windows, just pass through to the base implementation.
+        /// </summary>
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == WM_PAINT && ClassUtils.IsMono() && _monoLinks.Count > 0)
+            {
+                using (Graphics g = CreateGraphics())
+                using (Pen pen = new Pen(Color.Blue, 1))
+                {
+                    foreach (MonoLinkInfo link in _monoLinks)
+                    {
+                        if (link.Start >= TextLength)
+                            continue;
+                        Point startPos = GetPositionFromCharIndex(link.Start);
+                        int len = Math.Min(link.Length, TextLength - link.Start);
+                        string linkText = Text.Substring(link.Start, len);
+                        int linkWidth = TextRenderer.MeasureText(g, linkText, Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width;
+
+                        // Only draw if the link is within the visible area
+                        if (startPos.Y >= 0 && startPos.Y < ClientSize.Height)
+                        {
+                            int y = startPos.Y + Font.Height - 2;
+                            g.DrawLine(pen, startPos.X, y, startPos.X + linkWidth, y);
+                        }
+                    }
+                }
+            }
         }
 
         [DefaultValue(false)]
@@ -143,11 +200,23 @@ namespace GitForce
             if (position < 0 || position > Text.Length)
                 throw new ArgumentOutOfRangeException("position");
 
-            SelectionStart = position;
-            SelectedText = text;
-            Select(position, text.Length);
-            SetSelectionLink(true);
-            Select(position + text.Length, 0);
+            if (ClassUtils.IsMono())
+            {
+                // On Mono, SelectionColor/SelectionFont are no-ops. Just insert plain text
+                // and track the region; underlines are drawn via custom WM_PAINT painting.
+                SelectionStart = position;
+                SelectedText = text;
+                _monoLinks.Add(new MonoLinkInfo { Start = position, Length = text.Length, LinkText = text });
+                Select(position + text.Length, 0);
+            }
+            else
+            {
+                SelectionStart = position;
+                SelectedText = text;
+                Select(position, text.Length);
+                SetSelectionLink(true);
+                Select(position + text.Length, 0);
+            }
         }
 
         /// <summary>
@@ -178,11 +247,23 @@ namespace GitForce
             if (position < 0 || position > Text.Length)
                 throw new ArgumentOutOfRangeException("position");
 
-            SelectionStart = position;
-            SelectedRtf = @"{\rtf1\ansi "+text+@"\v #"+hyperlink+@"\v0}";
-            Select(position, text.Length + hyperlink.Length + 1);
-            SetSelectionLink(true);
-            Select(position + text.Length + hyperlink.Length + 1, 0);
+            if (ClassUtils.IsMono())
+            {
+                // On Mono, SelectionColor/SelectionFont are no-ops. Just insert plain text
+                // and track the region; underlines are drawn via custom WM_PAINT painting.
+                SelectionStart = position;
+                SelectedText = text;
+                _monoLinks.Add(new MonoLinkInfo { Start = position, Length = text.Length, LinkText = text + "#" + hyperlink });
+                Select(position + text.Length, 0);
+            }
+            else
+            {
+                SelectionStart = position;
+                SelectedRtf = @"{\rtf1\ansi "+text+@"\v #"+hyperlink+@"\v0}";
+                Select(position, text.Length + hyperlink.Length + 1);
+                SetSelectionLink(true);
+                Select(position + text.Length + hyperlink.Length + 1, 0);
+            }
         }
 
         /// <summary>
@@ -247,6 +328,72 @@ namespace GitForce
 
             Marshal.FreeCoTaskMem(lpar);
             return state;
+        }
+
+        /// <summary>
+        /// Mono: check whether a screen point falls within a link's bounding rectangle.
+        /// Uses pixel-based hit testing for reliable results (GetCharIndexFromPosition
+        /// is imprecise on Mono and causes cursor flickering).
+        /// </summary>
+        private bool IsPointOverLink(MonoLinkInfo link, Point point)
+        {
+            if (link.Start >= TextLength)
+                return false;
+            Point startPos = GetPositionFromCharIndex(link.Start);
+            int len = Math.Min(link.Length, TextLength - link.Start);
+            string linkText = Text.Substring(link.Start, len);
+            int linkWidth = TextRenderer.MeasureText(linkText, Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width;
+            Rectangle linkRect = new Rectangle(startPos.X, startPos.Y, linkWidth, Font.Height);
+            return linkRect.Contains(point);
+        }
+
+        /// <summary>
+        /// Mono: handle mouse clicks by checking if the click landed on a tracked link region.
+        /// Only left-click triggers the link; right-click falls through to the ContextMenuStrip.
+        /// </summary>
+        private void MonoHandleMouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            foreach (MonoLinkInfo link in _monoLinks)
+            {
+                if (IsPointOverLink(link, e.Location))
+                {
+                    OnLinkClicked(new LinkClickedEventArgs(link.LinkText));
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Mono: show a hand cursor when hovering over a link, default arrow otherwise.
+        /// Only updates the cursor when the hover state changes to avoid flickering.
+        /// </summary>
+        private void MonoHandleMouseMove(object sender, MouseEventArgs e)
+        {
+            bool overLink = false;
+            foreach (MonoLinkInfo link in _monoLinks)
+            {
+                if (IsPointOverLink(link, e.Location))
+                {
+                    overLink = true;
+                    break;
+                }
+            }
+            if (overLink != _lastOverLink)
+            {
+                _lastOverLink = overLink;
+                Cursor = overLink ? Cursors.Hand : Cursors.IBeam;
+            }
+        }
+
+        /// <summary>
+        /// Clear tracked Mono link regions. Call this before repopulating the control.
+        /// </summary>
+        public void ClearMonoLinks()
+        {
+            _monoLinks.Clear();
         }
 
         public void AppendText(string text, Color color)
