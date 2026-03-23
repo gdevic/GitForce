@@ -403,7 +403,18 @@ namespace GitForce.Main.Right.Panels
             if (e.Button == MouseButtons.Right)
             {
                 TreeNode clickedNode = treeRepos.GetNodeAt(e.X, e.Y);
-                treeRepos.SelectedNode = clickedNode;
+
+                // If right-clicking a node not already in the selection, select only that node.
+                // If right-clicking empty space, clear the selection.
+                if (clickedNode != null)
+                {
+                    if (!treeRepos.SelectedNodes.Contains(clickedNode))
+                        treeRepos.SelectedNodes = new List<TreeNode> { clickedNode };
+                }
+                else
+                {
+                    treeRepos.SelectedNodes = new List<TreeNode>();
+                }
 
                 contextMenu.Items.Clear();
                 contextMenu.Items.AddRange(GetTreeContextMenu(contextMenu));
@@ -600,7 +611,10 @@ namespace GitForce.Main.Right.Panels
 
             // Process each dragged node. For multi-drag, only repo nodes are moved;
             // project nodes are only moved when dragged alone (single selection).
-            foreach (TreeNode dragNode in dragNodes)
+            // When inserting after a target (isBottomZone), reverse iteration order so that
+            // the last item is inserted first, preserving the original selection order.
+            IEnumerable<TreeNode> orderedNodes = isBottomZone ? Enumerable.Reverse(dragNodes) : (IEnumerable<TreeNode>)dragNodes;
+            foreach (TreeNode dragNode in orderedNodes)
             {
                 if (dragNode.Tag is ClassRepo)
                 {

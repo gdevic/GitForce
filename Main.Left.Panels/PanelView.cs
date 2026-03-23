@@ -865,6 +865,9 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void MenuViewDiffClick(object sender, EventArgs e)
         {
+            // Guard: only diff if there are files explicitly selected in this panel
+            if (treeView.SelectedNodes.Count == 0)
+                return;
             Selection sel = new Selection(treeView, status);
             string opt = (sender as ToolStripMenuItem).Tag.ToString();
             status.Repo.GitDiff(opt, sel.SelFiles.ToList());

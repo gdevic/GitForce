@@ -632,7 +632,10 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void MenuDiffClick(object sender, EventArgs e)
         {
+            // Guard: only diff if there are files explicitly selected in this panel
             List<string> files = GetSelectedFiles();
+            if (files.Count == 0)
+                return;
             status.Repo.GitDiff("--cached", files);
         }
 
