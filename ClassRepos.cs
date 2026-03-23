@@ -20,6 +20,13 @@ namespace GitForce
         public List<ClassRepo> Repos = new List<ClassRepo>();
 
         /// <summary>
+        /// Project layout for tree view mode (projects and ordering).
+        /// Not serialized as part of this class; serialized separately in Save/Load.
+        /// </summary>
+        [NonSerialized]
+        public ClassProjectLayout ProjectLayout = new ClassProjectLayout();
+
+        /// <summary>
         /// Returns an existing repo with the root on the given path; otherwise returns null
         /// </summary>
         public ClassRepo Find(string path)
@@ -66,6 +73,17 @@ namespace GitForce
                         List<ClassRepo> newRepos = (List<ClassRepo>)rd.Deserialize(file);
                         string defaultRepo = (string)rd.Deserialize(file);
 
+                        // Attempt to read project layout (third object, may not exist in old format)
+                        ClassProjectLayout newLayout;
+                        try
+                        {
+                            newLayout = (ClassProjectLayout)rd.Deserialize(file);
+                        }
+                        catch (Exception)
+                        {
+                            newLayout = new ClassProjectLayout();
+                        }
+
                         // WAR: Mono 2.6.7 does not support serialization of a HashSet. At the same time...
                         // Quickly check that each repo is valid (find if at least one is not)
                         bool allOK = true;
@@ -91,11 +109,32 @@ namespace GitForce
                         // If the operation is a simple load, assign our object's list of repos
                         // Otherwise, we merge the new set with the existing one
                         if (isImport)
+                        {
                             Repos.AddRange(newRepos);
                             // After we merge the new set of repos, current/default repo remains the same
+                            // Merge imported projects, renaming on collision
+                            foreach (ClassProject importedProject in newLayout.Projects)
+                            {
+                                string name = importedProject.Name;
+                                while (ProjectLayout.FindProject(name) != null)
+                                    name += " (imported)";
+                                importedProject.Name = name;
+                                ProjectLayout.Projects.Add(importedProject);
+                                ProjectLayout.RootOrder.Add("P:" + name);
+                            }
+                            // Add imported ungrouped repos to root order
+                            foreach (string entry in newLayout.RootOrder)
+                            {
+                                if (entry.StartsWith("R:"))
+                                    ProjectLayout.RootOrder.Add(entry);
+                            }
+                            ProjectLayout.Rebuild(Repos);
+                        }
                         else
                         {
                             Repos = newRepos;
+                            ProjectLayout = newLayout;
+                            ProjectLayout.Rebuild(Repos);
                             // Upon load, set the current based on the default repo
                             Default = Repos.Find(r => r.Path == defaultRepo);
                             SetCurrent(Default);
@@ -130,6 +169,7 @@ namespace GitForce
                         BinaryFormatter wr = new BinaryFormatter();
                         wr.Serialize(file, Repos);
                         wr.Serialize(file, Default == null ? "" : Default.Path);
+                        wr.Serialize(file, ProjectLayout);
                         return true;
                     }
                     catch (Exception ex)
@@ -160,6 +200,9 @@ namespace GitForce
                 App.PrintStatusMessage("Removing invalid repo " + r, MessageType.General);
                 Delete(r);
             }
+
+            // Ensure project layout is consistent after removing invalid repos
+            ProjectLayout.Rebuild(Repos);
         }
 
         /// <summary>
@@ -194,6 +237,7 @@ namespace GitForce
                 throw new ClassException("Unable to initialize git repository!");
 
             Repos.Add(repo);
+            ProjectLayout.RootOrder.Add("R:" + repo.Path);
             App.PrintStatusMessage("Adding repo " + repo, MessageType.General);
 
             // If this is a very first repo, set it as default and current
@@ -209,6 +253,7 @@ namespace GitForce
         public void Delete(ClassRepo repo)
         {
             Repos.Remove(repo);
+            ProjectLayout.RemoveRepoEntirely(repo.Path);
 
             // If the current has been deleted, find a new current
             if (repo == Current)

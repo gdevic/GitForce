@@ -570,5 +570,19 @@ namespace GitForce.Properties {
                 this["WarnOnDetachedHead"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(GitForce.PortableSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public bool UseFlatRepoList {
+            get {
+                return ((bool)(this["UseFlatRepoList"]));
+            }
+            set {
+                this["UseFlatRepoList"] = value;
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelRepos));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.btFlatList = new System.Windows.Forms.ToolStripButton();
             this.listRepos = new GitForce.ListViewReorderEx();
             this.colRoot = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -46,7 +47,8 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1});
+            this.toolStripLabel1,
+            this.btFlatList});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -59,7 +61,18 @@
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(89, 22);
             this.toolStripLabel1.Text = "Git Repositories";
-            // 
+            //
+            // btFlatList
+            //
+            this.btFlatList.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btFlatList.CheckOnClick = true;
+            this.btFlatList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btFlatList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btFlatList.Name = "btFlatList";
+            this.btFlatList.Size = new System.Drawing.Size(23, 22);
+            this.btFlatList.ToolTipText = "Toggle flat list view";
+            this.btFlatList.Click += new System.EventHandler(this.BtFlatListClick);
+            //
             // listRepos
             // 
             this.listRepos.AllowDrop = true;
@@ -123,11 +136,35 @@
             this.imageList.Images.SetKeyName(1, "Repo1.ico");
             this.imageList.Images.SetKeyName(2, "Repo2.ico");
             this.imageList.Images.SetKeyName(3, "Repo3.ico");
-            // 
+            //
+            // treeRepos
+            //
+            this.treeRepos = new GitForce.TreeViewEx();
+            this.treeRepos.AllowDrop = true;
+            this.treeRepos.ContextMenuStrip = this.contextMenu;
+            this.treeRepos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeRepos.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeRepos.HideSelection = false;
+            this.treeRepos.ImageList = this.imageList;
+            this.treeRepos.Location = new System.Drawing.Point(0, 25);
+            this.treeRepos.Name = "treeRepos";
+            this.treeRepos.Size = new System.Drawing.Size(400, 375);
+            this.treeRepos.TabIndex = 2;
+            this.treeRepos.Visible = false;
+            this.treeRepos.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeReposItemDrag);
+            this.treeRepos.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeReposDragDrop);
+            this.treeRepos.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeReposDragEnter);
+            this.treeRepos.DragOver += new System.Windows.Forms.DragEventHandler(this.TreeReposDragOver);
+            this.treeRepos.DoubleClick += new System.EventHandler(this.TreeReposDoubleClick);
+            this.treeRepos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeReposMouseUp);
+            this.treeRepos.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.TreeReposAfterCollapseExpand);
+            this.treeRepos.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.TreeReposAfterCollapseExpand);
+            //
             // PanelRepos
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.treeRepos);
             this.Controls.Add(this.listRepos);
             this.Controls.Add(this.toolStrip1);
             this.Name = "PanelRepos";
@@ -151,6 +188,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ToolStripMenuItem dummyMenuItem;
+        private System.Windows.Forms.ToolStripButton btFlatList;
         private ListViewReorderEx listRepos;
+        private GitForce.TreeViewEx treeRepos;
     }
 }
