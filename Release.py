@@ -61,7 +61,7 @@ def IncrementVersionXml(file, version):
     fin.close()
     fout.close()
 
-version_file = "Properties/AssemblyInfo.cs"
+version_file = "src/Properties/AssemblyInfo.cs"
 changelist_file = "change.txt"
 
 version = IncrementVersion(version_file, changelist_file)
@@ -69,7 +69,7 @@ print('Building:')
 subprocess.Popen(["MSBuild.exe", "/t:Rebuild", "/p:Configuration=Release"], shell=True).wait()
 
 # Copy released executable
-shutil.copy2("obj/x86/Release/GitForce.exe", "./") # Here, to the root of the project
+shutil.copy2("src/obj/x86/Release/GitForce.exe", "./") # Here, to the root of the project
 
 # Get the summary of changes and append to the subject
 proc = subprocess.Popen(["git", "log", "--format=%B"], stdout=subprocess.PIPE)

@@ -35,8 +35,9 @@ $ sudo apt-get install mono-complete git meld
 
 ## Building from sources
 
-On Windows OS, install MSVC 2019 with C# support and open GitForce.sln. The code targets .NET 4.5 (which 2019 supports)
-If you use MSVC 2022, install .NET 4.5 framework. See dot.net.45 folder's readme.
+On Windows OS, install MSVC 2019 with C# support and open GitForce.sln. The code targets .NET 4.5 (which 2019 supports).
+If you use MSVC 2022, install .NET 4.5 framework. See `dot.net.45` folder's readme.
+All source code is under the `src/` directory.
 
 On Linux, use xbuild (part of mono-complete):
 ```
