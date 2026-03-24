@@ -70,7 +70,7 @@
             this.btFlatList.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btFlatList.Name = "btFlatList";
             this.btFlatList.Size = new System.Drawing.Size(23, 22);
-            this.btFlatList.ToolTipText = "Toggle flat list view";
+            this.btFlatList.ToolTipText = "Toggle between flat list and Project tree view";
             this.btFlatList.Click += new System.EventHandler(this.BtFlatListClick);
             //
             // listRepos
