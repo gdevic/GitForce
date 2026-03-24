@@ -11,6 +11,7 @@ GitForce is a GUI front-ends for the git command line tool. GitForce runs on bot
 * Easy scan for local repos
 * Supports multiple remote repos
 * Multiple workspaces which are sets of repos
+* Multiple repos can be combined into Projects
 * Multiple sets of changes independent of a single “index” mandated by the git design
 * Add custom tools to context menus to customize it to your specific needs
 * Easy manage SSH keys and remotes
