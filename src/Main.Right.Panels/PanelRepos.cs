@@ -224,14 +224,14 @@ namespace GitForce.Main.Right.Panels
             if (e.Button == MouseButtons.Right)
             {
                 contextMenu.Items.Clear();
-                contextMenu.Items.AddRange(GetFlatContextMenu(contextMenu));
+                contextMenu.Items.AddRange(BuildContextMenu(contextMenu));
             }
         }
 
         /// <summary>
         /// Builds and returns a context menu for flat mode
         /// </summary>
-        private ToolStripItemCollection GetFlatContextMenu(ToolStrip owner)
+        private ToolStripItemCollection BuildContextMenu(ToolStrip owner)
         {
             ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, MenuNewRepoClick);
             ToolStripMenuItem mScan = new ToolStripMenuItem("Scan...", null, MenuScanRepoClick);
@@ -241,15 +241,32 @@ namespace GitForce.Main.Right.Panels
             ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, ListReposDoubleClick);
             ToolStripMenuItem mSetDefault = new ToolStripMenuItem("Set Default to...", null, MenuSetDefaultRepoToClick);
             ToolStripMenuItem mCommand = new ToolStripMenuItem("Command Prompt...", null, MenuViewCommandClick);
+            ToolStripMenuItem mRemoveFromProject = new ToolStripMenuItem("Remove from Project", null, MenuRemoveFromProjectClick);
+            ToolStripMenuItem mNewProject = new ToolStripMenuItem("New Project...", null, MenuNewProjectClick);
+            ToolStripMenuItem mRenameProject = new ToolStripMenuItem("Rename Project...", null, MenuRenameProjectClick);
+            ToolStripMenuItem mDeleteProject = new ToolStripMenuItem("Delete Project", null, MenuDeleteProjectClick);
             ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
 
-            ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
+            var items = new List<ToolStripItem> {
                 mNew, mScan, mEdit, mDelete, mClone,
                 new ToolStripSeparator(),
-                mSwitchTo, mSetDefault, mCommand,
-                new ToolStripSeparator(),
-                mRefresh
-            });
+                mSwitchTo, mSetDefault, mCommand
+            };
+
+            if (!UseFlatMode)
+            {
+                items.Add(new ToolStripSeparator());
+                items.Add(mRemoveFromProject);
+                items.Add(new ToolStripSeparator());
+                items.Add(mNewProject);
+                items.Add(mRenameProject);
+                items.Add(mDeleteProject);
+            }
+
+            items.Add(new ToolStripSeparator());
+            items.Add(mRefresh);
+
+            ToolStripItemCollection menu = new ToolStripItemCollection(owner, items.ToArray());
 
             ClassRepo repo = GetSelectedRepo();
 
@@ -258,26 +275,39 @@ namespace GitForce.Main.Right.Panels
             else
             {
                 mNew.Tag = String.Empty;
+                mClone.Tag = repo;
+
                 if (repo == App.Repos.Current)
                     mSwitchTo.Enabled = false;
 
                 if (repo == App.Repos.Default)
                     mSetDefault.Enabled = false;
-            }
-            if (listRepos.SelectedIndices.Count > 1)
-            {
-                mDelete.Enabled = true;
-                mCommand.Enabled = false;
-                mClone.Enabled = false;
-            }
 
-            if (listRepos.SelectedIndices.Count == 1)
-            {
-                string repoName = listRepos.SelectedItems[0].Text.Replace('\\', '/').Split('/').Last();
+                string repoName = repo.Path.Replace('\\', '/').Split('/').Last();
                 mSwitchTo.Text = "Switch to " + repoName;
                 mSetDefault.Text = "Set Default to " + repoName;
-                mClone.Tag = App.Repos.Repos[listRepos.SelectedIndices[0]];
             }
+
+            if (GetSelectedRepos().Count > 1)
+            {
+                mEdit.Enabled = false;
+                mDelete.Enabled = true;
+                mClone.Enabled = false;
+                mSwitchTo.Enabled = false;
+                mSetDefault.Enabled = false;
+                mCommand.Enabled = false;
+            }
+
+            TreeNode selectedNode = treeRepos.SelectedNode;
+            bool isProjectNode = selectedNode != null && selectedNode.Tag is ClassProject;
+            bool isRepoInProject = repo != null && selectedNode != null
+                && selectedNode.Parent != null && selectedNode.Parent.Tag is ClassProject;
+
+            if (!isRepoInProject)
+                mRemoveFromProject.Enabled = false;
+
+            if (!isProjectNode)
+                mRenameProject.Enabled = mDeleteProject.Enabled = false;
 
             return menu;
         }
@@ -417,7 +447,7 @@ namespace GitForce.Main.Right.Panels
                 }
 
                 contextMenu.Items.Clear();
-                contextMenu.Items.AddRange(GetTreeContextMenu(contextMenu));
+                contextMenu.Items.AddRange(BuildContextMenu(contextMenu));
             }
         }
 
@@ -435,85 +465,8 @@ namespace GitForce.Main.Right.Panels
             }
         }
 
-        /// <summary>
-        /// Builds context menu for tree mode based on selected node type
-        /// </summary>
-        private ToolStripItemCollection GetTreeContextMenu(ToolStrip owner)
-        {
-            TreeNode selectedNode = treeRepos.SelectedNode;
-            bool isProjectNode = selectedNode != null && selectedNode.Tag is ClassProject;
-            bool isRepoNode = selectedNode != null && selectedNode.Tag is ClassRepo;
-            bool isRepoInProject = isRepoNode && selectedNode.Parent != null && selectedNode.Parent.Tag is ClassProject;
 
-            ToolStripMenuItem mNew = new ToolStripMenuItem("New...", null, MenuNewRepoClick);
-            ToolStripMenuItem mScan = new ToolStripMenuItem("Scan...", null, MenuScanRepoClick);
-            ToolStripMenuItem mNewProject = new ToolStripMenuItem("New Project...", null, MenuNewProjectClick);
-            ToolStripMenuItem mRefresh = new ToolStripMenuItem("Refresh", null, MenuRefreshClick, Keys.F5);
 
-            if (isProjectNode)
-            {
-                ToolStripMenuItem mRenameProject = new ToolStripMenuItem("Rename Project...", null, MenuRenameProjectClick);
-                ToolStripMenuItem mDeleteProject = new ToolStripMenuItem("Delete Project", null, MenuDeleteProjectClick);
-
-                return new ToolStripItemCollection(owner, new ToolStripItem[] {
-                    mRenameProject, mDeleteProject,
-                    new ToolStripSeparator(),
-                    mNew, mScan, mNewProject,
-                    new ToolStripSeparator(),
-                    mRefresh
-                });
-            }
-
-            if (isRepoNode)
-            {
-                ClassRepo repo = (ClassRepo)selectedNode.Tag;
-
-                ToolStripMenuItem mEdit = new ToolStripMenuItem("Edit...", null, MenuRepoEditClick);
-                ToolStripMenuItem mDelete = new ToolStripMenuItem("Delete...", null, MenuDeleteRepoClick);
-                ToolStripMenuItem mClone = new ToolStripMenuItem("Clone...", null, MenuNewRepoClick);
-                ToolStripMenuItem mSwitchTo = new ToolStripMenuItem("Switch to...", null, TreeReposDoubleClick);
-                ToolStripMenuItem mSetDefault = new ToolStripMenuItem("Set Default to...", null, MenuSetDefaultRepoToClick);
-                ToolStripMenuItem mCommand = new ToolStripMenuItem("Command Prompt...", null, MenuViewCommandClick);
-
-                mNew.Tag = String.Empty;
-                mClone.Tag = repo;
-
-                if (repo == App.Repos.Current) mSwitchTo.Enabled = false;
-                if (repo == App.Repos.Default) mSetDefault.Enabled = false;
-
-                string repoName = repo.Path.Replace('\\', '/').Split('/').Last();
-                mSwitchTo.Text = "Switch to " + repoName;
-                mSetDefault.Text = "Set Default to " + repoName;
-
-                var items = new List<ToolStripItem> {
-                    mNew, mScan, mEdit, mDelete, mClone,
-                    new ToolStripSeparator(),
-                    mSwitchTo, mSetDefault, mCommand
-                };
-
-                if (isRepoInProject)
-                {
-                    items.Add(new ToolStripSeparator());
-                    items.Add(new ToolStripMenuItem("Remove from Project", null, MenuRemoveFromProjectClick));
-                }
-
-                items.Add(new ToolStripSeparator());
-                items.Add(mNewProject);
-                items.Add(new ToolStripSeparator());
-                items.Add(mRefresh);
-
-                return new ToolStripItemCollection(owner, items.ToArray());
-            }
-
-            // Empty space or no selection
-            return new ToolStripItemCollection(owner, new ToolStripItem[] {
-                mNew, mScan,
-                new ToolStripSeparator(),
-                mNewProject,
-                new ToolStripSeparator(),
-                mRefresh
-            });
-        }
 
         #endregion
 
@@ -849,10 +802,7 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         public ToolStripItemCollection GetContextMenu(ToolStrip owner)
         {
-            if (UseFlatMode)
-                return GetFlatContextMenu(owner);
-            else
-                return GetTreeContextMenu(owner);
+            return BuildContextMenu(owner);
         }
 
         /// <summary>
