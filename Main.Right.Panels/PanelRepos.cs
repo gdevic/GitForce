@@ -860,23 +860,21 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void RestoreSelection(List<ClassRepo> repos)
         {
-            if (repos.Count == 0) return;
-
             if (UseFlatMode)
             {
+                // Clear auto-selection from FlatRefresh, then restore
                 foreach (ListViewItem li in listRepos.Items)
                 {
                     ClassRepo r = li.Tag as ClassRepo;
-                    if (r != null && repos.Contains(r))
-                        li.Selected = true;
+                    li.Selected = r != null && repos.Contains(r);
                 }
             }
             else
             {
+                // SelectedNodes setter calls SelectNone first, replacing auto-selection
                 var nodesToSelect = new List<TreeNode>();
                 CollectRepoNodes(treeRepos.Nodes, repos, nodesToSelect);
-                if (nodesToSelect.Count > 0)
-                    treeRepos.SelectedNodes = nodesToSelect;
+                treeRepos.SelectedNodes = nodesToSelect;
             }
         }
 

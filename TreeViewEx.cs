@@ -224,8 +224,7 @@ namespace GitForce
                 SetSelected(n, true);
                 n.EnsureVisible();
             }
-            if (nodes.Count > 0)
-                SelectedNode = nodes[0];
+            SelectedNode = nodes.Count > 0 ? nodes[0] : null;
             EndUpdate();
             OnAfterSelect(null);
         }
