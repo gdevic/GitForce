@@ -49,4 +49,4 @@ It should also work on other OS-es that have Mono support.
 
 ## Screenshot
 
-<img src="https://a.fsdn.com/con/app/proj/gitforce/screenshots/gitforce-main-window.png" />
+<img src="docs/gitforce-main-window.png" />
