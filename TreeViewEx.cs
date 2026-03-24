@@ -207,6 +207,7 @@ namespace GitForce
         public void NodesClear()
         {
             _selectedNodes.Clear();
+            SelectedNode = null;
             Nodes.Clear();
             OnAfterSelect(null);
         }
@@ -223,6 +224,8 @@ namespace GitForce
                 SetSelected(n, true);
                 n.EnsureVisible();
             }
+            if (nodes.Count > 0)
+                SelectedNode = nodes[0];
             EndUpdate();
             OnAfterSelect(null);
         }

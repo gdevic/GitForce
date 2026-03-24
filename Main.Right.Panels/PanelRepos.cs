@@ -1112,6 +1112,7 @@ namespace GitForce.Main.Right.Panels
         private void MenuRepoEditClick(object sender, EventArgs e)
         {
             ClassRepo repo = GetSelectedRepo();
+            if (repo == null) return;
             FormRepoEdit repoEdit = new FormRepoEdit(repo);
             if (repoEdit.ShowDialog() == DialogResult.OK)
                 App.DoRefresh();
