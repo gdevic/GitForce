@@ -695,6 +695,9 @@ namespace GitForce.Main.Right.Panels
 
         private void MenuNewProjectClick(object sender, EventArgs e)
         {
+            // Capture selected repos before showing the dialog
+            List<ClassRepo> selectedRepos = GetSelectedRepos();
+
             string name = FormProjectName.GetName("New Project", "");
             if (name == null) return;
 
@@ -704,6 +707,11 @@ namespace GitForce.Main.Right.Panels
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Move selected repos into the new project
+            foreach (ClassRepo repo in selectedRepos)
+                App.Repos.ProjectLayout.AddRepoToProject(name, repo.Path);
+
             ReposRefresh();
         }
 
