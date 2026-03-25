@@ -768,6 +768,7 @@ namespace GitForce.Main.Right.Panels
             else
             {
                 if (treeRepos.SelectedNode == null) return null;
+                if (treeRepos.SelectedNodes.Count != 1) return null;
                 return treeRepos.SelectedNode.Tag as ClassRepo;
             }
         }
