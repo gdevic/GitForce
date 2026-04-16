@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -99,6 +101,21 @@ namespace GitForce.Main.Right.Panels
                 {
                     string filterSha = btClearFilter.Enabled ? formFilter.filterSha : string.Empty;
                     UpdateList(listRev, result.stdout, false, filterSha);
+
+                    // Re-apply session-only row colors stored on the current repo
+                    ClassRepo cur = App.Repos.Current;
+                    if ((cur != null) && (cur.RevColors.Count > 0))
+                    {
+                        foreach (KeyValuePair<string, Color> kv in cur.RevColors)
+                        {
+                            ListViewItem item = listRev.Items[kv.Key];
+                            if (item != null)
+                            {
+                                item.BackColor = kv.Value;
+                                item.ForeColor = ContrastingTextColor(kv.Value);
+                            }
+                        }
+                    }
                 }
             }
             listRev.EndUpdate();
@@ -196,15 +213,20 @@ namespace GitForce.Main.Right.Panels
             ToolStripMenuItem mReset = new ToolStripMenuItem("Reset", null, MenuResetClick);
             ToolStripMenuItem mCherry = new ToolStripMenuItem("Cherry pick", null, MenuCherryPickClick);
             ToolStripMenuItem mCopy = new ToolStripMenuItem("Copy SHA", null, MenuCopyShaClick);
+            ToolStripMenuItem mColor = new ToolStripMenuItem("Color...", null, MenuColorClick);
+            ToolStripMenuItem mClearColors = new ToolStripMenuItem("Clear Colors", null, MenuClearColorsClick);
 
             ToolStripItemCollection menu = new ToolStripItemCollection(owner, new ToolStripItem[] {
                 mDescribe, mReset, mCherry,
                 new ToolStripSeparator(),
-                mCopy
+                mCopy,
+                new ToolStripSeparator(),
+                mColor, mClearColors
             });
 
             // Enable menu items only if there was a change selected
-            mDescribe.Enabled = mReset.Enabled = mCherry.Enabled = mCopy.Enabled = GetSelectedSha() != null;
+            mDescribe.Enabled = mReset.Enabled = mCherry.Enabled = mCopy.Enabled = mColor.Enabled = (GetSelectedSha() != null);
+            mClearColors.Enabled = ((App.Repos.Current != null) && (App.Repos.Current.RevColors.Count > 0));
 
             return menu;
         }
@@ -272,6 +294,63 @@ namespace GitForce.Main.Right.Panels
             {
                 Clipboard.SetText(sha);
             }
+        }
+
+        /// <summary>
+        /// Open a color picker for the selected row. The chosen color is stored on
+        /// the current repo (session-only) and applied as the row background.
+        /// </summary>
+        private void MenuColorClick(object sender, EventArgs e)
+        {
+            string sha = GetSelectedSha();
+            ClassRepo repo = App.Repos.Current;
+            if ((sha == null) || (repo == null))
+                return;
+            using (ColorDialog dlg = new ColorDialog())
+            {
+                Color existing;
+                if (repo.RevColors.TryGetValue(sha, out existing))
+                    dlg.Color = existing;
+                dlg.AnyColor = true;
+                dlg.FullOpen = true;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    repo.RevColors[sha] = dlg.Color;
+                    ListViewItem item = listRev.Items[sha];   // li.Name was set to SHA in UpdateList
+                    if (item != null)
+                    {
+                        item.BackColor = dlg.Color;
+                        item.ForeColor = ContrastingTextColor(dlg.Color);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Drop all session colors for the current repo and reset row backgrounds.
+        /// </summary>
+        private void MenuClearColorsClick(object sender, EventArgs e)
+        {
+            ClassRepo repo = App.Repos.Current;
+            if (repo == null)
+                return;
+            repo.RevColors.Clear();
+            foreach (ListViewItem item in listRev.Items)
+            {
+                item.BackColor = listRev.BackColor;
+                item.ForeColor = listRev.ForeColor;
+            }
+        }
+
+        /// <summary>
+        /// Returns black or white, whichever yields better contrast against 'bg'.
+        /// Uses ITU-R BT.601 perceived-luminance weighting: pure blue is "dark" and
+        /// gets white text; pure yellow is "light" and keeps black text.
+        /// </summary>
+        private static Color ContrastingTextColor(Color bg)
+        {
+            double luminance = ((((0.299 * bg.R) + (0.587 * bg.G)) + (0.114 * bg.B)) / 255.0);
+            return ((luminance < 0.5) ? Color.White : Color.Black);
         }
 
         /// <summary>

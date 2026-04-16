@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -73,6 +74,19 @@ namespace GitForce
         /// </summary>
         [NonSerialized]
         public ClassStatus Status;
+
+        /// <summary>
+        /// Per-row background colors for the Revisions tab, keyed by commit SHA.
+        /// Session-only: marked NonSerialized so it is not written to the workspace
+        /// file and is not restored across app runs. Lazily initialized because
+        /// BinaryFormatter does not run field initializers on deserialization.
+        /// </summary>
+        [NonSerialized]
+        private Dictionary<string, Color> _revColors;
+        public Dictionary<string, Color> RevColors
+        {
+            get { return (_revColors ?? (_revColors = new Dictionary<string, Color>())); }
+        }
 
         /// <summary>
         /// Class constructor
