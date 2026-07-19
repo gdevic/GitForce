@@ -184,7 +184,7 @@ namespace GitForce
         /// </summary>
         private void POutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data))   // If the stream ended, ignore stdout
+            if (e.Data == null)   // If the stream ended, ignore stdout
                 return;
 
             if (Result.stdout != string.Empty)

@@ -43,7 +43,8 @@ namespace GitForce
             if (result.Success())
             {
                 amendText = result.stdout;
-                // TODO: We are losing newlines with App.Repos.Current.Run. At least insert one after the subject line.
+                // The %b (body) format token does not include the blank line that
+                // conventionally separates the subject from the body, so reinsert it.
                 if (amendText.IndexOf(Environment.NewLine) > 0)
                     amendText = amendText.Insert(amendText.IndexOf(Environment.NewLine), Environment.NewLine);
             }
