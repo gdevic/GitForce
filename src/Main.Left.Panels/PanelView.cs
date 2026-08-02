@@ -490,8 +490,14 @@ namespace GitForce.Main.Left.Panels
         /// </summary>
         private void TreeViewAfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (status == null || treeView.SelectedNodes.Count == 0)
+            // The status buttons are registered by the main form only after this panel is created
+            if (status == null || StatusButtons == null)
                 return;
+
+            // Start from an empty set of operations, otherwise the operations allowed on the
+            // files selected before would accumulate and stay enabled for the new selection.
+            // With nothing selected the set stays empty, which disables all of the operations.
+            allowedOps.Clear();
 
             // The selection of files contains classes of operations (keys)
             Selection sel = new Selection(treeView, status);
