@@ -1018,12 +1018,12 @@ namespace GitForce.Main.Right.Panels
                                 break;
 
                             case "local":
-                                init = "clone " + newRepoStep1.Local + " \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone \"" + newRepoStep1.Local + "\" \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
                                 break;
 
                             case "remote":
                                 ClassRemotes.Remote r = newRepoStep1.Remote;
-                                init = "clone --progress -v --origin " + r.Name + " " + r.UrlFetch + " \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
+                                init = "clone --progress -v --origin \"" + r.Name + "\" \"" + r.UrlFetch + "\" \"" + root + "\"" + (isBare ? " --bare --shared " : " ") + extra;
                                 ClassUtils.AddEnvar("PASSWORD", r.Password);
                                 break;
                         }

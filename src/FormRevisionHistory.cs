@@ -106,6 +106,18 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Returns this form's file name in the form a git command line needs: quoted, so a name
+        /// containing spaces stays one argument, and with forward slashes, which "show sha:path"
+        /// requires (it addresses a path inside a tree, where the separator is always '/', and
+        /// rejects a backslash even on Windows). Pathspecs accept either separator, so one shape
+        /// serves every command here.
+        /// </summary>
+        private string GitPath()
+        {
+            return "\"" + file.Replace(Path.DirectorySeparatorChar, '/') + "\"";
+        }
+
+        /// <summary>
         /// The form is loading. Get the file log information and fill it in.
         /// </summary>
         private void FormRevisionHistoryLoad(object sender, EventArgs e)
@@ -124,7 +136,7 @@ namespace GitForce
                 cmd.Append(" -" + Properties.Settings.Default.commitsRetrieveLast);
 
             // Get the log of a single file only
-            cmd.Append(" -- \"" + file + "\"");
+            cmd.Append(" -- " + GitPath());
 
             ExecResult result = RunGit(cmd.ToString());
             if (result.Success())
@@ -182,7 +194,7 @@ namespace GitForce
         /// </summary>
         private void DiffVsClientFileMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + lruSha[0] + "..HEAD -- " + file;
+            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + lruSha[0] + "..HEAD -- " + GitPath();
             RunDiff(cmd);
         }
 
@@ -191,7 +203,7 @@ namespace GitForce
         /// </summary>
         private void DiffRevisionsMenuItemClick(object sender, EventArgs e)
         {
-            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + lruSha[0] + ".." + lruSha[1] + " -- " + file;
+            string cmd = "difftool " + ClassDiff.GetDiffCmd() + " " + lruSha[0] + ".." + lruSha[1] + " -- " + GitPath();
             RunDiff(cmd);
         }
 
@@ -231,7 +243,7 @@ namespace GitForce
             if (MessageBox.Show("This will sync file to a previous version. Continue?", "Revision Sync",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question)== DialogResult.Yes)
             {
-                string cmd = string.Format("checkout {1} -- \"{0}\"", file, lruSha[0]);
+                string cmd = string.Format("checkout {1} -- {0}", GitPath(), lruSha[0]);
                 ExecResult result = App.Repos.Current.RunCmd(cmd, false, isInSubmodule ? workingDir : null);
                 if (result.Success())
                 {
