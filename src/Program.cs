@@ -25,13 +25,42 @@ namespace GitForce
         /// single-threaded, some panels refresh functions are calling GitRun() which
         /// in turn spawns external async process during which time we can end up with
         /// multiple threads trying to refresh.
+        /// Each handler is invoked separately and its exceptions are caught and reported,
+        /// so that one failing panel neither aborts the panels that follow it nor leaves
+        /// the re-entrancy flag set (which would disable refresh for the whole session).
         /// </summary>
         public static void DoRefresh()
         {
             if (inRefresh) return;
             inRefresh = true;
-            Refresh();
-            inRefresh = false;
+            try
+            {
+                // Refresh is a multicast delegate: invoke each handler on its own so that an
+                // exception thrown by one panel does not skip the panels that follow it. That
+                // matters because the last handler in the chain is the one that clears the busy
+                // indicator, and a partially run chain leaves the UI in an inconsistent state.
+                if (Refresh != null)
+                {
+                    foreach (RefreshDelegate handler in Refresh.GetInvocationList())
+                    {
+                        try
+                        {
+                            handler();
+                        }
+                        catch (Exception ex)
+                        {
+                            PrintStatusMessage(String.Format("Refresh error in {0}: {1}",
+                                handler.Method.Name, ex.Message), MessageType.Error);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                // Always clear the re-entrancy flag: leaving it set after an exception would
+                // silently turn every subsequent refresh into a no-op for the rest of the session.
+                inRefresh = false;
+            }
         }
 
         /// <summary>
