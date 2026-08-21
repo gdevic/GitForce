@@ -182,6 +182,10 @@ namespace GitForce
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Report anything that escapes an event handler or a background thread. Installed
+            // before any other startup work so that faults during initialization are covered too.
+            ClassFault.Install();
+
             // Upgrade application settings across the version increment
             ClassUtils.UpgradeApplicationSettingsIfNecessary();
 

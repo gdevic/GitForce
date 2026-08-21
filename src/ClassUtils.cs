@@ -456,14 +456,52 @@ namespace GitForce
         /// </summary>
         public static void OpenWebLink(string html)
         {
-            try
+            if (!IsMono())
             {
-                Process.Start(html);
+                // On Windows the shell resolves the URL and picks the default browser
+                try
+                {
+                    Process.Start(html);
+                }
+                catch (Exception ex)
+                {
+                    ReportWebLinkError(html, ex.Message);
+                }
+                return;
             }
-            catch (Exception ex)
+
+            // Linux has no single way to open a URL, and the usual helper is not always there:
+            // xdg-open ships with xdg-utils, which a minimal install (a bare WSL2 image, for
+            // one) does not include, while wslview comes with wslu and hands the link to the
+            // Windows browser. Try each in turn so one missing program is not the end of it.
+            string[] openers = { "xdg-open", "wslview", "sensible-browser", "gnome-open" };
+            foreach (string opener in openers)
             {
-                MessageBox.Show(ex.Message, "GitForce", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                try
+                {
+                    Process.Start(opener, html);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    App.PrintLogMessage("OpenWebLink: " + opener + " could not be run: " + ex.Message, MessageType.Debug);
+                }
             }
+            ReportWebLinkError(html, "None of these browser helpers could be run: " + string.Join(", ", openers) +
+                "." + Environment.NewLine + "Install one of them, for example 'sudo apt install xdg-utils', or 'sudo apt install wslu' under WSL.");
+        }
+
+        /// <summary>
+        /// Reports a web link that could not be opened. Always names the link and the reason:
+        /// the underlying error is usually "Cannot find the specified file", which on its own
+        /// does not say which file, nor that a browser was being launched at all.
+        /// </summary>
+        private static void ReportWebLinkError(string html, string reason)
+        {
+            App.PrintStatusMessage("Unable to open " + html + ": " + reason, MessageType.Error);
+            MessageBox.Show("Unable to open this web link:" + Environment.NewLine + html + Environment.NewLine +
+                Environment.NewLine + reason,
+                "GitForce", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         /// <summary>

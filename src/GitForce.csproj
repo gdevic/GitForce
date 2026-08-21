@@ -61,6 +61,7 @@
     <Compile Include="ClassDiff.cs" />
     <Compile Include="ClassException.cs" />
     <Compile Include="ClassExecute.cs" />
+    <Compile Include="ClassFault.cs" />
     <Compile Include="ClassGit.cs" />
     <Compile Include="ClassGitDirectory.cs" />
     <Compile Include="ClassHttpsPasswd.cs" />

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace GitForce
 {
@@ -31,17 +30,15 @@ namespace GitForce
         /// </summary>
         public static void Handler(string topic)
         {
-            if (Webhelp.ContainsKey(topic))
-            {
-                if (ClassUtils.IsMono())
-                    Process.Start("xdg-open", Webhelp[topic]);
-                else
-                    Process.Start(Webhelp[topic]);
-            }
-            else
+            if (!Webhelp.ContainsKey(topic))
             {
                 App.PrintStatusMessage("Internal Error: Please report that `topic " + topic + "` not found!", MessageType.Error);
+                return;
             }
+            // Hand this to the shared helper rather than starting a browser here: it knows how
+            // to launch one on each platform, and it reports a failure instead of throwing.
+            // Launching a browser can always fail, so this must never escape to the caller.
+            ClassUtils.OpenWebLink(Webhelp[topic]);
         }
     }
 }

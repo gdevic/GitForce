@@ -102,7 +102,10 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                App.PrintStatusMessage("Version check: " + ex.Message, MessageType.Error);
+                // Not an error the user can do anything about: the update check is optional and
+                // fails whenever the machine is offline, behind a proxy or, as under WSL, simply
+                // slow to reach the outside. Printing it in red on every start is just noise.
+                App.PrintStatusMessage("Version check skipped: " + ex.Message, MessageType.General);
             }
         }
 
