@@ -770,10 +770,11 @@ namespace GitForce
                             args = remote + " " + r.Branches.Current;
                         PrintStatus("Push \"" + r.Path + "\" to a remote repo \"" + args + "\"", MessageType.General);
                         if (!r.RunCmd("push " + args).Success())
-                            return;
+                            goto Done;
                     }
                 }
             }
+            Done: App.DoRefresh();
         }
 
         /// <summary>
