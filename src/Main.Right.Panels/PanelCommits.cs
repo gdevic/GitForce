@@ -201,15 +201,33 @@ namespace GitForce.Main.Right.Panels
                     opclass[status.Ycode(s)] = new List<string> { s };
             }
 
-            // Perform required operations on the files
-            if (opclass.ContainsKey('?'))
-                status.Repo.GitAdd(opclass['?']);
-            if (opclass.ContainsKey('M'))
-                status.Repo.GitUpdate(opclass['M']);
-            if (opclass.ContainsKey('D'))
-                status.Repo.GitDelete(opclass['D']);
-            if (opclass.ContainsKey('R'))
-                status.Repo.GitRename(opclass['R']);
+            // Perform required operations on the files. Codes that need identical
+            // treatment are grouped: a type-changed 'T' file is staged like a modified
+            // one, and a copied 'C' file like a renamed one.
+            List<string> add = Pick(opclass, '?');
+            if (add.Count > 0)
+                status.Repo.GitAdd(add);
+            List<string> update = Pick(opclass, 'M', 'T');
+            if (update.Count > 0)
+                status.Repo.GitUpdate(update);
+            List<string> delete = Pick(opclass, 'D');
+            if (delete.Count > 0)
+                status.Repo.GitDelete(delete);
+            List<string> rename = Pick(opclass, 'R', 'C');
+            if (rename.Count > 0)
+                status.Repo.GitRename(rename);
+        }
+
+        /// <summary>
+        /// Collect the files bucketed under any of the given git status codes
+        /// </summary>
+        private static List<string> Pick(Dictionary<char, List<string>> opclass, params char[] codes)
+        {
+            List<string> files = new List<string>();
+            foreach (char code in codes)
+                if (opclass.ContainsKey(code))
+                    files.AddRange(opclass[code]);
+            return files;
         }
 
         /// <summary>

@@ -158,6 +158,7 @@ namespace GitForce
             Dictionary<char, string> desc = new Dictionary<char, string> {
             { ' ', "OK" },
             { 'M', "Modified" },
+            { 'T', "Type changed" },
             { 'A', "Added" },
             { 'D', "Deleted" },
             { 'R', "Renamed" },
@@ -177,11 +178,13 @@ namespace GitForce
                 {
                     char xcode = Xcode(name);
                     char ycode = Ycode(name);
-                    string x = "", y = "";
+                    string x = "", y = "", code;
+                    // Look the codes up defensively: an unrecognized code must degrade to
+                    // showing the raw letter, never throw out of this event handler
                     if (ycode != ' ')
-                        y = desc[ycode];
+                        y = desc.TryGetValue(ycode, out code) ? code : ycode.ToString();
                     if (xcode != ' ' && xcode != '?')
-                        x = ((ycode != ' ') ? ", " : "") + desc[xcode] + " in index";
+                        x = ((ycode != ' ') ? ", " : "") + (desc.TryGetValue(xcode, out code) ? code : xcode.ToString()) + " in index";
                     if (x.Length > 0 || y.Length > 0)
                         status += "   (" + y + x + ")";
                 }

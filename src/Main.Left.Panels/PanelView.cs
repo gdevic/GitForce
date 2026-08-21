@@ -359,6 +359,21 @@ namespace GitForce.Main.Left.Panels
                         Opclass[code] = new List<string> { s };
                 }
             }
+
+            /// <summary>
+            /// Return every selected file whose git status code is one of the given codes.
+            /// Handlers use this so that codes needing identical treatment (for example a
+            /// modified 'M' and a type-changed 'T' file, both of which are simply re-added)
+            /// cannot drift apart from the table of allowed operations.
+            /// </summary>
+            public List<string> Files(params char[] codes)
+            {
+                List<string> files = new List<string>();
+                foreach (char code in codes)
+                    if (Opclass.ContainsKey(code))
+                        files.AddRange(Opclass[code]);
+                return files;
+            }
         }
 
         /// <summary>
@@ -474,8 +489,10 @@ namespace GitForce.Main.Left.Panels
             {'?', new[]{ FileOps.Add, FileOps.DeleteFs, FileOps.Edit }},
             {' ', new[]{ FileOps.Rename, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
             {'M', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
+            {'T', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
             {'D', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert}},
             {'R', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
+            {'C', new[]{ FileOps.Update, FileOps.UpdateAll, FileOps.Revert, FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
             {'U', new[]{ FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}},
             {'A', new[]{ FileOps.Delete, FileOps.DeleteFs, FileOps.Edit, FileOps.Diff}}
         };
@@ -502,7 +519,9 @@ namespace GitForce.Main.Left.Panels
             // The selection of files contains classes of operations (keys)
             Selection sel = new Selection(treeView, status);
             List<char> keys = sel.Opclass.Keys.ToList();
-            foreach (var key in keys)
+            // Skip codes we have no rule for rather than throwing out of this event handler.
+            // Such a file simply offers no operations instead of breaking the selection.
+            foreach (var key in keys.Where(ops.ContainsKey))
                 allowedOps.AddRange(ops[key]);
 
             // Remove duplicate entries
@@ -684,7 +703,7 @@ namespace GitForce.Main.Left.Panels
 
             ClassTool tool = (ClassTool)(sender as ToolStripMenuItem).Tag;
             App.PrintStatusMessage(String.Format("{0} {1}", tool.Cmd, tool.Args), MessageType.Command);
-            App.PrintStatusMessage(tool.Run(files), MessageType.Output);
+            tool.Run(files);
         }
 
         /// <summary>
@@ -735,12 +754,15 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewUpdateChangelistClick(object sender, EventArgs e)
         {
             Selection sel = new Selection(treeView, status);
-            if (sel.Opclass.ContainsKey('M'))
-                status.Repo.GitUpdate(sel.Opclass['M']);
-            if (sel.Opclass.ContainsKey('D'))
-                status.Repo.GitDelete(sel.Opclass['D']);
-            if (sel.Opclass.ContainsKey('R'))
-                status.Repo.GitRename(sel.Opclass['R']);
+            List<string> update = sel.Files('M', 'T');
+            if (update.Count > 0)
+                status.Repo.GitUpdate(update);
+            List<string> delete = sel.Files('D');
+            if (delete.Count > 0)
+                status.Repo.GitDelete(delete);
+            List<string> rename = sel.Files('R', 'C');
+            if (rename.Count > 0)
+                status.Repo.GitRename(rename);
             App.DoRefresh();
         }
 
@@ -764,12 +786,9 @@ namespace GitForce.Main.Left.Panels
             if (MessageBox.Show("This will revert all changes to selected files in your working directory. It will not affect staged files in Changelists.\r\rProceed with Revert?",
                 "Revert", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (sel.Opclass.ContainsKey('M'))
-                    status.Repo.GitRevert(sel.Opclass['M']);
-                if (sel.Opclass.ContainsKey('D'))
-                    status.Repo.GitRevert(sel.Opclass['D']);
-                if (sel.Opclass.ContainsKey('R'))
-                    status.Repo.GitRevert(sel.Opclass['R']);
+                List<string> revert = sel.Files('M', 'T', 'D', 'R', 'C');
+                if (revert.Count > 0)
+                    status.Repo.GitRevert(revert);
                 App.DoRefresh();
             }
         }
@@ -797,12 +816,9 @@ namespace GitForce.Main.Left.Panels
         private void MenuViewOpenForDeleteClick(object sender, EventArgs e)
         {
             Selection sel = new Selection(treeView, status);
-            if (sel.Opclass.ContainsKey(' '))
-                status.Repo.GitDelete(sel.Opclass[' ']);
-            if (sel.Opclass.ContainsKey('M'))
-                status.Repo.GitDelete(sel.Opclass['M']);
-            if (sel.Opclass.ContainsKey('R'))
-                status.Repo.GitDelete(sel.Opclass['R']);
+            List<string> remove = sel.Files(' ', 'M', 'T', 'R', 'C');
+            if (remove.Count > 0)
+                status.Repo.GitDelete(remove);
             App.DoRefresh();
         }
 

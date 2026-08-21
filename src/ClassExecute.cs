@@ -10,7 +10,7 @@ namespace GitForce
     /// * Simple case: execute one command: Run()
     ///     returns when the command completes
     ///     return structure including the stdout
-    ///     safety built-in: self-terminate if there is no response within some time
+    ///     blocks the calling thread until the command completes
     /// * More complex case: AsyncRun()
     ///     command takes more time: asynchronous execution with a completion callback
     ///     callbacks for stdout and stderr
@@ -56,33 +56,64 @@ namespace GitForce
         private PStdoutDelegate FStdout;
         private PStderrDelegate FStderr;
         private PCompleteDelegate FComplete;
-        private Semaphore Exited = new Semaphore(0, 1);
+        /// <summary>
+        /// Signalled when the corresponding redirected stream reports end-of-stream.
+        /// Manual-reset so that repeated end-of-stream callbacks are harmless (plink is
+        /// known to deliver more than one when a new key is added).
+        /// </summary>
+        private readonly ManualResetEvent StdoutEof = new ManualResetEvent(false);
+        private readonly ManualResetEvent StderrEof = new ManualResetEvent(false);
+
+        /// <summary>
+        /// True when the standard streams of the child process are redirected to us.
+        /// When false, the streams belong to the child's own console and must not be
+        /// read, encoded or waited upon (doing so throws).
+        /// </summary>
+        private readonly bool Redirected;
+
+        /// <summary>
+        /// Set once the corresponding stream has delivered at least one line, so that
+        /// a leading empty line is preserved instead of being folded away.
+        /// </summary>
+        private bool anyStdout;
+        private bool anyStderr;
+
+        /// <summary>
+        /// Grace period (ms) to wait, after the process has already exited, for its
+        /// redirected streams to report end-of-stream. Bounded because a grandchild
+        /// process that inherited the pipe write handles (a detached 'git gc', a
+        /// credential helper) can hold them open long after git itself is gone.
+        /// </summary>
+        private const int DrainTimeout = 5000;
 
         public Exec(string cmd, string args)
         {
+            // TODO: This is a hack for mergetool: We need to show the window to ask the user if the merge succeeded.
+            // The problem is with .NET (and MONO!) buffering of streams prevents us to catching the question on time.
+            Redirected = !args.StartsWith("mergetool ");
+
             Proc = new Process {
                 StartInfo =
                 {
                     FileName = cmd,
                     Arguments = args,
                     UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    StandardOutputEncoding = System.Text.Encoding.UTF8,
+                    CreateNoWindow = Redirected,
+                    RedirectStandardOutput = Redirected,
+                    RedirectStandardError = Redirected,
                     WorkingDirectory = Directory.GetCurrentDirectory()
                 }};
 
-            Proc.OutputDataReceived += POutputDataReceived;
-            Proc.ErrorDataReceived += PErrorDataReceived;
-
-            // TODO: This is a hack for mergetool: We need to show the window to ask the user if the merge succeeded.
-            // The problem is with .NET (and MONO!) buffering of streams prevents us to catching the question on time.
-            if (args.StartsWith("mergetool "))
+            // Stream encodings may only be set for streams that are actually redirected,
+            // otherwise Process.Start() throws. Set both so that non-ASCII text coming
+            // back on either stream is decoded the same way.
+            if (Redirected)
             {
-                Proc.StartInfo.CreateNoWindow = false;
-                Proc.StartInfo.RedirectStandardOutput = false;
-                Proc.StartInfo.RedirectStandardError = false;
+                Proc.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
+                Proc.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
+
+                Proc.OutputDataReceived += POutputDataReceived;
+                Proc.ErrorDataReceived += PErrorDataReceived;
             }
 
             // Add all environment variables registered for our process environment
@@ -106,7 +137,7 @@ namespace GitForce
             App.StatusBusy(true);
             Exec job = new Exec(cmd, args);
             job.Thread = new Thread(job.ThreadedRun);
-            job.Thread.Start(1000 * 60); // Give the job 60 sec to cleanly finish
+            job.Thread.Start();
             job.Thread.Join();
             // There are known problems with async output not being flushed as the
             // thread exits. Releasing a time-slice using DoEvents seems to fix
@@ -126,7 +157,7 @@ namespace GitForce
             FComplete = pcomplete;
 
             Thread = new Thread(ThreadedRun);
-            Thread.Start(1000 * 60); // Give the job 60 sec to cleanly finish
+            Thread.Start();
         }
 
         /// <summary>
@@ -150,21 +181,38 @@ namespace GitForce
         /// <summary>
         /// Executes a job process and blocks until it completes.
         /// </summary>
-        private void ThreadedRun(object wait)
+        private void ThreadedRun()
         {
             try
             {
                 Proc.Start();
-                Proc.BeginOutputReadLine();
-                Proc.BeginErrorReadLine();
 
-                if (Proc.WaitForExit((int)wait))
-                    Proc.WaitForExit();
+                // The streams may only be read when they have been redirected (see the constructor)
+                if (Redirected)
+                {
+                    Proc.BeginOutputReadLine();
+                    Proc.BeginErrorReadLine();
+                }
 
-                // Wait for stdout and stderr signals to complete
-                Exited.WaitOne();
+                // Wait for the process itself for as long as it takes. Git commands are
+                // routinely slow (clone, gc, submodule update) and an interactive mergetool
+                // runs for as long as the user needs, so we must never terminate one: killing
+                // git mid-command leaves .git/index.lock behind and blocks every later command.
+                //
+                // Note the argument: the parameterless WaitForExit() would additionally block
+                // until both pipes report end-of-stream, and a grandchild process holding the
+                // inherited write handles can delay that indefinitely. Any value other than
+                // Timeout.Infinite waits for the process only, which is what we want here.
+                Proc.WaitForExit(int.MaxValue);
+
+                // The process is gone; now collect whatever the readers still owe us, bounded
+                if (Redirected)
+                {
+                    StdoutEof.WaitOne(DrainTimeout);
+                    StderrEof.WaitOne(DrainTimeout);
+                }
+
                 Result.retcode = Proc.ExitCode;
-                Proc.Close();
             }
             catch (Exception ex)
             {
@@ -172,9 +220,20 @@ namespace GitForce
             }
             finally
             {
+                // Release the process handle on every path, including the exception one
+                try
+                {
+                    Proc.Close();
+                }
+                catch (Exception) { }
+
+                // Copy the delegate first: Terminate() may null the field from another thread
+                // between the test and the invocation, which would fault on the GUI thread
+                PCompleteDelegate complete = FComplete;
+
                 // Call the completion function in the context of a GUI thread
-                if (FComplete != null)
-                    App.MainForm.BeginInvoke((MethodInvoker) (() => FComplete(Result)));
+                if (complete != null)
+                    App.MainForm.BeginInvoke((MethodInvoker) (() => complete(Result)));
             }
         }
 
@@ -184,15 +243,22 @@ namespace GitForce
         /// </summary>
         private void POutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (e.Data == null)   // If the stream ended, ignore stdout
+            if (e.Data == null)   // If the stream ended, signal it and ignore stdout
+            {
+                StdoutEof.Set();
                 return;
+            }
 
-            if (Result.stdout != string.Empty)
+            // Track whether anything was received rather than testing the accumulated
+            // text, so that a leading empty line is kept instead of being dropped
+            if (anyStdout)
                 Result.stdout += Environment.NewLine;
             Result.stdout += e.Data;
+            anyStdout = true;
 
-            if (FStdout != null)
-                App.MainForm.BeginInvoke((MethodInvoker)(() => FStdout(e.Data)));
+            PStdoutDelegate stdout = FStdout;   // Copy: Terminate() may null the field
+            if (stdout != null)
+                App.MainForm.BeginInvoke((MethodInvoker)(() => stdout(e.Data)));
         }
 
         /// <summary>
@@ -201,28 +267,25 @@ namespace GitForce
         /// </summary>
         private void PErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data))   // If the stream ended
+            // Only a null marks the end of the stream. An empty string is a genuine blank
+            // line: treating it as the end used to signal completion early and drop the line.
+            if (e.Data == null)
             {
-                // Sometimes we receive multiple null strings on error stream
-                // (example: when adding a new key with plink)
-                // This catches these cases which would increment semaphore over it's limit
-                try
-                {
-                    Exited.Release();           // release its semaphore
-                }
-                catch (Exception ex)
-                {
-                    App.PrintLogMessage(ex.Message, MessageType.Error);
-                }
+                // Sometimes we receive more than one end-of-stream on the error stream
+                // (example: when adding a new key with plink). Setting a manual-reset
+                // event is idempotent, so repeated signals are harmless.
+                StderrEof.Set();
             }
             else
             {
-                if (Result.stderr != string.Empty)
+                if (anyStderr)
                     Result.stderr += Environment.NewLine;
                 Result.stderr += e.Data;
+                anyStderr = true;
 
-                if (FStderr != null)
-                    App.MainForm.BeginInvoke((MethodInvoker)(() => FStderr(e.Data)));
+                PStderrDelegate stderr = FStderr;   // Copy: Terminate() may null the field
+                if (stderr != null)
+                    App.MainForm.BeginInvoke((MethodInvoker)(() => stderr(e.Data)));
             }
         }
     }

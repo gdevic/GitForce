@@ -81,14 +81,14 @@ namespace GitForce
 
         /// <summary>
         /// Runs a custom tool.
-        /// Returns a string with a tool output to be printed out.
-        /// This string can be empty, in which case nothing should be printed.
+        /// Output of a console tool is collected by the stdout and stderr handlers below
+        /// and posted to the status pane. Note that when this method waits for the tool to
+        /// exit it does so on the GUI thread, so the posted text only appears once it returns.
         /// </summary>
-        public string Run(List<string> files)
+        public void Run(List<string> files)
         {
             App.PrintLogMessage(ToString(), MessageType.Command);
 
-            string stdout = string.Empty;
             string args = DeMacroise(Args, files);
 
             // Add custom arguments if the checkbox to Prompt for Arguments was checked
@@ -100,7 +100,7 @@ namespace GitForce
 
                 FormCustomToolArgs formCustomToolArgs = new FormCustomToolArgs(desc, args, IsAddBrowse);
                 if (formCustomToolArgs.ShowDialog() == DialogResult.Cancel)
-                    return string.Empty;
+                    return;
 
                 args = formCustomToolArgs.GetArgs();
             }
@@ -137,7 +137,10 @@ namespace GitForce
                             proc.OutputDataReceived += ProcOutputDataReceived;
                             proc.ErrorDataReceived += ProcErrorDataReceived;
                             proc.Start();
+                            // Both streams must be drained. Leaving stderr unread lets the
+                            // child block once its pipe buffer fills, hanging WaitForExit().
                             proc.BeginOutputReadLine();
+                            proc.BeginErrorReadLine();
                             proc.WaitForExit();
                         }
                         else
@@ -185,8 +188,6 @@ namespace GitForce
 
             proc.Close();
             App.StatusBusy(false);
-
-            return stdout;
         }
 
         /// <summary>

@@ -77,6 +77,7 @@ namespace GitForce
         private static readonly Dictionary<char, Img> Staticons = new Dictionary<char, Img> {
             { ' ', Img.FileUnmodified },
             { 'M', Img.FileModified },
+            { 'T', Img.FileModified },
             { 'A', Img.FileAdded },
             { 'D', Img.FileDeleted },
             { 'R', Img.FileRenamed },
