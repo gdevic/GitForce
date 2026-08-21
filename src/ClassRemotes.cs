@@ -81,11 +81,27 @@ namespace GitForce
 
                 foreach (string s in response)
                 {
-                    Remote r = new Remote();
+                    // Each line reads "<name>\t<url> (fetch)" or "<name>\t<url> (push)". Split on
+                    // the first tab only: splitting on spaces as well loses the url of any remote
+                    // whose path contains one, which a local path remote easily does, and that
+                    // remote then silently ends up with no url and no way to fetch or push.
+                    int tab = s.IndexOf('\t');
+                    if (tab <= 0)
+                        continue;               // Not a line we recognize, skip it
+                    string name = s.Substring(0, tab);
+                    string url = s.Substring(tab + 1).Trim();
 
-                    // Split the resulting remote repo name/url into separate strings
-                    string[] url = s.Split("\t ".ToCharArray());
-                    string name = url[0];
+                    // The trailing marker says which of the two urls this line carries. Strip it
+                    // searching from the end, so a url holding spaces or brackets stays intact.
+                    bool isFetch = url.EndsWith("(fetch)", StringComparison.Ordinal);
+                    bool isPush = url.EndsWith("(push)", StringComparison.Ordinal);
+                    if (isFetch || isPush)
+                    {
+                        int marker = url.LastIndexOf(' ');
+                        url = marker > 0 ? url.Substring(0, marker).Trim() : string.Empty;
+                    }
+
+                    Remote r = new Remote();
 
                     // Find if the name exists in the main list and save off the password from it
                     if (newlist.ContainsKey(name))
@@ -100,20 +116,37 @@ namespace GitForce
                     // Set all other fields that we refresh every time
                     r.Name = name;
 
-                    if (url[2] == "(fetch)") r.UrlFetch = url[1];
-                    if (url[2] == "(push)") r.UrlPush = url[1];
+                    // A line carrying no marker is the fetch line of a remote that has no fetch
+                    // url. Current git prints "name<TAB>" both for a remote whose url is unset
+                    // and for one that only holds a pushurl, where the (push) line follows it.
+                    // So anything that is not explicitly a push line is the fetch url. Assigning
+                    // such a line to both fields would let a url that got split across lines
+                    // enable pushing to a truncated address.
+                    if (isPush)
+                        r.UrlPush = url;
+                    else
+                        r.UrlFetch = url;
 
                     // Add it to the new list
                     newlist[name] = r;
                 }
+
+                // Set the newly built list to be the master list
+                remotes = newlist;
+
+                // Fixup the new current string name
+                if (!remotes.ContainsKey(Current))
+                    Current = remotes.Count > 0 ? remotes.ElementAt(0).Key : "";
             }
-
-            // Set the newly built list to be the master list
-            remotes = newlist;
-
-            // Fixup the new current string name
-            if (!remotes.ContainsKey(Current))
-                Current = remotes.Count > 0 ? remotes.ElementAt(0).Key : "";
+            else
+            {
+                // Keep the list we already have. Replacing it with the empty one built above
+                // would discard the passwords and push commands held for these remotes, which
+                // are the only fields in this class meant to outlive the session, and this
+                // command fails for reasons that are usually temporary: a bad line in
+                // .git/config, or a repo folder that is momentarily unreachable.
+                App.PrintLogMessage("Remotes refresh skipped for " + repo.Path + ": " + result.stderr, MessageType.Error);
+            }
         }
 
         /// <summary>
@@ -135,11 +168,12 @@ namespace GitForce
         /// </summary>
         public string GetPassword(string name)
         {
+            // Coalesce on the way out rather than pre-setting a field: TryGetValue overwrites the
+            // whole struct with default(Remote) when the key is absent, so anything assigned
+            // before the call is lost and the caller would be handed a null back
             Remote r;
-            r.Password = "";
             if (name == "") name = Current;
-            remotes.TryGetValue(name, out r);
-            return r.Password;
+            return remotes.TryGetValue(name, out r) ? (r.Password ?? "") : "";
         }
 
         /// <summary>
@@ -161,11 +195,10 @@ namespace GitForce
         /// </summary>
         public string GetPushCmd(string name)
         {
+            // See GetPassword above for why the coalesce has to happen after TryGetValue
             Remote r;
-            r.PushCmd = "";
             if (name == "") name = Current;
-            remotes.TryGetValue(name, out r);
-            return r.PushCmd;
+            return remotes.TryGetValue(name, out r) ? (r.PushCmd ?? "") : "";
         }
     }
 }
