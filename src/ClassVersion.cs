@@ -38,20 +38,17 @@ namespace GitForce
         /// This should really be interlocking, but volatile will do with bools.
         /// </summary>
         public volatile bool NewVersionAvailable = false;
-        public volatile bool MessageAlreadySent = false;
 
         /// <summary>
         /// Thread handle for function that checks for a new version.
         /// </summary>
         private readonly Thread threadCheck;
-        private readonly Thread altThreadCheck;
 
         /// <summary>
         /// Web request object that tries to fetch text from a target website
         /// </summary>
 #if !DEBUG
         private readonly WebRequest request = null;
-        private readonly WebRequest altRequest = null;
 #endif
 
         /// <summary>
@@ -61,21 +58,14 @@ namespace GitForce
         {
 #if !DEBUG
             // Create a web request object
-            ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
             ServicePointManager.SecurityProtocol |= (SecurityProtocolType)0x00000C00; // SecurityProtocolType.Tls12;
-            request = WebRequest.Create("https://sourceforge.net/projects/gitforce/files/");
-            request.Timeout = 5000;
-
             string query = "?v=" + GetVersion() + (ClassUtils.IsMono() ? "&r=Mono" : "&r=.NET") + "&u=" + Environment.UserName;
-            altRequest = WebRequest.Create("http://baltazarstudios.com/uc/GitForce/index.php" + query);
-            altRequest.Timeout = 5000;
+            request = WebRequest.Create("http://baltazarstudios.com/uc/GitForce/index.php" + query);
+            request.Timeout = 5000;
 
             // Create and start the thread to check for the new version
             threadCheck = new Thread(() => ThreadVersionCheck(request));
             threadCheck.Start();
-
-            altThreadCheck = new Thread(() => ThreadVersionCheck(altRequest));
-            altThreadCheck.Start();
 #endif
         }
 
@@ -87,10 +77,8 @@ namespace GitForce
 #if !DEBUG
             // Abort the web request
             if (request != null) request.Abort();
-            if (altRequest != null) altRequest.Abort();
-            // Abort the threads. First give it a nice nudge and then simply abort them.
+            // Abort the thread. First give it a nice nudge and then simply abort it.
             threadCheck.Join(10); threadCheck.Abort();
-            altThreadCheck.Join(10); altThreadCheck.Abort();
 #endif
         }
 
@@ -119,12 +107,10 @@ namespace GitForce
         }
 
         /// <summary>
-        /// Parses the response string from new version check sites
+        /// Parses the response string from the new version check site
         /// </summary>
         private void ParseNewVersionResponse(StringBuilder answer)
         {
-            if (MessageAlreadySent) // Print only one message for multiple site's checks
-                return;
             // Search for the version string, for example:
             // [assembly: AssemblyFileVersion(&quot;1.0.11&quot;)]
             string sPattern = @"GitForce-(?<major>\d+).(?<minor>\d+).(?<build>\d+).exe";
@@ -145,12 +131,8 @@ namespace GitForce
                 int thisMinor = Convert.ToInt32(current[1]);
                 int thisBuild = Convert.ToInt32(current[2]);
 
-                // Compare two versions and set flag if the current one is less
-                if (thisMajor < webMajor)
-                    NewVersionAvailable = true;
-                else if (thisMinor < webMinor)
-                    NewVersionAvailable = true;
-                else if (thisBuild < webBuild)
+                // Compare two versions and set flag if the current one is less.
+                if (new Version(thisMajor, thisMinor, thisBuild) < new Version(webMajor, webMinor, webBuild))
                     NewVersionAvailable = true;
 
                 // By now we have log window availabe, so print out what's going on
@@ -158,7 +140,6 @@ namespace GitForce
                     App.PrintStatusMessage("**** A new version of GitForce is available! ****", MessageType.NewVersion);
                 else
                     App.PrintStatusMessage("Version check OK - this version is up-to-date.", MessageType.General);
-                MessageAlreadySent = true;
             }
             else
                 App.PrintStatusMessage("Version check: Unable to match pattern!", MessageType.Error);

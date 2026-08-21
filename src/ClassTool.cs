@@ -260,28 +260,35 @@ namespace GitForce
         /// <summary>
         /// Load a set of tools from a given file into the current tool-set.
         /// Returns a new class structure containing all the tools if the tools loaded correctly.
-        /// If load failed, return empty class and print the error message to a main pane.
+        /// A missing file is not an error: it returns an empty tool-set (this is the normal
+        /// case when the app is run for the very first time).
         /// </summary>
         public static ClassCustomTools Load(string name)
         {
             App.PrintStatusMessage("Loading custom tools: " + name, MessageType.General);
-            ClassCustomTools ct = new ClassCustomTools();
             try
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(ClassCustomTools));
                 using (TextReader textReader = new StreamReader(name))
                 {
-                    ct = (ClassCustomTools)deserializer.Deserialize(textReader);
+                    return (ClassCustomTools)deserializer.Deserialize(textReader);
                 }
+            }
+            catch (FileNotFoundException)
+            {
+                // It is OK not to find custom tools file (for example, the app is being run the very first time)
+                return new ClassCustomTools();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return new ClassCustomTools();
             }
             catch (Exception ex)
             {
-                // It is OK not to find custom tools file (for example, the app is being run the very first time)
-                // All other errors are being reported
-                if (!(ex is FileNotFoundException))
-                    App.PrintStatusMessage("Error loading custom tools: " + ex.Message, MessageType.Error);
+                // The file is there but is unreadable or malformed: report it and let the caller decide
+                App.PrintStatusMessage("Error loading custom tools: " + ex.Message, MessageType.Error);
+                return null;
             }
-            return ct;
         }
 
         /// <summary>

@@ -148,8 +148,9 @@ namespace GitForce
                 if (!ClassWorkspace.Load(name)) // still use it's name and continue running since it
                     return false;               // will be saved on a program exit
 
-            // Load custom tools
-            App.CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile);
+            // Load custom tools. A null return means the file exists but could not be parsed:
+            // start with an empty set, which is saved over that file when the app exits.
+            App.CustomTools = ClassCustomTools.Load(DefaultCustomToolsFile) ?? new ClassCustomTools();
 
             // If there are no tools on the list, find some local tools and add them
             if (App.CustomTools.Tools.Count == 0)
@@ -1003,12 +1004,18 @@ namespace GitForce
         {
             if (openTools.ShowDialog() == DialogResult.OK)
             {
+                // A null return means the file could not be read or parsed. Keep the current set
+                // of tools in that case, otherwise one bad file would discard all of the user's tools
                 ClassCustomTools newTools = ClassCustomTools.Load(openTools.FileName);
-                if (newTools != null)
+                if (newTools == null)
                 {
-                    App.CustomTools = newTools;
-                    App.PrintStatusMessage("Loaded custom tools from " + openTools.FileName, MessageType.General);
+                    MessageBox.Show("The selected file could not be read as a custom tools file." + Environment.NewLine +
+                        "Your current tools have been left unchanged.",
+                        "Import Tools", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+                App.CustomTools = newTools;
+                App.PrintStatusMessage("Loaded custom tools from " + openTools.FileName, MessageType.General);
             }
         }
 

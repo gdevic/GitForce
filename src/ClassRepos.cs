@@ -36,6 +36,20 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Returns true if the given repo path is already placed somewhere in this workspace's
+        /// project layout, either at the root level or inside one of the projects.
+        /// Used when importing a workspace to avoid listing the same repo in two places.
+        /// </summary>
+        private bool IsAlreadyTracked(string repoPath)
+        {
+            if (ProjectLayout.RootOrder.Any(e => e.StartsWith("R:") &&
+                    e.Substring(2).Equals(repoPath, StringComparison.OrdinalIgnoreCase)))
+                return true;
+            return ProjectLayout.Projects.Any(p => p.RepoPaths.Any(
+                    rp => rp.Equals(repoPath, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        /// <summary>
         /// Pointer to the default repo to switch to upon start
         /// </summary>
         public ClassRepo Default { get; set; }
@@ -110,11 +124,29 @@ namespace GitForce
                         // Otherwise, we merge the new set with the existing one
                         if (isImport)
                         {
-                            Repos.AddRange(newRepos);
+                            // Only add repos this workspace does not already have. Importing a
+                            // workspace that overlaps the current one would otherwise list the
+                            // same repo twice, and Rebuild() below does not remove duplicates.
+                            foreach (ClassRepo repo in newRepos)
+                            {
+                                if (Find(repo.Path) == null)
+                                    Repos.Add(repo);
+                            }
                             // After we merge the new set of repos, current/default repo remains the same
                             // Merge imported projects, renaming on collision
                             foreach (ClassProject importedProject in newLayout.Projects)
                             {
+                                // Drop repos that this workspace already places somewhere, so that a
+                                // repo cannot end up listed both in its existing place and inside the
+                                // imported project
+                                importedProject.RepoPaths.RemoveAll(IsAlreadyTracked);
+
+                                // Skip a project that is left with nothing to show. It would appear as
+                                // an empty folder in the tree, and importing the same workspace again
+                                // would add one more of them every time.
+                                if (importedProject.RepoPaths.Count == 0)
+                                    continue;
+
                                 string name = importedProject.Name;
                                 while (ProjectLayout.FindProject(name) != null)
                                     name += " (imported)";
@@ -122,10 +154,11 @@ namespace GitForce
                                 ProjectLayout.Projects.Add(importedProject);
                                 ProjectLayout.RootOrder.Add("P:" + name);
                             }
-                            // Add imported ungrouped repos to root order
+                            // Add imported ungrouped repos to root order, skipping any that this
+                            // workspace already places somewhere (at root level or inside a project)
                             foreach (string entry in newLayout.RootOrder)
                             {
-                                if (entry.StartsWith("R:"))
+                                if (entry.StartsWith("R:") && !IsAlreadyTracked(entry.Substring(2)))
                                     ProjectLayout.RootOrder.Add(entry);
                             }
                             ProjectLayout.Rebuild(Repos);

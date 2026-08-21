@@ -534,36 +534,43 @@ namespace GitForce.Main.Right.Panels
                 {
                     // Create a temp file to store our commit message
                     string tempFile = Path.GetTempFileName();
-                    File.WriteAllText(tempFile, commitForm.GetDescription());
-
-                    // If the current repo has only one commit bundle, we don't need to specify each file
-                    // but we can simply commit all files in index unless the user checked off some of them
-                    if ((status.Repo.Commits.Bundle.Count() == 1) && (status.Repo.Commits.Bundle[0].Files.Count == final.Count))
-                        final = new List<string>();
-
-                    // Form the final command with the description file and an optional amend
-                    if (status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final))
+                    try
                     {
-                        File.Delete(tempFile);
+                        File.WriteAllText(tempFile, commitForm.GetDescription());
 
-                        // If the current commit bundle is not default, remove it. Refresh which follows
-                        // will reset all files which were _not_ submitted as part of this change to be
-                        // moved to the default changelist.
-                        if (!c.IsDefault)
-                            App.Repos.Current.Commits.Bundle.Remove(c);
-                        else
-                            c.Description = "Default";
+                        // If the current repo has only one commit bundle, we don't need to specify each file
+                        // but we can simply commit all files in index unless the user checked off some of them
+                        if ((status.Repo.Commits.Bundle.Count() == 1) && (status.Repo.Commits.Bundle[0].Files.Count == final.Count))
+                            final = new List<string>();
 
-                        // Occasionally, run the garbage collection on the loose objects in the repo.
-                        // On average, do it once after every 10 commits. This is statistical and not
-                        // guaranteed, but it is very likely that it will prevent accumulation of loose
-                        // objects in the long run and the user will not have to worry about it at all.
-                        Random random = new Random();
-                        if (random.Next(0, 100) <= 10)
+                        // Form the final command with the description file and an optional amend
+                        if (status.Repo.GitCommit("-F \"" + tempFile + "\"", commitForm.GetCheckAmend(), final))
                         {
-                            App.PrintStatusMessage("Running garbage collection, please wait...", MessageType.General);
-                            App.Repos.Current.RunCmd("gc");
+                            // If the current commit bundle is not default, remove it. Refresh which follows
+                            // will reset all files which were _not_ submitted as part of this change to be
+                            // moved to the default changelist.
+                            if (!c.IsDefault)
+                                App.Repos.Current.Commits.Bundle.Remove(c);
+                            else
+                                c.Description = "Default";
+
+                            // Occasionally, run the garbage collection on the loose objects in the repo.
+                            // On average, do it once after every 10 commits. This is statistical and not
+                            // guaranteed, but it is very likely that it will prevent accumulation of loose
+                            // objects in the long run and the user will not have to worry about it at all.
+                            Random random = new Random();
+                            if (random.Next(0, 100) <= 10)
+                            {
+                                App.PrintStatusMessage("Running garbage collection, please wait...", MessageType.General);
+                                App.Repos.Current.RunCmd("gc");
+                            }
                         }
+                    }
+                    finally
+                    {
+                        // Remove the message file whether or not the commit succeeded, otherwise
+                        // every failed commit would leave a stray file behind in the temp folder
+                        ClassUtils.DeleteFile(tempFile);
                     }
                 }
                 App.DoRefresh();

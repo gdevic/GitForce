@@ -111,7 +111,21 @@ namespace GitForce
         /// </summary>
         public static void Clear()
         {
+            // Drop the repos in one step, then reset the pointers that referenced them. Clearing
+            // the list on its own would leave 'Current' pointing at a repo that is no longer in the
+            // workspace, which the panels would keep showing and refreshing.
+            // Do not delete the repos one by one through ClassRepos.Delete(): that re-elects a new
+            // 'Current' after every removal, and each election runs a git command against a repo
+            // which is about to be deleted anyway. Those commands also pump the message loop, so
+            // queued input could run against a half-cleared workspace.
             App.Repos.Repos.Clear();
+            App.Repos.Default = null;
+            App.Repos.SetCurrent(null);     // With the list empty this simply clears 'Current'
+
+            // Clearing a workspace also clears its project layout, so no empty project
+            // folders are left behind in the repo tree view
+            App.Repos.ProjectLayout = new ClassProjectLayout();
+
             App.Repos.InitAll();
             App.DoRefresh();
         }
