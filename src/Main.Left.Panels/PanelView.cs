@@ -856,30 +856,72 @@ namespace GitForce.Main.Left.Panels
         }
 
         /// <summary>
+        /// Watchers armed for files opened in an external editor, keyed by their full path, so
+        /// that opening the same file twice does not stack up a second one.
+        /// </summary>
+        private readonly Dictionary<string, FileSystemWatcher> watchers =
+            new Dictionary<string, FileSystemWatcher>(
+                ClassUtils.IsMono() ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
         /// Sets up a file watcher in order to refresh the view when a file is
         /// being modified by an external editor.
         /// </summary>
         private void WatchAndRefresh(string file)
         {
             // Watch the changes to that file, so we can refresh the view
+            FileSystemWatcher existing;
+            if (watchers.TryGetValue(file, out existing))
+            {
+                if (existing.EnableRaisingEvents)
+                    return;                 // Already watching this one
+
+                ReleaseWatcher(file);
+            }
+
+            string key = file;
             FileSystemWatcher watcher = new FileSystemWatcher();
             watcher.Path = Path.GetDirectoryName(file);
             watcher.Filter = Path.GetFileName(file);
             watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
-            watcher.Changed += OnFileChanged;
+            // Carry the key in the closure rather than reading it back from the event, whose
+            // path spelling need not match the one we were given
+            watcher.Changed += (sender, e) => OnFileChanged(key);
             watcher.EnableRaisingEvents = true;
+
+            watchers[key] = watcher;
+            if (components != null)
+                components.Add(watcher);
+        }
+
+        /// <summary>
+        /// Stops and disposes the watcher armed for a file, if there is one. Disposing it also
+        /// removes it from the panel's component container.
+        /// </summary>
+        private void ReleaseWatcher(string file)
+        {
+            FileSystemWatcher watcher;
+            if (!watchers.TryGetValue(file, out watcher))
+                return;
+            watchers.Remove(file);
+            watcher.Dispose();
         }
 
         /// <summary>
         /// Called by the callback thread when a file that has been watched was changed.
         /// We are watching files that user edits in an external editor.
         /// </summary>
-        private void OnFileChanged(object source, FileSystemEventArgs e)
+        private void OnFileChanged(string file)
         {
             if (App.MainForm.InvokeRequired)
-                App.MainForm.BeginInvoke((MethodInvoker)(() => OnFileChanged(source, e)));
-            else
-                App.DoRefresh();
+            {
+                // Marshal with BeginInvoke, not Invoke: FileSystemWatcher.Dispose() blocks until
+                // the callback returns, so a synchronous wait on the UI thread would deadlock
+                App.MainForm.BeginInvoke((MethodInvoker)(() => OnFileChanged(file)));
+                return;
+            }
+            ReleaseWatcher(file);
+            App.DoRefresh();
         }
 
         /// <summary>

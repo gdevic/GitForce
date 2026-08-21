@@ -46,6 +46,15 @@ namespace GitForce
         }
 
         /// <summary>
+        /// Copies the environment variables registered here onto a process about to be started.
+        /// </summary>
+        public static void SetEnvars(ProcessStartInfo startInfo)
+        {
+            foreach (var envar in Env)
+                startInfo.EnvironmentVariables[envar.Key] = envar.Value;
+        }
+
+        /// <summary>
         /// Writes binary resource to a temporary file
         /// </summary>
         public static string WriteResourceToFile(string pathName, string fileName, byte[] buffer)
@@ -100,8 +109,7 @@ namespace GitForce
                 proc.StartInfo.UseShellExecute = false;
 
                 // Add all environment variables listed
-                foreach (var envar in Env)
-                    proc.StartInfo.EnvironmentVariables.Add(envar.Key, envar.Value);
+                SetEnvars(proc.StartInfo);
 
                 if (IsMono())
                 {
@@ -231,8 +239,12 @@ namespace GitForce
             if (IsMono())
                 return path;
             var pathBuilder = new StringBuilder(1024);
-            NativeMethods.GetShortPathName(path, pathBuilder, pathBuilder.Capacity);
-            return pathBuilder.ToString();
+            // The API returns zero when it fails, and the size it wanted when our buffer was too
+            // small. In both cases the builder holds nothing usable, so fall back to the long
+            // path: handing back an empty string would silently blank out whatever the caller is
+            // configuring, which is GIT_ASKPASS and the paths to plink and pageant.
+            int written = NativeMethods.GetShortPathName(path, pathBuilder, pathBuilder.Capacity);
+            return (written <= 0 || written > pathBuilder.Capacity) ? path : pathBuilder.ToString();
         }
 
         /// <summary>

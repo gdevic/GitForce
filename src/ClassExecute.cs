@@ -117,14 +117,7 @@ namespace GitForce
             }
 
             // Add all environment variables registered for our process environment
-            foreach (var variable in ClassUtils.GetEnvars())
-            {
-                // If a variable with that name already exists, update it
-                if (Proc.StartInfo.EnvironmentVariables.ContainsKey(variable.Key))
-                    Proc.StartInfo.EnvironmentVariables[variable.Key] = variable.Value;
-                else
-                    Proc.StartInfo.EnvironmentVariables.Add(variable.Key, variable.Value);
-            }
+            ClassUtils.SetEnvars(Proc.StartInfo);
         }
 
         /// <summary>

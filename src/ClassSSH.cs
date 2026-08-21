@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace GitForce
 {
@@ -39,7 +38,10 @@ namespace GitForce
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Never show UI from a finalizer: see the same catch in ClassPutty. The log call
+                // is guarded because an exception escaping a finalizer terminates the process.
+                try { App.PrintLogMessage("SSH cleanup: " + ex.Message, MessageType.Error); }
+                catch (Exception) { }
             }
         }
     }

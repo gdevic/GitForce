@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace GitForce
 {
@@ -68,7 +67,12 @@ namespace GitForce
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Never show UI from a finalizer: it runs on the finalizer thread, at a point
+                // where the main window may already be gone, and a modal dialog there can stall
+                // shutdown. The log call is itself guarded, because an exception escaping a
+                // finalizer takes the whole process down with it.
+                try { App.PrintLogMessage("PuTTY cleanup: " + ex.Message, MessageType.Error); }
+                catch (Exception) { }
             }
         }
 

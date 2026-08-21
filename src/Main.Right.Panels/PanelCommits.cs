@@ -56,6 +56,7 @@ namespace GitForce.Main.Right.Panels
             treeCommits.NodesClear();
             foreach (var fileSystemWatcher in watcher)
                 fileSystemWatcher.Dispose();
+            watcher.Clear();
 
             if (App.Repos.Current != null)
             {

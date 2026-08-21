@@ -1108,17 +1108,24 @@ namespace GitForce
             {
                 e.DrawBackground();
                 e.DrawFocusRectangle();
-                var font = listStatus.Font;
-                if (item.MessageType == MessageType.NewVersion)
+
+                Font bold = item.MessageType == MessageType.NewVersion
+                                ? new Font(listStatus.Font, FontStyle.Bold)
+                                : null;
+                try
                 {
-                    font = new Font(font, FontStyle.Bold);
+                    e.Graphics.DrawString( // Draw the appropriate text in the ListBox
+                        item.Message, // The message linked to the item
+                        bold ?? listStatus.Font, // Take the font from the listbox
+                        GetMessageColor(item.MessageType), // Set the color
+                        e.Bounds
+                    );
                 }
-                e.Graphics.DrawString( // Draw the appropriate text in the ListBox
-                    item.Message, // The message linked to the item
-                    font, // Take the font from the listbox
-                    GetMessageColor(item.MessageType), // Set the color
-                    e.Bounds
-                );
+                finally
+                {
+                    if (bold != null)
+                        bold.Dispose();
+                }
             }
         }
     }
