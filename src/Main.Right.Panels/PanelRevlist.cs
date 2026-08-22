@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 
@@ -122,6 +123,11 @@ namespace GitForce.Main.Right.Panels
         }
 
         /// <summary>
+        /// Start of the UNIX epoch, used to convert the commit timestamps
+        /// </summary>
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+        /// <summary>
         /// Helper function that fills in the list of revisions.
         /// This is used from the code above and from the FormRevisionHistory.
         /// </summary>
@@ -134,29 +140,49 @@ namespace GitForce.Main.Right.Panels
             listRev.Items.Clear();
             int id = response.Length;
 
-            foreach (string s in response)
+            // Limit of the subject line length. Read once instead of once per row, and
+            // range-checked since the settings file can be edited by hand.
+            decimal w1 = Properties.Settings.Default.commitW1;
+            int c1 = (w1 < 1 || w1 > 1000) ? 60 : (int)w1;
+
+            for (int row = 0; row < response.Length; row++)
             {
+                // Number the revisions by their place in the log, so that a row skipped
+                // below does not shift the numbering of everything after it
+                string s = response[row];
+                id = response.Length - row;
+
+                // A user-supplied log filter can change the shape of the git log output, and
+                // so can a git config such as log.showSignature, so take only the rows that
+                // carry every field this list formats below. This also covers the empty
+                // string that a repo with no commits at all comes back as.
                 string[] cat = s.Split('\t');
-                if (s.Length < 2) continue; // Handle empty results (single empty string) correctly
+                if (cat.Length < 4) continue;
 
                 if ((filterSha.Length > 0) && (!cat[0].StartsWith(filterSha) && !filterSha.StartsWith(cat[0])))
                     continue;
 
-                // Convert the date/time from UNIX second based to C# date structure
-                DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(cat[1])).ToLocalTime();
+                // Convert the date/time from UNIX second based to C# date structure. The
+                // range is the whole of DateTime, since %ct is negative for a commit dated
+                // before 1970 and repos converted from older systems do carry those. The
+                // test is written the positive way round so that NaN, which TryParse does
+                // accept and which compares false against everything, is rejected too.
+                double seconds;
+                if (!double.TryParse(cat[1], NumberStyles.Float, CultureInfo.InvariantCulture, out seconds) ||
+                    !(seconds >= -62135596800.0 && seconds <= 253402300799.0))  // Year 1 .. year 9999
+                    continue;
+                DateTime date = Epoch.AddSeconds(seconds).ToLocalTime();
                 cat[1] = String.Format("{0:yyyy/MM/dd  HH:mm:ss}", date);
 
                 // Trim any spaces in the subject line
                 cat[3] = cat[3].Trim();
                 // Limit the subject line length to the length specified for that
-                int c1 = Convert.ToInt32(Properties.Settings.Default.commitW1);
                 if (cat[3].Length > c1)
                     cat[3] = cat[3].Substring(0, c1) + "...";
 
                 ListViewItem li = new ListViewItem(cat);
                 if (prefixRevId) // Prefix is used with file revision history dialog: a simple count-down index
                     li.SubItems.Insert(0, new ListViewItem.ListViewSubItem() { Text = string.Format("{0,4}", id) });
-                id--;
                 li.Name = cat[0];           // Used to search for a key
                 li.Tag = cat[0];            // Tag contains the SHA1 of the commit
                 listRev.Items.Add(li);

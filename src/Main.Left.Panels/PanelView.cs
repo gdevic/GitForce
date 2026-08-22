@@ -803,6 +803,10 @@ namespace GitForce.Main.Left.Panels
             if (formRename.LoadFiles(App.Repos.Current, sel.SelFiles))
                 if (formRename.ShowDialog() == DialogResult.OK)
                 {
+                    // git mv will not create the destination folder, so do it first
+                    if (!formRename.CreateTargetDirs())
+                        return;
+
                     List<string> cmds = formRename.GetGitCmds();
                     foreach (string cmd in cmds)
                         App.Repos.Current.RunCmd(cmd);

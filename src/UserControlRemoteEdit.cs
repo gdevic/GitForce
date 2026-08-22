@@ -122,8 +122,11 @@ namespace GitForce
             _fetchUrl = ClassUrl.Parse(textUrlFetch.Text.Trim());
             _pushUrl = ClassUrl.Parse(textUrlPush.Text.Trim());
 
-            // Consider valid entry if the name is ok and some combination of urls
-            return textName.Text.Trim().Length > 0 && _fetchUrl.Type != ClassUrl.UrlType.Unknown;
+            // Consider valid entry if the name is ok and the fetch URL parsed completely.
+            // Testing the type alone was not enough: a half-typed address like "git@host.xz:"
+            // has a type but no path, and git accepts it as a remote URL without complaint,
+            // so pressing OK replaced a working remote with one that can neither fetch nor push.
+            return textName.Text.Trim().Length > 0 && _fetchUrl.Ok;
         }
 
         /// <summary>
@@ -152,8 +155,10 @@ namespace GitForce
                 checkReveal.Enabled = btHttps.Enabled;
                 textPassword.ReadOnly = !btHttps.Enabled;
 
-                btWWW1.Enabled = _fetchUrl.Ok;
-                btWWW2.Enabled = _pushUrl.Ok;
+                // The web button builds its target out of the host name, and an address we
+                // keep whole (a local path, a scheme we do not model) has none to offer
+                btWWW1.Enabled = _fetchUrl.Ok && !string.IsNullOrEmpty(_fetchUrl.Host);
+                btWWW2.Enabled = _pushUrl.Ok && !string.IsNullOrEmpty(_pushUrl.Host);
 
             }
         }
@@ -201,7 +206,7 @@ namespace GitForce
         private bool isValidUrl(string target)
         {
             ClassUrl.Url url = ClassUrl.Parse(target.Trim());
-            return url.Ok;
+            return url.Ok && !string.IsNullOrEmpty(url.Host);
         }
 
         /// <summary>

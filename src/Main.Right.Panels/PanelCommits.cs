@@ -179,9 +179,14 @@ namespace GitForce.Main.Right.Panels
         /// </summary>
         private void TreeCommitsDragEnter(object sender, DragEventArgs e)
         {
-            // Allow drop only when there is a valid repo available
-            if (App.Repos.Current != null)
+            // Allow drop only when there is a valid repo available and the payload really is
+            // a list of file names: the drop handler cannot use anything else. Ask for the
+            // data rather than for the format, since the two are not the same question on
+            // every platform, and this handler has to agree with what the drop handler gets.
+            if (App.Repos.Current != null && e.Data.GetData(DataFormats.FileDrop) is string[])
                 e.Effect = DragDropEffects.All;
+            else
+                e.Effect = DragDropEffects.None;
         }
 
         /// <summary>
@@ -239,14 +244,25 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            string[] droppedList = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] droppedList = e.Data.GetData(DataFormats.FileDrop) as string[];
+            if (droppedList == null)
+                return;                     // Dropped data was not a list of file names
 
-            // Files can come from anywhere. Prune those that are not from this repo.
-            List<string> files = (from file in droppedList.ToList()
-                                  where (file.Length > status.Repo.Path.Length) && file.StartsWith(status.Repo.Path)
-                                  select file.Substring(status.Repo.Path.Length + 1)).ToList();
+            // Files can come from anywhere. Prune those that are not from this repo, matching
+            // on a whole path component: without the separator a sibling directory such as
+            // "proj2" passes the test for the repo "proj" and stages an unrelated file. The
+            // comparison ignores case only where the file system does, since a name from
+            // Explorer may differ in case from the path we hold, while on Unix "Proj" and
+            // "proj" are two different directories.
+            string root = status.Repo.Path.EndsWith(Convert.ToString(Path.DirectorySeparatorChar))
+                              ? status.Repo.Path
+                              : status.Repo.Path + Path.DirectorySeparatorChar;
+            StringComparison how = ClassUtils.IsMono() ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+            List<string> files = (from file in droppedList
+                                  where file.Length > root.Length && file.StartsWith(root, how)
+                                  select file.Substring(root.Length)).ToList();
 
-            DoDropFiles(status, files.ToList());
+            DoDropFiles(status, files);
 
             // Find which node the files have been dropped to, so we can
             // move them to the selected commit bundle
@@ -780,6 +796,9 @@ namespace GitForce.Main.Right.Panels
         private void TreeCommitsAfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             var commit = GetCommitForEditLabel(e);
+            if (e.Node == null)
+                return;                     // GetCommitForEditLabel has already cancelled the edit
+
             if (commit != null && e.Label != null && e.Label.Trim().Length > 0)
             {
                 commit.DescriptionTitle = e.Label;

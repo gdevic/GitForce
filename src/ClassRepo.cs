@@ -444,7 +444,16 @@ namespace GitForce
                 // Partition the args into "[command] -- [set of file chunks < 2000 chars]"
                 // Basically we have to rebuild the command into multiple instances with
                 // same command but with file lists not larger than about 2K
-                int i = args.IndexOf(" -- ") + 3;
+                int sep = args.IndexOf(" -- ", StringComparison.Ordinal);
+                if (sep < 0)
+                {
+                    // There is no file list to chunk on. Slicing the command at a fixed offset
+                    // would silently corrupt it, so run it whole and record that we saw it:
+                    // a command this long without a pathspec separator is a bug elsewhere.
+                    App.PrintLogMessage("Long git command without a ' -- ' separator, running it unsplit: " + args, MessageType.Error);
+                    return ClassGit.Run(args, async);
+                }
+                int i = sep + 3;
                 string cmd = args.Substring(0, i + 1);
                 args = args.Substring(i);       // We separate git command up to and until the list of files
 

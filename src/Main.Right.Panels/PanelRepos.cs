@@ -195,7 +195,7 @@ namespace GitForce.Main.Right.Panels
         {
             if (listRepos.Items.Count > 0)
             {
-                var columns = new int[4];
+                var columns = new int[listRepos.Columns.Count];
                 foreach (ColumnHeader l in listRepos.Columns)
                 {
                     if (l.Width <= 0)
@@ -396,14 +396,34 @@ namespace GitForce.Main.Right.Panels
             listRepos.BeginUpdate();
 
             // Adjust the header columns
-            string values = Properties.Settings.Default.ReposColumnWidths;
-            int[] columns = { -2, -2, -2, 0 }; // Auto-adjust by default
-            if (!string.IsNullOrEmpty(values)) // Otherwise, load widths from the settings
-                columns = values.Split(',').Select(Int32.Parse).ToArray();
+            int[] columns = ParseColumnWidths(Properties.Settings.Default.ReposColumnWidths, listRepos.Columns.Count);
             foreach (ColumnHeader l in listRepos.Columns)
                 l.Width = (columns[l.Index] <= 0) ? -1 : columns[l.Index]; // Additional safeguard against storing invalid column widths
 
             listRepos.EndUpdate();
+        }
+
+        /// <summary>
+        /// Parses the stored column widths into exactly count values.
+        /// A setting that is malformed, or that holds fewer values than there are columns,
+        /// falls back to auto-adjust: it can be hand-edited or left over from another layout.
+        /// </summary>
+        private static int[] ParseColumnWidths(string values, int count)
+        {
+            int[] auto = Enumerable.Repeat(-2, count).ToArray(); // Auto-adjust by default
+            if (string.IsNullOrEmpty(values))
+                return auto;
+
+            string[] tokens = values.Split(',');
+            if (tokens.Length < count)
+                return auto;
+
+            int[] columns = new int[count];
+            for (int i = 0; i < count; i++)
+                if (!int.TryParse(tokens[i], out columns[i]))
+                    return auto;
+
+            return columns;
         }
 
         #endregion

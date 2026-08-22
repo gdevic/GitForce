@@ -381,29 +381,102 @@ namespace GitForce
             string gitpath = file.Replace(Path.DirectorySeparatorChar, '/');
             string cmd = string.Format("show {1}:\"{0}\"", gitpath, sha);
 
-            ExecResult result = RunGit(cmd);
-            if (result.Success() == false)
-                return string.Empty;
-            string response = result.stdout;
-
-            // Create a temp file based on a version of our file and write its content to it
-            string rev = listRev.Items.Find(sha, false)[0].Text.Trim();
+            // Name the temp file after the revision index shown in the list. The row is
+            // looked up by its SHA key, which may be missing, in which case the SHA itself
+            // keeps the name unique.
+            ListViewItem[] found = listRev.Items.Find(sha, false);
+            string rev = found.Length > 0 ? found[0].Text.Trim() : sha;
             file = Path.GetFileName(file);
             file = string.Format("ReadOnly-{0}-Rev-{1}-{2}", tmpFileCounter, rev, file);
             tmpFileCounter++;
             string tempFile = Path.Combine(Path.GetTempPath(), file);
-            try
+
+            if (!RunGitToFile(cmd, tempFile))
             {
-                File.WriteAllText(tempFile, response);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "System error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Take the partially written file away. If something else is holding it,
+                // hand it to the exit-time cleanup instead of abandoning it in %TEMP%.
+                if (File.Exists(tempFile) && !ClassUtils.DeleteFile(tempFile))
+                    ClassGlobals.TempFiles.Add(tempFile);
+                return string.Empty;
             }
 
             // Add the temp file to the global list of temp files to be removed at the app exit time
             ClassGlobals.TempFiles.Add(tempFile);
             return tempFile;
+        }
+
+        /// <summary>
+        /// Runs a git command and copies its standard output into a file, byte for byte.
+        /// A revision of a file may well be binary, and a text file has to keep the line
+        /// endings it was committed with. Neither survives the line based accumulation that
+        /// the common Exec path performs, so this one writes the raw stream instead.
+        /// Returns true if the file was written and git reported success.
+        /// </summary>
+        private bool RunGitToFile(string args, string targetFile)
+        {
+            Process proc = null;
+            try
+            {
+                proc = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = Properties.Settings.Default.GitPath,
+                        Arguments = args,
+                        WorkingDirectory = workingDir,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    }
+                };
+
+                // Drain stderr on its own thread: filling that pipe while we are busy
+                // copying stdout would block git and deadlock this call
+                StringBuilder error = new StringBuilder();
+                proc.ErrorDataReceived += (sender, e) => { if (e.Data != null) error.AppendLine(e.Data); };
+
+                proc.Start();
+                proc.BeginErrorReadLine();
+
+                using (FileStream fs = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
+                    proc.StandardOutput.BaseStream.CopyTo(fs);
+
+                proc.WaitForExit();
+                if (proc.ExitCode == 0)
+                    return true;
+
+                // git names the reason on stderr, but not for every failure, so say
+                // something either way rather than failing without a word
+                string message = error.ToString().Trim();
+                App.PrintStatusMessage(string.IsNullOrEmpty(message)
+                                           ? string.Format("git {0} returned {1}", args, proc.ExitCode)
+                                           : message, MessageType.Error);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "System error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                // If we left through the exception path, git is still there writing into a
+                // pipe that nobody reads any more. End it here: disposing the Process only
+                // drops our handles, and the child would sit blocked until they finalize.
+                if (proc != null)
+                {
+                    try
+                    {
+                        if (!proc.HasExited)
+                            proc.Kill();
+                    }
+                    catch { }
+                    try { proc.StandardOutput.Close(); }
+                    catch { }
+                    proc.Dispose();
+                }
+            }
         }
     }
 }
