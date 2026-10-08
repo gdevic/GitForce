@@ -30,6 +30,7 @@ namespace GitForce
         public FormNewRepoScanProgress(string directory, bool fDeepScan)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             dir = directory;
             deepScan = fDeepScan;
         }

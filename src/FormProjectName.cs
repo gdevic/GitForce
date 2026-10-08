@@ -19,6 +19,7 @@ namespace GitForce
         public FormProjectName(string title, string currentName)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             Text = title;
             textName.Text = currentName ?? "";
             textName.SelectAll();

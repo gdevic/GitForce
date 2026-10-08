@@ -16,6 +16,7 @@ namespace GitForce
         public FormUnstash()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             PopulateStashList();

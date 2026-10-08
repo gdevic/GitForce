@@ -189,6 +189,9 @@ namespace GitForce
             // Upgrade application settings across the version increment
             ClassUtils.UpgradeApplicationSettingsIfNecessary();
 
+            // Resolve the color theme before any form is created
+            ClassTheme.Init();
+
             // Make sure the application data folder directory exists
             Directory.CreateDirectory(AppHome);
 
@@ -256,7 +259,6 @@ namespace GitForce
                             MainForm.Show();
                             DoRefresh();
                             Application.Run(MainForm);
-
                             Properties.Settings.Default.Save();
 
                             GC.KeepAlive(mAppMutex);

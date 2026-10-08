@@ -10,6 +10,7 @@ namespace GitForce
         public FormSubmoduleInfo()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
         }
 

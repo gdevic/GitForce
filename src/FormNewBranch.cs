@@ -22,6 +22,7 @@ namespace GitForce
         public FormNewBranch()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             branches = App.Repos.Current.Branches;
@@ -50,7 +51,7 @@ namespace GitForce
                         break;
                     default:
                         listBranches.Enabled = false;
-                        listBranches.BackColor = SystemColors.Control;
+                        listBranches.BackColor = ClassTheme.Map(SystemColors.Control);
                         break;
                 }
                 origin = null;
@@ -69,14 +70,14 @@ namespace GitForce
                         foreach (var branch in branches.Local)
                             listBranches.Items.Add(branch);
                         listBranches.Enabled = true;
-                        listBranches.BackColor = SystemColors.Window;
+                        listBranches.BackColor = ClassTheme.Map(SystemColors.Window);
                         break;
                     case "Remote":
                         listBranches.Items.Clear();
                         foreach (var branch in branches.Remote)
                             listBranches.Items.Add(branch);
                         listBranches.Enabled = true;
-                        listBranches.BackColor = SystemColors.Window;
+                        listBranches.BackColor = ClassTheme.Map(SystemColors.Window);
                         break;
                     case "Tag":
                         listBranches.Items.Clear();
@@ -88,7 +89,7 @@ namespace GitForce
                                 listBranches.Items.Add(tag);
                             listBranches.Enabled = true;
                         }
-                        listBranches.BackColor = SystemColors.Window;
+                        listBranches.BackColor = ClassTheme.Map(SystemColors.Window);
                         break;
                     default:
                         break;

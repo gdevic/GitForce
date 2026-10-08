@@ -16,6 +16,7 @@ namespace GitForce
         public FormSwitchToBranch()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             // Initialize the list of local branches to switch to

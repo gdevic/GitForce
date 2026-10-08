@@ -25,6 +25,7 @@ namespace GitForce
         public FormHttpsAuth(bool enableUsername)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             textUsername.Enabled = enableUsername;

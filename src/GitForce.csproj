@@ -71,6 +71,7 @@
     <Compile Include="ClassPortableSettings.cs" />
     <Compile Include="ClassSSH.cs" />
     <Compile Include="ClassTabCheck.cs" />
+    <Compile Include="ClassTheme.cs" />
     <Compile Include="ClassVersion.cs" />
     <Compile Include="ClassPutty.cs" />
     <Compile Include="ClassRemotes.cs" />

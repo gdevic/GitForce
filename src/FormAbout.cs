@@ -8,6 +8,7 @@ namespace GitForce
         public FormAbout()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             // Add the version number and the build date from the assembly info file

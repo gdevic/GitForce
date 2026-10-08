@@ -11,6 +11,7 @@ namespace GitForce
         public FormMergeBranch()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             ClassBranches branches = App.Repos.Current.Branches;

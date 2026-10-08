@@ -22,6 +22,7 @@ namespace GitForce
         public FormShowChangelist()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
             cr = Environment.NewLine;
 

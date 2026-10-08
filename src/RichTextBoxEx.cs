@@ -152,7 +152,7 @@ namespace GitForce
             if (m.Msg == WM_PAINT && ClassUtils.IsMono() && _monoLinks.Count > 0)
             {
                 using (Graphics g = CreateGraphics())
-                using (Pen pen = new Pen(Color.Blue, 1))
+                using (Pen pen = new Pen(ClassTheme.Map(Color.Blue), 1))
                 {
                     foreach (MonoLinkInfo link in _monoLinks)
                     {
@@ -215,7 +215,9 @@ namespace GitForce
                 SelectedText = text;
                 Select(position, text.Length);
                 SetSelectionLink(true);
+                LightenLinkBackground();
                 Select(position + text.Length, 0);
+                ResetSelectionBackground();
             }
         }
 
@@ -262,8 +264,29 @@ namespace GitForce
                 SelectedRtf = @"{\rtf1\ansi "+text+@"\v #"+hyperlink+@"\v0}";
                 Select(position, text.Length + hyperlink.Length + 1);
                 SetSelectionLink(true);
+                LightenLinkBackground();
                 Select(position + text.Length + hyperlink.Length + 1, 0);
+                ResetSelectionBackground();
             }
+        }
+
+        /// <summary>
+        /// The control draws a link in a system color that cannot be changed and that is hard to read
+        /// on a dark background: give the selected link a light background in the dark theme.
+        /// </summary>
+        private void LightenLinkBackground()
+        {
+            if (ClassTheme.IsDark)
+                SelectionBackColor = Color.FromArgb(214, 226, 248);
+        }
+
+        /// <summary>
+        /// Text typed or appended after a link starts with the formatting of the link
+        /// </summary>
+        private void ResetSelectionBackground()
+        {
+            if (ClassTheme.IsDark)
+                SelectionBackColor = Color.Empty;
         }
 
         /// <summary>
@@ -400,7 +423,7 @@ namespace GitForce
         {
             SelectionStart = TextLength;
             SelectionLength = 0;
-            SelectionColor = color;
+            SelectionColor = ClassTheme.Map(color);
             AppendText(text);
             SelectionColor = ForeColor;
         }

@@ -55,6 +55,7 @@ namespace GitForce
         public FormSettings()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             Cursor.Current = Cursors.WaitCursor;

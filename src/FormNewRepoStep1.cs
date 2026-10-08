@@ -41,6 +41,7 @@ namespace GitForce
         public FormNewRepoStep1()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             Type = "empty";

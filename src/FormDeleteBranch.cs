@@ -25,6 +25,7 @@ namespace GitForce
         public FormDeleteBranch(string defaultBranch)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             branches = App.Repos.Current.Branches;

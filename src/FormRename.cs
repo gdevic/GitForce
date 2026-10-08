@@ -36,6 +36,7 @@ namespace GitForce
         public FormRename()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
         }
 

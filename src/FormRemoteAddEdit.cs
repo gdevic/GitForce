@@ -12,6 +12,7 @@ namespace GitForce
         public FormRemoteAddEdit()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
         }
 

@@ -63,6 +63,7 @@ namespace GitForce
         public FormMain()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             // Initialize panels
@@ -1091,12 +1092,12 @@ namespace GitForce
         {
             switch (type)
             {
-                case MessageType.Error: return Brushes.Red;
-                case MessageType.Command: return Brushes.Green;
-                case MessageType.Output: return Brushes.Blue;
-                case MessageType.Debug: return Brushes.Gray;
-                case MessageType.NewVersion: return Brushes.Black;
-                default: return Brushes.Black;
+                case MessageType.Error: return ClassTheme.GetBrush(Color.Red);
+                case MessageType.Command: return ClassTheme.GetBrush(Color.Green);
+                case MessageType.Output: return ClassTheme.GetBrush(Color.Blue);
+                case MessageType.Debug: return ClassTheme.GetBrush(Color.Gray);
+                case MessageType.NewVersion: return ClassTheme.GetBrush(Color.Black);
+                default: return ClassTheme.GetBrush(Color.Black);
             }
         }
 

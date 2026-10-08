@@ -16,6 +16,7 @@ namespace GitForce
         public FormCustomizeTools(ClassCustomTools customTools)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             CustomTools = customTools.Copy();

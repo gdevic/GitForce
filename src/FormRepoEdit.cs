@@ -47,6 +47,7 @@ namespace GitForce
         public FormRepoEdit(ClassRepo targetRepo)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
             repo = targetRepo;
 

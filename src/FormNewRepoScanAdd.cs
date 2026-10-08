@@ -18,6 +18,7 @@ namespace GitForce
         public FormNewRepoScanAdd(List<string> dirList)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             dirs = dirList;
 
             // If there are 5 repos or more, display the progress bar

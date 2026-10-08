@@ -7,6 +7,7 @@ namespace GitForce
         public FormMergeMissing()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
         }
 
         /// <summary>

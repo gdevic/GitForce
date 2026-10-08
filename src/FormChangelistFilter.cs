@@ -18,6 +18,7 @@ namespace GitForce
         public FormChangelistFilter()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             dateTimeBefore.Value = DateTime.Today;

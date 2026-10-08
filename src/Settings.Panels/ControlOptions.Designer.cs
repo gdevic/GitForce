@@ -33,6 +33,9 @@
             this.checkBoxAutoCloseGitOnSuccess = new System.Windows.Forms.CheckBox();
             this.checkBoxWarnIfAdmin = new System.Windows.Forms.CheckBox();
             this.checkBoxWarnOnDetachedHead = new System.Windows.Forms.CheckBox();
+            this.labelTheme = new System.Windows.Forms.Label();
+            this.comboBoxTheme = new System.Windows.Forms.ComboBox();
+            this.labelThemeNote = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // checkBoxTabs
@@ -85,10 +88,44 @@
             this.checkBoxWarnOnDetachedHead.Text = "Warn when switching to a &detached HEAD repository";
             this.checkBoxWarnOnDetachedHead.UseVisualStyleBackColor = true;
             //
+            // labelTheme
+            //
+            this.labelTheme.AutoSize = true;
+            this.labelTheme.Location = new System.Drawing.Point(3, 128);
+            this.labelTheme.Name = "labelTheme";
+            this.labelTheme.Size = new System.Drawing.Size(40, 13);
+            this.labelTheme.TabIndex = 5;
+            this.labelTheme.Text = "&Theme:";
+            //
+            // comboBoxTheme
+            //
+            this.comboBoxTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTheme.FormattingEnabled = true;
+            this.comboBoxTheme.Items.AddRange(new object[] {
+            "Light",
+            "Dark",
+            "System"});
+            this.comboBoxTheme.Location = new System.Drawing.Point(49, 124);
+            this.comboBoxTheme.Name = "comboBoxTheme";
+            this.comboBoxTheme.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxTheme.TabIndex = 6;
+            //
+            // labelThemeNote
+            //
+            this.labelThemeNote.AutoSize = true;
+            this.labelThemeNote.Location = new System.Drawing.Point(3, 152);
+            this.labelThemeNote.Name = "labelThemeNote";
+            this.labelThemeNote.Size = new System.Drawing.Size(197, 13);
+            this.labelThemeNote.TabIndex = 7;
+            this.labelThemeNote.Text = "A new theme applies after GitForce is restarted.";
+            //
             // ControlOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.labelThemeNote);
+            this.Controls.Add(this.comboBoxTheme);
+            this.Controls.Add(this.labelTheme);
             this.Controls.Add(this.checkBoxWarnOnDetachedHead);
             this.Controls.Add(this.checkBoxWarnIfAdmin);
             this.Controls.Add(this.checkBoxAutoCloseGitOnSuccess);
@@ -109,5 +146,8 @@
         private System.Windows.Forms.CheckBox checkBoxAutoCloseGitOnSuccess;
         private System.Windows.Forms.CheckBox checkBoxWarnIfAdmin;
         private System.Windows.Forms.CheckBox checkBoxWarnOnDetachedHead;
+        private System.Windows.Forms.Label labelTheme;
+        private System.Windows.Forms.ComboBox comboBoxTheme;
+        private System.Windows.Forms.Label labelThemeNote;
     }
 }

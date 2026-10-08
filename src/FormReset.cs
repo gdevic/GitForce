@@ -13,6 +13,7 @@ namespace GitForce
         public FormReset()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
         }
 

@@ -49,6 +49,7 @@ namespace GitForce
         public FormRevisionHistory(string targetFile)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             // Apply the same font we use for description of changes

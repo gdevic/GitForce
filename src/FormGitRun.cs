@@ -19,6 +19,7 @@ namespace GitForce
         public FormGitRun(string cmd, string args)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
             checkAutoclose.Checked = Properties.Settings.Default.AutoCloseGitOnSuccess;
 

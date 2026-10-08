@@ -17,6 +17,7 @@ namespace GitForce
         public FormCustomToolArgs(string desc, string args, bool isBrowse)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             Text = desc;

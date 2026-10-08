@@ -17,6 +17,7 @@ namespace GitForce
         public FormEditTools(ClassTool tool)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
             Tool = (ClassTool) tool.Clone();
 

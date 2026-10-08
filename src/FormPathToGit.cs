@@ -14,6 +14,7 @@ namespace GitForce
         public FormPathToGit(string programFiles, string suggestPathToGit)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
 
             textBoxPath.Text = programFiles;
 

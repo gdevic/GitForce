@@ -14,6 +14,7 @@ namespace GitForce
         public FormLog()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             // Add our main print function callback delegate

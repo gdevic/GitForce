@@ -7,6 +7,7 @@ namespace GitForce
         public FormRemoteEdit(ClassRepo repo)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             userControlRemotesEdit.SetRepo(repo);

@@ -16,6 +16,9 @@ namespace GitForce
         public const int HWND_BROADCAST = 0xffff;
         public const int WM_COMMAND = 0x0111;
         public const int TCM_ADJUSTRECT = 0x1328;
+        public const int WM_ERASEBKGND = 0x0014;
+        public const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+        public const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
 
         public static readonly uint WmShowme = RegisterWindowMessage("WM_SHOWME");
 
@@ -43,6 +46,12 @@ namespace GitForce
 
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        public static extern int SetWindowTheme(IntPtr hwnd, string subAppName, string subIdList);
 
         /// <summary>
         /// Attaches a console so we can use Console class to print.

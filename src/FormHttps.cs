@@ -20,6 +20,7 @@ namespace GitForce
         public FormHttps()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             // Add button click handlers that will expand the list of existing fetch and push URLs

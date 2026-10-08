@@ -55,6 +55,7 @@ namespace GitForce
         public FormRecreateRepos()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
         }
 
@@ -99,7 +100,7 @@ namespace GitForce
                     case ClassUtils.DirStatType.Invalid:
                         item.SubItems[1].Text = "Non-existing";
                         enableClosing = false;
-                        item.SubItems[0].ForeColor = Color.Red;
+                        item.SubItems[0].ForeColor = ClassTheme.Map(Color.Red);
                         break;
                     case ClassUtils.DirStatType.Empty:
                         item.SubItems[1].Text = "Empty";
@@ -107,7 +108,7 @@ namespace GitForce
                         break;
                     case ClassUtils.DirStatType.Git:
                         item.SubItems[1].Text = "OK";
-                        item.SubItems[0].ForeColor = Color.DarkOliveGreen;
+                        item.SubItems[0].ForeColor = ClassTheme.Map(Color.DarkOliveGreen);
                         break;
                     case ClassUtils.DirStatType.Nongit:
                         item.SubItems[1].Text = "Non-empty";

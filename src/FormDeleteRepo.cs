@@ -19,6 +19,7 @@ namespace GitForce
         public FormDeleteRepo(string root)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             dir = textPath.Text = root;

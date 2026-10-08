@@ -27,6 +27,7 @@ namespace GitForce
         public FormDownload(string title, string webPageArg, string regExArg, string mergeWebPathArg)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             Text = title;
             webPage = webPageArg;
             regEx = regExArg;

@@ -15,6 +15,7 @@ namespace GitForce
         public FormCommitMerge(bool forCommit, string description)
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             textDescription.Font = Properties.Settings.Default.commitFont;
@@ -90,9 +91,9 @@ namespace GitForce
 
             // Color the text and the label in red if the span was reached))
             if (w1 > Properties.Settings.Default.commitW1 || w2 > Properties.Settings.Default.commitW2)
-                textDescription.ForeColor = labelWidth.ForeColor = Color.Red;
+                textDescription.ForeColor = labelWidth.ForeColor = ClassTheme.Map(Color.Red);
             else
-                textDescription.ForeColor = labelWidth.ForeColor = SystemColors.ControlText;
+                textDescription.ForeColor = labelWidth.ForeColor = ClassTheme.Map(SystemColors.ControlText);
         }
     }
 }

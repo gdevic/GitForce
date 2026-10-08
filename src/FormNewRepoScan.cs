@@ -14,6 +14,7 @@ namespace GitForce
         public FormNewRepoScan()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
             ClassWinGeometry.Restore(this);
 
             checkBoxDeepScan.Checked = Properties.Settings.Default.RepoDeepScan;

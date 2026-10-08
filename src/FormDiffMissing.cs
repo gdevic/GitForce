@@ -10,6 +10,7 @@ namespace GitForce
         public FormDiffMissing()
         {
             InitializeComponent();
+            ClassTheme.Apply(this);
 
             if (!ClassUtils.IsMono())
             {
